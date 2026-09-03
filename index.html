@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="WildCard DEV — cinematic web, app, and AI systems.">
+  <title>WildCard DEV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="WildCard DEV home">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span>WildCard DEV</span>
+    </a>
+    <a class="donate" href="https://square.link/u/YnAVr8ht" target="_blank" rel="noopener noreferrer">Donate</a>
+  </header>
+
+  <main class="landing">
+    <section class="portal-stage" aria-labelledby="portal-title">
+      <button class="portal-trigger" type="button" aria-describedby="portal-hint">
+        <span class="portal-ring portal-ring--outer" aria-hidden="true"></span>
+        <span class="portal-ring portal-ring--middle" aria-hidden="true"></span>
+        <span class="portal-ring portal-ring--inner" aria-hidden="true"></span>
+        <span class="portal-core" aria-hidden="true"></span>
+        <span class="portal-copy">
+          <span class="eyebrow">WildCard DEV</span>
+          <strong id="portal-title">Enter the portal</strong>
+          <span id="portal-hint">Experience coming next</span>
+        </span>
+      </button>
+    </section>
+
+    <!-- These two clean card shells are deliberately dormant in the first baseline.
+         The next step will reveal them after the selected portal video finishes. -->
+    <section class="card-stage" aria-label="WildCard contacts" hidden>
+      <article class="identity-card identity-card--matt">
+        <img data-src="assets/matt-avatar.png" alt="Matt Tobaben">
+        <p class="eyebrow">Owner</p>
+        <h2>Matt Tobaben</h2>
+        <p>WildCard DEV</p>
+        <a href="mailto:matt@wildcarddev.com">matt@wildcarddev.com</a>
+        <a href="tel:+14029150789">402-915-0789</a>
+      </article>
+
+      <article class="identity-card identity-card--penny">
+        <img data-src="assets/penny-hot-still.png" alt="Penny, WildCard DEV concierge">
+        <p class="eyebrow">Concierge</p>
+        <h2>Penny</h2>
+        <p>Project guidance, contact routing, and interface support.</p>
+        <button type="button">Enter Penny’s Office</button>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
