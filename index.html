@@ -31,9 +31,18 @@
       </button>
     </section>
 
-    <!-- These two clean card shells are deliberately dormant in the first baseline.
-         The next step will reveal them after the selected portal video finishes. -->
-    <section class="card-stage" aria-label="WildCard contacts" hidden>
+    <section class="spinner-stage" aria-label="WildCard navigation" hidden>
+      <div class="spinner-deck">
+        <button class="spinner-card" style="--i:0; --angle:0deg" data-channel="contact"><span>01</span><strong>Contact</strong></button>
+        <button class="spinner-card" style="--i:1; --angle:60deg" data-channel="systems"><span>02</span><strong>Systems</strong></button>
+        <button class="spinner-card" style="--i:2; --angle:120deg" data-channel="portfolio"><span>03</span><strong>Portfolio</strong></button>
+        <button class="spinner-card spinner-card--penny" style="--i:3; --angle:180deg" data-channel="penny"><span>04</span><strong>Penny</strong></button>
+        <button class="spinner-card" style="--i:4; --angle:240deg" data-channel="automation"><span>05</span><strong>Automation</strong></button>
+        <button class="spinner-card" style="--i:5; --angle:300deg" data-channel="interface"><span>06</span><strong>Interface</strong></button>
+      </div>
+    </section>
+
+    <section class="card-stage" aria-label="WildCard interface" hidden>
       <article class="identity-card identity-card--matt">
         <img data-src="assets/matt-avatar.png" alt="Matt Tobaben">
         <p class="eyebrow">Owner</p>
@@ -49,6 +58,12 @@
         <h2>Penny</h2>
         <p>Project guidance, contact routing, and interface support.</p>
         <button type="button">Enter Penny’s Office</button>
+      </article>
+
+      <article class="content-field" aria-live="polite">
+        <p class="eyebrow">Active channel</p>
+        <h2 data-content-title>Contact</h2>
+        <p data-content-copy>Direct operator access for WildCard DEV, Matt, and Penny.</p>
       </article>
     </section>
   </main>
