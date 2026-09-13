@@ -36,9 +36,13 @@ body { overflow: clip; }
   place-items: center;
   visibility: hidden;
   pointer-events: none;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
 }
 
 .spinner-stage.is-active { visibility: visible; pointer-events: auto; }
+.spinner-stage.is-active:active { cursor: grabbing; }
 
 .spinner-deck {
   width: clamp(6.6rem, 12vw, 9rem);

@@ -43,6 +43,9 @@ function Spinner({ open, activeIndex, onSelect }) {
   const frameRef = useRef(0);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
+  const dragRef = useRef({ active: false, pointerId: null, lastX: 0, lastTime: 0, velocity: 0, moved: false });
+  const inertiaRef = useRef(0);
+  const suppressClickUntilRef = useRef(0);
   const [engaged, setEngaged] = useState(false);
   const [settled, setSettled] = useState(false);
 
@@ -68,7 +71,18 @@ function Spinner({ open, activeIndex, onSelect }) {
       if (!lastTimeRef.current) lastTimeRef.current = time;
       const elapsed = Math.min(time - lastTimeRef.current, 40);
       lastTimeRef.current = time;
-      if (time > resumeAtRef.current) changeRotation((current) => current + elapsed * 0.006);
+      if (dragRef.current.active) {
+        // Pointer movement owns the rotation while dragging.
+      } else if (Math.abs(inertiaRef.current) > 0.002) {
+        changeRotation((current) => current + inertiaRef.current * elapsed);
+        inertiaRef.current *= Math.pow(0.94, elapsed / 16.67);
+        if (Math.abs(inertiaRef.current) <= 0.002) {
+          inertiaRef.current = 0;
+          resumeAtRef.current = time + 1200;
+        }
+      } else if (time > resumeAtRef.current) {
+        changeRotation((current) => current + elapsed * 0.006);
+      }
       frameRef.current = requestAnimationFrame(tick);
     };
     frameRef.current = requestAnimationFrame(tick);
@@ -92,9 +106,55 @@ function Spinner({ open, activeIndex, onSelect }) {
   }, [changeRotation, open]);
 
   const selectCard = (index) => {
+    if (performance.now() < suppressClickUntilRef.current) return;
+    inertiaRef.current = 0;
     resumeAtRef.current = performance.now() + 2600;
     changeRotation((current) => shortestTurn(current, -index * STEP));
     onSelect(index);
+  };
+
+  const handlePointerDown = (event) => {
+    if (!open || event.button > 0) return;
+    inertiaRef.current = 0;
+    resumeAtRef.current = Number.POSITIVE_INFINITY;
+    dragRef.current = {
+      active: true,
+      pointerId: event.pointerId,
+      lastX: event.clientX,
+      lastTime: performance.now(),
+      velocity: 0,
+      moved: false,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setEngaged(true);
+  };
+
+  const handlePointerMove = (event) => {
+    const drag = dragRef.current;
+    if (!drag.active || drag.pointerId !== event.pointerId) return;
+    const now = performance.now();
+    const deltaX = event.clientX - drag.lastX;
+    const elapsed = Math.max(now - drag.lastTime, 8);
+    if (Math.abs(deltaX) > 1) drag.moved = true;
+    changeRotation((current) => current + deltaX * 0.38);
+    drag.velocity = (drag.velocity * 0.55) + ((deltaX * 0.38) / elapsed) * 0.45;
+    drag.lastX = event.clientX;
+    drag.lastTime = now;
+  };
+
+  const handlePointerEnd = (event) => {
+    const drag = dragRef.current;
+    if (!drag.active || drag.pointerId !== event.pointerId) return;
+    drag.active = false;
+    if (drag.moved) suppressClickUntilRef.current = performance.now() + 250;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    inertiaRef.current = Math.max(-0.9, Math.min(0.9, drag.velocity));
+    if (Math.abs(inertiaRef.current) <= 0.002) {
+      inertiaRef.current = 0;
+      resumeAtRef.current = performance.now() + 1200;
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -105,7 +165,7 @@ function Spinner({ open, activeIndex, onSelect }) {
   };
 
   return (
-    <section ref={stageRef} className={`spinner-stage${open ? ' is-active' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`} aria-label="WildCard navigation" aria-hidden={!open} onPointerEnter={() => setEngaged(true)} onPointerLeave={() => setEngaged(false)} onFocus={() => setEngaged(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setEngaged(false); }} onKeyDown={handleKeyDown}>
+    <section ref={stageRef} className={`spinner-stage${open ? ' is-active' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`} aria-label="WildCard navigation" aria-hidden={!open} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerEnd} onPointerEnter={() => setEngaged(true)} onPointerLeave={() => { if (!dragRef.current.active) setEngaged(false); }} onFocus={() => setEngaged(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setEngaged(false); }} onKeyDown={handleKeyDown}>
       <div ref={deckRef} className="spinner-deck" style={{ '--rotation': '0deg' }}>
         {CHANNELS.map((channel, index) => (
           <button key={channel.id} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onClick={() => selectCard(index)}>
