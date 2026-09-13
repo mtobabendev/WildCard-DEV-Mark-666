@@ -3,7 +3,7 @@
 body { overflow: clip; }
 
 .portal-stage {
-  transform: translate(clamp(-3rem, -3vw, -1.5rem), clamp(1.5rem, 4vh, 2.75rem));
+  transform: translate(clamp(-6rem, -5.5vw, -4rem), clamp(5rem, 9vh, 7rem));
 }
 
 .context-window {
@@ -29,8 +29,8 @@ body { overflow: clip; }
 .context-window > p:last-child { margin: 0; color: var(--muted); line-height: 1.45; }
 
 .spinner-stage {
-  left: calc(50% + clamp(-3rem, -3vw, -1.5rem));
-  top: calc(52% + clamp(1.5rem, 4vh, 2.75rem));
+  left: calc(50% + clamp(-6rem, -5.5vw, -4rem));
+  top: calc(52% + clamp(5rem, 9vh, 7rem));
   width: min(48rem, 96vw);
   height: min(24rem, 48vh);
   display: grid;
@@ -62,7 +62,7 @@ body { overflow: clip; }
   transition: border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.spinner-stage.is-active .spinner-card { animation: card-unfold 1050ms cubic-bezier(.2, .82, .22, 1.14) forwards; animation-delay: calc(620ms + var(--i) * 150ms); }
+.spinner-stage.is-active .spinner-card { animation: card-unfold 1050ms cubic-bezier(.2, .82, .22, 1.14) both; animation-delay: calc(620ms + var(--i) * 150ms); }
 .spinner-stage.is-settled .spinner-card { animation: none; opacity: 1; }
 .spinner-card.is-selected { border-color: var(--pink); box-shadow: inset 0 0 24px rgba(255, 91, 214, .2), 0 0 28px rgba(255, 91, 214, .42); }
 
@@ -78,7 +78,7 @@ body { overflow: clip; }
 }
 @keyframes card-unfold {
   0% { opacity: 0; transform: rotateY(0deg) translateZ(0) scale(.12); }
-  45% { opacity: 1; transform: rotateY(calc(var(--angle) * .18)) translateZ(1.5rem) scale(.7); }
+  18% { opacity: 1; transform: rotateY(0deg) translateZ(0) scale(.7); }
   100% { opacity: 1; transform: rotateY(var(--angle)) translateZ(var(--orbit-radius)) scale(1); }
 }
 @keyframes card-breathe {
@@ -87,9 +87,9 @@ body { overflow: clip; }
 }
 
 @media (max-width: 700px) {
-  .portal-stage { transform: translate(-1.25rem, 1.5rem); }
+  .portal-stage { transform: translate(-2rem, 4rem); }
   .context-window { top: 5.2rem; width: calc(100vw - 1.2rem); min-height: 6.5rem; padding: .8rem 1rem; }
-  .spinner-stage { left: calc(50% - 1.25rem); top: calc(49% + 1.5rem); width: 100vw; height: 18rem; scale: 1; }
+  .spinner-stage { left: calc(50% - 2rem); top: calc(49% + 4rem); width: 100vw; height: 18rem; scale: 1; }
   .spinner-card { --orbit-radius: clamp(7.1rem, 35vw, 9.2rem); }
 }
 
