@@ -21,7 +21,7 @@ function shortestTurn(current, target) {
 
 function Portal({ open, onOpen }) {
   return (
-    <section className="portal-stage" aria-labelledby="portal-title">
+    <section className={`portal-stage${open ? ' is-open' : ''}`} aria-labelledby="portal-title">
       <button className={`portal-trigger${open ? ' is-open' : ''}`} type="button" aria-describedby="portal-hint" aria-expanded={open} onClick={onOpen}>
         <span className="portal-ring portal-ring--outer" aria-hidden="true" />
         <span className="portal-ring portal-ring--middle" aria-hidden="true" />
@@ -143,7 +143,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    if (window.matchMedia('(max-width: 320px)').matches && drag.moved) {
+    if (window.matchMedia('(max-width: 240px)').matches && drag.moved) {
       const direction = event.clientX < drag.startX ? 1 : -1;
       const nextIndex = (activeIndex + direction + CHANNELS.length) % CHANNELS.length;
       inertiaRef.current = 0;
@@ -194,14 +194,16 @@ function App() {
       </header>
       <main className="landing">
         <Portal open={open} onOpen={() => setOpen(true)} />
-        <section className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}>
-          <p className="eyebrow">Active channel</p><h2>{activeChannel.title}</h2><p>{activeChannel.copy}</p>
-        </section>
-        <Spinner open={open} activeIndex={activeIndex} onSelect={setActiveIndex} />
-        <section className={`card-stage${open ? ' is-active' : ''}`} aria-label="WildCard interface" aria-hidden={!open}>
+        <section className={`card-stage card-stage--matt${open ? ' is-active' : ''}`} aria-label="Owner information" aria-hidden={!open}>
           <article className="identity-card identity-card--matt">
             <img src={mattAvatar} alt="Matt Tobaben" /><p className="eyebrow">Owner</p><h2>Matt Tobaben</h2><p>WildCard DEV</p><a href="mailto:matt@wildcarddev.com">matt@wildcarddev.com</a><a href="tel:+14029150789">402-915-0789</a>
           </article>
+        </section>
+        <Spinner open={open} activeIndex={activeIndex} onSelect={setActiveIndex} />
+        <section className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}>
+          <p className="eyebrow">Active channel</p><h2>{activeChannel.title}</h2><p>{activeChannel.copy}</p>
+        </section>
+        <section className={`card-stage card-stage--penny${open ? ' is-active' : ''}`} aria-label="Penny concierge" aria-hidden={!open}>
           <article className="identity-card identity-card--penny">
             <img src={pennyAvatar} alt="Penny, WildCard DEV concierge" /><p className="eyebrow">Concierge</p><h2>Penny</h2><p>Project guidance, contact routing, and interface support.</p><button type="button">Enter Penny’s Office</button>
           </article>

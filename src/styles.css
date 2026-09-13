@@ -117,8 +117,15 @@ body { overflow: clip; }
     padding: 4.4rem .75rem 1rem;
   }
   .portal-stage { width: 100%; height: calc(100svh - 5.4rem); transform: none; }
-  .portal-stage:has(.portal-trigger.is-open) { display: none; }
-  .card-stage.is-active { display: contents; }
+  .portal-stage.is-open { display: none; }
+  .card-stage {
+    position: relative;
+    inset: auto;
+    display: none;
+    width: 100%;
+  }
+  .card-stage.is-active { display: block; }
+  .card-stage--matt { order: 1; }
   .identity-card {
     position: relative;
     inset: auto;
@@ -130,7 +137,6 @@ body { overflow: clip; }
   }
   .card-stage.is-active .identity-card--matt,
   .card-stage.is-active .identity-card--penny { animation: none; opacity: 1; transform: none; }
-  .identity-card--matt { order: 1; }
   .spinner-stage {
     position: relative;
     order: 2;
@@ -156,15 +162,16 @@ body { overflow: clip; }
   }
   .context-window:not(.is-active) { display: none; }
   .context-window.is-active { animation: none; opacity: 1; transform: none; }
-  .identity-card--penny { order: 4; }
+  .card-stage--penny { order: 4; }
   .spinner-card { --orbit-radius: clamp(7.1rem, 35vw, 9.2rem); }
 }
 
 @media (max-width: 430px) {
-  .site-header { min-height: 3.6rem; gap: .45rem; padding: .55rem .65rem; }
-  .brand { gap: .4rem; letter-spacing: .12em; font-size: .64rem; white-space: nowrap; }
+  .site-header { width: 100%; max-width: 100vw; min-height: 3.6rem; justify-content: flex-start; gap: .45rem; overflow: hidden; padding: .55rem .65rem; }
+  .brand { flex: 0 1 auto; min-width: 0; gap: .4rem; letter-spacing: .12em; font-size: .64rem; white-space: nowrap; }
+  .brand span:last-child { overflow: hidden; text-overflow: ellipsis; }
   .brand-dot { width: .62rem; height: .62rem; }
-  .donate { flex: 0 0 auto; padding: .42rem .65rem; font-size: .62rem; }
+  .donate { flex: 0 0 auto; margin-left: auto; padding: .42rem .65rem; font-size: .62rem; }
   .portal-copy { width: 10.5rem; min-width: 0; }
   .portal-copy strong { font-size: 1.2rem; }
   .landing { gap: .75rem; padding: 4rem .5rem .75rem; }
@@ -196,9 +203,9 @@ body { overflow: clip; }
   .spinner-card::before { top: .7rem; font-size: 3.5rem; }
 }
 
-@media (max-width: 320px) {
-  .landing:has(.spinner-stage.is-active) .identity-card,
-  .landing:has(.spinner-stage.is-active) .context-window { display: none; }
+@media (max-width: 240px) {
+  .card-stage,
+  .context-window { display: none !important; }
   .spinner-stage { min-height: calc(100svh - 5rem); overflow: hidden; }
   .spinner-deck { width: 7.4rem; height: 10rem; transform: none !important; animation: none !important; }
   .spinner-card {
