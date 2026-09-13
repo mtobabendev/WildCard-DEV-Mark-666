@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
 import pennyAvatar from '../assets/penny-hot-still.png';
+import pennyYogaVideo from '../assets/Yoga.mp4';
 
 const CHANNELS = [
   { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, and Penny.' },
@@ -160,6 +161,7 @@ function Spinner({ open, activeIndex, onSelect }) {
       <div ref={deckRef} className="spinner-deck" style={{ '--rotation': '0deg' }}>
         {CHANNELS.map((channel, index) => (
           <button key={channel.id} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onAnimationEnd={(event) => { if (index === CHANNELS.length - 1 && event.animationName === 'card-unfold') setSettled(true); }} onClick={() => selectCard(index)}>
+            {channel.penny && open && <video className="spinner-card-video" src={pennyYogaVideo} autoPlay muted loop playsInline aria-hidden="true" />}
             <span>{channel.number}</span>
             <strong>{channel.title}</strong>
           </button>

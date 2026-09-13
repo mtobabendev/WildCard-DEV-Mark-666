@@ -66,6 +66,26 @@ body { overflow: clip; }
 .spinner-stage.is-settled .spinner-card { animation: none; opacity: 1; }
 .spinner-card.is-selected { border-color: var(--pink); box-shadow: inset 0 0 24px rgba(255, 91, 214, .2), 0 0 28px rgba(255, 91, 214, .42); }
 
+.spinner-card--penny::before { content: none; }
+.spinner-card--penny::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 42%, rgba(13, 7, 25, .88) 100%);
+  pointer-events: none;
+}
+.spinner-card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.spinner-card--penny > span,
+.spinner-card--penny > strong { position: relative; z-index: 2; }
+
 @media (hover: hover) and (pointer: fine) {
   .spinner-stage.is-settled.is-engaged .spinner-card { --orbit-radius: clamp(9rem, 22vw, 14.5rem); animation: card-breathe 1.9s ease-in-out calc(var(--i) * -160ms) infinite; opacity: 1; }
 }
