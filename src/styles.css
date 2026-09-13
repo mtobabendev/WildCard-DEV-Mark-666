@@ -3,7 +3,7 @@
 body { overflow: clip; }
 
 .portal-stage {
-  transform: translate(clamp(-6rem, -5.5vw, -4rem), clamp(5rem, 9vh, 7rem));
+  transform: translate(clamp(-6rem, -5.5vw, -4rem), clamp(9rem, 15vh, 11rem));
 }
 
 .context-window {
@@ -30,7 +30,7 @@ body { overflow: clip; }
 
 .spinner-stage {
   left: calc(50% + clamp(-6rem, -5.5vw, -4rem));
-  top: calc(52% + clamp(5rem, 9vh, 7rem));
+  top: calc(52% + clamp(9rem, 15vh, 11rem));
   width: min(48rem, 96vw);
   height: min(24rem, 48vh);
   display: grid;
@@ -87,13 +87,29 @@ body { overflow: clip; }
 }
 
 @media (max-width: 700px) {
-  .portal-stage { transform: translate(-2rem, 4rem); }
+  .portal-stage { transform: translate(-2rem, 6rem); }
   .context-window { top: 5.2rem; width: calc(100vw - 1.2rem); min-height: 6.5rem; padding: .8rem 1rem; }
-  .spinner-stage { left: calc(50% - 2rem); top: calc(49% + 4rem); width: 100vw; height: 18rem; scale: 1; }
+  .spinner-stage { left: calc(50% - 2rem); top: calc(49% + 6rem); width: 100vw; height: 18rem; scale: 1; }
   .spinner-card { --orbit-radius: clamp(7.1rem, 35vw, 9.2rem); }
 }
 
 @media (max-width: 430px) {
+  .site-header { min-height: 3.6rem; gap: .45rem; padding: .55rem .65rem; }
+  .brand { gap: .4rem; letter-spacing: .12em; font-size: .64rem; white-space: nowrap; }
+  .brand-dot { width: .62rem; height: .62rem; }
+  .donate { flex: 0 0 auto; padding: .42rem .65rem; font-size: .62rem; }
+  .context-window { top: 3.8rem; width: calc(100vw - .8rem); min-height: 0; padding: .65rem .75rem; border-radius: .9rem; }
+  .context-window .eyebrow { font-size: .58rem; }
+  .context-window h2 { margin: .2rem 0; font-size: 1.25rem; }
+  .context-window > p:last-child { font-size: .78rem; line-height: 1.35; }
+  .identity-card { width: 7.25rem; padding: .55rem; border-radius: .9rem; font-size: .62rem; }
+  .identity-card img { width: 2.25rem; height: 2.25rem; border-radius: .65rem; }
+  .identity-card h2 { margin: .2rem 0; font-size: 1rem; }
+  .identity-card p { margin: .3rem 0; }
+  .identity-card a { margin-top: .2rem; font-size: .58rem; overflow-wrap: anywhere; }
+  .identity-card button { min-height: 44px; padding: .35rem; font-size: .62rem; }
+  .identity-card--matt { top: 10.75rem; left: .35rem; }
+  .identity-card--penny { right: .35rem; bottom: .35rem; }
   .spinner-deck { width: 6.3rem; height: 8.6rem; }
   .spinner-card { --orbit-radius: clamp(6.2rem, 30vw, 7.8rem); padding: .75rem; border-radius: 1rem; }
   .spinner-card::before { top: .7rem; font-size: 3.5rem; }
