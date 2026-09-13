@@ -44,7 +44,7 @@ function Spinner({ open, activeIndex, onSelect }) {
   const frameRef = useRef(0);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
-  const dragRef = useRef({ active: false, pointerId: null, startX: 0, lastX: 0, lastTime: 0, velocity: 0, moved: false });
+  const dragRef = useRef({ active: false, pointerId: null, cardIndex: null, startX: 0, lastX: 0, lastTime: 0, velocity: 0, moved: false });
   const inertiaRef = useRef(0);
   const suppressClickUntilRef = useRef(0);
   const [engaged, setEngaged] = useState(false);
@@ -107,11 +107,13 @@ function Spinner({ open, activeIndex, onSelect }) {
 
   const handlePointerDown = (event) => {
     if (!open || event.button > 0) return;
+    const pressedCard = event.target.closest?.('.spinner-card');
     inertiaRef.current = 0;
     resumeAtRef.current = Number.POSITIVE_INFINITY;
     dragRef.current = {
       active: true,
       pointerId: event.pointerId,
+      cardIndex: pressedCard ? Number(pressedCard.dataset.index) : null,
       startX: event.clientX,
       lastX: event.clientX,
       lastTime: performance.now(),
@@ -143,6 +145,11 @@ function Spinner({ open, activeIndex, onSelect }) {
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+    if (!drag.moved && Number.isInteger(drag.cardIndex)) {
+      selectCard(drag.cardIndex);
+      suppressClickUntilRef.current = performance.now() + 250;
+      return;
+    }
     if (window.matchMedia('(max-width: 240px)').matches && drag.moved) {
       const direction = event.clientX < drag.startX ? 1 : -1;
       const nextIndex = (activeIndex + direction + CHANNELS.length) % CHANNELS.length;
@@ -170,7 +177,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     <section ref={stageRef} className={`spinner-stage${open ? ' is-active' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`} aria-label="WildCard navigation" aria-hidden={!open} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerEnd} onPointerEnter={() => setEngaged(true)} onPointerLeave={() => { if (!dragRef.current.active) setEngaged(false); }} onFocus={() => setEngaged(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setEngaged(false); }} onKeyDown={handleKeyDown}>
       <div ref={deckRef} className="spinner-deck" style={{ '--rotation': '0deg' }}>
         {CHANNELS.map((channel, index) => (
-          <button key={channel.id} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onAnimationEnd={(event) => { if (index === CHANNELS.length - 1 && event.animationName === 'card-unfold') setSettled(true); }} onClick={() => selectCard(index)}>
+          <button key={channel.id} data-index={index} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-controls="channel-content" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onAnimationEnd={(event) => { if (index === CHANNELS.length - 1 && event.animationName === 'card-unfold') setSettled(true); }} onClick={() => selectCard(index)}>
             {channel.penny && open && <video className="spinner-card-video" src={pennyYogaVideo} autoPlay muted loop playsInline aria-hidden="true" />}
             <span>{channel.number}</span>
             <strong>{channel.title}</strong>
@@ -200,7 +207,7 @@ function App() {
           </article>
         </section>
         <Spinner open={open} activeIndex={activeIndex} onSelect={setActiveIndex} />
-        <section className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}>
+        <section id="channel-content" className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}>
           <p className="eyebrow">Active channel</p><h2>{activeChannel.title}</h2><p>{activeChannel.copy}</p>
         </section>
         <section className={`card-stage card-stage--penny${open ? ' is-active' : ''}`} aria-label="Penny concierge" aria-hidden={!open}>
