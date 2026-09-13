@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
-import pennyAvatar from '../assets/penny-hot-still.png';
+import pennyAvatar from '../assets/BetterThanJarvis.jpg';
 import pennyYogaVideo from '../assets/Yoga.mp4';
 
 const CHANNELS = [
