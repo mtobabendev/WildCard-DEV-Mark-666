@@ -58,7 +58,7 @@ function Spinner({ open, activeIndex, onSelect }) {
       setSettled(false);
       return undefined;
     }
-    const timer = window.setTimeout(() => setSettled(true), 1450);
+    const timer = window.setTimeout(() => setSettled(true), 2500);
     return () => window.clearTimeout(timer);
   }, [open]);
 

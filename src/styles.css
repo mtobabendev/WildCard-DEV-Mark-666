@@ -2,6 +2,10 @@
 
 body { overflow: clip; }
 
+.portal-stage {
+  transform: translate(clamp(-3rem, -3vw, -1.5rem), clamp(1.5rem, 4vh, 2.75rem));
+}
+
 .context-window {
   position: fixed;
   z-index: 7;
@@ -53,7 +57,7 @@ body { overflow: clip; }
   transition: border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.spinner-stage.is-active .spinner-card { animation: card-unfold 760ms cubic-bezier(.2, .82, .22, 1.14) forwards; animation-delay: calc(520ms + var(--i) * 110ms); }
+.spinner-stage.is-active .spinner-card { animation: card-unfold 1050ms cubic-bezier(.2, .82, .22, 1.14) forwards; animation-delay: calc(620ms + var(--i) * 150ms); }
 .spinner-stage.is-settled .spinner-card { animation: none; opacity: 1; }
 .spinner-card.is-selected { border-color: var(--pink); box-shadow: inset 0 0 24px rgba(255, 91, 214, .2), 0 0 28px rgba(255, 91, 214, .42); }
 
@@ -78,6 +82,7 @@ body { overflow: clip; }
 }
 
 @media (max-width: 700px) {
+  .portal-stage { transform: translate(-1.25rem, 1.5rem); }
   .context-window { top: 5.2rem; width: calc(100vw - 1.2rem); min-height: 6.5rem; padding: .8rem 1rem; }
   .spinner-stage { top: 49%; width: 100vw; height: 18rem; scale: 1; }
   .spinner-card { --orbit-radius: clamp(7.1rem, 35vw, 9.2rem); }
