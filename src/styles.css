@@ -98,6 +98,8 @@ body { overflow: clip; }
   .brand { gap: .4rem; letter-spacing: .12em; font-size: .64rem; white-space: nowrap; }
   .brand-dot { width: .62rem; height: .62rem; }
   .donate { flex: 0 0 auto; padding: .42rem .65rem; font-size: .62rem; }
+  .portal-copy { width: 10.5rem; min-width: 0; }
+  .portal-copy strong { font-size: 1.2rem; }
   .context-window { top: 3.8rem; width: calc(100vw - .8rem); min-height: 0; padding: .65rem .75rem; border-radius: .9rem; }
   .context-window .eyebrow { font-size: .58rem; }
   .context-window h2 { margin: .2rem 0; font-size: 1.25rem; }
