@@ -57,15 +57,6 @@ function Spinner({ open, activeIndex, onSelect }) {
   }, []);
 
   useEffect(() => {
-    if (!open) {
-      setSettled(false);
-      return undefined;
-    }
-    const timer = window.setTimeout(() => setSettled(true), 2500);
-    return () => window.clearTimeout(timer);
-  }, [open]);
-
-  useEffect(() => {
     if (!open || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const tick = (time) => {
       if (!lastTimeRef.current) lastTimeRef.current = time;
@@ -168,7 +159,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     <section ref={stageRef} className={`spinner-stage${open ? ' is-active' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`} aria-label="WildCard navigation" aria-hidden={!open} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerEnd} onPointerEnter={() => setEngaged(true)} onPointerLeave={() => { if (!dragRef.current.active) setEngaged(false); }} onFocus={() => setEngaged(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setEngaged(false); }} onKeyDown={handleKeyDown}>
       <div ref={deckRef} className="spinner-deck" style={{ '--rotation': '0deg' }}>
         {CHANNELS.map((channel, index) => (
-          <button key={channel.id} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onClick={() => selectCard(index)}>
+          <button key={channel.id} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onAnimationEnd={(event) => { if (index === CHANNELS.length - 1 && event.animationName === 'card-unfold') setSettled(true); }} onClick={() => selectCard(index)}>
             <span>{channel.number}</span>
             <strong>{channel.title}</strong>
           </button>

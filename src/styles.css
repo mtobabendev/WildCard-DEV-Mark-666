@@ -78,7 +78,7 @@ body { overflow: clip; }
 }
 @keyframes card-unfold {
   0% { opacity: 0; transform: rotateY(0deg) translateZ(0) scale(.12); }
-  18% { opacity: 1; transform: rotateY(0deg) translateZ(0) scale(.7); }
+  8% { opacity: 1; transform: rotateY(0deg) translateZ(0) scale(.35); }
   100% { opacity: 1; transform: rotateY(var(--angle)) translateZ(var(--orbit-radius)) scale(1); }
 }
 @keyframes card-breathe {
