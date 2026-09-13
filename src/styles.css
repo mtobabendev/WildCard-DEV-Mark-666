@@ -29,7 +29,8 @@ body { overflow: clip; }
 .context-window > p:last-child { margin: 0; color: var(--muted); line-height: 1.45; }
 
 .spinner-stage {
-  top: 52%;
+  left: calc(50% + clamp(-3rem, -3vw, -1.5rem));
+  top: calc(52% + clamp(1.5rem, 4vh, 2.75rem));
   width: min(48rem, 96vw);
   height: min(24rem, 48vh);
   display: grid;
@@ -88,7 +89,7 @@ body { overflow: clip; }
 @media (max-width: 700px) {
   .portal-stage { transform: translate(-1.25rem, 1.5rem); }
   .context-window { top: 5.2rem; width: calc(100vw - 1.2rem); min-height: 6.5rem; padding: .8rem 1rem; }
-  .spinner-stage { top: 49%; width: 100vw; height: 18rem; scale: 1; }
+  .spinner-stage { left: calc(50% - 1.25rem); top: calc(49% + 1.5rem); width: 100vw; height: 18rem; scale: 1; }
   .spinner-card { --orbit-radius: clamp(7.1rem, 35vw, 9.2rem); }
 }
 
