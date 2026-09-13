@@ -44,7 +44,7 @@ function Spinner({ open, activeIndex, onSelect }) {
   const frameRef = useRef(0);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
-  const dragRef = useRef({ active: false, pointerId: null, lastX: 0, lastTime: 0, velocity: 0, moved: false });
+  const dragRef = useRef({ active: false, pointerId: null, startX: 0, lastX: 0, lastTime: 0, velocity: 0, moved: false });
   const inertiaRef = useRef(0);
   const suppressClickUntilRef = useRef(0);
   const [engaged, setEngaged] = useState(false);
@@ -112,6 +112,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     dragRef.current = {
       active: true,
       pointerId: event.pointerId,
+      startX: event.clientX,
       lastX: event.clientX,
       lastTime: performance.now(),
       velocity: 0,
@@ -127,7 +128,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     const now = performance.now();
     const deltaX = event.clientX - drag.lastX;
     const elapsed = Math.max(now - drag.lastTime, 8);
-    if (Math.abs(deltaX) > 1) drag.moved = true;
+    if (Math.abs(event.clientX - drag.startX) > 8) drag.moved = true;
     changeRotation((current) => current + deltaX * 0.38);
     drag.velocity = (drag.velocity * 0.55) + ((deltaX * 0.38) / elapsed) * 0.45;
     drag.lastX = event.clientX;
@@ -141,6 +142,15 @@ function Spinner({ open, activeIndex, onSelect }) {
     if (drag.moved) suppressClickUntilRef.current = performance.now() + 250;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    if (window.matchMedia('(max-width: 320px)').matches && drag.moved) {
+      const direction = event.clientX < drag.startX ? 1 : -1;
+      const nextIndex = (activeIndex + direction + CHANNELS.length) % CHANNELS.length;
+      inertiaRef.current = 0;
+      resumeAtRef.current = Number.POSITIVE_INFINITY;
+      changeRotation(-nextIndex * STEP);
+      onSelect(nextIndex);
+      return;
     }
     inertiaRef.current = Math.max(-0.9, Math.min(0.9, drag.velocity));
     if (Math.abs(inertiaRef.current) <= 0.002) {
