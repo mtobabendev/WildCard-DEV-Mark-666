@@ -271,6 +271,7 @@ button, a { font: inherit; }
 .card-stage.is-active .identity-card--matt { animation: panel-up 850ms cubic-bezier(.16,.84,.26,1) 160ms forwards; }
 .card-stage.is-active .identity-card--penny { animation: panel-down 850ms cubic-bezier(.16,.84,.26,1) 320ms forwards; }
 .identity-card img { width: 5.4rem; height: 5.4rem; border-radius: 1.3rem; object-fit: cover; }
+.identity-card--penny img { object-fit: contain; }
 .identity-card h2 { margin: .4rem 0; }
 .identity-card p { color: var(--muted); }
 .identity-card a { display: block; margin-top: .5rem; color: var(--ink); }
