@@ -196,6 +196,7 @@ body { overflow: clip; }
     font-size: .72rem;
   }
   .identity-card img { grid-row: 1 / span 5; width: 3.25rem; height: 3.25rem; border-radius: .75rem; }
+  .penny-avatar-toggle { grid-row: 1 / span 5; width: 3.25rem; height: 3.25rem; border-radius: .75rem; }
   .identity-card .eyebrow,
   .identity-card h2,
   .identity-card p,

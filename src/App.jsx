@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
 import pennyAvatar from '../assets/BetterThanJarvis.jpg';
+import pennyLandingAvatar from '../assets/PennyLanding.jpg';
 import pennyYogaVideo from '../assets/Yoga.mp4';
 
 const CHANNELS = [
@@ -191,7 +192,19 @@ function Spinner({ open, activeIndex, onSelect }) {
 function App() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [pennyRevealed, setPennyRevealed] = useState(false);
+  const pennyNavigationRef = useRef(null);
   const activeChannel = CHANNELS[activeIndex];
+
+  useEffect(() => () => clearTimeout(pennyNavigationRef.current), []);
+
+  const enterPennyOffice = () => {
+    setPennyRevealed(true);
+    if (pennyNavigationRef.current) return;
+    pennyNavigationRef.current = window.setTimeout(() => {
+      window.location.assign('https://www.pennyzoffice.wildcarddev.com/');
+    }, 2000);
+  };
 
   return (
     <>
@@ -212,7 +225,13 @@ function App() {
         </section>
         <section className={`card-stage card-stage--penny${open ? ' is-active' : ''}`} aria-label="Penny concierge" aria-hidden={!open}>
           <article className="identity-card identity-card--penny">
-            <img src={pennyAvatar} alt="Penny, WildCard DEV concierge" /><p className="eyebrow">Concierge</p><h2>Penny</h2><p>Project guidance, contact routing, and interface support.</p><button type="button">Enter Penny’s Office</button>
+            <button className={`penny-avatar-toggle${pennyRevealed ? ' is-revealed' : ''}`} type="button" aria-label="Reveal Penny, then enter Penny’s Office" onMouseEnter={() => setPennyRevealed(true)} onFocus={() => setPennyRevealed(true)} onClick={enterPennyOffice}>
+              <span className="penny-avatar-flip" aria-hidden="true">
+                <img className="penny-avatar-front" src={pennyLandingAvatar} alt="" />
+                <img className="penny-avatar-back" src={pennyAvatar} alt="" />
+              </span>
+            </button>
+            <p className="eyebrow">Concierge</p><h2>Penny</h2><p>Project guidance, contact routing, and interface support.</p><button type="button">Enter Penny’s Office</button>
           </article>
         </section>
       </main>
