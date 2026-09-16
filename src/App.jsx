@@ -3,12 +3,13 @@ import mattAvatar from '../assets/matt-avatar.png';
 import pennyAvatar from '../assets/BetterThanJarvis.jpg';
 import pennyLandingAvatar from '../assets/PennyLanding.jpg';
 import pennyYogaVideo from '../assets/Yoga.mp4';
+import pennyCardVideo from '../assets/PennyCard1.mp4';
 
 const CHANNELS = [
-  { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, and Penny.' },
+  { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, and Penny.', video: pennyCardVideo },
   { id: 'systems', number: '02', title: 'Systems', copy: 'Premium web, app, automation, and AI systems built with cinematic precision.' },
   { id: 'portfolio', number: '03', title: 'Portfolio', copy: 'Selected builds, experiments, client systems, and interface work.' },
-  { id: 'penny', number: '04', title: 'Penny', copy: 'Concierge guidance, contact routing, and controlled chaos.', penny: true },
+  { id: 'penny', number: '04', title: 'Penny', copy: 'Concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyYogaVideo },
   { id: 'automation', number: '05', title: 'Automation', copy: 'Workflow logic, task support, and smart execution systems.' },
   { id: 'interface', number: '06', title: 'Interface', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive.' },
 ];
@@ -112,16 +113,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     const pressedCard = event.target.closest?.('.spinner-card');
     inertiaRef.current = 0;
     resumeAtRef.current = Number.POSITIVE_INFINITY;
-    dragRef.current = {
-      active: true,
-      pointerId: event.pointerId,
-      cardIndex: pressedCard ? Number(pressedCard.dataset.index) : null,
-      startX: event.clientX,
-      lastX: event.clientX,
-      lastTime: performance.now(),
-      velocity: 0,
-      moved: false,
-    };
+    dragRef.current = { active: true, pointerId: event.pointerId, cardIndex: pressedCard ? Number(pressedCard.dataset.index) : null, startX: event.clientX, lastX: event.clientX, lastTime: performance.now(), velocity: 0, moved: false };
     event.currentTarget.setPointerCapture(event.pointerId);
     setEngaged(true);
   };
@@ -144,9 +136,7 @@ function Spinner({ open, activeIndex, onSelect }) {
     if (!drag.active || drag.pointerId !== event.pointerId) return;
     drag.active = false;
     if (drag.moved) suppressClickUntilRef.current = performance.now() + 250;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
     if (!drag.moved && Number.isInteger(drag.cardIndex)) {
       selectCard(drag.cardIndex);
       suppressClickUntilRef.current = performance.now() + 250;
@@ -180,7 +170,7 @@ function Spinner({ open, activeIndex, onSelect }) {
       <div ref={deckRef} className="spinner-deck" style={{ '--rotation': '0deg' }}>
         {CHANNELS.map((channel, index) => (
           <button key={channel.id} data-index={index} className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`} style={{ '--i': index, '--angle': `${index * STEP}deg` }} type="button" aria-controls="channel-content" aria-pressed={activeIndex === index} tabIndex={open ? 0 : -1} onAnimationEnd={(event) => { if (index === CHANNELS.length - 1 && event.animationName === 'card-unfold') setSettled(true); }} onClick={() => selectCard(index)}>
-            {channel.penny && open && <video className="spinner-card-video" src={pennyYogaVideo} autoPlay muted loop playsInline aria-hidden="true" />}
+            {channel.video && open && <video className="spinner-card-video" src={channel.video} autoPlay muted loop playsInline aria-hidden="true" />}
             <span>{channel.number}</span>
             <strong>{channel.title}</strong>
           </button>
@@ -193,18 +183,8 @@ function Spinner({ open, activeIndex, onSelect }) {
 function CombinationDial({ value, position, onChange }) {
   const pointerStartRef = useRef(null);
   const adjust = (amount) => onChange((value + amount + 10) % 10);
-
   return (
-    <div className="combination-dial" onWheel={(event) => { event.preventDefault(); adjust(event.deltaY > 0 ? 1 : -1); }} onPointerDown={(event) => {
-      if (event.target.closest('button')) return;
-      pointerStartRef.current = event.clientY;
-      event.currentTarget.setPointerCapture(event.pointerId);
-    }} onPointerUp={(event) => {
-      if (pointerStartRef.current === null) return;
-      const distance = event.clientY - pointerStartRef.current;
-      pointerStartRef.current = null;
-      if (Math.abs(distance) >= 16) adjust(distance < 0 ? 1 : -1);
-    }}>
+    <div className="combination-dial" onWheel={(event) => { event.preventDefault(); adjust(event.deltaY > 0 ? 1 : -1); }} onPointerDown={(event) => { if (event.target.closest('button')) return; pointerStartRef.current = event.clientY; event.currentTarget.setPointerCapture(event.pointerId); }} onPointerUp={(event) => { if (pointerStartRef.current === null) return; const distance = event.clientY - pointerStartRef.current; pointerStartRef.current = null; if (Math.abs(distance) >= 16) adjust(distance < 0 ? 1 : -1); }}>
       <button type="button" aria-label={`Increase digit ${position}`} onClick={() => adjust(1)}>▲</button>
       <output aria-label={`Combination digit ${position}`}>{value}</output>
       <button type="button" aria-label={`Decrease digit ${position}`} onClick={() => adjust(-1)}>▼</button>
@@ -215,7 +195,6 @@ function CombinationDial({ value, position, onChange }) {
 function CombinationGate({ open, onClose }) {
   const [digits, setDigits] = useState([0, 0, 0]);
   const [message, setMessage] = useState('Set the house combination.');
-
   useEffect(() => {
     if (!open) return undefined;
     setDigits([0, 0, 0]);
@@ -224,34 +203,19 @@ function CombinationGate({ open, onClose }) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
-
   if (!open) return null;
-
   const setDigit = (index, value) => setDigits((current) => current.map((digit, digitIndex) => digitIndex === index ? value : digit));
   const unlock = (event) => {
     event.preventDefault();
-    if (digits.join('') === '216') {
-      setMessage('The door is open.');
-      window.location.assign(SPADE_URL);
-      return;
-    }
+    if (digits.join('') === '216') { setMessage('The door is open.'); window.location.assign(SPADE_URL); return; }
     setMessage('Wrong room. Try the card again.');
   };
-
   return (
     <div className="combination-gate" role="presentation" onPointerDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <section className="combination-lock" role="dialog" aria-modal="true" aria-labelledby="combination-title">
         <button className="combination-close" type="button" aria-label="Close combination lock" onClick={onClose}>×</button>
-        <p className="eyebrow">Penny’s Office</p>
-        <h2 id="combination-title">The Spade</h2>
-        <p className="combination-instruction">Turn the three dials. Wheel, swipe, or use the arrows.</p>
-        <form onSubmit={unlock}>
-          <div className="combination-dials" aria-label="Three digit combination">
-            {digits.map((digit, index) => <CombinationDial key={index} value={digit} position={index + 1} onChange={(value) => setDigit(index, value)} />)}
-          </div>
-          <p className="combination-message" aria-live="polite">{message}</p>
-          <button className="combination-enter" type="submit">Try the door</button>
-        </form>
+        <p className="eyebrow">Penny’s Office</p><h2 id="combination-title">The Spade</h2><p className="combination-instruction">Turn the three dials. Wheel, swipe, or use the arrows.</p>
+        <form onSubmit={unlock}><div className="combination-dials" aria-label="Three digit combination">{digits.map((digit, index) => <CombinationDial key={index} value={digit} position={index + 1} onChange={(value) => setDigit(index, value)} />)}</div><p className="combination-message" aria-live="polite">{message}</p><button className="combination-enter" type="submit">Try the door</button></form>
       </section>
     </div>
   );
@@ -265,46 +229,21 @@ function App() {
   const pennyNavigationRef = useRef(null);
   const activeChannel = CHANNELS[activeIndex];
   const closeGate = useCallback(() => setGateOpen(false), []);
-
   useEffect(() => () => clearTimeout(pennyNavigationRef.current), []);
-
   const enterPennyOffice = () => {
     setPennyRevealed(true);
     if (pennyNavigationRef.current) return;
-    pennyNavigationRef.current = window.setTimeout(() => {
-      setGateOpen(true);
-      pennyNavigationRef.current = null;
-    }, 2000);
+    pennyNavigationRef.current = window.setTimeout(() => { setGateOpen(true); pennyNavigationRef.current = null; }, 2000);
   };
-
   return (
     <>
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="WildCard DEV home"><span className="brand-dot" aria-hidden="true" /><span>WildCard DEV</span></a>
-        <a className="donate" href="https://square.link/u/YnAVr8ht" target="_blank" rel="noopener noreferrer">Donate</a>
-      </header>
+      <header className="site-header"><a className="brand" href="/" aria-label="WildCard DEV home"><span className="brand-dot" aria-hidden="true" /><span>WildCard DEV</span></a><a className="donate" href="https://square.link/u/YnAVr8ht" target="_blank" rel="noopener noreferrer">Donate</a></header>
       <main className="landing">
         <Portal open={open} onOpen={() => setOpen(true)} />
-        <section className={`card-stage card-stage--matt${open ? ' is-active' : ''}`} aria-label="Owner information" aria-hidden={!open}>
-          <article className="identity-card identity-card--matt">
-            <img src={mattAvatar} alt="Matt Tobaben" /><p className="eyebrow">Owner</p><h2>Matt Tobaben</h2><p>WildCard DEV</p><a href="mailto:matt@wildcarddev.com">matt@wildcarddev.com</a><a href="tel:+14029150789">402-915-0789</a>
-          </article>
-        </section>
+        <section className={`card-stage card-stage--matt${open ? ' is-active' : ''}`} aria-label="Owner information" aria-hidden={!open}><article className="identity-card identity-card--matt"><img src={mattAvatar} alt="Matt Tobaben" /><p className="eyebrow">Owner</p><h2>Matt Tobaben</h2><p>WildCard DEV</p><a href="mailto:matt@wildcarddev.com">matt@wildcarddev.com</a><a href="tel:+14029150789">402-915-0789</a></article></section>
         <Spinner open={open} activeIndex={activeIndex} onSelect={setActiveIndex} />
-        <section id="channel-content" className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}>
-          <p className="eyebrow">Active channel</p><h2>{activeChannel.title}</h2><p>{activeChannel.copy}</p>
-        </section>
-        <section className={`card-stage card-stage--penny${open ? ' is-active' : ''}`} aria-label="Penny concierge" aria-hidden={!open}>
-          <article className="identity-card identity-card--penny">
-            <button className={`penny-avatar-toggle${pennyRevealed ? ' is-revealed' : ''}`} type="button" aria-label="Reveal Penny, then enter Penny’s Office" onMouseEnter={() => setPennyRevealed(true)} onFocus={() => setPennyRevealed(true)} onClick={enterPennyOffice}>
-              <span className="penny-avatar-flip" aria-hidden="true">
-                <img className="penny-avatar-front" src={pennyLandingAvatar} alt="" />
-                <img className="penny-avatar-back" src={pennyAvatar} alt="" />
-              </span>
-            </button>
-            <p className="eyebrow">Concierge</p><h2>Penny</h2><p>Project guidance, contact routing, and interface support.</p><button type="button" onClick={() => setGateOpen(true)}>Enter Penny’s Office</button>
-          </article>
-        </section>
+        <section id="channel-content" className={`context-window${open ? ' is-active' : ''}`} aria-live="polite" aria-hidden={!open}><p className="eyebrow">Active channel</p><h2>{activeChannel.title}</h2><p>{activeChannel.copy}</p></section>
+        <section className={`card-stage card-stage--penny${open ? ' is-active' : ''}`} aria-label="Penny concierge" aria-hidden={!open}><article className="identity-card identity-card--penny"><button className={`penny-avatar-toggle${pennyRevealed ? ' is-revealed' : ''}`} type="button" aria-label="Reveal Penny, then enter Penny’s Office" onMouseEnter={() => setPennyRevealed(true)} onFocus={() => setPennyRevealed(true)} onClick={enterPennyOffice}><span className="penny-avatar-flip" aria-hidden="true"><img className="penny-avatar-front" src={pennyLandingAvatar} alt="" /><img className="penny-avatar-back" src={pennyAvatar} alt="" /></span></button><p className="eyebrow">Concierge</p><h2>Penny</h2><p>Project guidance, contact routing, and interface support.</p><button type="button" onClick={() => setGateOpen(true)}>Enter Penny’s Office</button></article></section>
       </main>
       <CombinationGate open={gateOpen} onClose={closeGate} />
     </>
