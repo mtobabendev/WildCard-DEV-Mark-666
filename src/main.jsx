@@ -1,4 +1,4 @@
-import { StrictMode, useRef, useState } from 'react';
+import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import pennySaysHello from '../assets/PennySaysHello.mp4';
@@ -8,6 +8,15 @@ function SiteEntry() {
   const [introFinished, setIntroFinished] = useState(false);
   const videoRef = useRef(null);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    const playAttempt = video.play();
+    if (playAttempt?.catch) playAttempt.catch(() => {});
+  }, []);
+
   if (introFinished) return <App />;
 
   return (
@@ -16,10 +25,12 @@ function SiteEntry() {
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        display: 'grid',
-        placeItems: 'center',
-        width: '100vw',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
         height: '100dvh',
+        minHeight: '100vh',
         overflow: 'hidden',
         background: '#000',
       }}
@@ -28,15 +39,19 @@ function SiteEntry() {
         ref={videoRef}
         src={pennySaysHello}
         autoPlay
+        muted
         playsInline
-        controls
         preload="auto"
         onEnded={() => setIntroFinished(true)}
         onError={() => setIntroFinished(true)}
         style={{
+          display: 'block',
           width: '100%',
           height: '100%',
+          maxWidth: '100vw',
+          maxHeight: '100dvh',
           objectFit: 'contain',
+          objectPosition: 'center',
           background: '#000',
         }}
       />
