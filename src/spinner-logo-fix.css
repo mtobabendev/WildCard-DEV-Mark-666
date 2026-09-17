@@ -1,7 +1,20 @@
-/* Spinner center correction: keep startup bat-heart untouched, use the actual WildCard Spade after fan-out. */
+/* Spinner center correction.
+   The center Spade and the orbiting cards share one preserve-3d scene.
+   Front-half cards therefore occlude the Spade; rear-half cards pass behind it.
+   Startup bat-heart remains untouched. */
+.spinner-stage {
+  transform-style: preserve-3d !important;
+  perspective: 900px;
+}
+
+.spinner-stage .spinner-deck {
+  z-index: auto !important;
+  transform-style: preserve-3d !important;
+}
+
 .spinner-stage .spinner-center-panel {
   position: absolute !important;
-  z-index: 100 !important;
+  z-index: auto !important;
   left: 50% !important;
   top: 50% !important;
   right: auto !important;
@@ -14,7 +27,8 @@
   background: transparent !important;
   box-shadow: none !important;
   translate: none !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) translateZ(0) !important;
+  transform-style: preserve-3d !important;
   pointer-events: none !important;
 }
 
