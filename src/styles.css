@@ -6,6 +6,41 @@ body { overflow: clip; }
   transform: translate(clamp(-6rem, -5.5vw, -4rem), clamp(9rem, 15vh, 11rem));
 }
 
+.portal-trigger {
+  filter: drop-shadow(0 0 14px rgba(141, 114, 255, .5)) drop-shadow(0 0 24px rgba(96, 207, 255, .32));
+  animation: portal-breathe 2.2s ease-in-out infinite;
+}
+
+.portal-trigger.is-open {
+  animation: portal-settle 900ms ease forwards, portal-afterglow 2.4s ease-in-out 900ms infinite;
+}
+
+.portal-ring--outer,
+.portal-ring--middle,
+.portal-ring--inner {
+  animation: portal-ring-pulse 1.9s ease-in-out infinite;
+}
+.portal-ring--middle { animation-delay: -0.45s; }
+.portal-ring--inner { animation-delay: -0.9s; }
+
+.portal-logo {
+  position: absolute;
+  z-index: 3;
+  inset: 50% auto auto 50%;
+  width: clamp(5.5rem, 16vw, 9rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  translate: -50% -50%;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(141, 114, 255, .9)) drop-shadow(0 0 24px rgba(96, 207, 255, .75));
+  animation: portal-logo-pulse 1.8s ease-in-out infinite;
+}
+
+.portal-copy {
+  z-index: 4;
+  transform: rotateX(-61deg) translateZ(74px);
+}
+
 .context-window {
   position: fixed;
   z-index: 7;
@@ -45,7 +80,51 @@ body { overflow: clip; }
 .spinner-stage.is-active { visibility: visible; pointer-events: auto; }
 .spinner-stage.is-active:active { cursor: grabbing; }
 
+.spinner-center-panel {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: clamp(8.5rem, 18vw, 13rem);
+  min-height: clamp(8rem, 17vw, 12rem);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: .45rem;
+  padding: 1rem;
+  border-radius: 50%;
+  border: 1px solid rgba(141, 114, 255, .18);
+  background: radial-gradient(circle, rgba(18, 12, 46, .12), rgba(5, 4, 18, .02) 65%, transparent 72%);
+  box-shadow: inset 0 0 28px rgba(96, 207, 255, .08), 0 0 22px rgba(141, 114, 255, .12);
+  translate: -50% -50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+.spinner-stage.is-settled .spinner-center-panel { opacity: 1; }
+
+.spinner-center-panel img {
+  width: clamp(4.5rem, 10vw, 7rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(141, 114, 255, .95)) drop-shadow(0 0 24px rgba(96, 207, 255, .78));
+  animation: spinner-logo-pulse 1.9s ease-in-out infinite;
+}
+
+.spinner-center-panel strong {
+  color: #dfff3f;
+  font-size: clamp(.75rem, 1.2vw, 1rem);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 0 0 7px #dfff3f, 0 0 18px rgba(223, 255, 63, .78), 0 0 28px rgba(141, 114, 255, .35);
+  animation: spinner-name-pulse 1.6s ease-in-out infinite;
+}
+
 .spinner-deck {
+  position: relative;
+  z-index: 1;
   width: clamp(6.6rem, 12vw, 9rem);
   height: clamp(9rem, 16vw, 12rem);
   transform: rotateX(-8deg) rotateY(var(--rotation));
@@ -158,6 +237,30 @@ body { overflow: clip; }
   .spinner-stage.is-settled.is-engaged .spinner-card { --orbit-radius: clamp(9rem, 22vw, 14.5rem); animation: card-breathe 1.9s ease-in-out calc(var(--i) * -160ms) infinite; opacity: 1; }
 }
 
+@keyframes portal-breathe {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(141,114,255,.45)) drop-shadow(0 0 20px rgba(96,207,255,.28)); }
+  50% { filter: drop-shadow(0 0 26px rgba(141,114,255,.9)) drop-shadow(0 0 44px rgba(96,207,255,.72)); }
+}
+@keyframes portal-afterglow {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(141,114,255,.5)) drop-shadow(0 0 24px rgba(96,207,255,.35)); }
+  50% { filter: drop-shadow(0 0 30px rgba(141,114,255,.95)) drop-shadow(0 0 48px rgba(96,207,255,.78)); }
+}
+@keyframes portal-ring-pulse {
+  0%, 100% { filter: brightness(1); opacity: .68; box-shadow: inset 0 0 18px rgba(96,207,255,.28), 0 0 18px rgba(141,114,255,.28); }
+  50% { filter: brightness(1.65); opacity: 1; box-shadow: inset 0 0 32px rgba(96,207,255,.72), 0 0 34px rgba(141,114,255,.82); }
+}
+@keyframes portal-logo-pulse {
+  0%, 100% { scale: .96; filter: drop-shadow(0 0 10px rgba(141,114,255,.72)) drop-shadow(0 0 18px rgba(96,207,255,.55)); }
+  50% { scale: 1.06; filter: drop-shadow(0 0 20px rgba(141,114,255,1)) drop-shadow(0 0 36px rgba(96,207,255,.95)); }
+}
+@keyframes spinner-logo-pulse {
+  0%, 100% { scale: .96; filter: drop-shadow(0 0 10px rgba(141,114,255,.72)) drop-shadow(0 0 18px rgba(96,207,255,.58)); }
+  50% { scale: 1.06; filter: drop-shadow(0 0 22px rgba(141,114,255,1)) drop-shadow(0 0 38px rgba(96,207,255,.95)); }
+}
+@keyframes spinner-name-pulse {
+  0%, 100% { opacity: .78; text-shadow: 0 0 6px #dfff3f, 0 0 14px rgba(223,255,63,.62); }
+  50% { opacity: 1; text-shadow: 0 0 10px #dfff3f, 0 0 24px rgba(223,255,63,.95), 0 0 34px rgba(141,114,255,.5); }
+}
 @keyframes context-arrive { to { transform: translate(-50%, 0) scale(1); opacity: 1; } }
 @keyframes deck-rise {
   0% { opacity: 0; transform: translateY(44vh) rotateX(72deg) rotateY(var(--rotation)) scale(.08); }
@@ -231,6 +334,8 @@ body { overflow: clip; }
     scale: 1;
   }
   .spinner-stage:not(.is-active) { display: none; }
+  .spinner-center-panel { width: 8rem; min-height: 8rem; }
+  .spinner-center-panel strong { font-size: .64rem; }
   .context-window {
     position: relative;
     order: 3;
@@ -257,6 +362,7 @@ body { overflow: clip; }
   .donate { flex: 0 0 auto; margin-left: auto; padding: .42rem .65rem; font-size: .62rem; }
   .portal-copy { width: 10.5rem; min-width: 0; }
   .portal-copy strong { font-size: 1.2rem; }
+  .portal-logo { width: 5.25rem; }
   .landing { gap: .75rem; padding: 4rem .5rem .75rem; }
   .context-window { width: 100%; min-height: 10rem; padding: .8rem; border-radius: .9rem; }
   .context-window .eyebrow { font-size: .58rem; }
@@ -302,6 +408,7 @@ body { overflow: clip; }
   .card-stage,
   .context-window { display: none !important; }
   .spinner-stage { min-height: calc(100svh - 5rem); overflow: hidden; }
+  .spinner-center-panel { display: none; }
   .spinner-deck { width: 7.4rem; height: 10rem; transform: none !important; animation: none !important; }
   .spinner-card {
     --orbit-radius: 0;
@@ -314,6 +421,12 @@ body { overflow: clip; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .portal-trigger,
+  .portal-trigger.is-open,
+  .portal-ring,
+  .portal-logo,
+  .spinner-center-panel img,
+  .spinner-center-panel strong,
   .context-window.is-active,
   .spinner-stage.is-active .spinner-deck,
   .spinner-stage.is-active .spinner-card,
