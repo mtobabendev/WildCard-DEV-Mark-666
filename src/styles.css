@@ -29,7 +29,7 @@ body { overflow: clip; }
 .context-window > p:last-child { margin: 0; color: var(--muted); line-height: 1.45; }
 
 .spinner-stage {
-  left: calc(50% + clamp(-6rem, -5.5vw, -4rem));
+  left: calc(50% + clamp(-6rem, -5.5vw, -4rem) - .5in);
   top: calc(52% + clamp(9rem, 15vh, 11rem));
   width: min(48rem, 96vw);
   height: min(24rem, 48vh);
