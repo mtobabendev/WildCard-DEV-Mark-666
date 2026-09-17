@@ -123,11 +123,12 @@ body { overflow: clip; }
 }
 
 .identity-card--penny {
-  width: min(30rem, 42vw);
+  width: min(25rem, 35vw);
+  padding: .85rem;
   display: grid;
-  grid-template-columns: minmax(10rem, 14rem) 1fr;
+  grid-template-columns: minmax(9rem, 12rem) minmax(8.5rem, 1fr);
   align-items: center;
-  gap: 1rem;
+  gap: .75rem;
 }
 
 .penny-video-shell {
