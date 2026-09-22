@@ -5,10 +5,10 @@ import pennyKnowledgeVideo from '../assets/PennyKnowledge.mp4';
 import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.mp4';
 import pennyYogaVideo from '../assets/Yoga.mp4';
 import pennyQueenVideo from '../assets/PennyQueen.mp4';
-import pennyCardVideo from '../assets/PennyCard1.mp4';
-import pennyCardVideo2 from '../assets/Card2.mp4';
-import pennyCardVideo3 from '../assets/PennyCard3.mp4';
-import pennyCardVideo4 from '../assets/PennyCard4.mp4';
+import pennyCardVideo from '../assets/PennyCard1.webm';
+import pennyCardVideo2 from '../assets/Card2.webm';
+import pennyCardVideo3 from '../assets/PennyCard3.webm';
+import pennyCardVideo4 from '../assets/PennyCard4.webm';
 
 const CHANNELS = [
   { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, and Penny.', video: pennyCardVideo },
