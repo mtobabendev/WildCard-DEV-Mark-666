@@ -596,6 +596,7 @@ function Spinner({
             <button
               key={channel.id}
               data-index={index}
+              data-channel={channel.id}
               className={`spinner-card${channel.penny ? ' spinner-card--penny' : ''}${activeIndex === index ? ' is-selected' : ''}`}
               style={{
                 '--i': index,
@@ -1162,10 +1163,10 @@ export default function App() {
           )}
 
           <div className="penny-copy">
-            <p className="eyebrow">Concierge</p>
+            <p className="eyebrow">Digital Avatar of Lilith</p>
             <h2>Penny</h2>
             <p>
-              Your first point of contact for WildCard DEV.
+              Concierge guidance, contact routing, and controlled chaos.
             </p>
 
             <button
