@@ -23,6 +23,7 @@ const CHANNELS = [
 
 const STEP = 360 / CHANNELS.length;
 const SPADE_URL = 'https://the-spade.wildcarddev.com/';
+const PENNY_OFFICE_URL = 'https://www.pennyzoffice.wildcarddev.com/';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
@@ -103,6 +104,38 @@ function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 .7A11.5 11.5 0 0 0 8.36 23.1c.58.1.79-.25.79-.56v-2.19c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.57-.29-5.27-1.29-5.27-5.72 0-1.26.45-2.3 1.19-3.11-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.19A11 11 0 0 1 12 6.09a11 11 0 0 1 2.89.39c2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.77.11 3.06.74.81 1.19 1.85 1.19 3.11 0 4.44-2.71 5.42-5.29 5.71.42.36.79 1.07.79 2.16v3.21c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13.6 22v-8.8h3l.45-3.43H13.6V7.58c0-.99.28-1.67 1.72-1.67h1.84V2.84c-.32-.04-1.41-.14-2.68-.14-2.65 0-4.47 1.62-4.47 4.6v2.47H7v3.43h3.01V22h3.59Z" />
+    </svg>
+  );
+}
+
+function SunoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15.5 3.3v11.18a3.55 3.55 0 1 1-2-3.2V6.02l7-1.55v7.51a3.55 3.55 0 1 1-2-3.2V2.1l-3 .66v.54Zm-5.55 10.83a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1Zm7 1.5a1.55 1.55 0 1 0 3.1 0 1.55 1.55 0 0 0-3.1 0Z" />
+    </svg>
+  );
+}
+
+function GooglePlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3.7 2.46a1.76 1.76 0 0 0-.7 1.43v16.22c0 .58.27 1.1.7 1.43l9.18-9.54L3.7 2.46Zm10.43 10.84-2.3 2.39 6.18 3.5c.75.42 1.62.16 2.01-.45.13-.21.2-.46.2-.74 0-.53-.27-.98-.74-1.25l-5.35-3.45ZM11.83 8.31l2.3 2.39 5.35-3.45c.47-.27.74-.72.74-1.25 0-.28-.07-.53-.2-.74-.39-.61-1.26-.87-2.01-.45l-6.18 3.5ZM4.8 2l5.66 5.88 2.42-1.37L6.02 2.62A2.06 2.06 0 0 0 4.8 2Zm5.66 14.12L4.8 22c.4 0 .82-.11 1.22-.34l6.86-3.89-2.42-1.65Z" />
+    </svg>
+  );
+}
+
+function AppleIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M16.69 12.07c.02-2.04 1.67-3.02 1.75-3.07-.95-1.39-2.43-1.58-2.96-1.6-1.26-.13-2.46.74-3.1.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.04-1.43 2.49-.37 6.17 1.03 8.19.68.99 1.5 2.1 2.57 2.06 1.03-.04 1.42-.67 2.67-.67s1.6.67 2.69.65c1.11-.02 1.82-1.01 2.5-2 0 0 1.15-1.68 1.28-2.34-.03-.01-2.36-.91-2.39-3.3Zm-2.04-5.99c.57-.69.96-1.65.85-2.61-.82.03-1.81.55-2.4 1.24-.53.61-.99 1.58-.87 2.51.91.07 1.85-.46 2.42-1.14Z" />
     </svg>
   );
 }
@@ -790,37 +823,44 @@ function ContactPanels({
                 Kandy@wildcarddev.com
               </a>
 
-              <div className="kandy-links">
+              <div
+                className="kandy-links"
+                aria-label="Kandy links"
+              >
                 <a
                   href={KANDY_FACEBOOK_URL}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Kandy on Facebook"
                 >
-                  Facebook
+                  <FacebookIcon />
                 </a>
 
                 <a
                   href={KANDY_SUNO_URL}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Kandy on Suno"
                 >
-                  Suno
+                  <SunoIcon />
                 </a>
 
                 <a
                   href={SUNO_ANDROID_URL}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Download Suno for Android"
                 >
-                  Suno for Android
+                  <GooglePlayIcon />
                 </a>
 
                 <a
                   href={SUNO_IOS_URL}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Download Suno for iPhone"
                 >
-                  Suno for iPhone
+                  <AppleIcon />
                 </a>
               </div>
             </div>
@@ -1104,11 +1144,19 @@ export default function App() {
         aria-hidden={!open}
       >
         <article className="identity-card identity-card--penny">
-          <div className="penny-video-shell">
-            <PennyLoopVideo
-              active={pennyVideoActive}
-            />
-          </div>
+          {!isWatch && (
+            <a
+              className="penny-video-link"
+              href={PENNY_OFFICE_URL}
+              aria-label="Visit Penny's Office"
+            >
+              <div className="penny-video-shell">
+                <PennyLoopVideo
+                  active={pennyVideoActive}
+                />
+              </div>
+            </a>
+          )}
 
           <div className="penny-copy">
             <p className="eyebrow">Concierge</p>
