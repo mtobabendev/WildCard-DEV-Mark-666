@@ -17,7 +17,7 @@ const CHANNELS = [
   { id: 'systems', number: '02', title: 'Systems', copy: 'Premium web, app, automation, and AI systems built with cinematic precision.', video: pennyCardVideo2 },
   { id: 'portfolio', number: '03', title: 'Portfolio', copy: 'Selected builds, experiments, client systems, and interface work.', video: pennyCardVideo3 },
   { id: 'penny', number: '04', title: 'Penny', copy: 'Concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyKandyAvaVideo },
-  { id: 'automation', number: '05', title: 'Automation', copy: 'Workflow logic, task support, and smart execution systems.', video: pennyCardVideo4 },
+  { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: pennyCardVideo4 },
   { id: 'interface', number: '06', title: 'Interface', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive.', video: pennyQueenVideo },
 ];
 
