@@ -71,7 +71,7 @@ function Spinner({ open, activeIndex, onSelect }) {
 
 function PennyLoopVideo() {
   const [videoIndex, setVideoIndex] = useState(0);
-  const videos = [pennyClubFinalVideo, pennyNaughtyVideo, pennyKnowledgeVideo];
+  const videos = [pennyClubFinalVideo, pennyNaughtyVideo, pennyKandyAvaVideo];
   return <video key={videoIndex} className="penny-loop-video" src={videos[videoIndex]} autoPlay muted playsInline onEnded={() => setVideoIndex((current) => (current + 1) % videos.length)} aria-label="Penny" />;
 }
 
