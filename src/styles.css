@@ -1076,6 +1076,12 @@ body {
     --orbit-radius:
       clamp(7.1rem, 35vw, 9.2rem);
   }
+
+  .spinner-card[data-channel="automation"] > strong {
+    font-size: .62rem;
+    line-height: 1.1;
+    letter-spacing: .045em;
+  }
 }
 
 @media (max-width: 520px) {
