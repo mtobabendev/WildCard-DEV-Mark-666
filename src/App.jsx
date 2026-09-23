@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
-import pennyKnowledgeVideo from '../assets/PennyKnowledge.mp4';
-import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.mp4';
+import pennyKnowledgeVideo from '../assets/PennyKnowledge.webm';
+import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.webm';
 import pennyYogaVideo from '../assets/Yoga.mp4';
-import pennyQueenVideo from '../assets/PennyQueen.mp4';
+import pennyQueenVideo from '../assets/PennyQueen.webm';
 import pennyCardVideo from '../assets/PennyCard1.webm';
 import pennyCardVideo2 from '../assets/Card2.webm';
 import pennyCardVideo3 from '../assets/PennyCard3.webm';
