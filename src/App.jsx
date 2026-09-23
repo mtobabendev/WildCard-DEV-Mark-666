@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
 import pennyKnowledgeVideo from '../assets/PennyKnowledge.webm';
+import pennyKandyAvaVideo from '../assets/PennyKandyAva.webm';
+import pennyClubFinalVideo from '../assets/PennyClubFinal.webm';
 import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.webm';
 import pennyYogaVideo from '../assets/WitchPennyAndKandy2.webm';
 import pennyQueenVideo from '../assets/WitchPennyAndKandy4.webm';
@@ -69,7 +71,7 @@ function Spinner({ open, activeIndex, onSelect }) {
 
 function PennyLoopVideo() {
   const [videoIndex, setVideoIndex] = useState(0);
-  const videos = [pennyKnowledgeVideo, pennyNaughtyVideo];
+  const videos = [pennyClubFinalVideo, pennyNaughtyVideo, pennyKnowledgeVideo];
   return <video key={videoIndex} className="penny-loop-video" src={videos[videoIndex]} autoPlay muted playsInline onEnded={() => setVideoIndex((current) => (current + 1) % videos.length)} aria-label="Penny" />;
 }
 
