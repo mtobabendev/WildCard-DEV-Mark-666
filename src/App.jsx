@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import mattAvatar from '../assets/matt-avatar.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
-import kandyKandleVideo from '../assets/KandyKandle.mp4';
+import kandyKandleWebm from '../assets/KandyKandle.webm';
+import kandyKandleMp4 from '../assets/KandyKandle.mp4';
 import pennyKandyAvaVideo from '../assets/PennyKandyAva.webm';
 import pennyClubFinalVideo from '../assets/PennyClubFinal.webm';
 import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.webm';
@@ -735,14 +736,16 @@ function KandyVideo({ active }) {
     <video
       ref={videoRef}
       className="kandy-video"
-      src={kandyKandleVideo}
       autoPlay
       muted
       loop
       playsInline
       preload="metadata"
       aria-label="Kandy"
-    />
+    >
+      <source src={kandyKandleWebm} type="video/webm" />
+      <source src={kandyKandleMp4} type="video/mp4" />
+    </video>
   );
 }
 
