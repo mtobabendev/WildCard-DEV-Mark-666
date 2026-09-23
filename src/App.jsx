@@ -15,7 +15,7 @@ import pennyCardVideo4 from '../assets/WitchPennyAndKandy3.webm';
 const CHANNELS = [
   { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: pennyCardVideo },
   { id: 'systems', number: '02', title: 'Systems', copy: 'Premium web, app, automation, and AI systems built with cinematic precision.', video: pennyCardVideo2 },
-  { id: 'portfolio', number: '03', title: 'Portfolio', copy: 'Selected builds, experiments, client systems, and interface work.', video: pennyCardVideo3 },
+  { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'A living archive of WildCard DEV builds, experiments, strange ideas, and systems summoned into existence.', video: pennyCardVideo3 },
   { id: 'penny', number: '04', title: 'Penny', copy: 'Concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyKandyAvaVideo },
   { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: pennyCardVideo4 },
   { id: 'interface', number: '06', title: 'Interface', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive.', video: pennyQueenVideo },
