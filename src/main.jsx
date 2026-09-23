@@ -1,7 +1,8 @@
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
-import pennySaysHello from '../assets/PennySaysHello.mp4';
+import pennySaysHelloWebm from '../assets/PennySaysHello.webm';
+import pennySaysHelloMp4 from '../assets/PennySaysHello.mp4';
 import './styles.css';
 
 function SiteEntry() {
@@ -13,11 +14,18 @@ function SiteEntry() {
     if (!video) return;
 
     video.muted = true;
+
     const playAttempt = video.play();
-    if (playAttempt?.catch) playAttempt.catch(() => {});
+    if (playAttempt?.catch) {
+      playAttempt.catch(() => {});
+    }
   }, []);
 
   if (introFinished) return <App />;
+
+  const finishIntro = () => {
+    setIntroFinished(true);
+  };
 
   return (
     <div
@@ -37,13 +45,12 @@ function SiteEntry() {
     >
       <video
         ref={videoRef}
-        src={pennySaysHello}
         autoPlay
         muted
         playsInline
         preload="auto"
-        onEnded={() => setIntroFinished(true)}
-        onError={() => setIntroFinished(true)}
+        onEnded={finishIntro}
+        onError={finishIntro}
         style={{
           display: 'block',
           width: '100%',
@@ -54,7 +61,10 @@ function SiteEntry() {
           objectPosition: 'center',
           background: '#000',
         }}
-      />
+      >
+        <source src={pennySaysHelloWebm} type="video/webm" />
+        <source src={pennySaysHelloMp4} type="video/mp4" />
+      </video>
     </div>
   );
 }
