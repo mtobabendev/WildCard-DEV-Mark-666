@@ -597,6 +597,10 @@ body {
   width: min(42rem, calc(100vw - 2rem));
 }
 
+.context-window--contact.is-active {
+  pointer-events: auto;
+}
+
 .contact-form {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1039,6 +1043,27 @@ body {
 }
 
 @media (min-width: 901px) {
+  .identity-card--matt {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .identity-card--matt h2 {
+    margin: .25rem 0;
+  }
+
+  .identity-card--matt p {
+    margin: .2rem 0;
+  }
+
+  .identity-card--matt > a {
+    margin-top: .35rem;
+  }
+
+  .identity-card--matt .owner-socials {
+    margin-top: .55rem;
+  }
+
   .identity-pair {
     top: 6rem;
     left: clamp(1rem, 2vw, 2.5rem);
