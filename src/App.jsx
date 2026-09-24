@@ -235,7 +235,7 @@ function Spinner({
 }) {
   const stageRef = useRef(null);
   const deckRef = useRef(null);
-  const rotationRef = useRef(0);
+  const rotationRef = useRef(-activeIndex * STEP);
   const frameRef = useRef(0);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
@@ -620,7 +620,7 @@ function Spinner({
       <div
         ref={deckRef}
         className="spinner-deck"
-        style={{ '--rotation': '0deg' }}
+        style={{ '--rotation': `${rotationRef.current}deg` }}
       >
         {CHANNELS.map((channel, index) => {
           const shouldMountVideo = (
@@ -1242,7 +1242,7 @@ function CombinationGate({
 
 export default function App() {
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(3);
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
