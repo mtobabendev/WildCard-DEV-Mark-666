@@ -12,6 +12,7 @@ import pennyCardVideo from '../assets/PennyShowsOff.webm';
 import pennyCardVideo2 from '../assets/WitchPennyAndKandy6.webm';
 import pennyCardVideo3 from '../assets/WitchPennyAndKandy1.webm';
 import pennyCardVideo4 from '../assets/WitchPennyAndKandy3.webm';
+import pennyContactAssistVideo from '../assets/PennyContactAssistVideo.webm';
 
 const CHANNELS = [
   { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: pennyCardVideo },
@@ -29,6 +30,42 @@ const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
+const CONTACT_ASSIST_TIMEOUT_MS = 8000;
+
+function shouldBypassContactAssist(event) {
+  return (
+    event.button !== 0
+    || event.metaKey
+    || event.ctrlKey
+    || event.shiftKey
+    || event.altKey
+  );
+}
+
+function buildProjectInquiryMailto(formData) {
+  const name = String(formData.get('name') || '').trim();
+  const email = String(formData.get('email') || '').trim();
+  const phone = String(formData.get('phone') || '').trim();
+  const projectType = String(formData.get('projectType') || '').trim();
+  const message = String(formData.get('message') || '').trim();
+
+  const subject = 'WildCard DEV Project Inquiry';
+  const body = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    `Project type: ${projectType}`,
+    '',
+    'Message:',
+    message,
+  ].join('\n');
+
+  return (
+    'mailto:matt@wildcarddev.com'
+    + `?subject=${encodeURIComponent(subject)}`
+    + `&body=${encodeURIComponent(body)}`
+  );
+}
 
 function shortestTurn(current, target) {
   const normalized = ((target - current + 540) % 360) - 180;
@@ -750,10 +787,111 @@ function KandyVideo({ active }) {
   );
 }
 
+function PennyContactAssist({
+  active,
+  message,
+  videoRef,
+  onComplete,
+}) {
+  return (
+    <aside
+      className={`penny-contact-assist${active ? ' is-active' : ''}`}
+      aria-hidden={!active}
+    >
+      <div className="penny-contact-assist-video-shell">
+        <video
+          ref={videoRef}
+          className="penny-contact-assist-video"
+          src={pennyContactAssistVideo}
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          onEnded={() => {
+            if (active) {
+              onComplete();
+            }
+          }}
+        />
+      </div>
+
+      <div
+        className="penny-contact-assist-bubble"
+        role="status"
+        aria-live="polite"
+      >
+        {active ? message : ''}
+      </div>
+    </aside>
+  );
+}
+
+function ContactForm({ onSubmit }) {
+  return (
+    <form
+      className="contact-form"
+      onSubmit={onSubmit}
+    >
+      <label className="contact-field">
+        <span>Name</span>
+        <input
+          type="text"
+          name="name"
+          autoComplete="name"
+          required
+        />
+      </label>
+
+      <label className="contact-field">
+        <span>Email</span>
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          required
+        />
+      </label>
+
+      <label className="contact-field">
+        <span>Phone <small>(optional)</small></span>
+        <input
+          type="tel"
+          name="phone"
+          autoComplete="tel"
+        />
+      </label>
+
+      <label className="contact-field">
+        <span>Project type</span>
+        <input
+          type="text"
+          name="projectType"
+        />
+      </label>
+
+      <label className="contact-field contact-field--message">
+        <span>Message</span>
+        <textarea
+          name="message"
+          rows="2"
+          required
+        />
+      </label>
+
+      <button
+        className="contact-submit"
+        type="submit"
+      >
+        Send inquiry
+      </button>
+    </form>
+  );
+}
+
 function ContactPanels({
   open,
   showKandy,
   pageVisible,
+  onContactAssist,
 }) {
   return (
     <section
@@ -771,11 +909,31 @@ function ContactPanels({
           <h2>Matt Tobaben</h2>
           <p>WildCard DEV</p>
 
-          <a href="mailto:matt@wildcarddev.com">
+          <a
+            href="mailto:matt@wildcarddev.com"
+            onClick={(event) => {
+              if (shouldBypassContactAssist(event)) return;
+              event.preventDefault();
+              onContactAssist(
+                'mailto:matt@wildcarddev.com',
+                "I'll get that ready for you.",
+              );
+            }}
+          >
             matt@wildcarddev.com
           </a>
 
-          <a href="tel:+14029150789">
+          <a
+            href="tel:+14029150789"
+            onClick={(event) => {
+              if (shouldBypassContactAssist(event)) return;
+              event.preventDefault();
+              onContactAssist(
+                'tel:+14029150789',
+                "I'll put you through.",
+              );
+            }}
+          >
             402-915-0789
           </a>
 
@@ -823,7 +981,17 @@ function ContactPanels({
             <div className="kandy-copy">
               <h2>Kandy</h2>
 
-              <a href="mailto:Kandy@wildcarddev.com">
+              <a
+                href="mailto:Kandy@wildcarddev.com"
+                onClick={(event) => {
+                  if (shouldBypassContactAssist(event)) return;
+                  event.preventDefault();
+                  onContactAssist(
+                    'mailto:Kandy@wildcarddev.com',
+                    "I'll get you over to Kandy.",
+                  );
+                }}
+              >
                 Kandy@wildcarddev.com
               </a>
 
@@ -1076,6 +1244,142 @@ export default function App() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [gateOpen, setGateOpen] = useState(false);
+  const [assistActive, setAssistActive] = useState(false);
+  const [assistMessage, setAssistMessage] = useState('');
+
+  const assistVideoRef = useRef(null);
+  const assistTimeoutRef = useRef(0);
+  const assistRunningRef = useRef(false);
+  const assistCompletionRef = useRef(false);
+  const pendingHrefRef = useRef('');
+
+  const completeContactAssist = useCallback(() => {
+    if (
+      !assistRunningRef.current
+      || assistCompletionRef.current
+    ) {
+      return;
+    }
+
+    assistCompletionRef.current = true;
+
+    if (assistTimeoutRef.current) {
+      window.clearTimeout(assistTimeoutRef.current);
+      assistTimeoutRef.current = 0;
+    }
+
+    const destination = pendingHrefRef.current;
+    const video = assistVideoRef.current;
+
+    if (video) {
+      video.pause();
+
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Some browsers can reject seeking before metadata is ready.
+      }
+    }
+
+    assistRunningRef.current = false;
+    pendingHrefRef.current = '';
+    setAssistActive(false);
+    setAssistMessage('');
+
+    if (destination) {
+      window.location.href = destination;
+    }
+  }, []);
+
+  const startContactAssist = useCallback((
+    href,
+    message,
+  ) => {
+    if (assistRunningRef.current) {
+      return false;
+    }
+
+    const video = assistVideoRef.current;
+
+    if (!video) {
+      window.location.href = href;
+      return true;
+    }
+
+    assistRunningRef.current = true;
+    assistCompletionRef.current = false;
+    pendingHrefRef.current = href;
+
+    setAssistMessage(message);
+    setAssistActive(true);
+
+    if (assistTimeoutRef.current) {
+      window.clearTimeout(assistTimeoutRef.current);
+    }
+
+    assistTimeoutRef.current = window.setTimeout(
+      completeContactAssist,
+      CONTACT_ASSIST_TIMEOUT_MS,
+    );
+
+    video.pause();
+    video.muted = false;
+    video.volume = 1;
+
+    try {
+      video.currentTime = 0;
+    } catch {
+      // Seeking will be retried naturally when playback begins.
+    }
+
+    try {
+      const playAttempt = video.play();
+
+      if (playAttempt?.catch) {
+        playAttempt.catch(() => {
+          completeContactAssist();
+        });
+      }
+    } catch {
+      completeContactAssist();
+    }
+
+    return true;
+  }, [completeContactAssist]);
+
+  useEffect(() => (
+    () => {
+      if (assistTimeoutRef.current) {
+        window.clearTimeout(assistTimeoutRef.current);
+      }
+
+      const video = assistVideoRef.current;
+
+      if (video) {
+        video.pause();
+      }
+    }
+  ), []);
+
+  const handleContactFormSubmit = useCallback((event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    const mailtoHref = buildProjectInquiryMailto(
+      new FormData(form),
+    );
+
+    startContactAssist(
+      mailtoHref,
+      "I'll get that ready for you.",
+    );
+  }, [startContactAssist]);
+
   const isWatch = useMediaQuery('(max-width: 240px)');
   const reducedMotion = useMediaQuery(
     '(prefers-reduced-motion: reduce)',
@@ -1119,6 +1423,7 @@ export default function App() {
         open={open}
         showKandy={!isWatch}
         pageVisible={pageVisible}
+        onContactAssist={startContactAssist}
       />
 
       <Spinner
@@ -1132,7 +1437,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open ? ' is-active' : ''}`}
+        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}`}
         aria-live="polite"
         aria-hidden={!open}
       >
@@ -1140,7 +1445,15 @@ export default function App() {
           Channel {activeChannel.number}
         </p>
         <h2>{activeChannel.title}</h2>
-        <p>{activeChannel.copy}</p>
+        <p className="channel-copy">
+          {activeChannel.copy}
+        </p>
+
+        {activeChannel.id === 'contact' && (
+          <ContactForm
+            onSubmit={handleContactFormSubmit}
+          />
+        )}
       </section>
 
       <section
@@ -1179,6 +1492,13 @@ export default function App() {
           </div>
         </article>
       </section>
+
+      <PennyContactAssist
+        active={assistActive}
+        message={assistMessage}
+        videoRef={assistVideoRef}
+        onComplete={completeContactAssist}
+      />
 
       <CombinationGate
         open={gateOpen}
