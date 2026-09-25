@@ -238,7 +238,7 @@ export default function LittleBlackBook() {
 
       const focusable = Array.from(drawerRef.current.querySelectorAll(
         'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      )).filter((element) => !element.hasAttribute('hidden'));
+      )).filter((element) => !element.closest('[hidden]'));
 
       if (!focusable.length) return;
 
@@ -513,6 +513,7 @@ export default function LittleBlackBook() {
         aria-controls="penny-little-black-book"
         aria-expanded={isOpen}
         aria-label="Open Penny’s Little Black Book"
+        tabIndex={isOpen ? -1 : 0}
         onClick={(event) => {
           event.stopPropagation();
           setIsOpen(true);
@@ -527,6 +528,7 @@ export default function LittleBlackBook() {
           className="lbb-backdrop"
           type="button"
           aria-label="Close Penny’s Little Black Book"
+          tabIndex={-1}
           onClick={closeDrawer}
         />
       )}

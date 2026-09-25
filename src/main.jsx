@@ -28,10 +28,11 @@ function SiteEntry() {
 
   return (
     <>
-      {introFinished ? (
-        <App />
-      ) : (
-        <div
+      <div style={{ display: 'contents' }}>
+        {introFinished ? (
+          <App />
+        ) : (
+          <div
           style={{
             position: 'fixed',
             inset: 0,
@@ -67,9 +68,10 @@ function SiteEntry() {
           >
             <source src={pennySaysHelloWebm} type="video/webm" />
             <source src={pennySaysHelloMp4} type="video/mp4" />
-          </video>
-        </div>
-      )}
+            </video>
+          </div>
+        )}
+      </div>
       <LittleBlackBook />
     </>
   );
