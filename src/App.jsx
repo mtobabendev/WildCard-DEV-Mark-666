@@ -32,6 +32,17 @@ const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
 
+function trackAnalyticsEvent(name, parameters = {}) {
+  if (
+    typeof window === 'undefined'
+    || typeof window.gtag !== 'function'
+  ) {
+    return;
+  }
+
+  window.gtag('event', name, parameters);
+}
+
 function shouldBypassContactAssist(event) {
   return (
     event.button !== 0
@@ -995,6 +1006,27 @@ function ContactPanels({
                 Kandy@wildcarddev.com
               </a>
 
+              <div className="kandy-suno-feature">
+                <p>Original music and cover art by Kopacetic Kandle.</p>
+                <a
+                  className="kandy-suno-cta"
+                  href={KANDY_SUNO_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => {
+                    trackAnalyticsEvent(
+                      'kandy_suno_playlist_click',
+                      {
+                        source: 'kandy_card',
+                        link_url: KANDY_SUNO_URL,
+                      },
+                    );
+                  }}
+                >
+                  Listen to Kandy on Suno
+                </a>
+              </div>
+
               <div
                 className="kandy-links"
                 aria-label="Kandy links"
@@ -1013,6 +1045,15 @@ function ContactPanels({
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Kandy on Suno"
+                  onClick={() => {
+                    trackAnalyticsEvent(
+                      'kandy_suno_playlist_click',
+                      {
+                        source: 'kandy_card',
+                        link_url: KANDY_SUNO_URL,
+                      },
+                    );
+                  }}
                 >
                   <SunoIcon />
                 </a>
@@ -1437,7 +1478,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}`}
+        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}`}
         aria-live="polite"
         aria-hidden={!open}
       >
@@ -1453,6 +1494,32 @@ export default function App() {
           <ContactForm
             onSubmit={handleContactFormSubmit}
           />
+        )}
+
+        {activeChannel.id === 'portfolio' && (
+          <div className="grimoire-feature">
+            <p className="eyebrow">Featured creative work</p>
+            <h3>Kandy’s Soundtrack</h3>
+            <p>
+              Original songs and cover art by Kopacetic Kandle.
+            </p>
+            <a
+              href={KANDY_SUNO_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => {
+                trackAnalyticsEvent(
+                  'kandy_suno_playlist_click',
+                  {
+                    source: 'grimoire',
+                    link_url: KANDY_SUNO_URL,
+                  },
+                );
+              }}
+            >
+              Explore the playlist →
+            </a>
+          </div>
         )}
       </section>
 
