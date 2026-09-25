@@ -1164,16 +1164,18 @@ body {
 
   .identity-card--kandy {
     grid-template-columns:
-      clamp(10rem, 11vw, 12rem)
+      clamp(11.5rem, 12.5vw, 13.5rem)
       minmax(0, 1fr);
     gap: .75rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   .identity-card--kandy .kandy-video-shell {
-    width: clamp(10rem, 11vw, 12rem);
-    height: auto;
-    aspect-ratio: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 17rem;
+    aspect-ratio: auto;
+    align-self: stretch;
   }
 
   .card-stage--penny .identity-card--penny {
@@ -1240,12 +1242,16 @@ body {
 
   .identity-card--kandy {
     grid-template-columns:
-      4.5rem minmax(0, 1fr);
+      6rem minmax(0, 1fr);
+    align-items: stretch;
   }
 
   .kandy-video-shell {
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 100%;
+    height: 100%;
+    min-height: 11rem;
+    aspect-ratio: auto;
+    align-self: stretch;
   }
 }
 
@@ -1336,8 +1342,9 @@ body {
   .identity-card--kandy {
     display: grid;
     grid-template-columns:
-      minmax(4.5rem, 5.4rem)
+      minmax(6.5rem, 8rem)
       minmax(0, 1fr);
+    align-items: stretch;
   }
 
   .kandy-suno-feature p {
@@ -1353,8 +1360,10 @@ body {
 
   .kandy-video-shell {
     width: 100%;
-    height: auto;
-    aspect-ratio: 1;
+    height: 100%;
+    min-height: 10rem;
+    aspect-ratio: auto;
+    align-self: stretch;
   }
 
   .identity-card--penny {
@@ -1437,6 +1446,16 @@ body {
 @media (max-width: 520px) {
   .identity-pair {
     grid-template-columns: 1fr;
+  }
+
+  .identity-card--kandy {
+    grid-template-columns:
+      minmax(8rem, 10rem)
+      minmax(0, 1fr);
+  }
+
+  .identity-card--kandy .kandy-video-shell {
+    min-height: 12rem;
   }
 }
 
@@ -1561,14 +1580,17 @@ body {
 
   .identity-card--kandy {
     grid-template-columns:
-      4.5rem minmax(0, 1fr);
+      7rem minmax(0, 1fr);
+    align-items: stretch;
   }
 
   .kandy-video-shell {
-    grid-row: 1 / span 3;
-    width: 4.5rem;
-    height: 4.5rem;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 10.5rem;
     aspect-ratio: auto;
+    align-self: stretch;
   }
 
   .kandy-copy {
