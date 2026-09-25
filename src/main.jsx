@@ -1,13 +1,12 @@
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.jsx';
 import LittleBlackBook from './LittleBlackBook.jsx';
 import pennySaysHelloWebm from '../assets/PennySaysHello.webm';
 import pennySaysHelloMp4 from '../assets/PennySaysHello.mp4';
-import './styles.css';
 
 function SiteEntry() {
   const [introFinished, setIntroFinished] = useState(false);
+  const [AppComponent, setAppComponent] = useState(null);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -20,6 +19,20 @@ function SiteEntry() {
     if (playAttempt?.catch) {
       playAttempt.catch(() => {});
     }
+
+    let cancelled = false;
+
+    import('./App.jsx')
+      .then(({ default: LoadedApp }) => {
+        if (!cancelled) {
+          setAppComponent(() => LoadedApp);
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const finishIntro = () => {
@@ -29,8 +42,8 @@ function SiteEntry() {
   return (
     <>
       <div style={{ display: 'contents' }}>
-        {introFinished ? (
-          <App />
+        {introFinished && AppComponent ? (
+          <AppComponent />
         ) : (
           <div
           style={{
