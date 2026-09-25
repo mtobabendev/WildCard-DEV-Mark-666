@@ -1838,3 +1838,60 @@ body {
     }
   }
 }
+
+/* Spinner center correction, consolidated from spinner-logo-fix.css. */
+.spinner-stage {
+  transform-style: preserve-3d !important;
+  perspective: 900px;
+}
+
+.spinner-stage .spinner-deck {
+  z-index: auto !important;
+  transform-style: preserve-3d !important;
+}
+
+.spinner-stage .spinner-center-panel {
+  position: absolute !important;
+  z-index: auto !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: clamp(7rem, 14vw, 10rem) !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  gap: .35rem !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  translate: none !important;
+  transform: translate(-50%, -50%) translateZ(0) !important;
+  transform-style: preserve-3d !important;
+  pointer-events: none !important;
+}
+
+.spinner-stage.is-settled .spinner-center-panel {
+  opacity: 1 !important;
+}
+
+.spinner-stage .spinner-center-panel img {
+  content: url('/assets/wildcard-logo-main.png') !important;
+  display: block !important;
+  width: clamp(5.75rem, 11vw, 8rem) !important;
+  height: auto !important;
+  aspect-ratio: 1 !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  filter: drop-shadow(0 0 12px rgba(141,114,255,.95)) drop-shadow(0 0 26px rgba(96,207,255,.85)) !important;
+}
+
+.spinner-stage .spinner-center-panel strong {
+  display: block !important;
+  margin: .15rem 0 0 !important;
+  color: #dfff3f !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  font-size: clamp(.68rem, 1vw, .9rem) !important;
+  letter-spacing: .18em !important;
+  text-shadow: 0 0 7px #dfff3f, 0 0 18px rgba(223,255,63,.8) !important;
+}
