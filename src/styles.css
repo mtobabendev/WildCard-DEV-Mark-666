@@ -448,6 +448,48 @@ body {
   overflow-wrap: anywhere;
 }
 
+.kandy-suno-feature {
+  margin-top: .65rem;
+}
+
+.kandy-suno-feature p {
+  margin: 0 0 .5rem;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
+.kandy-copy .kandy-suno-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  margin-top: 0;
+  padding: .5rem .75rem;
+  border: 1px solid rgba(255, 91, 214, .5);
+  border-radius: 999px;
+  background: rgba(255, 91, 214, .12);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  box-shadow:
+    0 0 18px rgba(255, 91, 214, .16),
+    inset 0 0 12px rgba(96, 207, 255, .05);
+}
+
+.kandy-copy .kandy-suno-cta:hover,
+.kandy-copy .kandy-suno-cta:focus-visible {
+  border-color: var(--pink);
+  background: rgba(255, 91, 214, .2);
+  box-shadow:
+    0 0 22px rgba(255, 91, 214, .28),
+    inset 0 0 12px rgba(96, 207, 255, .08);
+  outline: none;
+}
+
 .kandy-links {
   grid-column: 1 / -1;
   display: flex;
@@ -597,8 +639,49 @@ body {
   width: min(42rem, calc(100vw - 2rem));
 }
 
-.context-window--contact.is-active {
+.context-window--contact.is-active,
+.context-window--portfolio.is-active {
   pointer-events: auto;
+}
+
+.grimoire-feature {
+  margin-top: .85rem;
+  padding: .8rem .9rem;
+  border: 1px solid rgba(255, 91, 214, .34);
+  border-radius: .9rem;
+  background: rgba(6, 4, 22, .46);
+  box-shadow:
+    inset 0 0 18px rgba(96, 207, 255, .05);
+}
+
+.grimoire-feature .eyebrow {
+  margin: 0;
+}
+
+.grimoire-feature h3 {
+  margin: .3rem 0;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.grimoire-feature > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.grimoire-feature > a {
+  display: inline-flex;
+  margin-top: .65rem;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.grimoire-feature > a:hover,
+.grimoire-feature > a:focus-visible {
+  color: var(--pink);
+  outline: none;
 }
 
 .contact-form {
@@ -1255,6 +1338,17 @@ body {
     grid-template-columns:
       minmax(4.5rem, 5.4rem)
       minmax(0, 1fr);
+  }
+
+  .kandy-suno-feature p {
+    font-size: .68rem;
+  }
+
+  .kandy-copy .kandy-suno-cta {
+    width: 100%;
+    min-height: 2.2rem;
+    padding: .45rem .6rem;
+    font-size: .68rem;
   }
 
   .kandy-video-shell {
