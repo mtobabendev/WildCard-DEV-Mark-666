@@ -640,11 +640,13 @@ body {
 }
 
 .context-window--contact.is-active,
-.context-window--portfolio.is-active {
+.context-window--portfolio.is-active,
+.context-window--automation.is-active {
   pointer-events: auto;
 }
 
-.grimoire-feature {
+.grimoire-feature,
+.wildcard-social-feature {
   margin-top: .85rem;
   padding: .8rem .9rem;
   border: 1px solid rgba(255, 91, 214, .34);
@@ -654,23 +656,27 @@ body {
     inset 0 0 18px rgba(96, 207, 255, .05);
 }
 
-.grimoire-feature .eyebrow {
+.grimoire-feature .eyebrow,
+.wildcard-social-feature .eyebrow {
   margin: 0;
 }
 
-.grimoire-feature h3 {
+.grimoire-feature h3,
+.wildcard-social-feature h3 {
   margin: .3rem 0;
   color: var(--ink);
   font-size: 1rem;
 }
 
-.grimoire-feature > p:not(.eyebrow) {
+.grimoire-feature > p:not(.eyebrow),
+.wildcard-social-feature > p:not(.eyebrow) {
   margin: 0;
   color: var(--muted);
   line-height: 1.4;
 }
 
-.grimoire-feature > a {
+.grimoire-feature > a,
+.wildcard-social-feature > a {
   display: inline-flex;
   margin-top: .65rem;
   color: #fff;
@@ -679,7 +685,9 @@ body {
 }
 
 .grimoire-feature > a:hover,
-.grimoire-feature > a:focus-visible {
+.grimoire-feature > a:focus-visible,
+.wildcard-social-feature > a:hover,
+.wildcard-social-feature > a:focus-visible {
   color: var(--pink);
   outline: none;
 }
