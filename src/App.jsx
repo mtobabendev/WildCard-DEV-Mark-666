@@ -29,6 +29,8 @@ const PENNY_OFFICE_URL = 'https://www.pennyzoffice.wildcarddev.com/';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
+const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
+const WILDCARD_GITHUB_URL = 'https://github.com/mtobabendev';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
@@ -1582,6 +1584,38 @@ export default function App() {
             >
               Enter Penny’s Office
             </button>
+
+            <div
+              className="penny-socials"
+              aria-label="Penny links"
+            >
+              <a
+                href={WILDCARD_PARTY_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WildCard Social"
+              >
+                <FacebookIcon />
+              </a>
+
+              <a
+                href={WILDCARD_X_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WildCard DEV on X"
+              >
+                <XIcon />
+              </a>
+
+              <a
+                href={WILDCARD_GITHUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WildCard DEV on GitHub"
+              >
+                <GitHubIcon />
+              </a>
+            </div>
           </div>
         </article>
       </section>
