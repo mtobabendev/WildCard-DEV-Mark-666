@@ -28,6 +28,7 @@ const SPADE_URL = 'https://the-spade.wildcarddev.com/';
 const PENNY_OFFICE_URL = 'https://www.pennyzoffice.wildcarddev.com/';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
+const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
@@ -1478,7 +1479,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}`}
+        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
         aria-live="polite"
         aria-hidden={!open}
       >
@@ -1518,6 +1519,31 @@ export default function App() {
               }}
             >
               Explore the playlist →
+            </a>
+          </div>
+        )}
+
+        {activeChannel.id === 'automation' && (
+          <div className="wildcard-social-feature">
+            <p className="eyebrow">WildCard Social // Live</p>
+            <h3>Penny took the keys.</h3>
+            <p>
+              An ad-free social network with live feeds, direct messaging,
+              rooms, and Penny’s AI presence woven into the experience.
+            </p>
+            <a
+              href={WILDCARD_PARTY_URL}
+              onClick={() => {
+                trackAnalyticsEvent(
+                  'wildcard_party_click',
+                  {
+                    source: 'hells_little_helpers',
+                    link_url: WILDCARD_PARTY_URL,
+                  },
+                );
+              }}
+            >
+              Enter WildCard Party →
             </a>
           </div>
         )}
