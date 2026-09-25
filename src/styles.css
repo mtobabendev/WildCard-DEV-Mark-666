@@ -629,6 +629,63 @@ body {
   transform: translateY(0);
 }
 
+.penny-socials {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-top: .75rem;
+}
+
+.penny-socials a {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 2.25rem;
+  border: 1px solid rgba(201, 111, 255, .62);
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 91, 214, .28),
+      rgba(141, 114, 255, .16) 58%,
+      rgba(10, 8, 29, .9)
+    );
+  box-shadow:
+    0 0 16px rgba(141, 114, 255, .3),
+    0 0 22px rgba(255, 91, 214, .16),
+    inset 0 0 12px rgba(255, 91, 214, .08);
+  color: #ff8ce5;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.penny-socials svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.penny-socials a:nth-child(2) {
+  color: #c49aff;
+}
+
+.penny-socials a:hover,
+.penny-socials a:focus-visible {
+  transform: translateY(-2px) scale(1.06);
+  border-color: #ff72de;
+  color: #fff;
+  box-shadow:
+    0 0 20px rgba(255, 91, 214, .48),
+    0 0 28px rgba(141, 114, 255, .38),
+    inset 0 0 14px rgba(255, 91, 214, .12);
+  outline: none;
+}
+
 .context-window > .channel-copy {
   margin: 0;
   color: var(--muted);
