@@ -20,7 +20,7 @@ const CHANNELS = [
   { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'A living archive of WildCard DEV builds, experiments, strange ideas, and systems summoned into existence.', video: pennyCardVideo3 },
   { id: 'penny', number: '04', title: 'Penny', copy: 'The digital avatar of Lilith — concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyKandyAvaVideo },
   { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: pennyCardVideo4 },
-  { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive.', video: pennyQueenVideo },
+  { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive. See that little spade on the right? That’s Penny’s Little Black Book. Give it a tap.', video: pennyQueenVideo },
 ];
 
 const STEP = 360 / CHANNELS.length;
