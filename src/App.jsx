@@ -161,6 +161,14 @@ function GitHubIcon() {
   );
 }
 
+function DiscordIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19.54 5.34A16.3 16.3 0 0 0 15.44 4l-.5 1.02a15.1 15.1 0 0 0-5.87 0L8.55 4a16.5 16.5 0 0 0-4.1 1.35C1.86 9.2 1.16 12.96 1.5 16.67a16.8 16.8 0 0 0 5.03 2.54l1.23-1.68a10.4 10.4 0 0 1-1.94-.94l.48-.37a11.7 11.7 0 0 0 11.4 0l.49.37c-.62.37-1.27.68-1.95.94l1.23 1.68a16.7 16.7 0 0 0 5.03-2.54c.4-4.3-.68-8.03-2.96-11.33ZM8.83 14.4c-1.01 0-1.84-.93-1.84-2.07s.81-2.07 1.84-2.07c1.04 0 1.86.94 1.84 2.07 0 1.14-.81 2.07-1.84 2.07Zm6.34 0c-1.01 0-1.84-.93-1.84-2.07s.81-2.07 1.84-2.07c1.04 0 1.86.94 1.84 2.07 0 1.14-.8 2.07-1.84 2.07Z" />
+    </svg>
+  );
+}
+
 function FacebookIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -990,6 +998,24 @@ function ContactPanels({
               aria-label="Matt Tobaben on GitHub"
             >
               <GitHubIcon />
+            </a>
+
+            <a
+              href="https://discord.com/users/1503417641086488708"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Matt Tobaben on Discord"
+            >
+              <DiscordIcon />
+            </a>
+
+            <a
+              href="https://www.facebook.com/profile.php?id=61595096724035"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Matt Tobaben on Facebook"
+            >
+              <FacebookIcon />
             </a>
           </div>
         </article>
