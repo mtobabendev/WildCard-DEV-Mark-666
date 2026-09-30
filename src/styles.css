@@ -1282,8 +1282,8 @@ body {
         clamp(20.5rem, 22vw, 24rem)
       )
       minmax(
-        17rem,
-        clamp(17rem, 18vw, 19rem)
+        19rem,
+        clamp(19rem, 20vw, 21rem)
       );
     gap: clamp(.65rem, 1vw, 1rem);
   }
