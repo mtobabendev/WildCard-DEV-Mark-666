@@ -4,10 +4,10 @@ import mattAvatar from '../assets/matt-avatar.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
 import kandyKandleWebm from '../assets/KandyKandle.webm';
-import kandyKandleMp4 from '../assets/KandyKandle.mp4';
 import pennyKandyAvaVideo from '../assets/PennyKandyAva.webm';
 import pennyClubFinalVideo from '../assets/PennyClubFinal.webm';
-import pennyNaughtyVideo from '../assets/PennyNahtyAvatar2.webm';
+import pennyLapDanceVideo from '../assets/ClubPennyLapDance1.webm';
+import pennyKnowledgeVideo from '../assets/PennyKnowledge.webm';
 import pennyQueenVideo from '../assets/WitchPennyAndKandy4.webm';
 import pennyCardVideo from '../assets/PennyShowsOff.webm';
 import pennyCardVideo2 from '../assets/WitchPennyAndKandy6.webm';
@@ -720,8 +720,8 @@ function PennyLoopVideo({ active }) {
 
   const videos = [
     pennyClubFinalVideo,
-    pennyNaughtyVideo,
-    pennyKandyAvaVideo,
+    pennyLapDanceVideo,
+    pennyKnowledgeVideo,
   ];
 
   useEffect(() => {
@@ -797,7 +797,6 @@ function KandyVideo({ active }) {
       aria-label="Kandy"
     >
       <source src={kandyKandleWebm} type="video/webm" />
-      <source src={kandyKandleMp4} type="video/mp4" />
     </video>
   );
 }

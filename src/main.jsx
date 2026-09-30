@@ -2,7 +2,6 @@ import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import LittleBlackBook from './LittleBlackBook.jsx';
 import pennySaysHelloWebm from '../assets/PennySaysHello.webm';
-import pennySaysHelloMp4 from '../assets/PennySaysHello.mp4';
 
 function SiteEntry() {
   const [introFinished, setIntroFinished] = useState(false);
@@ -80,7 +79,6 @@ function SiteEntry() {
             }}
           >
             <source src={pennySaysHelloWebm} type="video/webm" />
-            <source src={pennySaysHelloMp4} type="video/mp4" />
             </video>
           </div>
         )}
