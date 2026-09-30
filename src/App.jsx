@@ -1517,7 +1517,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
+        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
         aria-live="polite"
         aria-hidden={!open}
       >
@@ -1530,9 +1530,58 @@ export default function App() {
         </p>
 
         {activeChannel.id === 'contact' && (
-          <ContactForm
-            onSubmit={handleContactFormSubmit}
-          />
+          <>
+            <div className="penny-contact-actions">
+              <p className="eyebrow">Penny // Direct</p>
+              <div className="penny-contact-links">
+                <a
+                  href="mailto:penny@wildcarddev.com"
+                  onClick={(event) => {
+                    if (shouldBypassContactAssist(event)) return;
+                    event.preventDefault();
+                    startContactAssist(
+                      'mailto:penny@wildcarddev.com',
+                      "I'll open a line to Penny.",
+                    );
+                  }}
+                >
+                  EMAIL PENNY
+                </a>
+
+                <a
+                  href="tel:+14029150789"
+                  onClick={(event) => {
+                    if (shouldBypassContactAssist(event)) return;
+                    event.preventDefault();
+                    startContactAssist(
+                      'tel:+14029150789',
+                      "I'll put Penny through.",
+                    );
+                  }}
+                >
+                  CALL PENNY
+                  <span>(402) 915-0789</span>
+                </a>
+              </div>
+            </div>
+
+            <ContactForm
+              onSubmit={handleContactFormSubmit}
+            />
+          </>
+        )}
+
+        {activeChannel.id === 'systems' && (
+          <div className="arcane-feature">
+            <p className="eyebrow">Live project</p>
+            <a
+              href="https://pennysoffice.wildcarddev.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              ENTER PENNY’S OFFICE →
+            </a>
+          </div>
         )}
 
         {activeChannel.id === 'portfolio' && (
