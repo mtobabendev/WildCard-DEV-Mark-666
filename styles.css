@@ -272,34 +272,6 @@ button, a { font: inherit; }
 .card-stage.is-active .identity-card--penny { animation: panel-down 850ms cubic-bezier(.16,.84,.26,1) 320ms forwards; }
 .identity-card img { width: 5.4rem; height: 5.4rem; border-radius: 1.3rem; object-fit: cover; }
 .identity-card--penny img { object-fit: contain; }
-.penny-avatar-toggle {
-  width: 5.4rem;
-  height: 5.4rem;
-  padding: 0;
-  border: 0;
-  border-radius: 1.3rem;
-  background: transparent;
-  cursor: pointer;
-  perspective: 700px;
-}
-.penny-avatar-toggle:focus-visible { outline: 2px solid var(--pink); outline-offset: .25rem; }
-.penny-avatar-flip {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 560ms cubic-bezier(.2,.76,.3,1);
-}
-.penny-avatar-toggle.is-revealed .penny-avatar-flip { transform: rotateY(180deg); }
-.penny-avatar-flip img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-.penny-avatar-back { transform: rotateY(180deg); }
 .combination-gate {
   position: fixed;
   z-index: 30;
@@ -321,7 +293,6 @@ button, a { font: inherit; }
   box-shadow: 0 0 50px rgba(255, 91, 214, .24), inset 0 0 35px rgba(96, 207, 255, .08);
 }
 .combination-lock h2 { margin: .35rem 0; font-size: 2rem; }
-.combination-instruction { margin: .5rem auto 1.25rem; color: var(--muted); line-height: 1.45; }
 .combination-close {
   position: absolute;
   top: .65rem;
@@ -363,41 +334,9 @@ button, a { font: inherit; }
   text-shadow: 0 0 18px var(--pink);
 }
 .combination-message { min-height: 1.5rem; margin: 1rem 0 .5rem; color: var(--muted); }
-.combination-enter {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid var(--pink);
-  border-radius: .8rem;
-  color: var(--ink);
-  background: rgba(255, 91, 214, .16);
-  cursor: pointer;
-}
-.combination-enter:hover,
-.combination-enter:focus-visible { background: rgba(255, 91, 214, .28); }
 .identity-card h2 { margin: .4rem 0; }
 .identity-card p { color: var(--muted); }
 .identity-card a { display: block; margin-top: .5rem; color: var(--ink); }
-
-.content-field {
-  position: absolute;
-  left: 2vw;
-  bottom: 2rem;
-  width: min(26rem, 88vw);
-  min-height: 8.5rem;
-  padding: 1.25rem 1.45rem;
-  border: 1px solid rgba(141,114,255,.42);
-  border-radius: 1.4rem;
-  background: rgba(10,8,29,.82);
-  box-shadow: 0 0 34px rgba(96,207,255,.12);
-  backdrop-filter: blur(18px);
-  transform: translateY(-90vh);
-  opacity: 0;
-  pointer-events: auto;
-}
-
-.card-stage.is-active .content-field { animation: panel-down 850ms cubic-bezier(.16,.84,.26,1) 480ms forwards; }
-.content-field h2 { margin: .4rem 0; font-size: clamp(1.7rem, 3vw, 2.7rem); }
-.content-field > p:last-child { margin: 0; color: var(--muted); line-height: 1.55; }
 
 @keyframes portal-settle {
   to { opacity: .42; scale: .86; filter: saturate(1.35); }
@@ -431,11 +370,8 @@ button, a { font: inherit; }
   .spinner-stage { top: 38%; scale: .66; }
   .identity-card { width: 10.5rem; padding: .8rem; font-size: .72rem; }
   .identity-card img { width: 3rem; height: 3rem; }
-  .penny-avatar-toggle { width: 3rem; height: 3rem; }
   .identity-card--matt { top: 5rem; left: .6rem; }
   .identity-card--penny { right: .6rem; bottom: .6rem; }
-  .content-field { left: .6rem; bottom: .6rem; width: calc(100vw - 12.3rem); min-height: 8rem; padding: .85rem; }
-  .content-field h2 { font-size: 1.4rem; }
 }
 
 @media (max-width: 430px) {
@@ -448,7 +384,6 @@ button, a { font: inherit; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .spinner-stage.is-active,
   .spinner-stage.is-active .spinner-card,
-  .card-stage.is-active .identity-card,
-  .card-stage.is-active .content-field { animation-duration: .01ms !important; animation-delay: 0ms !important; }
+  .card-stage.is-active .identity-card { animation-duration: .01ms !important; animation-delay: 0ms !important; }
   .spinner-stage.is-active .spinner-deck { animation: none; }
 }
