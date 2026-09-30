@@ -346,6 +346,59 @@ body {
   animation-delay: 260ms;
 }
 
+.identity-card--matt .owner-labs-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.75rem;
+  margin-top: .65rem;
+  padding: .55rem .85rem;
+  border: 1px solid rgba(223, 255, 63, .78);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      180deg,
+      #e8ff75,
+      #dfff3f
+    );
+  color: #0a081d;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: .045em;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  box-shadow:
+    0 0 16px rgba(223, 255, 63, .24),
+    inset 0 1px 0 rgba(255, 255, 255, .42);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    filter 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.identity-card--matt .owner-labs-pill:hover,
+.identity-card--matt .owner-labs-pill:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 0 22px rgba(223, 255, 63, .4),
+    inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+
+.identity-card--matt .owner-labs-pill:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.identity-card--matt .owner-labs-pill:active {
+  transform: translateY(0);
+}
+
 .owner-socials {
   display: flex;
   align-items: center;
@@ -1720,6 +1773,15 @@ body {
     grid-column: auto;
   }
 
+  .identity-card--matt .owner-labs-pill {
+    grid-column: 2;
+    width: 100%;
+    min-height: 44px;
+    margin-top: .35rem;
+    padding: .5rem .65rem;
+    font-size: .64rem;
+  }
+
   .owner-socials {
     grid-column: 1 / -1;
     margin: .45rem 0 0;
@@ -1824,6 +1886,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .penny-contact-assist {
     transition: none;
+  }
+
+  .identity-card--matt .owner-labs-pill {
+    transition: none;
+  }
+
+  .identity-card--matt .owner-labs-pill:hover,
+  .identity-card--matt .owner-labs-pill:focus-visible {
+    transform: none;
   }
 
 

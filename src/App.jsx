@@ -951,6 +951,16 @@ function ContactPanels({
             402-915-0789
           </a>
 
+          <a
+            className="owner-labs-pill"
+            href="https://labs.wildcarddev.com/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="See WildCard Labs live"
+          >
+            YES. WE HAVE A LAB FOR THAT. SEE IT LIVE.
+          </a>
+
           <div
             className="owner-socials"
             aria-label="Matt Tobaben social links"
