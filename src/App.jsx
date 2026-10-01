@@ -14,6 +14,7 @@ import pennyCardVideo2 from '../assets/WitchPennyAndKandy6.webm';
 import pennyCardVideo3 from '../assets/WitchPennyAndKandy1.webm';
 import pennyCardVideo4 from '../assets/WitchPennyAndKandy3.webm';
 import pennyContactAssistVideo from '../assets/PennyContactAssistVideo.webm';
+import ownerPennyKandyVideo from '../assets/WitchPennyAndKandy2-silent.webm';
 
 const CHANNELS = [
   { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: pennyCardVideo },
@@ -1064,6 +1065,26 @@ function ContactPanels({
             >
               <FacebookIcon />
             </a>
+          </div>
+
+          <div
+            className="owner-feature-video-shell"
+            aria-hidden="true"
+          >
+            <video
+              className="owner-feature-video"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            >
+              <source
+                src={ownerPennyKandyVideo}
+                type="video/webm"
+                media="(min-width: 241px) and (max-width: 520px), (min-width: 901px)"
+              />
+            </video>
           </div>
         </article>
 
