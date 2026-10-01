@@ -1741,7 +1741,7 @@ export default function App() {
       >
         <article className="identity-card identity-card--penny">
           {!isWatch && (
-            <div className="penny-video-link">
+            <div className="penny-video-static">
               <div className="penny-video-shell">
                 <PennyLoopVideo
                   active={pennyVideoActive}
