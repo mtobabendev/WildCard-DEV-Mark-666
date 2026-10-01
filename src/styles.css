@@ -1393,7 +1393,7 @@ body {
         clamp(13.5rem, 14vw, 14rem)
       );
     grid-template-rows: repeat(5, auto);
-    gap: .15rem 1rem;
+    gap: .15rem .75rem;
     align-items: start;
     padding-top: 1rem;
     padding-bottom: 1rem;
