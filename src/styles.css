@@ -2051,6 +2051,43 @@ body {
     flex-basis: 2rem;
   }
 
+  .identity-card--matt {
+    grid-template-columns:
+      3.25rem
+      minmax(0, 1fr)
+      3.75rem;
+    gap: .15rem .55rem;
+  }
+
+  .identity-card--matt > img {
+    grid-column: 1;
+    grid-row: 1 / span 7;
+  }
+
+  .identity-card--matt > .eyebrow,
+  .identity-card--matt > h2,
+  .identity-card--matt > p,
+  .identity-card--matt > a:not(.owner-labs-pill) {
+    grid-column: 2;
+  }
+
+  .identity-card--matt .owner-labs-pill {
+    grid-column: 2;
+  }
+
+  .identity-card--matt .owner-socials {
+    grid-column: 2 / 4;
+  }
+
+  .identity-card--matt .owner-feature-video-shell {
+    display: block;
+    grid-column: 3;
+    grid-row: 1 / span 6;
+    width: 100%;
+    max-height: 9.5rem;
+    aspect-ratio: 9 / 16;
+  }
+
   .spinner-deck {
     width: 6.3rem;
     height: 8.6rem;
