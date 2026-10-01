@@ -1384,8 +1384,32 @@ body {
 
 @media (min-width: 901px) {
   .identity-card--matt {
+    display: grid;
+    grid-template-columns:
+      5.4rem
+      minmax(0, 1fr)
+      minmax(
+        12rem,
+        clamp(12rem, 15vw, 15rem)
+      );
+    grid-template-rows: repeat(5, auto);
+    gap: .15rem 1rem;
+    align-items: start;
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+
+  .identity-card--matt > img {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    align-self: start;
+  }
+
+  .identity-card--matt > .eyebrow,
+  .identity-card--matt > h2,
+  .identity-card--matt > p,
+  .identity-card--matt > a:not(.owner-labs-pill) {
+    grid-column: 2;
   }
 
   .identity-card--matt h2 {
@@ -1400,7 +1424,17 @@ body {
     margin-top: .35rem;
   }
 
+  .identity-card--matt .owner-labs-pill {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    justify-self: start;
+    align-self: start;
+  }
+
   .identity-card--matt .owner-socials {
+    grid-column: 3;
+    grid-row: 3 / span 2;
+    align-self: start;
     margin-top: .55rem;
   }
 
