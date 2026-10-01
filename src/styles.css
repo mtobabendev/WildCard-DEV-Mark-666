@@ -1387,11 +1387,7 @@ body {
     display: grid;
     grid-template-columns:
       5.4rem
-      minmax(0, 1fr)
-      minmax(
-        13.5rem,
-        clamp(13.5rem, 14vw, 14rem)
-      );
+      minmax(0, 1fr);
     grid-template-rows: repeat(5, auto);
     gap: .15rem .75rem;
     align-items: start;
@@ -1425,15 +1421,15 @@ body {
   }
 
   .identity-card--matt .owner-labs-pill {
-    grid-column: 3;
-    grid-row: 1 / span 2;
+    grid-column: 2;
+    grid-row: auto;
     justify-self: start;
     align-self: start;
   }
 
   .identity-card--matt .owner-socials {
-    grid-column: 3;
-    grid-row: 3 / span 2;
+    grid-column: 2;
+    grid-row: auto;
     align-self: start;
     margin-top: .55rem;
   }
