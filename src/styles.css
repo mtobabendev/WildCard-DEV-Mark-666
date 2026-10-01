@@ -1389,8 +1389,8 @@ body {
       5.4rem
       minmax(0, 1fr)
       minmax(
-        12rem,
-        clamp(12rem, 15vw, 15rem)
+        13.5rem,
+        clamp(13.5rem, 14vw, 14rem)
       );
     grid-template-rows: repeat(5, auto);
     gap: .15rem 1rem;

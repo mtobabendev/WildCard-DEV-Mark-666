@@ -1013,7 +1013,7 @@ function ContactPanels({
             rel="noreferrer"
             aria-label="See WildCard Labs live"
           >
-            YES. WE HAVE A LAB FOR THAT. SEE IT LIVE.
+            LABS
           </a>
 
           <div
