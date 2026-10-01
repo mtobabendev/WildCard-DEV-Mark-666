@@ -611,19 +611,11 @@ body {
   gap: .75rem;
 }
 
-.penny-video-link {
+.penny-video-static {
   display: block;
   min-width: 0;
   margin: 0;
-  color: inherit;
-  text-decoration: none;
   border-radius: 1.25rem;
-  cursor: pointer;
-}
-
-.penny-video-link:focus-visible {
-  outline: 2px solid var(--pink);
-  outline-offset: .25rem;
 }
 
 .penny-video-shell {
@@ -2008,7 +2000,7 @@ body {
     gap: .75rem;
   }
 
-  .identity-card .penny-video-link {
+  .identity-card .penny-video-static {
     grid-column: 1;
     grid-row: 1 / span 5;
     margin: 0;
