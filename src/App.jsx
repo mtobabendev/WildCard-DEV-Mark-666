@@ -26,8 +26,7 @@ const CHANNELS = [
 ];
 
 const STEP = 360 / CHANNELS.length;
-const SPADE_URL = 'https://the-spade.wildcarddev.com/';
-const PENNY_OFFICE_URL = 'https://www.pennyzoffice.wildcarddev.com/';
+const PENNY_SERVICES_URL = 'https://pennysoffice.wildcarddev.com/services';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
@@ -1311,7 +1310,7 @@ function CombinationGate({
 
     if (digits.join('') === '216') {
       setMessage('The door is open.');
-      window.location.assign(SPADE_URL);
+      window.location.assign(PENNY_SERVICES_URL);
       return;
     }
 
@@ -1742,17 +1741,13 @@ export default function App() {
       >
         <article className="identity-card identity-card--penny">
           {!isWatch && (
-            <a
-              className="penny-video-link"
-              href={PENNY_OFFICE_URL}
-              aria-label="Visit Penny's Office"
-            >
+            <div className="penny-video-link">
               <div className="penny-video-shell">
                 <PennyLoopVideo
                   active={pennyVideoActive}
                 />
               </div>
-            </a>
+            </div>
           )}
 
           <div className="penny-copy">
