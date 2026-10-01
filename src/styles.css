@@ -2055,7 +2055,7 @@ body {
     grid-template-columns:
       3.25rem
       minmax(0, 1fr)
-      3.75rem;
+      4.25rem;
     gap: .15rem .55rem;
   }
 
@@ -2084,7 +2084,7 @@ body {
     grid-column: 3;
     grid-row: 1 / span 6;
     width: 100%;
-    max-height: 9.5rem;
+    max-height: 10.5rem;
     aspect-ratio: 9 / 16;
   }
 
