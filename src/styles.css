@@ -1017,6 +1017,41 @@ body {
   object-fit: cover;
 }
 
+.penny-contact-assist-close {
+  position: absolute;
+  top: .45rem;
+  right: .45rem;
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 91, 214, .46);
+  border-radius: 999px;
+  background: rgba(10, 8, 29, .92);
+  color: #fff;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.penny-contact-assist-close:hover,
+.penny-contact-assist-close:focus-visible {
+  border-color: var(--pink);
+  box-shadow:
+    0 0 18px rgba(255, 91, 214, .3);
+  outline: 2px solid rgba(255, 255, 255, .86);
+  outline-offset: 2px;
+}
+
+.penny-contact-assist-content {
+  min-width: 0;
+  display: grid;
+  gap: .55rem;
+  padding-right: 2.4rem;
+}
+
 .penny-contact-assist-bubble {
   min-width: 0;
   border: 1px solid rgba(141, 114, 255, .34);
@@ -1027,6 +1062,40 @@ body {
   line-height: 1.4;
   box-shadow:
     inset 0 0 16px rgba(96, 207, 255, .06);
+}
+
+.penny-contact-assist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.penny-contact-assist-actions a {
+  min-width: 0;
+  min-height: 2.75rem;
+  flex: 1 1 8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem .7rem;
+  border: 1px solid rgba(141, 114, 255, .42);
+  border-radius: .7rem;
+  background: rgba(18, 12, 46, .8);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  text-decoration: none;
+}
+
+.penny-contact-assist-actions a:hover,
+.penny-contact-assist-actions a:focus-visible {
+  border-color: var(--pink);
+  box-shadow:
+    0 0 16px rgba(255, 91, 214, .24);
+  outline: 2px solid rgba(255, 255, 255, .82);
+  outline-offset: 2px;
 }
 
 @media (min-width: 901px) {
@@ -1338,15 +1407,16 @@ body {
   .identity-pair {
     top: 6rem;
     left: clamp(1rem, 2vw, 2.5rem);
+    right: calc(
+      min(25rem, 35vw)
+      + clamp(1.65rem, 3vw, 3.5rem)
+    );
     grid-template-columns:
       minmax(
         20.5rem,
         clamp(20.5rem, 22vw, 24rem)
       )
-      minmax(
-        19rem,
-        clamp(19rem, 20vw, 21rem)
-      );
+      minmax(19rem, 1fr);
     gap: clamp(.65rem, 1vw, 1rem);
   }
 
@@ -1374,13 +1444,13 @@ body {
 
   .context-window {
     left: 50%;
-    top: calc(clamp(27.5rem, 42vh, 31rem) + .25rem);
+    top: calc(clamp(26rem, 40vh, 29rem) + .25rem);
     width: min(31rem, calc(100vw - 4rem));
   }
 
   .spinner-stage {
     left: 50%;
-    top: clamp(44rem, 68vh, 47rem);
+    top: clamp(41.5rem, 64vh, 45rem);
   }
 }
 
@@ -1388,9 +1458,9 @@ body {
   .context-window {
     top: calc(
       clamp(
-        23.5rem,
+        22.5rem,
         calc(100vh - 24rem),
-        27.5rem
+        26rem
       )
       + .25rem
     );
@@ -1399,9 +1469,9 @@ body {
 
   .spinner-stage {
     top: clamp(
-      38rem,
-      calc(100vh - 7rem),
-      44rem
+      36rem,
+      calc(100vh - 9rem),
+      42rem
     );
   }
 }

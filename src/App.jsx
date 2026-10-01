@@ -812,14 +812,25 @@ function KandyVideo({ active }) {
 function PennyContactAssist({
   active,
   message,
+  fallbackType,
   videoRef,
   onComplete,
+  onClose,
 }) {
   return (
     <aside
       className={`penny-contact-assist${active ? ' is-active' : ''}`}
       aria-hidden={!active}
     >
+      <button
+        className="penny-contact-assist-close"
+        type="button"
+        aria-label="Close Contact Assist"
+        onClick={onClose}
+      >
+        ×
+      </button>
+
       <div className="penny-contact-assist-video-shell">
         <video
           ref={videoRef}
@@ -836,12 +847,48 @@ function PennyContactAssist({
         />
       </div>
 
-      <div
-        className="penny-contact-assist-bubble"
-        role="status"
-        aria-live="polite"
-      >
-        {active ? message : ''}
+      <div className="penny-contact-assist-content">
+        <div
+          className="penny-contact-assist-bubble"
+          role="status"
+          aria-live="polite"
+        >
+          {active ? message : ''}
+        </div>
+
+        {active && fallbackType === 'penny-phone' && (
+          <div
+            className="penny-contact-assist-actions"
+            aria-label="Penny phone fallback actions"
+          >
+            <a
+              href="tel:+14029150789"
+              onClick={onClose}
+            >
+              CALL PENNY
+            </a>
+            <a
+              href="sms:+14029150789"
+              onClick={onClose}
+            >
+              TEXT PENNY
+            </a>
+          </div>
+        )}
+
+        {active && fallbackType === 'penny-email' && (
+          <div
+            className="penny-contact-assist-actions"
+            aria-label="Penny email fallback action"
+          >
+            <a
+              href="mailto:penny@wildcarddev.com"
+              onClick={onClose}
+            >
+              OPEN EMAIL
+            </a>
+          </div>
+        )}
       </div>
     </aside>
   );
@@ -1332,6 +1379,7 @@ export default function App() {
   const assistRunningRef = useRef(false);
   const assistCompletionRef = useRef(false);
   const pendingHrefRef = useRef('');
+  const assistFallbackRef = useRef('');
 
   const completeContactAssist = useCallback(() => {
     if (
@@ -1363,6 +1411,7 @@ export default function App() {
 
     assistRunningRef.current = false;
     pendingHrefRef.current = '';
+    assistFallbackRef.current = '';
     setAssistActive(false);
     setAssistMessage('');
 
@@ -1371,9 +1420,36 @@ export default function App() {
     }
   }, []);
 
+  const cancelContactAssist = useCallback(() => {
+    if (assistTimeoutRef.current) {
+      window.clearTimeout(assistTimeoutRef.current);
+      assistTimeoutRef.current = 0;
+    }
+
+    const video = assistVideoRef.current;
+
+    if (video) {
+      video.pause();
+
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Some browsers can reject seeking before metadata is ready.
+      }
+    }
+
+    assistRunningRef.current = false;
+    assistCompletionRef.current = false;
+    pendingHrefRef.current = '';
+    assistFallbackRef.current = '';
+    setAssistActive(false);
+    setAssistMessage('');
+  }, []);
+
   const startContactAssist = useCallback((
     href,
     message,
+    fallbackType = '',
   ) => {
     if (assistRunningRef.current) {
       return false;
@@ -1389,6 +1465,7 @@ export default function App() {
     assistRunningRef.current = true;
     assistCompletionRef.current = false;
     pendingHrefRef.current = href;
+    assistFallbackRef.current = fallbackType;
 
     setAssistMessage(message);
     setAssistActive(true);
@@ -1542,6 +1619,7 @@ export default function App() {
                     startContactAssist(
                       'mailto:penny@wildcarddev.com',
                       "I'll open a line to Penny.",
+                      'penny-email',
                     );
                   }}
                 >
@@ -1556,6 +1634,7 @@ export default function App() {
                     startContactAssist(
                       'tel:+14029150789',
                       "I'll put Penny through.",
+                      'penny-phone',
                     );
                   }}
                 >
@@ -1708,8 +1787,10 @@ export default function App() {
       <PennyContactAssist
         active={assistActive}
         message={assistMessage}
+        fallbackType={assistFallbackRef.current}
         videoRef={assistVideoRef}
         onComplete={completeContactAssist}
+        onClose={cancelContactAssist}
       />
 
       <CombinationGate
