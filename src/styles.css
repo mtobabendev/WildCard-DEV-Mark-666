@@ -612,10 +612,7 @@ body {
 }
 
 .penny-video-static {
-  display: block;
   min-width: 0;
-  margin: 0;
-  border-radius: 1.25rem;
 }
 
 .penny-video-shell {
@@ -2003,8 +2000,6 @@ body {
   .identity-card .penny-video-static {
     grid-column: 1;
     grid-row: 1 / span 5;
-    margin: 0;
-    font-size: inherit;
   }
 
   .penny-video-shell {
@@ -2060,10 +2055,6 @@ body {
   .identity-card--matt > h2,
   .identity-card--matt > p,
   .identity-card--matt > a:not(.owner-labs-pill) {
-    grid-column: 2;
-  }
-
-  .identity-card--matt .owner-labs-pill {
     grid-column: 2;
   }
 

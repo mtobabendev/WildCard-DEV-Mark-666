@@ -835,9 +835,8 @@ function PennyContactAssist({
         <video
           ref={videoRef}
           className="penny-contact-assist-video"
-          src={pennyContactAssistVideo}
           playsInline
-          preload="metadata"
+          preload="none"
           aria-hidden="true"
           onEnded={() => {
             if (active) {
@@ -962,6 +961,36 @@ function ContactPanels({
   pageVisible,
   onContactAssist,
 }) {
+  const ownerFeatureVideoRef = useRef(null);
+  const ownerFeatureVideoSupported = useMediaQuery(
+    '(min-width: 241px) and (max-width: 520px), (min-width: 901px)',
+  );
+
+  useEffect(() => {
+    const video = ownerFeatureVideoRef.current;
+
+    if (!video) return;
+
+    if (
+      !open
+      || !pageVisible
+      || !ownerFeatureVideoSupported
+    ) {
+      video.pause();
+      return;
+    }
+
+    const playAttempt = video.play();
+
+    if (playAttempt?.catch) {
+      playAttempt.catch(() => {});
+    }
+  }, [
+    open,
+    pageVisible,
+    ownerFeatureVideoSupported,
+  ]);
+
   return (
     <section
       className={`card-stage card-stage--contacts${open ? ' is-active' : ''}`}
@@ -1021,7 +1050,7 @@ function ContactPanels({
             aria-label="Matt Tobaben social links"
           >
             <a
-              href="https://x.com/WildCardDEV"
+              href={WILDCARD_X_URL}
               target="_blank"
               rel="noreferrer"
               aria-label="WildCard DEV on X"
@@ -1071,8 +1100,8 @@ function ContactPanels({
             aria-hidden="true"
           >
             <video
+              ref={ownerFeatureVideoRef}
               className="owner-feature-video"
-              autoPlay
               loop
               muted
               playsInline
@@ -1270,28 +1299,130 @@ function CombinationGate({
     'Set the house combination.',
   );
 
+  const gateRef = useRef(null);
+  const dialogRef = useRef(null);
+  const closeRef = useRef(null);
+  const returnFocusRef = useRef(null);
+
   useEffect(() => {
     if (!open) return undefined;
 
     setDigits([0, 0, 0]);
     setMessage('Set the house combination.');
+    returnFocusRef.current = document.activeElement;
+
+    closeRef.current?.focus();
+
+    const gate = gateRef.current;
+    const parent = gate?.parentElement;
+    const inertState = new Map();
+
+    const applyInert = () => {
+      if (!parent || !gate) return;
+
+      Array.from(parent.children).forEach((node) => {
+        if (node === gate) return;
+
+        if (!inertState.has(node)) {
+          inertState.set(
+            node,
+            node.hasAttribute('inert'),
+          );
+        }
+
+        node.setAttribute('inert', '');
+      });
+    };
+
+    applyInert();
+
+    const observer = parent
+      ? new MutationObserver(applyInert)
+      : null;
+
+    observer?.observe(parent, {
+      childList: true,
+    });
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
+        event.preventDefault();
         onClose();
+        return;
+      }
+
+      if (
+        event.key !== 'Tab'
+        || !dialogRef.current
+      ) {
+        return;
+      }
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll(
+          'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => (
+        !element.closest('[hidden]')
+        && !element.hasAttribute('inert')
+      ));
+
+      if (!focusable.length) {
+        event.preventDefault();
+        closeRef.current?.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const activeElement = document.activeElement;
+
+      if (!dialogRef.current.contains(activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+        return;
+      }
+
+      if (
+        event.shiftKey
+        && activeElement === first
+      ) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey
+        && activeElement === last
+      ) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
-    window.addEventListener(
+    document.addEventListener(
       'keydown',
       handleKeyDown,
     );
 
     return () => {
-      window.removeEventListener(
+      document.removeEventListener(
         'keydown',
         handleKeyDown,
       );
+      observer?.disconnect();
+
+      inertState.forEach((wasInert, node) => {
+        if (!wasInert) {
+          node.removeAttribute('inert');
+        }
+      });
+
+      const returnFocus = returnFocusRef.current;
+
+      if (returnFocus?.isConnected) {
+        window.setTimeout(() => {
+          returnFocus.focus();
+        }, 0);
+      }
     };
   }, [open, onClose]);
 
@@ -1319,6 +1450,7 @@ function CombinationGate({
 
   return (
     <div
+      ref={gateRef}
       className="combination-gate"
       role="presentation"
       onPointerDown={(event) => {
@@ -1328,12 +1460,14 @@ function CombinationGate({
       }}
     >
       <section
+        ref={dialogRef}
         className="combination-lock"
         role="dialog"
         aria-modal="true"
         aria-labelledby="combination-title"
       >
         <button
+          ref={closeRef}
           className="combination-close"
           type="button"
           onClick={onClose}
@@ -1394,6 +1528,10 @@ export default function App() {
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
 
+  const closeGate = useCallback(() => {
+    setGateOpen(false);
+  }, []);
+
   const assistVideoRef = useRef(null);
   const assistTimeoutRef = useRef(0);
   const assistRunningRef = useRef(false);
@@ -1427,6 +1565,9 @@ export default function App() {
       } catch {
         // Some browsers can reject seeking before metadata is ready.
       }
+
+      video.removeAttribute('src');
+      video.load();
     }
 
     assistRunningRef.current = false;
@@ -1456,6 +1597,9 @@ export default function App() {
       } catch {
         // Some browsers can reject seeking before metadata is ready.
       }
+
+      video.removeAttribute('src');
+      video.load();
     }
 
     assistRunningRef.current = false;
@@ -1500,6 +1644,8 @@ export default function App() {
     );
 
     video.pause();
+    video.src = pennyContactAssistVideo;
+    video.load();
     video.muted = false;
     video.volume = 1;
 
@@ -1534,6 +1680,8 @@ export default function App() {
 
       if (video) {
         video.pause();
+        video.removeAttribute('src');
+        video.load();
       }
     }
   ), []);
@@ -1811,7 +1959,7 @@ export default function App() {
 
       <CombinationGate
         open={gateOpen}
-        onClose={() => setGateOpen(false)}
+        onClose={closeGate}
       />
     </main>
   );
