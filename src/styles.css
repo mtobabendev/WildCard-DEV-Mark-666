@@ -784,34 +784,45 @@ body {
   }
 }
 
-.penny-socials {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
+.penny-link-deck {
+  display: grid;
+  grid-template-columns:
+    minmax(3.6rem, 4.1rem)
+    2.6rem
+    minmax(3.6rem, 4.1rem);
+  align-items: end;
+  justify-content: start;
+  gap: clamp(.28rem, 1.4vw, .45rem);
+  width: min(100%, 11.6rem);
   margin-top: .75rem;
+  padding: .35rem .2rem .15rem;
+  overflow: visible;
 }
 
-.penny-socials a {
+.identity-card--penny .penny-link-card {
   display: grid;
+  grid-template-rows: 1.55rem auto;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  flex: 0 0 2.25rem;
-  border: 1px solid rgba(201, 111, 255, .62);
-  border-radius: 999px;
+  gap: .24rem;
+  min-width: 0;
+  min-height: 3.15rem;
+  margin: 0;
+  padding: .48rem .42rem .42rem;
+  border: 1px solid rgba(201, 111, 255, .58);
+  border-radius: .72rem;
   background:
-    radial-gradient(
-      circle at 35% 30%,
-      rgba(255, 91, 214, .28),
-      rgba(141, 114, 255, .16) 58%,
+    linear-gradient(
+      155deg,
+      rgba(255, 91, 214, .15),
+      rgba(96, 207, 255, .08) 52%,
       rgba(10, 8, 29, .9)
     );
   box-shadow:
-    0 0 16px rgba(141, 114, 255, .3),
-    0 0 22px rgba(255, 91, 214, .16),
-    inset 0 0 12px rgba(255, 91, 214, .08);
-  color: #ff8ce5;
+    0 0 14px rgba(141, 114, 255, .2),
+    inset 0 0 12px rgba(255, 91, 214, .07);
+  color: #ff9ee8;
   text-decoration: none;
+  transform-origin: center bottom;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -819,7 +830,24 @@ body {
     box-shadow 160ms ease;
 }
 
-.penny-socials svg {
+.identity-card--penny .penny-link-card--party {
+  transform: translateY(-.12rem) rotate(-4deg);
+}
+
+.identity-card--penny .penny-link-card--x {
+  color: #c49aff;
+  transform: translateY(-.12rem) rotate(4deg);
+}
+
+.penny-link-card-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.penny-link-card-icon svg {
   position: relative;
   z-index: 1;
   width: 1rem;
@@ -828,46 +856,98 @@ body {
 }
 
 .penny-party-link {
-  position: relative;
   overflow: hidden;
 }
 
-.penny-party-spade {
+.identity-card--penny .penny-party-spade {
   position: absolute;
   inset: 50% auto auto 50%;
   z-index: 0;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 0;
   object-fit: contain;
-  opacity: .7;
+  opacity: .72;
   transform: translate(-50%, -50%);
   filter:
     saturate(1.35)
     drop-shadow(0 0 5px rgba(255, 91, 214, .65));
 }
 
-.penny-party-link svg {
-  z-index: 1;
-  width: .92rem;
-  height: .92rem;
+.penny-link-card-icon--party svg {
+  width: .86rem;
+  height: .86rem;
   color: #fff;
-  filter: drop-shadow(0 0 4px rgba(10, 8, 29, .95));
+  filter:
+    drop-shadow(0 0 4px rgba(10, 8, 29, .95));
 }
 
-.penny-socials a:nth-child(2) {
-  color: #c49aff;
+.penny-link-card-label {
+  min-width: 0;
+  color: currentColor;
+  font-size: .56rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .08em;
+  white-space: nowrap;
 }
 
-.penny-socials a:hover,
-.penny-socials a:focus-visible {
-  transform: translateY(-2px) scale(1.06);
+.penny-link-hub {
+  align-self: end;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-bottom: -.12rem;
+  border: 1px solid rgba(255, 91, 214, .5);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 91, 214, .2),
+      rgba(20, 8, 40, .94) 68%
+    );
+  box-shadow:
+    0 0 16px rgba(255, 91, 214, .28),
+    0 0 22px rgba(96, 207, 255, .14),
+    inset 0 0 10px rgba(141, 114, 255, .1);
+  pointer-events: none;
+}
+
+.identity-card--penny .penny-link-hub img {
+  display: block;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 91, 214, .72));
+}
+
+.identity-card--penny .penny-link-card:hover,
+.identity-card--penny .penny-link-card:focus-visible {
   border-color: #ff72de;
   color: #fff;
   box-shadow:
-    0 0 20px rgba(255, 91, 214, .48),
-    0 0 28px rgba(141, 114, 255, .38),
-    inset 0 0 14px rgba(255, 91, 214, .12);
-  outline: none;
+    0 0 19px rgba(255, 91, 214, .4),
+    0 0 25px rgba(141, 114, 255, .28),
+    inset 0 0 14px rgba(255, 91, 214, .1);
+  outline: 2px solid rgba(255, 255, 255, .86);
+  outline-offset: 2px;
+}
+
+.identity-card--penny .penny-link-card--party:hover,
+.identity-card--penny .penny-link-card--party:focus-visible {
+  transform: translateY(-.28rem) rotate(-5deg);
+}
+
+.identity-card--penny .penny-link-card--x:hover,
+.identity-card--penny .penny-link-card--x:focus-visible {
+  transform: translateY(-.28rem) rotate(5deg);
+}
+
+.identity-card--penny .penny-link-card:active {
+  transform: translateY(0) rotate(0deg) scale(.97);
 }
 
 .context-window > .channel-copy {
@@ -2325,6 +2405,14 @@ body {
   .penny-destination-pill:hover,
   .penny-destination-pill:focus-visible {
     transform: none;
+  }
+
+  .identity-card--penny .penny-link-card,
+  .identity-card--penny .penny-link-card:hover,
+  .identity-card--penny .penny-link-card:focus-visible,
+  .identity-card--penny .penny-link-card:active {
+    transform: none;
+    transition: none;
   }
 
   .identity-card--matt .owner-labs-pill {

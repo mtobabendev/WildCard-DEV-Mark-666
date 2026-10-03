@@ -1924,32 +1924,58 @@ export default function App() {
             </div>
 
             <div
-              className="penny-socials"
+              className="penny-link-deck"
               aria-label="Penny links"
             >
               <a
-                className="penny-party-link"
+                className="penny-link-card penny-link-card--party penny-party-link"
                 href={WILDCARD_PARTY_URL}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="WildCard Party"
               >
-                <img
-                  className="penny-party-spade"
-                  src={pennySpadeLogo}
-                  alt=""
+                <span
+                  className="penny-link-card-icon penny-link-card-icon--party"
                   aria-hidden="true"
-                />
-                <FacebookIcon />
+                >
+                  <img
+                    className="penny-party-spade"
+                    src={pennySpadeLogo}
+                    alt=""
+                  />
+                  <FacebookIcon />
+                </span>
+                <span className="penny-link-card-label">
+                  PARTY
+                </span>
               </a>
 
+              <div
+                className="penny-link-hub"
+                aria-hidden="true"
+              >
+                <img
+                  src={pennySpadeLogo}
+                  alt=""
+                />
+              </div>
+
               <a
+                className="penny-link-card penny-link-card--x"
                 href={WILDCARD_X_URL}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="WildCard DEV on X"
               >
-                <XIcon />
+                <span
+                  className="penny-link-card-icon"
+                  aria-hidden="true"
+                >
+                  <XIcon />
+                </span>
+                <span className="penny-link-card-label">
+                  X
+                </span>
               </a>
             </div>
           </div>
