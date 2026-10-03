@@ -88,8 +88,25 @@ function SiteEntry() {
   );
 }
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <SiteEntry />
-  </StrictMode>,
-);
+const root = createRoot(document.getElementById('root'));
+const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
+
+if (normalizedPath === '/bunker') {
+  import('./Bunker.jsx')
+    .then(({ default: Bunker }) => {
+      root.render(
+        <StrictMode>
+          <Bunker />
+        </StrictMode>,
+      );
+    })
+    .catch(() => {
+      window.location.replace('/');
+    });
+} else {
+  root.render(
+    <StrictMode>
+      <SiteEntry />
+    </StrictMode>,
+  );
+}

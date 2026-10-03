@@ -1,0 +1,263 @@
+:root {
+  color-scheme: dark;
+  --bunker-ink: #f9f5ff;
+  --bunker-pink: #ff5bd6;
+  --bunker-violet: #8d72ff;
+  --bunker-blue: #60cfff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  color: var(--bunker-ink);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #050311;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.bunker-page {
+  --bunker-fallback: none;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding:
+    max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 3, 17, .26),
+      rgba(4, 2, 14, .74)
+    ),
+    var(--bunker-fallback)
+      center / cover no-repeat,
+    #050311;
+}
+
+.bunker-wallpaper,
+.bunker-scrim {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bunker-wallpaper {
+  z-index: -3;
+  object-fit: cover;
+  object-position: center;
+  background: #050311;
+}
+
+.bunker-scrim {
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(10, 8, 29, .28),
+      rgba(4, 2, 14, .78) 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(4, 2, 14, .16),
+      rgba(4, 2, 14, .56)
+    );
+}
+
+.bunker-panel {
+  width: min(46rem, calc(100vw - 2rem));
+  padding: clamp(1.25rem, 4vw, 2.4rem);
+  border: 1px solid rgba(141, 114, 255, .5);
+  border-radius: clamp(1rem, 3vw, 1.5rem);
+  background: rgba(8, 5, 24, .76);
+  box-shadow:
+    0 0 34px rgba(96, 207, 255, .16),
+    0 0 48px rgba(255, 91, 214, .12),
+    inset 0 0 30px rgba(141, 114, 255, .08);
+  backdrop-filter: blur(14px);
+  text-align: center;
+}
+
+.bunker-spade {
+  display: block;
+  width: clamp(4rem, 14vw, 6.5rem);
+  height: auto;
+  margin: 0 auto clamp(.9rem, 3vw, 1.35rem);
+  filter:
+    drop-shadow(0 0 12px rgba(255, 91, 214, .58))
+    drop-shadow(0 0 22px rgba(96, 207, 255, .26));
+}
+
+.bunker-panel h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.45rem, 5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: clamp(.08em, .5vw, .18em);
+  text-wrap: balance;
+  text-shadow:
+    0 0 18px rgba(255, 91, 214, .34),
+    0 0 28px rgba(96, 207, 255, .2);
+}
+
+.bunker-panel p {
+  margin:
+    clamp(.75rem, 2.5vw, 1.1rem)
+    0
+    0;
+  color: #cfc5e7;
+  font-size: clamp(.72rem, 2.4vw, .95rem);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: clamp(.08em, .45vw, .16em);
+}
+
+.bunker-return {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: clamp(1rem, 3vw, 1.45rem);
+  padding: .65rem 1rem;
+  border: 1px solid rgba(255, 91, 214, .68);
+  border-radius: 999px;
+  color: var(--bunker-ink);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 91, 214, .2),
+      rgba(96, 207, 255, .16)
+    );
+  box-shadow:
+    0 0 18px rgba(255, 91, 214, .2),
+    inset 0 1px 0 rgba(255, 255, 255, .16);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-align: center;
+  text-decoration: none;
+}
+
+.bunker-return:hover,
+.bunker-return:focus-visible {
+  border-color: var(--bunker-pink);
+  box-shadow:
+    0 0 24px rgba(255, 91, 214, .32),
+    0 0 30px rgba(96, 207, 255, .14);
+  outline: 2px solid rgba(255, 255, 255, .8);
+  outline-offset: 3px;
+}
+
+@media (max-width: 430px) {
+  .bunker-page {
+    padding:
+      max(.75rem, env(safe-area-inset-top))
+      max(.75rem, env(safe-area-inset-right))
+      max(.75rem, env(safe-area-inset-bottom))
+      max(.75rem, env(safe-area-inset-left));
+  }
+
+  .bunker-panel {
+    width: 100%;
+    padding: 1.1rem .9rem;
+  }
+
+  .bunker-panel h1 {
+    font-size: clamp(1.28rem, 7.4vw, 2rem);
+    letter-spacing: .09em;
+  }
+
+  .bunker-panel p {
+    font-size: .7rem;
+    letter-spacing: .1em;
+  }
+
+  .bunker-return {
+    width: 100%;
+    max-width: 18rem;
+    font-size: .68rem;
+  }
+}
+
+@media (max-width: 240px) {
+  .bunker-page {
+    padding: .5rem;
+  }
+
+  .bunker-wallpaper {
+    display: none;
+  }
+
+  .bunker-panel {
+    padding: .85rem .65rem;
+    border-radius: .8rem;
+    backdrop-filter: none;
+  }
+
+  .bunker-spade {
+    width: 3.25rem;
+    margin-bottom: .65rem;
+  }
+
+  .bunker-panel h1 {
+    font-size: 1.05rem;
+    line-height: 1.08;
+    letter-spacing: .06em;
+  }
+
+  .bunker-panel p {
+    margin-top: .55rem;
+    font-size: .62rem;
+    line-height: 1.35;
+    letter-spacing: .07em;
+  }
+
+  .bunker-return {
+    min-height: 40px;
+    margin-top: .7rem;
+    padding: .5rem .6rem;
+    font-size: .58rem;
+    letter-spacing: .08em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bunker-wallpaper {
+    display: none;
+  }
+
+  .bunker-return {
+    transition: none;
+  }
+}

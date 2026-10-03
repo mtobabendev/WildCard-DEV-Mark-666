@@ -26,7 +26,7 @@ const CHANNELS = [
 ];
 
 const STEP = 360 / CHANNELS.length;
-const PENNY_SERVICES_URL = 'https://pennysoffice.wildcarddev.com/services';
+const PENNY_SERVICES_URL = '/bunker';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
