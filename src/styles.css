@@ -784,6 +784,221 @@ body {
   }
 }
 
+.identity-link-deck {
+  display: grid;
+  align-items: stretch;
+  gap: .3rem;
+  width: 100%;
+  margin-top: .55rem;
+  overflow: visible;
+}
+
+.identity-card .identity-link-card {
+  display: grid;
+  grid-template-rows: 1.35rem auto;
+  place-items: center;
+  gap: .18rem;
+  min-width: 0;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: .36rem .32rem .32rem;
+  border: 1px solid rgba(201, 111, 255, .5);
+  border-radius: .7rem;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(255, 91, 214, .12),
+      rgba(96, 207, 255, .07) 52%,
+      rgba(10, 8, 29, .9)
+    );
+  box-shadow:
+    0 0 12px rgba(141, 114, 255, .16),
+    inset 0 0 10px rgba(255, 91, 214, .06);
+  color: #f4efff;
+  font-size: inherit;
+  text-decoration: none;
+  overflow-wrap: normal;
+  transform-origin: center bottom;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.identity-link-card-icon {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.identity-link-card-icon svg {
+  width: .92rem;
+  height: .92rem;
+  fill: currentColor;
+}
+
+.identity-link-card-label {
+  min-width: 0;
+  font-size: .52rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .07em;
+  white-space: nowrap;
+}
+
+.identity-link-hub {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  justify-self: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 91, 214, .48);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 91, 214, .18),
+      rgba(20, 8, 40, .94) 68%
+    );
+  box-shadow:
+    0 0 14px rgba(255, 91, 214, .24),
+    0 0 20px rgba(96, 207, 255, .1),
+    inset 0 0 9px rgba(141, 114, 255, .09);
+  pointer-events: none;
+}
+
+.identity-card .identity-link-card:hover,
+.identity-card .identity-link-card:focus-visible {
+  border-color: #ff72de;
+  color: #fff;
+  box-shadow:
+    0 0 18px rgba(255, 91, 214, .34),
+    0 0 22px rgba(96, 207, 255, .14),
+    inset 0 0 12px rgba(255, 91, 214, .08);
+  outline: 2px solid rgba(255, 255, 255, .86);
+  outline-offset: 2px;
+}
+
+.identity-card .identity-link-card:active {
+  transform: translateY(0) rotate(0deg) scale(.97);
+}
+
+.owner-link-deck {
+  grid-template-columns: repeat(3, minmax(3.25rem, 1fr));
+  grid-template-areas:
+    "x linkedin github"
+    "discord hub facebook";
+  max-width: 13rem;
+}
+
+.identity-card--matt .owner-link-card--x {
+  grid-area: x;
+  transform: rotate(-3deg);
+}
+
+.identity-card--matt .owner-link-card--linkedin {
+  grid-area: linkedin;
+  transform: translateY(-.08rem) rotate(-1deg);
+}
+
+.identity-card--matt .owner-link-card--github {
+  grid-area: github;
+  transform: rotate(3deg);
+}
+
+.identity-card--matt .owner-link-card--discord {
+  grid-area: discord;
+  transform: rotate(-2deg);
+}
+
+.identity-card--matt .owner-link-card--facebook {
+  grid-area: facebook;
+  transform: rotate(2deg);
+}
+
+.owner-link-hub {
+  grid-area: hub;
+}
+
+.identity-card--matt .owner-link-hub img {
+  display: block;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 91, 214, .58));
+}
+
+.identity-card--matt .owner-link-card:hover,
+.identity-card--matt .owner-link-card:focus-visible {
+  transform: translateY(-.18rem) rotate(0deg);
+}
+
+.kandy-link-deck {
+  grid-template-columns:
+    minmax(3.25rem, 1fr)
+    2.6rem
+    minmax(3.25rem, 1fr);
+  grid-template-areas:
+    "facebook hub suno"
+    "play hub apple";
+  max-width: 11.5rem;
+}
+
+.identity-card--kandy .kandy-link-card--facebook {
+  grid-area: facebook;
+  transform: rotate(-2deg);
+}
+
+.identity-card--kandy .kandy-link-card--suno {
+  grid-area: suno;
+  transform: rotate(2deg);
+}
+
+.identity-card--kandy .kandy-link-card--play {
+  grid-area: play;
+  transform: rotate(-1deg);
+}
+
+.identity-card--kandy .kandy-link-card--apple {
+  grid-area: apple;
+  transform: rotate(1deg);
+}
+
+.kandy-link-hub {
+  grid-area: hub;
+  align-self: stretch;
+  width: 2.6rem;
+  height: auto;
+  min-height: 2.75rem;
+  border-radius: .85rem;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 91, 214, .2),
+      rgba(141, 114, 255, .12),
+      rgba(10, 8, 29, .92)
+    );
+}
+
+.kandy-link-hub span {
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-shadow:
+    0 0 8px rgba(255, 91, 214, .72);
+}
+
+.identity-card--kandy .kandy-link-card:hover,
+.identity-card--kandy .kandy-link-card:focus-visible {
+  transform: translateY(-.18rem) rotate(0deg);
+}
+
 .penny-link-deck {
   display: grid;
   grid-template-columns:
@@ -1640,6 +1855,13 @@ body {
     margin-top: .55rem;
   }
 
+  .identity-card--matt .owner-link-deck {
+    grid-column: 2;
+    grid-row: auto;
+    align-self: start;
+    margin-top: .55rem;
+  }
+
   .owner-feature-video-shell {
     display: block;
     grid-column: 3;
@@ -2005,6 +2227,11 @@ body {
     margin-top: .4rem;
   }
 
+  .identity-card--matt .owner-link-deck {
+    grid-column: 2 / 4;
+    margin-top: .4rem;
+  }
+
   .identity-card--matt .owner-feature-video-shell {
     display: block;
     grid-column: 3;
@@ -2185,6 +2412,13 @@ body {
     margin-top: .45rem;
   }
 
+  .kandy-link-deck {
+    width: 100%;
+    max-width: 11.5rem;
+    gap: .28rem;
+    margin-top: .45rem;
+  }
+
   .kandy-links a {
     grid-column: auto;
     width: 2rem;
@@ -2255,6 +2489,11 @@ body {
   }
 
   .owner-socials {
+    grid-column: 2 / -1;
+    margin: .4rem 0 0;
+  }
+
+  .owner-link-deck {
     grid-column: 2 / -1;
     margin: .4rem 0 0;
   }
@@ -2411,6 +2650,14 @@ body {
   .identity-card--penny .penny-link-card:hover,
   .identity-card--penny .penny-link-card:focus-visible,
   .identity-card--penny .penny-link-card:active {
+    transform: none;
+    transition: none;
+  }
+
+  .identity-card .identity-link-card,
+  .identity-card .identity-link-card:hover,
+  .identity-card .identity-link-card:focus-visible,
+  .identity-card .identity-link-card:active {
     transform: none;
     transition: none;
   }

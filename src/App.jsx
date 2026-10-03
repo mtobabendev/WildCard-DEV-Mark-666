@@ -1045,52 +1045,97 @@ function ContactPanels({
           </a>
 
           <div
-            className="owner-socials"
+            className="identity-link-deck owner-link-deck"
             aria-label="Matt Tobaben social links"
           >
             <a
+              className="identity-link-card owner-link-card--x"
               href={WILDCARD_X_URL}
               target="_blank"
               rel="noreferrer"
               aria-label="WildCard DEV on X"
             >
-              <XIcon />
+              <span
+                className="identity-link-card-icon"
+                aria-hidden="true"
+              >
+                <XIcon />
+              </span>
+              <span className="identity-link-card-label">X</span>
             </a>
 
             <a
+              className="identity-link-card owner-link-card--linkedin"
               href="https://www.linkedin.com/in/matt-tobaben/"
               target="_blank"
               rel="noreferrer"
               aria-label="Matt Tobaben on LinkedIn"
             >
-              <LinkedInIcon />
+              <span
+                className="identity-link-card-icon"
+                aria-hidden="true"
+              >
+                <LinkedInIcon />
+              </span>
+              <span className="identity-link-card-label">IN</span>
             </a>
 
             <a
+              className="identity-link-card owner-link-card--github"
               href="https://github.com/mtobabendev"
               target="_blank"
               rel="noreferrer"
               aria-label="Matt Tobaben on GitHub"
             >
-              <GitHubIcon />
+              <span
+                className="identity-link-card-icon"
+                aria-hidden="true"
+              >
+                <GitHubIcon />
+              </span>
+              <span className="identity-link-card-label">GH</span>
             </a>
 
+            <div
+              className="identity-link-hub owner-link-hub"
+              aria-hidden="true"
+            >
+              <img
+                src={wildCardLogo}
+                alt=""
+              />
+            </div>
+
             <a
+              className="identity-link-card owner-link-card--discord"
               href="https://discord.com/users/1503417641086488708"
               target="_blank"
               rel="noreferrer"
               aria-label="Matt Tobaben on Discord"
             >
-              <DiscordIcon />
+              <span
+                className="identity-link-card-icon"
+                aria-hidden="true"
+              >
+                <DiscordIcon />
+              </span>
+              <span className="identity-link-card-label">DC</span>
             </a>
 
             <a
+              className="identity-link-card owner-link-card--facebook"
               href="https://www.facebook.com/profile.php?id=61595096724035"
               target="_blank"
               rel="noreferrer"
               aria-label="Matt Tobaben on Facebook"
             >
-              <FacebookIcon />
+              <span
+                className="identity-link-card-icon"
+                aria-hidden="true"
+              >
+                <FacebookIcon />
+              </span>
+              <span className="identity-link-card-label">FB</span>
             </a>
           </div>
 
@@ -1162,19 +1207,27 @@ function ContactPanels({
               </div>
 
               <div
-                className="kandy-links"
+                className="identity-link-deck kandy-link-deck"
                 aria-label="Kandy links"
               >
                 <a
+                  className="identity-link-card kandy-link-card--facebook"
                   href={KANDY_FACEBOOK_URL}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Kandy on Facebook"
                 >
-                  <FacebookIcon />
+                  <span
+                    className="identity-link-card-icon"
+                    aria-hidden="true"
+                  >
+                    <FacebookIcon />
+                  </span>
+                  <span className="identity-link-card-label">FB</span>
                 </a>
 
                 <a
+                  className="identity-link-card kandy-link-card--suno"
                   href={KANDY_SUNO_URL}
                   target="_blank"
                   rel="noreferrer"
@@ -1189,25 +1242,52 @@ function ContactPanels({
                     );
                   }}
                 >
-                  <SunoIcon />
+                  <span
+                    className="identity-link-card-icon"
+                    aria-hidden="true"
+                  >
+                    <SunoIcon />
+                  </span>
+                  <span className="identity-link-card-label">SUNO</span>
                 </a>
 
+                <div
+                  className="identity-link-hub kandy-link-hub"
+                  aria-hidden="true"
+                >
+                  <span>K</span>
+                </div>
+
                 <a
+                  className="identity-link-card kandy-link-card--play"
                   href={SUNO_ANDROID_URL}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Download Suno for Android"
                 >
-                  <GooglePlayIcon />
+                  <span
+                    className="identity-link-card-icon"
+                    aria-hidden="true"
+                  >
+                    <GooglePlayIcon />
+                  </span>
+                  <span className="identity-link-card-label">GP</span>
                 </a>
 
                 <a
+                  className="identity-link-card kandy-link-card--apple"
                   href={SUNO_IOS_URL}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Download Suno for iPhone"
                 >
-                  <AppleIcon />
+                  <span
+                    className="identity-link-card-icon"
+                    aria-hidden="true"
+                  >
+                    <AppleIcon />
+                  </span>
+                  <span className="identity-link-card-label">iOS</span>
                 </a>
               </div>
             </div>
