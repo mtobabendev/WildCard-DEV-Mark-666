@@ -31,7 +31,6 @@ const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
 const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
-const WILDCARD_GITHUB_URL = 'https://github.com/mtobabendev';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
