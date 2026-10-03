@@ -1905,24 +1905,42 @@ export default function App() {
               Concierge guidance, contact routing, and controlled chaos.
             </p>
 
-            <button
-              className="penny-office-button"
-              type="button"
-              onClick={() => setGateOpen(true)}
-            >
-              Enter Penny’s Office
-            </button>
+            <div className="penny-destination-pills">
+              <button
+                className="penny-destination-pill penny-destination-pill--office"
+                type="button"
+                onClick={() => setGateOpen(true)}
+              >
+                PENNY’S OFFICE
+              </button>
+
+              <a
+                className="penny-destination-pill penny-destination-pill--garage"
+                href="https://pennysoffice.wildcarddev.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PENNY’S GARAGE
+              </a>
+            </div>
 
             <div
               className="penny-socials"
               aria-label="Penny links"
             >
               <a
+                className="penny-party-link"
                 href={WILDCARD_PARTY_URL}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="WildCard Social"
+                aria-label="WildCard Party"
               >
+                <img
+                  className="penny-party-spade"
+                  src={pennySpadeLogo}
+                  alt=""
+                  aria-hidden="true"
+                />
                 <FacebookIcon />
               </a>
 
@@ -1933,15 +1951,6 @@ export default function App() {
                 aria-label="WildCard DEV on X"
               >
                 <XIcon />
-              </a>
-
-              <a
-                href={WILDCARD_GITHUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WildCard DEV on GitHub"
-              >
-                <GitHubIcon />
               </a>
             </div>
           </div>
