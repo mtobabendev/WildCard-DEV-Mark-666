@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import mattAvatar from '../assets/matt-avatar.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
+import wildCardDevIcon from '../assets/wildcard-logo-main.png';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
 import kandyKandleWebm from '../assets/KandyKandle.webm';
 import pennyKandyAvaVideo from '../assets/PennyKandyAva.webm';
@@ -1101,7 +1102,7 @@ function ContactPanels({
               aria-hidden="true"
             >
               <img
-                src={wildCardLogo}
+                src={wildCardDevIcon}
                 alt=""
               />
             </div>
@@ -1255,7 +1256,10 @@ function ContactPanels({
                   className="identity-link-hub kandy-link-hub"
                   aria-hidden="true"
                 >
-                  <span>K</span>
+                  <img
+                    src={wildCardDevIcon}
+                    alt=""
+                  />
                 </div>
 
                 <a

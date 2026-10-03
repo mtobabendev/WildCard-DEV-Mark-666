@@ -985,13 +985,15 @@ body {
     );
 }
 
-.kandy-link-hub span {
-  color: #fff;
-  font-size: .8rem;
-  font-weight: 900;
-  letter-spacing: .05em;
-  text-shadow:
-    0 0 8px rgba(255, 91, 214, .72);
+.identity-card--kandy .kandy-link-hub img {
+  display: block;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 5px rgba(96, 207, 255, .7))
+    drop-shadow(0 0 8px rgba(141, 114, 255, .55));
 }
 
 .identity-card--kandy .kandy-link-card:hover,
@@ -1917,6 +1919,72 @@ body {
     min-height: 17rem;
     aspect-ratio: auto;
     align-self: stretch;
+  }
+
+  .identity-card--matt .owner-link-deck {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr))
+      2.4rem
+      repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "x linkedin github hub discord facebook";
+    gap: .2rem;
+    width: min(100%, 16rem);
+    max-width: 16rem;
+    margin-top: .4rem;
+  }
+
+  .identity-card--matt .identity-link-card {
+    grid-template-rows: 1.15rem auto;
+    min-height: 2.5rem;
+    padding: .28rem .2rem .24rem;
+  }
+
+  .identity-card--matt .owner-link-hub {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .identity-card--matt .owner-link-hub img {
+    width: 1.72rem;
+    height: 1.72rem;
+  }
+
+  .identity-card--kandy .kandy-link-deck {
+    position: relative;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "facebook suno"
+      "play apple";
+    gap: .25rem;
+    width: 100%;
+    max-width: 100%;
+    margin-top: .35rem;
+    padding-top: 2.15rem;
+  }
+
+  .identity-card--kandy .identity-link-card {
+    grid-template-rows: 1.15rem auto;
+    min-height: 2.5rem;
+    padding: .28rem .2rem .24rem;
+  }
+
+  .identity-card--kandy .kandy-link-hub {
+    position: absolute;
+    grid-area: auto;
+    top: 0;
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    min-height: 0;
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  .identity-card--kandy .kandy-link-hub img {
+    width: 1.45rem;
+    height: 1.45rem;
   }
 
   .card-stage--penny .identity-card--penny {
