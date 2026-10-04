@@ -100,7 +100,7 @@ a {
   padding: clamp(1.25rem, 4vw, 2.4rem);
   border: 1px solid rgba(141, 114, 255, .5);
   border-radius: clamp(1rem, 3vw, 1.5rem);
-  background: rgba(8, 5, 24, .76);
+  background: rgba(8, 5, 24, .42);
   box-shadow:
     0 0 34px rgba(96, 207, 255, .16),
     0 0 48px rgba(255, 91, 214, .12),
