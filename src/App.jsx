@@ -1035,15 +1035,27 @@ function ContactPanels({
             402-915-0789
           </a>
 
-          <a
-            className="owner-labs-pill"
-            href="https://labs.wildcarddev.com/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="See WildCard Labs live"
-          >
-            LABS
-          </a>
+          <div className="owner-project-pills">
+            <a
+              className="owner-labs-pill"
+              href="https://labs.wildcarddev.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="See WildCard Labs live"
+            >
+              LABS
+            </a>
+
+            <a
+              className="owner-labs-pill owner-possibilities-pill"
+              href="https://pennysoffice.wildcarddev.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Explore the possibilities with Penny's Garage"
+            >
+              THE POSSIBILITIES
+            </a>
+          </div>
 
           <div
             className="identity-link-deck owner-link-deck"
@@ -1855,7 +1867,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
+        className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'penny' ? ' context-window--penny' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
         aria-live="polite"
         aria-hidden={!open || contactPanelDismissed}
         hidden={contactPanelDismissed}
@@ -1925,13 +1937,31 @@ export default function App() {
 
         {activeChannel.id === 'systems' && (
           <div className="arcane-feature">
-            <p className="eyebrow">Live project</p>
-            <a
-              href="https://pennysoffice.wildcarddev.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              ENTER PENNY’S OFFICE →
+            <p className="eyebrow">Live projects</p>
+            <div className="arcane-project-links">
+              <a
+                href="https://pennysoffice.wildcarddev.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PENNY’S GARAGE
+              </a>
+              <a
+                href="https://labs.wildcarddev.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                WILDCARD LABS
+              </a>
+            </div>
+          </div>
+        )}
+
+        {activeChannel.id === 'penny' && (
+          <div className="penny-bunker-feature">
+            <p className="eyebrow">Penny // Discord</p>
+            <a href="/bunker">
+              ENTER THE DISCORD BUNKER →
             </a>
           </div>
         )}
@@ -2016,7 +2046,7 @@ export default function App() {
                 type="button"
                 onClick={() => setGateOpen(true)}
               >
-                PENNY’S OFFICE
+                PENNY’S DISCORD
               </button>
 
               <a
