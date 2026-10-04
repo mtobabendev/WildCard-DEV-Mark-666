@@ -1022,3 +1022,377 @@
     transition: none !important;
   }
 }
+
+/* Little Black Book Stage LBB-1: workout + contact copy controls */
+.lbb-workout {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 210, 223, .12);
+}
+
+.lbb-workout-head,
+.lbb-workout-panel-head,
+.lbb-exercise-title,
+.lbb-previous-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.lbb-workout-head h3,
+.lbb-workout-panel h4,
+.lbb-workout-head p,
+.lbb-kicker,
+.lbb-workout-panel-head span,
+.lbb-previous-body p {
+  margin: 0;
+}
+
+.lbb-kicker {
+  color: var(--lbb-blue);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.lbb-workout-head h3 {
+  margin-top: .15rem;
+  color: var(--lbb-pink);
+  font-size: .95rem;
+  letter-spacing: .1em;
+}
+
+.lbb-workout-head > p {
+  max-width: 230px;
+  color: var(--lbb-muted);
+  font-size: .68rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.lbb-workout-modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+  margin-top: .8rem;
+}
+
+.lbb-workout-modes button,
+.lbb-repeat-button,
+.lbb-previous-toggle {
+  min-height: 48px;
+  border: 1px solid rgba(201, 210, 223, .16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .035);
+  color: var(--lbb-silver);
+  font-size: .64rem;
+  font-weight: 900;
+  letter-spacing: .07em;
+  cursor: pointer;
+}
+
+.lbb-workout-modes button:hover,
+.lbb-workout-modes button:focus-visible,
+.lbb-repeat-button:hover,
+.lbb-repeat-button:focus-visible,
+.lbb-previous-toggle:hover,
+.lbb-previous-toggle:focus-visible {
+  border-color: var(--lbb-blue);
+  outline: 2px solid rgba(96, 207, 255, .2);
+  outline-offset: 1px;
+}
+
+.lbb-workout-modes button.is-active {
+  border-color: rgba(255, 91, 214, .62);
+  background: linear-gradient(180deg, rgba(255, 91, 214, .2), rgba(141, 114, 255, .1));
+  color: #fff;
+  box-shadow: inset 0 -2px 0 var(--lbb-pink);
+}
+
+.lbb-workout-panel {
+  margin-top: .8rem;
+}
+
+.lbb-workout-panel h4 {
+  color: #fff;
+  font-size: .72rem;
+  letter-spacing: .09em;
+}
+
+.lbb-workout-panel-head span {
+  color: var(--lbb-muted);
+  font-size: .64rem;
+}
+
+.lbb-exercise-list {
+  display: grid;
+  gap: .58rem;
+  margin-top: .6rem;
+}
+
+.lbb-exercise-card {
+  display: grid;
+  gap: .58rem;
+  padding: .72rem;
+  border: 1px solid rgba(201, 210, 223, .11);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.lbb-exercise-card.is-enabled {
+  border-color: rgba(96, 207, 255, .22);
+  background: rgba(96, 207, 255, .035);
+}
+
+.lbb-exercise-title strong,
+.lbb-workout-use strong {
+  color: #fff;
+  font-size: .79rem;
+}
+
+.lbb-exercise-card > label,
+.lbb-workout-notes,
+.lbb-five-sets label {
+  display: grid;
+  gap: .28rem;
+  color: var(--lbb-muted);
+  font-size: .57rem;
+  font-weight: 850;
+  letter-spacing: .07em;
+}
+
+.lbb-exercise-card input[type="text"],
+.lbb-workout-notes textarea,
+.lbb-five-sets input {
+  width: 100%;
+  min-height: 42px;
+  padding: .52rem .58rem;
+}
+
+.lbb-workout-done,
+.lbb-workout-use {
+  position: relative;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: .42rem;
+  cursor: pointer;
+}
+
+.lbb-workout-done input,
+.lbb-workout-use input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--lbb-pink);
+}
+
+.lbb-workout-done span {
+  color: var(--lbb-blue);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.lbb-workout-done input:disabled + span {
+  opacity: .42;
+}
+
+.lbb-five-sets {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .35rem;
+}
+
+.lbb-five-sets label {
+  text-align: center;
+}
+
+.lbb-five-sets input {
+  min-width: 0;
+  padding-inline: .25rem;
+  text-align: center;
+}
+
+.lbb-workout-notes {
+  margin-top: .75rem;
+}
+
+.lbb-workout-notes textarea {
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.lbb-previous-day {
+  margin-top: .8rem;
+  border: 1px solid rgba(201, 210, 223, .11);
+  border-radius: 11px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .02);
+}
+
+.lbb-previous-toggle {
+  width: 100%;
+  min-height: 46px;
+  padding: .6rem .72rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.lbb-previous-body {
+  padding: .72rem;
+  border-top: 1px solid rgba(201, 210, 223, .08);
+}
+
+.lbb-previous-body p,
+.lbb-previous-body li {
+  color: var(--lbb-muted);
+  font-size: .7rem;
+  line-height: 1.45;
+}
+
+.lbb-previous-body ul {
+  margin: .5rem 0 .7rem;
+  padding-left: 1.15rem;
+}
+
+.lbb-repeat-button {
+  width: 100%;
+  margin-top: .5rem;
+  border-color: rgba(255, 91, 214, .36);
+}
+
+.lbb-contact-copy-grid {
+  display: grid;
+  gap: .46rem;
+  margin-top: .65rem;
+}
+
+.lbb-contact-copy-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .55rem;
+  min-width: 0;
+  padding: .48rem .55rem;
+  border: 1px solid rgba(201, 210, 223, .09);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .02);
+}
+
+.lbb-contact-copy-row > div {
+  display: grid;
+  min-width: 0;
+  gap: .12rem;
+}
+
+.lbb-contact-copy-row > div span {
+  color: var(--lbb-blue);
+  font-size: .52rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+}
+
+.lbb-contact-copy-row strong {
+  min-width: 0;
+  color: var(--lbb-silver);
+  font-size: .72rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.lbb-contact-copy-row button {
+  min-width: 68px;
+  min-height: 40px;
+  padding: .35rem .52rem;
+  border: 1px solid rgba(255, 91, 214, .32);
+  border-radius: 8px;
+  background: rgba(255, 91, 214, .07);
+  color: #fff;
+  font-size: .58rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.lbb-contact-copy-row button:hover,
+.lbb-contact-copy-row button:focus-visible {
+  border-color: var(--lbb-pink);
+  outline: 2px solid rgba(255, 91, 214, .18);
+  outline-offset: 1px;
+}
+
+.lbb-contact-copy-row button:disabled {
+  opacity: .38;
+  cursor: default;
+}
+
+.lbb-copy-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 560px) {
+  .lbb-workout-modes {
+    grid-template-columns: 1fr;
+  }
+
+  .lbb-workout-head {
+    align-items: flex-start;
+  }
+
+  .lbb-workout-head > p {
+    max-width: 180px;
+    font-size: .63rem;
+  }
+
+  .lbb-exercise-card {
+    padding: .65rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .lbb-workout-head,
+  .lbb-workout-panel-head {
+    display: grid;
+  }
+
+  .lbb-workout-head > p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .lbb-five-sets {
+    gap: .22rem;
+  }
+
+  .lbb-five-sets input {
+    min-height: 40px;
+    font-size: .72rem;
+  }
+
+  .lbb-contact-copy-row {
+    grid-template-columns: minmax(0, 1fr) 64px;
+  }
+}
+
+@media (max-width: 240px) {
+  .lbb-workout {
+    display: none;
+  }
+
+  .lbb-contact-copy-row {
+    grid-template-columns: 1fr;
+  }
+
+  .lbb-contact-copy-row button {
+    width: 100%;
+  }
+}

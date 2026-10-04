@@ -7,6 +7,40 @@ const STORE_NAME = 'state';
 const STORE_KEY = 'app';
 const SAVE_DELAY_MS = 200;
 
+const BODY_WEIGHT_EXERCISES = [
+  'Push-Ups',
+  'Diamond Push-Ups',
+  'Pull-Ups',
+  'Bicycle Crunches',
+  'Squats',
+  'Side Squats',
+  'Lunges',
+  'Good Mornings',
+  'Tricep Dips',
+];
+
+const WEIGHT_EXERCISES = [
+  'Squat',
+  'Bench Press',
+  'Row',
+  'Overhead Press',
+  'Deadlift',
+  'Curls',
+];
+
+const YOGA_POSES = [
+  'Mountain Pose',
+  'Cat-Cow',
+  "Child's Pose",
+  'Downward Dog',
+  'Low Lunge',
+  'Sphinx / Cobra',
+  'Seated Forward Fold',
+  'Supine Twist',
+  'Legs Up the Wall',
+  'Savasana',
+];
+
 const STARTER_BILLS = [
   ['starter-rent', 'Rent / Mortgage'],
   ['starter-electric', 'Electric'],
@@ -41,6 +75,7 @@ function defaultData() {
       rows: makeStarterBills(),
     },
     contacts: [],
+    workouts: {},
   };
 }
 
@@ -57,7 +92,62 @@ function normalizeData(value) {
         : fallback.bills.rows,
     },
     contacts: Array.isArray(value.contacts) ? value.contacts : [],
+    workouts: value.workouts && typeof value.workouts === 'object' ? value.workouts : {},
   };
+}
+
+function emptyWorkoutDay() {
+  return {
+    selectedMode: '',
+    bodyWeight: {},
+    weights: {},
+    yoga: {},
+    notes: '',
+  };
+}
+
+function workoutHasData(workout) {
+  if (!workout || typeof workout !== 'object') return false;
+  if (workout.selectedMode || workout.notes) return true;
+  return ['bodyWeight', 'weights', 'yoga'].some((key) => (
+    workout[key] && Object.keys(workout[key]).length > 0
+  ));
+}
+
+function repeatWorkoutConfiguration(workout) {
+  const source = workout || emptyWorkoutDay();
+  const next = emptyWorkoutDay();
+  next.selectedMode = source.selectedMode || '';
+  next.notes = source.notes || '';
+
+  BODY_WEIGHT_EXERCISES.forEach((name) => {
+    const item = source.bodyWeight?.[name];
+    if (item && (item.work || item.notes || item.done)) {
+      next.bodyWeight[name] = { work: '', done: false, notes: item.notes || '' };
+    }
+  });
+
+  WEIGHT_EXERCISES.forEach((name) => {
+    const item = source.weights?.[name];
+    if (item && item.enabled) {
+      next.weights[name] = {
+        enabled: true,
+        weight: item.weight || '',
+        sets: ['', '', '', '', ''],
+        done: false,
+        notes: item.notes || '',
+      };
+    }
+  });
+
+  YOGA_POSES.forEach((name) => {
+    const item = source.yoga?.[name];
+    if (item && (item.duration || item.notes || item.done)) {
+      next.yoga[name] = { duration: '', done: false, notes: item.notes || '' };
+    }
+  });
+
+  return next;
 }
 
 function localDateKey(date) {
@@ -152,6 +242,8 @@ export default function LittleBlackBook() {
   const [plannerText, setPlannerText] = useState('');
   const [contactDraft, setContactDraft] = useState({ name: '', phone: '', email: '', notes: '' });
   const [editingContactId, setEditingContactId] = useState(null);
+  const [copyStatus, setCopyStatus] = useState('');
+  const [previousOpen, setPreviousOpen] = useState(false);
   const [calculator, setCalculator] = useState({ display: '0', stored: null, operator: null, waiting: false });
 
   const triggerRef = useRef(null);
@@ -160,6 +252,7 @@ export default function LittleBlackBook() {
   const dbRef = useRef(null);
   const hydratedRef = useRef(false);
   const saveTimerRef = useRef(null);
+  const copyTimerRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -188,6 +281,7 @@ export default function LittleBlackBook() {
     return () => {
       cancelled = true;
       if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current);
+      if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
       dbRef.current?.close();
       dbRef.current = null;
     };
@@ -261,6 +355,9 @@ export default function LittleBlackBook() {
   }, [isOpen]);
 
   const plannerDay = data.planner[selectedDate] || { items: [], notes: '' };
+  const workoutDay = data.workouts[selectedDate] || emptyWorkoutDay();
+  const previousDate = shiftDateKey(selectedDate, -1);
+  const previousWorkout = data.workouts[previousDate] || null;
   const isToday = selectedDate === localDateKey(new Date());
   const selectedDateLabel = useMemo(
     () => new Intl.DateTimeFormat('en-US', {
@@ -303,6 +400,45 @@ export default function LittleBlackBook() {
         },
       };
     });
+  }
+
+  function updateWorkoutDay(updater) {
+    setData((current) => {
+      const currentDay = current.workouts[selectedDate] || emptyWorkoutDay();
+      const nextDay = updater(currentDay);
+      return {
+        ...current,
+        workouts: {
+          ...current.workouts,
+          [selectedDate]: nextDay,
+        },
+      };
+    });
+  }
+
+  function updateWorkoutItem(section, name, patch) {
+    updateWorkoutDay((day) => ({
+      ...day,
+      [section]: {
+        ...(day[section] || {}),
+        [name]: {
+          ...(day[section]?.[name] || {}),
+          ...patch,
+        },
+      },
+    }));
+  }
+
+  function repeatYesterday() {
+    if (!previousWorkout) return;
+    if (workoutHasData(workoutDay) && !window.confirm('Replace today’s workout with yesterday’s configuration?')) return;
+    setData((current) => ({
+      ...current,
+      workouts: {
+        ...current.workouts,
+        [selectedDate]: repeatWorkoutConfiguration(previousWorkout),
+      },
+    }));
   }
 
   function addPlannerItem(event) {
@@ -434,6 +570,18 @@ export default function LittleBlackBook() {
       contacts: current.contacts.filter((contact) => contact.id !== id),
     }));
     if (editingContactId === id) cancelContactEdit();
+  }
+
+  async function copyContactField(contactId, field, value) {
+    if (!value) return;
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopyStatus(contactId + ':' + field);
+      if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = window.setTimeout(() => setCopyStatus(''), 1400);
+    } catch {
+      setCopyStatus('error:' + contactId + ':' + field);
+    }
   }
 
   function calculatorDigit(digit) {
@@ -655,6 +803,263 @@ export default function LittleBlackBook() {
                 placeholder="Notes for this date…"
               />
             </label>
+
+            <section className="lbb-workout" aria-labelledby="lbb-workout-title">
+              <div className="lbb-workout-head">
+                <div>
+                  <p className="lbb-kicker">MOVE</p>
+                  <h3 id="lbb-workout-title">WORKOUT</h3>
+                </div>
+                <p>Pick one lane. Your entries stay put when you switch.</p>
+              </div>
+
+              <div className="lbb-workout-modes" role="group" aria-label="Workout mode">
+                {[
+                  ['bodyWeight', 'BODY WEIGHT'],
+                  ['weights', 'WEIGHTS AVAILABLE'],
+                  ['yoga', 'YOGA'],
+                ].map(([mode, label]) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    className={workoutDay.selectedMode === mode ? 'is-active' : ''}
+                    aria-pressed={workoutDay.selectedMode === mode}
+                    onClick={() => updateWorkoutDay((day) => ({ ...day, selectedMode: mode }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {workoutDay.selectedMode === 'bodyWeight' && (
+                <div className="lbb-workout-panel">
+                  <h4>WORKOUT ROUTINE</h4>
+                  <div className="lbb-exercise-list">
+                    {BODY_WEIGHT_EXERCISES.map((name) => {
+                      const item = workoutDay.bodyWeight?.[name] || {};
+                      return (
+                        <article className="lbb-exercise-card" key={name}>
+                          <div className="lbb-exercise-title">
+                            <strong>{name}</strong>
+                            <label className="lbb-workout-done">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(item.done)}
+                                onChange={(event) => updateWorkoutItem('bodyWeight', name, { done: event.target.checked })}
+                              />
+                              <span>DONE</span>
+                            </label>
+                          </div>
+                          <label>
+                            <span>SETS / REPS OR WORK</span>
+                            <input
+                              type="text"
+                              value={item.work || ''}
+                              onChange={(event) => updateWorkoutItem('bodyWeight', name, { work: event.target.value })}
+                              placeholder="e.g. 3 × 12"
+                            />
+                          </label>
+                          <label>
+                            <span>NOTES</span>
+                            <input
+                              type="text"
+                              value={item.notes || ''}
+                              onChange={(event) => updateWorkoutItem('bodyWeight', name, { notes: event.target.value })}
+                              placeholder="Optional"
+                            />
+                          </label>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {workoutDay.selectedMode === 'weights' && (
+                <div className="lbb-workout-panel">
+                  <div className="lbb-workout-panel-head">
+                    <h4>5×5 STRENGTH</h4>
+                    <span>Target 5 × 5. Enter actual reps.</span>
+                  </div>
+                  <div className="lbb-exercise-list">
+                    {WEIGHT_EXERCISES.map((name) => {
+                      const item = workoutDay.weights?.[name] || {};
+                      const sets = Array.isArray(item.sets) ? item.sets : ['', '', '', '', ''];
+                      return (
+                        <article className={'lbb-exercise-card' + (item.enabled ? ' is-enabled' : '')} key={name}>
+                          <div className="lbb-exercise-title">
+                            <label className="lbb-workout-use">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(item.enabled)}
+                                onChange={(event) => updateWorkoutItem('weights', name, {
+                                  enabled: event.target.checked,
+                                  sets: sets.length === 5 ? sets : ['', '', '', '', ''],
+                                })}
+                              />
+                              <strong>{name}</strong>
+                            </label>
+                            <label className="lbb-workout-done">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(item.done)}
+                                disabled={!item.enabled}
+                                onChange={(event) => updateWorkoutItem('weights', name, { done: event.target.checked })}
+                              />
+                              <span>DONE</span>
+                            </label>
+                          </div>
+                          {item.enabled && (
+                            <>
+                              <label>
+                                <span>WEIGHT</span>
+                                <input
+                                  type="text"
+                                  inputMode="decimal"
+                                  value={item.weight || ''}
+                                  onChange={(event) => updateWorkoutItem('weights', name, { weight: event.target.value })}
+                                  placeholder="Weight"
+                                />
+                              </label>
+                              <div className="lbb-five-sets" aria-label={name + ' five set reps'}>
+                                {sets.map((setValue, index) => (
+                                  <label key={index}>
+                                    <span>S{index + 1}</span>
+                                    <input
+                                      type="text"
+                                      inputMode="numeric"
+                                      value={setValue || ''}
+                                      onChange={(event) => {
+                                        const nextSets = [...sets];
+                                        nextSets[index] = event.target.value;
+                                        updateWorkoutItem('weights', name, { sets: nextSets });
+                                      }}
+                                      placeholder="5"
+                                      aria-label={name + ' set ' + (index + 1) + ' reps'}
+                                    />
+                                  </label>
+                                ))}
+                              </div>
+                              <label>
+                                <span>NOTES</span>
+                                <input
+                                  type="text"
+                                  value={item.notes || ''}
+                                  onChange={(event) => updateWorkoutItem('weights', name, { notes: event.target.value })}
+                                  placeholder="Optional"
+                                />
+                              </label>
+                            </>
+                          )}
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {workoutDay.selectedMode === 'yoga' && (
+                <div className="lbb-workout-panel">
+                  <div className="lbb-workout-panel-head">
+                    <h4>BEGINNER FLOW</h4>
+                    <span>About 10–15 minutes.</span>
+                  </div>
+                  <div className="lbb-exercise-list">
+                    {YOGA_POSES.map((name) => {
+                      const item = workoutDay.yoga?.[name] || {};
+                      return (
+                        <article className="lbb-exercise-card" key={name}>
+                          <div className="lbb-exercise-title">
+                            <strong>{name}</strong>
+                            <label className="lbb-workout-done">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(item.done)}
+                                onChange={(event) => updateWorkoutItem('yoga', name, { done: event.target.checked })}
+                              />
+                              <span>DONE</span>
+                            </label>
+                          </div>
+                          <label>
+                            <span>DURATION</span>
+                            <input
+                              type="text"
+                              value={item.duration || ''}
+                              onChange={(event) => updateWorkoutItem('yoga', name, { duration: event.target.value })}
+                              placeholder="e.g. 45 sec"
+                            />
+                          </label>
+                          <label>
+                            <span>NOTES</span>
+                            <input
+                              type="text"
+                              value={item.notes || ''}
+                              onChange={(event) => updateWorkoutItem('yoga', name, { notes: event.target.value })}
+                              placeholder="Optional"
+                            />
+                          </label>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <label className="lbb-workout-notes">
+                <span>WORKOUT NOTES</span>
+                <textarea
+                  rows="3"
+                  value={workoutDay.notes || ''}
+                  onChange={(event) => updateWorkoutDay((day) => ({ ...day, notes: event.target.value }))}
+                  placeholder="Optional notes for this workout…"
+                />
+              </label>
+
+              <div className="lbb-previous-day">
+                <button
+                  type="button"
+                  className="lbb-previous-toggle"
+                  aria-expanded={previousOpen}
+                  onClick={() => setPreviousOpen((open) => !open)}
+                >
+                  <span>PREVIOUS DAY</span>
+                  <span aria-hidden="true">{previousOpen ? '−' : '+'}</span>
+                </button>
+                {previousOpen && (
+                  <div className="lbb-previous-body">
+                    {!previousWorkout || !workoutHasData(previousWorkout) ? (
+                      <p className="lbb-empty">No workout recorded for the previous calendar day.</p>
+                    ) : (
+                      <>
+                        <p><strong>Mode:</strong> {previousWorkout.selectedMode || 'Not selected'}</p>
+                        {previousWorkout.selectedMode === 'bodyWeight' && (
+                          <ul>
+                            {BODY_WEIGHT_EXERCISES.filter((name) => previousWorkout.bodyWeight?.[name]).map((name) => (
+                              <li key={name}>{name}: {previousWorkout.bodyWeight[name].work || 'no work entered'}{previousWorkout.bodyWeight[name].done ? ' ✓' : ''}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {previousWorkout.selectedMode === 'weights' && (
+                          <ul>
+                            {WEIGHT_EXERCISES.filter((name) => previousWorkout.weights?.[name]?.enabled).map((name) => (
+                              <li key={name}>{name}: {previousWorkout.weights[name].weight || 'no weight'} / {(previousWorkout.weights[name].sets || []).filter(Boolean).join(', ') || 'no sets entered'}{previousWorkout.weights[name].done ? ' ✓' : ''}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {previousWorkout.selectedMode === 'yoga' && (
+                          <ul>
+                            {YOGA_POSES.filter((name) => previousWorkout.yoga?.[name]).map((name) => (
+                              <li key={name}>{name}: {previousWorkout.yoga[name].duration || 'no duration'}{previousWorkout.yoga[name].done ? ' ✓' : ''}</li>
+                            ))}
+                          </ul>
+                        )}
+                        <button className="lbb-repeat-button" type="button" onClick={repeatYesterday}>REPEAT YESTERDAY</button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
           </section>
 
           <section
@@ -795,11 +1200,37 @@ export default function LittleBlackBook() {
                       <button type="button" onClick={() => deleteContact(contact.id)}>DELETE</button>
                     </div>
                   </div>
-                  <div className="lbb-contact-links">
-                    {contact.phone && <a href={'tel:' + contact.phone}>{contact.phone}</a>}
-                    {contact.email && <a href={'mailto:' + contact.email}>{contact.email}</a>}
+                  <div className="lbb-contact-copy-grid">
+                    {[
+                      ['name', 'NAME', contact.name],
+                      ['phone', 'PHONE', contact.phone],
+                      ['email', 'EMAIL', contact.email],
+                      ['notes', 'NOTES', contact.notes],
+                    ].map(([field, label, value]) => {
+                      const statusKey = contact.id + ':' + field;
+                      const copied = copyStatus === statusKey;
+                      const failed = copyStatus === 'error:' + statusKey;
+                      return (
+                        <div className="lbb-contact-copy-row" key={field}>
+                          <div>
+                            <span>{label}</span>
+                            <strong>{value || '—'}</strong>
+                          </div>
+                          <button
+                            type="button"
+                            disabled={!value}
+                            aria-label={'Copy ' + field}
+                            onClick={() => copyContactField(contact.id, field, value)}
+                          >
+                            {copied ? 'COPIED' : 'COPY'}
+                          </button>
+                          <span className="lbb-copy-status" aria-live="polite">
+                            {failed ? 'Copy failed' : copied ? label + ' copied' : ''}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
-                  {contact.notes && <p>{contact.notes}</p>}
                 </article>
               ))}
             </div>
