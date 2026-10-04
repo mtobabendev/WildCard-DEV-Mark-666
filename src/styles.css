@@ -83,6 +83,33 @@ body {
     260ms forwards;
 }
 
+.context-window-close {
+  position: absolute;
+  top: .55rem;
+  right: .55rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 91, 214, .5);
+  border-radius: 999px;
+  background: rgba(10, 8, 29, .9);
+  color: #fff;
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.context-window-close:hover,
+.context-window-close:focus-visible {
+  border-color: var(--pink);
+  box-shadow: 0 0 18px rgba(255, 91, 214, .3);
+  outline: 2px solid rgba(255, 255, 255, .86);
+  outline-offset: 2px;
+}
+
 .context-window h2 {
   margin: .35rem 0;
   font-size: clamp(1.35rem, 3vw, 2.1rem);

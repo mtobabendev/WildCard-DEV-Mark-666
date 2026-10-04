@@ -1607,6 +1607,7 @@ function CombinationGate({
 export default function App() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(3);
+  const [contactPanelClosed, setContactPanelClosed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
@@ -1794,6 +1795,15 @@ export default function App() {
   );
   const pageVisible = usePageVisible();
   const activeChannel = CHANNELS[activeIndex];
+  const contactPanelDismissed = (
+    activeChannel.id === 'contact'
+    && contactPanelClosed
+  );
+
+  const handleChannelSelect = (index) => {
+    setContactPanelClosed(false);
+    setActiveIndex(index);
+  };
 
   const pennyVideoActive = (
     open
@@ -1837,7 +1847,7 @@ export default function App() {
       <Spinner
         open={open}
         activeIndex={activeIndex}
-        onSelect={setActiveIndex}
+        onSelect={handleChannelSelect}
         isWatch={isWatch}
         pageVisible={pageVisible}
         reducedMotion={reducedMotion}
@@ -1845,10 +1855,22 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
+        className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
         aria-live="polite"
-        aria-hidden={!open}
+        aria-hidden={!open || contactPanelDismissed}
+        hidden={contactPanelDismissed}
       >
+        {activeChannel.id === 'contact' && !contactPanelDismissed && (
+          <button
+            className="context-window-close"
+            type="button"
+            aria-label="Close contact panel"
+            onClick={() => setContactPanelClosed(true)}
+          >
+            ×
+          </button>
+        )}
+
         <p className="eyebrow">
           Channel {activeChannel.number}
         </p>
