@@ -1214,7 +1214,13 @@ export default function LittleBlackBook() {
                         <div className="lbb-contact-copy-row" key={field}>
                           <div>
                             <span>{label}</span>
-                            <strong>{value || '—'}</strong>
+                            {field === 'phone' && value ? (
+                              <a className="lbb-contact-copy-link" href={'tel:' + value}>{value}</a>
+                            ) : field === 'email' && value ? (
+                              <a className="lbb-contact-copy-link" href={'mailto:' + value}>{value}</a>
+                            ) : (
+                              <strong>{value || '—'}</strong>
+                            )}
                           </div>
                           <button
                             type="button"

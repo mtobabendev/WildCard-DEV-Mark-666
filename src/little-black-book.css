@@ -1295,13 +1295,28 @@
   letter-spacing: .09em;
 }
 
-.lbb-contact-copy-row strong {
+.lbb-contact-copy-row strong,
+.lbb-contact-copy-link {
   min-width: 0;
   color: var(--lbb-silver);
   font-size: .72rem;
   font-weight: 650;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
+}
+
+.lbb-contact-copy-link {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  text-decoration-color: rgba(96, 207, 255, .5);
+  text-underline-offset: 2px;
+}
+
+.lbb-contact-copy-link:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--lbb-blue);
+  outline-offset: 2px;
 }
 
 .lbb-contact-copy-row button {
