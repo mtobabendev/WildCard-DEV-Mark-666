@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
-import mattAvatar from '../assets/matt-avatar.png';
+import mattAvatar from '../assets/matt-avatar-ui.png';
 import wildCardLogo from '../assets/209000-pinkgothicbatheart.png';
 import wildCardDevIcon from '../assets/wildcard-logo-main.png';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
