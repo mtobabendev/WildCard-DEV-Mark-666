@@ -35,6 +35,7 @@ const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
+const NON_SPINNER_MEDIA_DELAY_MS = 2600;
 
 function trackAnalyticsEvent(name, parameters = {}) {
   if (
@@ -959,6 +960,7 @@ function ContactPanels({
   open,
   showKandy,
   pageVisible,
+  mediaReady,
   onContactAssist,
 }) {
   const ownerFeatureVideoRef = useRef(null);
@@ -975,6 +977,7 @@ function ContactPanels({
       !open
       || !pageVisible
       || !ownerFeatureVideoSupported
+      || !mediaReady
     ) {
       video.pause();
       return;
@@ -989,6 +992,7 @@ function ContactPanels({
     open,
     pageVisible,
     ownerFeatureVideoSupported,
+    mediaReady,
   ]);
 
   return (
@@ -1162,13 +1166,15 @@ function ContactPanels({
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
             >
-              <source
-                src={ownerPennyKandyVideo}
-                type="video/webm"
-                media="(min-width: 241px) and (max-width: 520px), (min-width: 901px)"
-              />
+              {mediaReady && (
+                <source
+                  src={ownerPennyKandyVideo}
+                  type="video/webm"
+                  media="(min-width: 241px) and (max-width: 520px), (min-width: 901px)"
+                />
+              )}
             </video>
           </div>
         </article>
@@ -1177,7 +1183,7 @@ function ContactPanels({
           <article className="identity-card identity-card--kandy">
             <div className="kandy-video-shell">
               <KandyVideo
-                active={open && pageVisible}
+                active={open && pageVisible && mediaReady}
               />
             </div>
 
@@ -1623,6 +1629,7 @@ export default function App() {
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
+  const [nonSpinnerMediaReady, setNonSpinnerMediaReady] = useState(false);
 
   const closeGate = useCallback(() => {
     setGateOpen(false);
@@ -1806,6 +1813,29 @@ export default function App() {
     '(prefers-reduced-motion: reduce)',
   );
   const pageVisible = usePageVisible();
+
+  useEffect(() => {
+    if (!open) {
+      setNonSpinnerMediaReady(false);
+      return undefined;
+    }
+
+    if (reducedMotion) {
+      setNonSpinnerMediaReady(true);
+      return undefined;
+    }
+
+    setNonSpinnerMediaReady(false);
+
+    const timeoutId = window.setTimeout(() => {
+      setNonSpinnerMediaReady(true);
+    }, NON_SPINNER_MEDIA_DELAY_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [open, reducedMotion]);
+
   const activeChannel = CHANNELS[activeIndex];
   const contactPanelDismissed = (
     activeChannel.id === 'contact'
@@ -1821,6 +1851,7 @@ export default function App() {
     open
     && pageVisible
     && !isWatch
+    && nonSpinnerMediaReady
   );
 
   return (
@@ -1853,6 +1884,7 @@ export default function App() {
         open={open}
         showKandy={!isWatch}
         pageVisible={pageVisible}
+        mediaReady={nonSpinnerMediaReady}
         onContactAssist={startContactAssist}
       />
 
