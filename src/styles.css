@@ -3036,7 +3036,7 @@ body {
 }
 
 .spinner-stage .spinner-center-panel img {
-  content: url('/assets/wildcard-logo-main.png') !important;
+  content: url('/static/wildcard-logo-main.png') !important;
   display: block !important;
   width: clamp(5.75rem, 11vw, 8rem) !important;
   height: auto !important;
