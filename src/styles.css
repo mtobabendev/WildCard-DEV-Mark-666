@@ -1840,6 +1840,15 @@ body {
   }
 }
 
+@keyframes context-arrive-right {
+  to {
+    transform:
+      translateY(0)
+      scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes deck-rise {
   0% {
     opacity: 0;
@@ -2129,9 +2138,17 @@ body {
   }
 
   .context-window {
-    left: 50%;
+    left: auto;
+    right: clamp(1rem, 2vw, 2.5rem);
     top: calc(clamp(26rem, 40vh, 29rem) + .25rem);
     width: min(31rem, calc(100vw - 4rem));
+    transform:
+      translateY(-2rem)
+      scale(.9);
+  }
+
+  .context-window.is-active {
+    animation-name: context-arrive-right;
   }
 
   .spinner-stage {
@@ -2150,7 +2167,7 @@ body {
       )
       + .25rem
     );
-    width: min(34rem, calc(100vw - 4rem));
+    width: min(31rem, calc(100vw - 4rem));
   }
 
   .spinner-stage {
@@ -2966,6 +2983,14 @@ body {
     .spinner-stage.is-active .spinner-card {
       transform: none !important;
     }
+  }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+  .context-window.is-active {
+    transform:
+      translateY(0)
+      scale(1);
   }
 }
 
