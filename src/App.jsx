@@ -35,7 +35,7 @@ const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
 const CONTACT_ASSIST_TIMEOUT_MS = 8000;
-const NON_SPINNER_MEDIA_DELAY_MS = 2600;
+const NON_SPINNER_MEDIA_DELAY_MS = 800;
 
 function trackAnalyticsEvent(name, parameters = {}) {
   if (
