@@ -608,6 +608,10 @@ body {
   line-height: 1.35;
 }
 
+.kandy-suno-latest {
+  margin-top: .45rem;
+}
+
 .kandy-copy .kandy-suno-cta {
   display: inline-flex;
   align-items: center;
