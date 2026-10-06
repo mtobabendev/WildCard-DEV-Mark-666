@@ -30,16 +30,6 @@ function SiteEntry() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = true;
-
-    const playAttempt = video.play();
-    if (playAttempt?.catch) {
-      playAttempt.catch(() => {});
-    }
-
     let cancelled = false;
 
     import('./App.jsx')
@@ -49,6 +39,40 @@ function SiteEntry() {
         }
       })
       .catch(() => {});
+
+    const video = videoRef.current;
+
+    if (!video) {
+      if (!cancelled) {
+        setIntroFinished(true);
+      }
+    } else if (
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+    ) {
+      if (!cancelled) {
+        setIntroFinished(true);
+      }
+    } else {
+      video.muted = true;
+
+      try {
+        const playAttempt = video.play();
+
+        if (playAttempt?.catch) {
+          playAttempt.catch(() => {
+            if (!cancelled) {
+              setIntroFinished(true);
+            }
+          });
+        }
+      } catch {
+        if (!cancelled) {
+          setIntroFinished(true);
+        }
+      }
+    }
 
     return () => {
       cancelled = true;
@@ -106,7 +130,6 @@ function SiteEntry() {
         >
           <video
             ref={videoRef}
-            autoPlay
             muted
             playsInline
             preload="auto"
