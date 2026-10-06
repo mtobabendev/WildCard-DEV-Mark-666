@@ -965,7 +965,7 @@ function ContactPanels({
 }) {
   const ownerFeatureVideoRef = useRef(null);
   const ownerFeatureVideoSupported = useMediaQuery(
-    '(min-width: 241px) and (max-width: 520px), (min-width: 901px)',
+    '(min-width: 241px) and (max-width: 520px), (min-width: 1100px) and (min-height: 821px)',
   );
 
   useEffect(() => {
@@ -1172,7 +1172,7 @@ function ContactPanels({
                 <source
                   src={ownerPennyKandyVideo}
                   type="video/webm"
-                  media="(min-width: 241px) and (max-width: 520px), (min-width: 901px)"
+                  media="(min-width: 241px) and (max-width: 520px), (min-width: 1100px) and (min-height: 821px)"
                 />
               )}
             </video>
