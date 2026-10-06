@@ -821,6 +821,7 @@ function PennyContactAssist({
     <aside
       className={`penny-contact-assist${active ? ' is-active' : ''}`}
       aria-hidden={!active}
+      inert={!active}
     >
       <button
         className="penny-contact-assist-close"
@@ -995,6 +996,7 @@ function ContactPanels({
     <section
       className={`card-stage card-stage--contacts${open ? ' is-active' : ''}`}
       aria-hidden={!open}
+      inert={!open}
     >
       <div className="identity-pair">
         <article className="identity-card identity-card--matt">
@@ -1871,6 +1873,7 @@ export default function App() {
         className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'penny' ? ' context-window--penny' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
         aria-live="polite"
         aria-hidden={!open || contactPanelDismissed}
+        inert={!open || contactPanelDismissed}
         hidden={contactPanelDismissed}
       >
         {activeChannel.id === 'contact' && !contactPanelDismissed && (
@@ -2022,6 +2025,7 @@ export default function App() {
       <section
         className={`card-stage card-stage--penny${open ? ' is-active' : ''}`}
         aria-hidden={!open}
+        inert={!open}
       >
         <article className="identity-card identity-card--penny">
           {!isWatch && (
