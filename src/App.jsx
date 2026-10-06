@@ -30,6 +30,8 @@ const STEP = 360 / CHANNELS.length;
 const PENNY_SERVICES_URL = '/bunker';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
+const KANDY_LATEST_TRACK_URL =
+  'https://suno.com/song/34d73d33-56ab-4beb-adab-cde275ca1ad3?sh=HRAX1Ir73RfDIBmF';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
 const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
@@ -1219,6 +1221,26 @@ function ContactPanels({
                 >
                   Listen to Kandy on Suno
                 </a>
+
+                <div className="kandy-suno-latest">
+                  <a
+                    className="kandy-suno-cta"
+                    href={KANDY_LATEST_TRACK_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => {
+                      trackAnalyticsEvent(
+                        'kandy_suno_latest_track_click',
+                        {
+                          source: 'kandy_card',
+                          link_url: KANDY_LATEST_TRACK_URL,
+                        },
+                      );
+                    }}
+                  >
+                    Latest track: Listen now →
+                  </a>
+                </div>
               </div>
 
               <div
