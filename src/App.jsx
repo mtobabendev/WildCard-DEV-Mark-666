@@ -16,14 +16,19 @@ import pennyCardVideo3 from '../assets/WitchPennyAndKandy1.webm';
 import pennyCardVideo4 from '../assets/WitchPennyAndKandy3.webm';
 import pennyContactAssistVideo from '../assets/PennyContactAssistVideo.webm';
 import ownerPennyKandyVideo from '../assets/WitchPennyAndKandy2-silent.webm';
+import witchHalloweenHookUp from '../assets/WitchPennyKandyHookUp.webm';
+import witchHalloween20 from '../assets/WitchPennyKandy20.webm';
+import witchHalloweenTarot from '../assets/WitchPennyKandyTarot.webm';
+import witchHalloweenIntro from '../assets/WitchPennyIntroKandy.webm';
+import witchHalloweenReading from '../assets/WitchPennyKandyTarotReading.webm';
 
 const CHANNELS = [
-  { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: pennyCardVideo },
-  { id: 'systems', number: '02', title: 'Arcane Engineering', copy: 'Web, apps, automation, and AI built with cinematic precision.', video: pennyCardVideo2 },
-  { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'A living archive of WildCard DEV builds, experiments, strange ideas, and systems summoned into existence.', video: pennyCardVideo3 },
+  { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: witchHalloweenHookUp },
+  { id: 'systems', number: '02', title: 'Arcane Engineering', copy: 'Web, apps, automation, and AI built with cinematic precision.', video: witchHalloween20 },
+  { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'A living archive of WildCard DEV builds, experiments, strange ideas, and systems summoned into existence.', video: witchHalloweenTarot },
   { id: 'penny', number: '04', title: 'Penny', copy: 'The digital avatar of Lilith — concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyKandyAvaVideo },
-  { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: pennyCardVideo4 },
-  { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive. See that little spade on the right? That’s Penny’s Little Black Book. Give it a tap.', video: pennyQueenVideo },
+  { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: witchHalloweenIntro },
+  { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive. See that little spade on the right? That’s Penny’s Little Black Book. Give it a tap.', video: witchHalloweenReading },
 ];
 
 const STEP = 360 / CHANNELS.length;
