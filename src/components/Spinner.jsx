@@ -9,6 +9,7 @@ function shortestTurn(current, target) {
 
 function Spinner({
   channels,
+  compact = false,
   open,
   activeIndex,
   onSelect,
@@ -96,7 +97,7 @@ function Spinner({
           inertiaRef.current = 0;
           resumeAtRef.current = time + 1200;
         }
-      } else if (time > resumeAtRef.current) {
+      } else if (!compact && time > resumeAtRef.current) {
         changeRotation(
           (current) => current + elapsed * 0.006,
         );
@@ -113,6 +114,7 @@ function Spinner({
     };
   }, [
     changeRotation,
+    compact,
     isWatch,
     open,
     pageVisible,
@@ -134,7 +136,7 @@ function Spinner({
       const shouldPlay = (
         open
         && pageVisible
-        && (!isWatch || index === activeIndex)
+        && ((!isWatch && !compact) || index === activeIndex)
       );
 
       if (shouldPlay) {
@@ -147,7 +149,7 @@ function Spinner({
         video.pause();
       }
     });
-  }, [activeIndex, isWatch, open, pageVisible]);
+  }, [activeIndex, compact, isWatch, open, pageVisible]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -368,7 +370,7 @@ function Spinner({
   return (
     <section
       ref={stageRef}
-      className={`spinner-stage${open ? ' is-active' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`}
+      className={`spinner-stage${open ? ' is-active' : ''}${compact ? ' is-compact' : ''}${settled ? ' is-settled' : ''}${engaged ? ' is-engaged' : ''}`}
       aria-label="WildCard navigation"
       aria-hidden={!open}
       onPointerDown={handlePointerDown}
