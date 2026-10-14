@@ -3042,3 +3042,113 @@ body {
   letter-spacing: .18em !important;
   text-shadow: 0 0 7px #dfff3f, 0 0 18px rgba(223,255,63,.8) !important;
 }
+
+/* M.1: The existing spinner becomes navigation when a channel is selected. */
+.landing.is-section {
+  min-height: 100svh;
+}
+
+.landing.is-section .card-stage--contacts,
+.landing.is-section .card-stage--penny {
+  display: none;
+}
+
+.section-home-button {
+  position: fixed;
+  z-index: 11;
+  top: 5.2rem;
+  left: clamp(.75rem, 2vw, 2rem);
+  min-height: 2.75rem;
+  padding: .55rem 1rem;
+  border: 1px solid rgba(255, 91, 214, .72);
+  border-radius: 999px;
+  background: rgba(10, 8, 29, .92);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.section-home-button:hover,
+.section-home-button:focus-visible {
+  border-color: var(--pink);
+  box-shadow: 0 0 20px rgba(255, 91, 214, .32);
+  outline-offset: 3px;
+}
+
+.landing.is-section .spinner-stage.is-compact {
+  position: fixed;
+  z-index: 9;
+  top: 5.5rem;
+  right: 1rem;
+  left: auto;
+  width: 32rem;
+  height: 20rem;
+  translate: none;
+  scale: .53;
+  transform-origin: top right;
+}
+
+.landing.is-section .context-window {
+  position: fixed;
+  z-index: 7;
+  top: clamp(10rem, 24vh, 15rem);
+  left: clamp(1rem, 6vw, 7rem);
+  right: auto;
+  width: min(45rem, calc(100vw - 22rem));
+  height: auto;
+  max-height: calc(100svh - 13rem);
+  overflow-y: auto;
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.landing.is-section .context-window.is-active {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1099px), (max-height: 820px) {
+  .landing.is-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8rem .75rem 1.5rem;
+  }
+
+  .landing.is-section .spinner-stage.is-compact {
+    position: relative;
+    order: 1;
+    inset: auto;
+    width: 100%;
+    height: 13rem;
+    margin: 0 auto;
+    translate: none;
+    scale: .65;
+    transform-origin: center center;
+  }
+
+  .landing.is-section .context-window {
+    position: relative;
+    order: 2;
+    inset: auto;
+    width: min(44rem, 100%);
+    max-height: none;
+    overflow: visible;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .landing.is-section {
+    padding-top: 7.5rem;
+  }
+
+  .landing.is-section .spinner-stage.is-compact {
+    height: 12rem;
+    scale: .6;
+  }
+}
