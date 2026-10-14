@@ -2371,6 +2371,34 @@ body {
   }
 }
 
+/* Keep the owner feature visible in roomy compact desktop layouts. */
+@media (min-width: 900px) and (max-width: 1099px),
+       (min-width: 1100px) and (max-height: 820px) {
+  .identity-card--matt {
+    padding-right: 7.5rem;
+  }
+
+  .identity-card--matt .owner-feature-video-shell {
+    position: absolute;
+    display: block;
+    top: 1rem;
+    right: 1rem;
+    width: 5.5rem;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border: 1px solid rgba(255, 91, 214, .42);
+    border-radius: 1rem;
+    background: rgba(6, 4, 22, .72);
+  }
+
+  .identity-card--matt .owner-feature-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 @media (max-width: 520px) {
   .identity-pair {
     grid-template-columns: 1fr;
