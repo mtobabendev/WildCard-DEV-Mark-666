@@ -1120,6 +1120,8 @@ function CombinationGate({
 
 export default function App() {
   const open = true;
+  const [siteMode, setSiteMode] = useState('home');
+  const isHome = siteMode === 'home';
   const [activeIndex, setActiveIndex] = useState(3);
   const [contactPanelClosed, setContactPanelClosed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
@@ -1318,16 +1320,23 @@ export default function App() {
   const handleChannelSelect = (index) => {
     setContactPanelClosed(false);
     setActiveIndex(index);
+    setSiteMode('section');
+  };
+
+  const returnHome = () => {
+    setContactPanelClosed(false);
+    setSiteMode('home');
   };
 
   const pennyVideoActive = (
     open
+    && isHome
     && pageVisible
     && !isWatch
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1347,8 +1356,18 @@ export default function App() {
         </a>
       </header>
 
+      {!isHome && (
+        <button
+          className="section-home-button"
+          type="button"
+          onClick={returnHome}
+        >
+          ← Home
+        </button>
+      )}
+
       <ContactPanels
-        open={open}
+        open={isHome}
         showKandy={!isWatch}
         pageVisible={pageVisible}
         onContactAssist={startContactAssist}
@@ -1356,6 +1375,7 @@ export default function App() {
 
       <Spinner
         channels={CHANNELS}
+        compact={!isHome}
         open={open}
         activeIndex={activeIndex}
         onSelect={handleChannelSelect}
@@ -1372,7 +1392,7 @@ export default function App() {
         inert={!open || contactPanelDismissed}
         hidden={contactPanelDismissed}
       >
-        {activeChannel.id === 'contact' && !contactPanelDismissed && (
+        {isHome && activeChannel.id === 'contact' && !contactPanelDismissed && (
           <button
             className="context-window-close"
             type="button"
@@ -1519,9 +1539,9 @@ export default function App() {
       </section>
 
       <section
-        className={`card-stage card-stage--penny${open ? ' is-active' : ''}`}
-        aria-hidden={!open}
-        inert={!open}
+        className={`card-stage card-stage--penny${isHome ? ' is-active' : ''}`}
+        aria-hidden={!isHome}
+        inert={!isHome}
       >
         <article className="identity-card identity-card--penny">
           {!isWatch && (
