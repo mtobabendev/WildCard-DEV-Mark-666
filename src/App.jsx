@@ -208,53 +208,6 @@ function AppleIcon() {
   );
 }
 
-function Portal({ open, onOpen }) {
-  return (
-    <section
-      className={`portal-stage${open ? ' is-open' : ''}`}
-      aria-labelledby="portal-title"
-    >
-      <button
-        className={`portal-trigger${open ? ' is-open' : ''}`}
-        type="button"
-        aria-describedby="portal-hint"
-        aria-expanded={open}
-        onClick={onOpen}
-      >
-        <span
-          className="portal-ring portal-ring--outer"
-          aria-hidden="true"
-        />
-        <span
-          className="portal-ring portal-ring--middle"
-          aria-hidden="true"
-        />
-        <span
-          className="portal-ring portal-ring--inner"
-          aria-hidden="true"
-        />
-        <span
-          className="portal-core"
-          aria-hidden="true"
-        />
-
-        <img
-          className="portal-logo"
-          src={wildCardLogo}
-          alt=""
-          aria-hidden="true"
-        />
-
-        <span className="portal-copy">
-          <span className="eyebrow">WildCard DEV</span>
-          <strong id="portal-title">Enter the portal</strong>
-          <span id="portal-hint">Experience coming next</span>
-        </span>
-      </button>
-    </section>
-  );
-}
-
 function Spinner({
   open,
   activeIndex,
@@ -1646,7 +1599,7 @@ function CombinationGate({
 }
 
 export default function App() {
-  const [open, setOpen] = useState(false);
+  const open = true;
   const [activeIndex, setActiveIndex] = useState(3);
   const [contactPanelClosed, setContactPanelClosed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
@@ -1873,11 +1826,6 @@ export default function App() {
           Donate
         </a>
       </header>
-
-      <Portal
-        open={open}
-        onOpen={() => setOpen(true)}
-      />
 
       <ContactPanels
         open={open}
