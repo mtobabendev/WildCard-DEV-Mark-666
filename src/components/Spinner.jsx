@@ -60,7 +60,6 @@ function Spinner({
       !open
       || !pageVisible
       || isWatch
-      || compact
       || reducedMotion
     ) {
       cancelAnimationFrame(frameRef.current);
@@ -98,7 +97,7 @@ function Spinner({
           inertiaRef.current = 0;
           resumeAtRef.current = time + 1200;
         }
-      } else if (time > resumeAtRef.current) {
+      } else if (!compact && time > resumeAtRef.current) {
         changeRotation(
           (current) => current + elapsed * 0.006,
         );
