@@ -1551,6 +1551,7 @@ export default function App() {
         )}
 
         {activeChannel.id === 'systems' && (
+          isHome ? (
           <div className="arcane-feature">
             <p className="eyebrow">Live projects</p>
             <div className="arcane-project-links">
@@ -1570,15 +1571,98 @@ export default function App() {
               </a>
             </div>
           </div>
+          ) : (
+          <div className="arcane-feature chamber-feature">
+            <p className="eyebrow">What we build</p>
+            <p className="chamber-intro">
+              WildCard DEV develops practical web and application experiences,
+              from public-facing storefronts to specialized internal tools.
+            </p>
+            <ul className="chamber-capabilities">
+              <li>
+                <strong>Web Development</strong>
+                <span>Websites, storefronts, responsive interfaces, and business web apps.</span>
+              </li>
+              <li>
+                <strong>Application Development</strong>
+                <span>Custom applications, interactive tools, and specialized workflows.</span>
+              </li>
+              <li>
+                <strong>Integrations &amp; Automation</strong>
+                <span>Connecting existing systems and reducing repetitive work.</span>
+              </li>
+              <li>
+                <strong>AI-Assisted Systems</strong>
+                <span>Purpose-built assistants and practical AI integration work, scoped to real needs.</span>
+              </li>
+            </ul>
+            <h3>Explore the work</h3>
+            <div className="arcane-project-links">
+              <a
+                href="https://pennysoffice.wildcarddev.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PENNY’S GARAGE
+              </a>
+              <a
+                href="https://labs.wildcarddev.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                WILDCARD LABS · COMING SOON
+              </a>
+              <a
+                href="https://wildcard-showroom-enhanced-1500.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WEB &amp; APP SHOWROOM DEMO
+              </a>
+            </div>
+          </div>
+          )
         )}
 
         {activeChannel.id === 'penny' && (
+          isHome ? (
           <div className="penny-bunker-feature">
             <p className="eyebrow">Penny // Discord</p>
             <a href="/bunker">
               ENTER THE DISCORD BUNKER →
             </a>
           </div>
+          ) : (
+          <div className="penny-bunker-feature chamber-feature">
+            <p className="eyebrow">Meet Penny</p>
+            <p className="chamber-intro">
+              Penny is WildCard DEV’s digital concierge, a familiar face
+              for exploring our projects, finding the right destination,
+              and getting in touch. Her personality is part of the experience;
+              this channel does not promise autonomous services.
+            </p>
+            <h3>Find Penny in the WildCard ecosystem</h3>
+            <p className="chamber-intro">
+              The Discord Bunker is Penny’s community doorway.
+              Penny’s Garage showcases services and merchandise.
+              WildCard Party is the social and messaging platform.
+            </p>
+            <a href="/bunker">
+              ENTER THE DISCORD BUNKER →
+            </a>
+            <div className="chamber-actions">
+              <a href="https://pennysoffice.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
+                Explore Penny’s Garage →
+              </a>
+              <a href={WILDCARD_PARTY_URL} target="_blank" rel="noopener noreferrer">
+                Visit WildCard Party →
+              </a>
+              <a href="mailto:penny@wildcarddev.com">
+                Email Penny →
+              </a>
+            </div>
+          </div>
+          )
         )}
 
         {activeChannel.id === 'portfolio' && (
@@ -1657,7 +1741,47 @@ export default function App() {
           </div>
         )}
 
+        {activeChannel.id === 'interface' && !isHome && (
+          <div className="veil-feature chamber-feature">
+            <p className="eyebrow">Interactive experience design</p>
+            <p className="chamber-intro">
+              Responsive layouts, interactive components, and purposeful motion
+              make WildCard DEV interfaces distinctive without sacrificing usability.
+            </p>
+            <ul className="chamber-capabilities">
+              <li>
+                <strong>Responsive interfaces</strong>
+                <span>Layouts designed for desktop and mobile screens.</span>
+              </li>
+              <li>
+                <strong>Interactive visuals</strong>
+                <span>Hands-on elements such as the spinner and merchandise viewer.</span>
+              </li>
+              <li>
+                <strong>Motion and transitions</strong>
+                <span>Visual feedback that supports navigation and reduced-motion preferences.</span>
+              </li>
+              <li>
+                <strong>Usable experiences</strong>
+                <span>Readable content, accessible actions, and clear ways forward.</span>
+              </li>
+            </ul>
+            <h3>Penny’s Little Black Book</h3>
+            <p className="chamber-intro">
+              A working interactive feature already built into this site.
+              Look for the small spade launcher on the right to explore it.
+              There is no separate page or second copy to open.
+            </p>
+            <div className="chamber-actions">
+              <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
+                Open the Web &amp; App Showroom demo →
+              </a>
+            </div>
+          </div>
+        )}
+
         {activeChannel.id === 'automation' && (
+          isHome ? (
           <div className="wildcard-social-feature">
             <p className="eyebrow">WildCard Social // Live</p>
             <h3>Penny took the keys.</h3>
@@ -1680,6 +1804,58 @@ export default function App() {
               Enter WildCard Party →
             </a>
           </div>
+          ) : (
+          <div className="wildcard-social-feature chamber-feature">
+            <p className="eyebrow">Automation &amp; custom systems</p>
+            <p className="chamber-intro">
+              The right little helper handles repetitive work so people can focus
+              on decisions, creativity, and the unusual problems worth solving.
+            </p>
+            <ul className="chamber-capabilities">
+              <li>
+                <strong>Workflow Automation</strong>
+                <span>Streamlining routine tasks and administrative steps.</span>
+              </li>
+              <li>
+                <strong>System Integrations</strong>
+                <span>Connecting applications, data sources, and existing business processes.</span>
+              </li>
+              <li>
+                <strong>AI-Assisted Processes</strong>
+                <span>Support for drafting, organizing, analyzing, and routing work.</span>
+              </li>
+              <li>
+                <strong>Custom Utilities</strong>
+                <span>Focused tools for specific operational problems.</span>
+              </li>
+            </ul>
+            <h3>WildCard Party // Live</h3>
+            <p>
+              Explore our community platform with direct messaging,
+              attachments, presence, and read/unread indicators.
+              Calling functionality remains in development.
+            </p>
+            <a
+              href={WILDCARD_PARTY_URL}
+              onClick={() => {
+                trackAnalyticsEvent(
+                  'wildcard_party_click',
+                  {
+                    source: 'hells_little_helpers',
+                    link_url: WILDCARD_PARTY_URL,
+                  },
+                );
+              }}
+            >
+              Enter WildCard Party →
+            </a>
+            <div className="chamber-actions">
+              <a href="mailto:penny@wildcarddev.com?subject=WildCard%20DEV%20Automation%20Inquiry">
+                Ask Penny about an automation project →
+              </a>
+            </div>
+          </div>
+          )
         )}
       </section>
 
