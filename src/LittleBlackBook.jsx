@@ -706,7 +706,25 @@ export default function LittleBlackBook() {
           </button>
         </header>
 
-        <nav className="lbb-tabs" role="tablist" aria-label="Little Black Book tools">
+        <nav
+          className="lbb-tabs"
+          role="tablist"
+          aria-label="Little Black Book tools"
+          onKeyDown={(event) => {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+            const tabs = Array.from(event.currentTarget.querySelectorAll('[role="tab"]'));
+            const currentIndex = tabs.indexOf(event.target);
+            if (currentIndex === -1) return;
+
+            const nextIndex = event.key === 'Home' ? 0
+              : event.key === 'End' ? tabs.length - 1
+                : (currentIndex + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+            event.preventDefault();
+            const nextTab = tabs[nextIndex];
+            nextTab.focus();
+            setActiveTab(nextTab.id.slice('lbb-tab-'.length));
+          }}
+        >
           {[
             ['today', 'TODAY'],
             ['bills', 'BILLS'],
