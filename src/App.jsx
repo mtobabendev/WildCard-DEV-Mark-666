@@ -31,6 +31,61 @@ const CHANNELS = [
   { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive. See that little spade on the right? That’s Penny’s Little Black Book. Give it a tap.', video: witchHalloweenReading },
 ];
 
+const GRIMOIRE_PROJECTS = [
+  {
+    name: "Penny's Garage",
+    status: 'Production storefront',
+    description: 'WildCard DEV’s interactive services and merchandise storefront, with hosted provider listings and rotatable merchandise presentation. Display merchandise may be demonstration-only.',
+    capabilities: ['Storefront', 'Hosted services', 'Merchandise viewer'],
+    links: [
+      { label: 'Explore Penny’s Garage →', href: 'https://pennysoffice.wildcarddev.com/' },
+    ],
+  },
+  {
+    name: 'WildCard Party',
+    status: 'Live platform · Calling in development',
+    description: 'A social and community platform with direct messaging, attachments, presence, and read/unread indicators. Calling functionality remains in development.',
+    capabilities: ['Community', 'Messaging', 'Attachments'],
+    links: [
+      { label: 'Visit WildCard Party →', href: 'https://party.wildcarddev.com/' },
+    ],
+  },
+  {
+    name: 'WildCard Labs',
+    status: 'Coming soon',
+    description: 'The experimental development space for WildCard DEV. Its landing page is a preview of what is planned, not a completed project gallery.',
+    capabilities: ['Research', 'Experiments'],
+    links: [
+      { label: 'Visit the Labs landing page →', href: 'https://labs.wildcarddev.com/' },
+    ],
+  },
+  {
+    name: 'Web & App Showroom',
+    status: 'Package demonstrations · Not client projects',
+    description: 'Explore two example web-and-app build packages: the Enhanced Build and the Launch Build.',
+    capabilities: ['Web design', 'App development', 'Package demos'],
+    links: [
+      { label: 'Open Enhanced Build demo →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/' },
+      { label: 'Open Launch Build demo →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/launch/' },
+    ],
+  },
+];
+
+const GRIMOIRE_ARCHIVE = [
+  {
+    name: '3D Video Carousel',
+    description: 'An earlier pointer-driven, rotating 3D carousel experiment combining image and video panels.',
+  },
+  {
+    name: 'Dice Prototypes',
+    description: 'Historical dice-focused browser experiments, including multiple builds preserved in the Mark III archive.',
+  },
+  {
+    name: 'Flashcards',
+    description: 'A browser-based flashcard experiment from the earlier WildCard development era.',
+  },
+];
+
 const PENNY_SERVICES_URL = '/bunker';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
@@ -1527,28 +1582,78 @@ export default function App() {
         )}
 
         {activeChannel.id === 'portfolio' && (
-          <div className="grimoire-feature">
-            <p className="eyebrow">Featured creative work</p>
-            <h3>Kandy’s Soundtrack</h3>
-            <p>
-              Original songs and cover art by Kopacetic Kandle.
-            </p>
-            <a
-              href={KANDY_SUNO_URL}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => {
-                trackAnalyticsEvent(
-                  'kandy_suno_playlist_click',
-                  {
-                    source: 'grimoire',
-                    link_url: KANDY_SUNO_URL,
-                  },
-                );
-              }}
-            >
-              Explore the playlist →
-            </a>
+          <div className="grimoire-collections">
+            <section className="grimoire-collection" aria-labelledby="grimoire-living-works">
+              <h3 id="grimoire-living-works">I. The Living Works</h3>
+              <p className="grimoire-collection-intro">
+                Real WildCard DEV sites, platforms, and development demonstrations.
+              </p>
+              <div className="grimoire-grid">
+                {GRIMOIRE_PROJECTS.map((project) => (
+                  <article className="grimoire-card" key={project.name}>
+                    <p className="grimoire-card-status">{project.status}</p>
+                    <h4>{project.name}</h4>
+                    <p className="grimoire-card-description">{project.description}</p>
+                    <ul className="grimoire-capabilities" aria-label="Demonstrated capabilities">
+                      {project.capabilities.map((capability) => (
+                        <li key={capability}>{capability}</li>
+                      ))}
+                    </ul>
+                    <div className="grimoire-links">
+                      {project.links.map((link) => (
+                        <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="grimoire-collection" aria-labelledby="grimoire-resurrection">
+              <h3 id="grimoire-resurrection">II. The Resurrection Chamber</h3>
+              <p className="grimoire-collection-intro">
+                From the private WildCard Mark III archive. Historical prototypes
+                shown for context only, not currently available as public demos.
+              </p>
+              <div className="grimoire-grid">
+                {GRIMOIRE_ARCHIVE.map((experiment) => (
+                  <article className="grimoire-card" key={experiment.name}>
+                    <p className="grimoire-card-status">Archive only · Restoration candidate</p>
+                    <h4>{experiment.name}</h4>
+                    <p className="grimoire-card-description">{experiment.description}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="grimoire-collection" aria-labelledby="grimoire-creative">
+              <h3 id="grimoire-creative">III. The Creative Vault</h3>
+              <div className="grimoire-feature grimoire-card">
+                <p className="grimoire-card-status">Creative showcase</p>
+                <h4>Kandy’s Soundtrack</h4>
+                <p className="grimoire-card-description">
+                  Original songs and cover art by Kopacetic Kandle.
+                </p>
+                <a
+                  href={KANDY_SUNO_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => {
+                    trackAnalyticsEvent(
+                      'kandy_suno_playlist_click',
+                      {
+                        source: 'grimoire',
+                        link_url: KANDY_SUNO_URL,
+                      },
+                    );
+                  }}
+                >
+                  Explore the playlist →
+                </a>
+              </div>
+            </section>
           </div>
         )}
 
