@@ -444,6 +444,7 @@ function Spinner({
                 '--angle': `${index * STEP}deg`,
               }}
               type="button"
+              aria-label={channel.penny ? channel.title : undefined}
               aria-controls="channel-content"
               aria-pressed={activeIndex === index}
               tabIndex={open ? 0 : -1}
