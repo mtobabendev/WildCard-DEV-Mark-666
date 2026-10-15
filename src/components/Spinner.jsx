@@ -22,6 +22,7 @@ function Spinner({
   const deckRef = useRef(null);
   const rotationRef = useRef(-activeIndex * STEP);
   const frameRef = useRef(0);
+  const startFrameRef = useRef(null);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
   const videoRefs = useRef([]);
@@ -62,12 +63,15 @@ function Spinner({
       || isWatch
       || reducedMotion
     ) {
+      startFrameRef.current = null;
       cancelAnimationFrame(frameRef.current);
+      frameRef.current = 0;
       lastTimeRef.current = 0;
       return undefined;
     }
 
     const tick = (time) => {
+      frameRef.current = 0;
       if (!lastTimeRef.current) {
         lastTimeRef.current = time;
       }
@@ -103,13 +107,25 @@ function Spinner({
         );
       }
 
+      if (!compact || Math.abs(inertiaRef.current) > 0.002) {
+        frameRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    startFrameRef.current = () => {
+      if (frameRef.current) return;
+      lastTimeRef.current = 0;
       frameRef.current = requestAnimationFrame(tick);
     };
 
-    frameRef.current = requestAnimationFrame(tick);
+    if (!compact || Math.abs(inertiaRef.current) > 0.002) {
+      startFrameRef.current();
+    }
 
     return () => {
+      startFrameRef.current = null;
       cancelAnimationFrame(frameRef.current);
+      frameRef.current = 0;
       lastTimeRef.current = 0;
     };
   }, [
@@ -341,6 +357,8 @@ function Spinner({
     if (Math.abs(inertiaRef.current) <= 0.002) {
       inertiaRef.current = 0;
       resumeAtRef.current = performance.now() + 1200;
+    } else if (compact) {
+      startFrameRef.current?.();
     }
   };
 
