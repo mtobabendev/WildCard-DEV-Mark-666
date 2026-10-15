@@ -1274,6 +1274,7 @@ body {
 }
 
 .arcane-feature,
+.veil-feature,
 .grimoire-feature,
 .penny-bunker-feature,
 .wildcard-social-feature {
@@ -1287,6 +1288,7 @@ body {
 }
 
 .arcane-feature .eyebrow,
+.veil-feature .eyebrow,
 .grimoire-feature .eyebrow,
 .penny-bunker-feature .eyebrow,
 .wildcard-social-feature .eyebrow {
@@ -3272,6 +3274,95 @@ body {
 
 @media (max-width: 620px) {
   .grimoire-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* M.2C: Shared, static content layout for the four new chamber foundations. */
+.chamber-feature {
+  min-width: 0;
+}
+
+.chamber-feature h3 {
+  margin: 1rem 0 .4rem;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.chamber-feature .chamber-intro {
+  margin: .65rem 0;
+  color: var(--muted);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.chamber-capabilities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  margin: .8rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chamber-capabilities li {
+  display: grid;
+  align-content: start;
+  gap: .3rem;
+  min-width: 0;
+  padding: .6rem .7rem;
+  border: 1px solid rgba(141, 114, 255, .35);
+  border-radius: .7rem;
+  background: rgba(10, 8, 29, .45);
+}
+
+.chamber-capabilities strong {
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.chamber-capabilities span {
+  color: var(--muted);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chamber-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: .8rem;
+}
+
+.chamber-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  max-width: 100%;
+  padding: .5rem .7rem;
+  border: 1px solid rgba(141, 114, 255, .48);
+  border-radius: .7rem;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: .2rem;
+  overflow-wrap: anywhere;
+}
+
+.chamber-actions a:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.chamber-actions a:focus-visible,
+.chamber-feature > a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 620px) {
+  .chamber-capabilities {
     grid-template-columns: minmax(0, 1fr);
   }
 }
