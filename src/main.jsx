@@ -146,7 +146,9 @@ function SiteEntry() {
               background: '#000',
             }}
           >
-            <source src={pennySaysHelloWebm} type="video/webm" />
+            {!window.matchMedia('(prefers-reduced-motion: reduce)').matches && (
+              <source src={pennySaysHelloWebm} type="video/webm" />
+            )}
             </video>
           </div>
         )}
