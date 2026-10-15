@@ -3152,3 +3152,126 @@ body {
     scale: .6;
   }
 }
+
+/* M.2B: Portfolio presentation inside the existing Grimoire content panel. */
+.grimoire-collections {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+  margin-top: 1rem;
+}
+
+.grimoire-collection {
+  min-width: 0;
+}
+
+.grimoire-collection > h3 {
+  margin: 0 0 .35rem;
+  color: var(--ink);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.grimoire-collection-intro {
+  margin: 0 0 .8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.grimoire-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.grimoire-card {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid rgba(255, 91, 214, .34);
+  border-radius: .9rem;
+  background: rgba(6, 4, 22, .6);
+}
+
+.grimoire-card-status {
+  margin: 0;
+  color: #e6c9f6;
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.grimoire-card h4 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.grimoire-card-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.grimoire-capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grimoire-capabilities li {
+  border: 1px solid rgba(141, 114, 255, .48);
+  border-radius: .4rem;
+  padding: .25rem .4rem;
+  color: var(--ink);
+  font-size: .72rem;
+  line-height: 1.25;
+}
+
+.grimoire-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .45rem;
+  margin-top: auto;
+}
+
+.grimoire-links a,
+.grimoire-feature.grimoire-card > a {
+  display: inline-block;
+  max-width: 100%;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: .2rem;
+  overflow-wrap: anywhere;
+}
+
+.grimoire-links a:hover,
+.grimoire-feature.grimoire-card > a:hover {
+  color: var(--pink);
+}
+
+.grimoire-links a:focus-visible,
+.grimoire-feature.grimoire-card > a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: .15rem;
+}
+
+.grimoire-feature.grimoire-card {
+  margin-top: 0;
+}
+
+@media (max-width: 620px) {
+  .grimoire-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
