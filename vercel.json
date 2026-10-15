@@ -4,6 +4,10 @@
     {
       "source": "/bunker",
       "destination": "/index.html"
+    },
+    {
+      "source": "/grimoire",
+      "destination": "/index.html"
     }
   ],
   "headers": [

@@ -1118,15 +1118,46 @@ function CombinationGate({
   );
 }
 
+function readNavigationState() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (path === '/grimoire') {
+    return { siteMode: 'section', activeIndex: 2 };
+  }
+
+  const saved = window.history.state?.wildcardDevNavigation;
+  if (
+    path === '/'
+    && (saved?.siteMode === 'home' || saved?.siteMode === 'section')
+    && Number.isInteger(saved.activeIndex)
+    && saved.activeIndex >= 0
+    && saved.activeIndex < CHANNELS.length
+    && (saved.siteMode === 'home' || saved.activeIndex !== 2)
+  ) {
+    return saved;
+  }
+
+  return { siteMode: 'home', activeIndex: 3 };
+}
+
 export default function App() {
   const open = true;
-  const [siteMode, setSiteMode] = useState('home');
+  const [navigation, setNavigation] = useState(readNavigationState);
+  const { siteMode, activeIndex } = navigation;
   const isHome = siteMode === 'home';
-  const [activeIndex, setActiveIndex] = useState(3);
   const [contactPanelClosed, setContactPanelClosed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
+
+  useEffect(() => {
+    const syncHistory = () => {
+      setNavigation(readNavigationState());
+      setContactPanelClosed(false);
+    };
+
+    window.addEventListener('popstate', syncHistory);
+    return () => window.removeEventListener('popstate', syncHistory);
+  }, []);
 
   const closeGate = useCallback(() => {
     setGateOpen(false);
@@ -1318,14 +1349,23 @@ export default function App() {
   );
 
   const handleChannelSelect = (index) => {
+    const next = { siteMode: 'section', activeIndex: index };
+    if (isHome || activeIndex !== index) {
+      window.history.pushState(
+        { wildcardDevNavigation: next },
+        '',
+        index === 2 ? '/grimoire' : '/',
+      );
+    }
     setContactPanelClosed(false);
-    setActiveIndex(index);
-    setSiteMode('section');
+    setNavigation(next);
   };
 
   const returnHome = () => {
+    const next = { siteMode: 'home', activeIndex };
+    window.history.pushState({ wildcardDevNavigation: next }, '', '/');
     setContactPanelClosed(false);
-    setSiteMode('home');
+    setNavigation(next);
   };
 
   const pennyVideoActive = (
