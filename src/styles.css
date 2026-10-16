@@ -3366,3 +3366,123 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+
+/* M.3: static icons orbit slowly with CSS transforms, not video or JS loops.
+   The original grid layout stays available whenever reduced motion is requested. */
+.mini-spinner-track {
+  display: contents;
+}
+
+/* Keep Penny's original static link arrangement when the track is flattened. */
+.penny-link-deck.mini-spinner .penny-link-card--party { grid-column: 1; grid-row: 1; }
+.penny-link-deck.mini-spinner .penny-link-hub { grid-column: 2; grid-row: 1; }
+.penny-link-deck.mini-spinner .penny-link-card--x { grid-column: 3; grid-row: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .identity-card--matt .owner-link-deck.mini-spinner,
+  .identity-card--kandy .kandy-link-deck.mini-spinner,
+  .identity-card--penny .penny-link-deck.mini-spinner {
+    position: relative;
+    display: block;
+    grid-template: none;
+    width: min(100%, 12rem);
+    max-width: 12rem;
+    height: 5.75rem;
+    min-height: 5.75rem;
+    padding: 0;
+    perspective: 500px;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .identity-card--matt .owner-link-deck.mini-spinner {
+    --mini-radius: 4rem;
+    --mini-card-width: 3.15rem;
+    width: min(100%, 14rem);
+    max-width: 14rem;
+  }
+
+  .identity-card--kandy .kandy-link-deck.mini-spinner {
+    --mini-radius: 3rem;
+    --mini-card-width: 3.15rem;
+    width: min(100%, 11.5rem);
+    max-width: 11.5rem;
+  }
+
+  .identity-card--penny .penny-link-deck.mini-spinner {
+    --mini-radius: 2.75rem;
+    --mini-card-width: 4.1rem;
+    width: min(100%, 11.6rem);
+    max-width: 11.6rem;
+  }
+
+  .mini-spinner .mini-spinner-track {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    display: block;
+    transform-style: preserve-3d;
+    animation: wildcard-mini-spinner-turn 60s linear infinite;
+    transition: transform 300ms ease-out;
+  }
+
+  .mini-spinner .mini-spinner-track > a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--mini-card-width);
+    height: 3rem;
+    min-height: 3rem;
+    margin: 0;
+    transform: translate(-50%, -50%) rotateY(var(--mini-angle)) translateZ(var(--mini-radius)) !important;
+    transform-origin: center;
+    backface-visibility: hidden;
+  }
+
+  .mini-spinner--owner .mini-spinner-track > a:nth-child(1),
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(1),
+  .mini-spinner--penny .mini-spinner-track > a:nth-child(1) { --mini-angle: 0deg; }
+
+  .mini-spinner--owner .mini-spinner-track > a:nth-child(2) { --mini-angle: 72deg; }
+  .mini-spinner--owner .mini-spinner-track > a:nth-child(3) { --mini-angle: 144deg; }
+  .mini-spinner--owner .mini-spinner-track > a:nth-child(4) { --mini-angle: 216deg; }
+  .mini-spinner--owner .mini-spinner-track > a:nth-child(5) { --mini-angle: 288deg; }
+
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(2) { --mini-angle: 90deg; }
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(3) { --mini-angle: 180deg; }
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(4) { --mini-angle: 270deg; }
+
+  .mini-spinner--penny .mini-spinner-track > a:nth-child(2) { --mini-angle: 180deg; }
+
+  .identity-card--matt .owner-link-deck.mini-spinner .owner-link-hub,
+  .identity-card--kandy .kandy-link-deck.mini-spinner .kandy-link-hub,
+  .identity-card--penny .penny-link-deck.mini-spinner .penny-link-hub {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .mini-spinner:hover .mini-spinner-track,
+  .mini-spinner:focus-within .mini-spinner-track,
+  .landing.is-section .mini-spinner-track,
+  .landing.is-page-hidden .mini-spinner-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes wildcard-mini-spinner-turn {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+}
