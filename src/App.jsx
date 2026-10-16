@@ -491,21 +491,102 @@ function ContactForm({ onSubmit }) {
   );
 }
 
+const miniSpinnerDrags = new WeakMap();
+const miniSpinnerClickBlocks = new WeakMap();
+
+function miniSpinnerTrack(root) {
+  return root.querySelector('.mini-spinner-track');
+}
+
+function startMiniSpinnerDrag(event) {
+  if (event.button !== 0 || !event.isPrimary
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const root = event.currentTarget;
+  const track = miniSpinnerTrack(root);
+  if (!track) return;
+
+  // Read the actual CSS rotation before taking over. No jump on first drag.
+  const matrix = new DOMMatrixReadOnly(getComputedStyle(track).transform);
+  const angle = Math.atan2(-matrix.m13, matrix.m11) * 180 / Math.PI;
+  miniSpinnerDrags.set(root, {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startAngle: angle,
+    angle,
+    moved: false,
+  });
+
+  track.style.animation = 'none';
+  track.style.transition = 'none';
+  track.style.transform = `rotateY(${angle}deg)`;
+}
+
+function moveMiniSpinnerDrag(event) {
+  const root = event.currentTarget;
+  const drag = miniSpinnerDrags.get(root);
+  if (!drag || drag.pointerId !== event.pointerId) return;
+
+  const delta = event.clientX - drag.startX;
+  if (!drag.moved && Math.abs(delta) <= 8) return;
+
+  if (!drag.moved) {
+    drag.moved = true;
+    root.classList.add('is-dragging');
+    root.setPointerCapture(event.pointerId);
+  }
+
+  drag.angle = drag.startAngle + delta * 0.38;
+  miniSpinnerTrack(root).style.transform = `rotateY(${drag.angle}deg)`;
+}
+
+function endMiniSpinnerDrag(event) {
+  const root = event.currentTarget;
+  const drag = miniSpinnerDrags.get(root);
+  if (!drag || drag.pointerId !== event.pointerId) return;
+
+  miniSpinnerDrags.delete(root);
+  root.classList.remove('is-dragging');
+  if (drag.moved) miniSpinnerClickBlocks.set(root, performance.now() + 250);
+
+  if (root.hasPointerCapture(event.pointerId)) {
+    root.releasePointerCapture(event.pointerId);
+  }
+
+  // Restart the existing slow CSS rotation exactly where the drag ended.
+  const track = miniSpinnerTrack(root);
+  track.style.setProperty('--mini-offset', `${drag.angle}deg`);
+  track.style.removeProperty('animation');
+  track.style.removeProperty('transition');
+  track.style.removeProperty('transform');
+}
+
+function suppressMiniSpinnerDragClick(event) {
+  if (performance.now() < (miniSpinnerClickBlocks.get(event.currentTarget) || 0)) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}
+
 function focusMiniSpinnerLink(event) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const track = event.currentTarget.querySelector('.mini-spinner-track');
+  if (miniSpinnerDrags.has(event.currentTarget)
+    || !event.target.matches(':focus-visible')
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const track = miniSpinnerTrack(event.currentTarget);
   const links = track ? Array.from(track.querySelectorAll('a')) : [];
   const index = links.indexOf(event.target.closest('a'));
   if (index < 0) return;
 
-  // Keep keyboard-focused destinations front-facing.
+  // Keyboard-focused destinations face forward.
   track.style.animation = 'none';
   track.style.transform = `rotateY(${-index * 360 / links.length}deg)`;
 }
 
 function releaseMiniSpinnerLink(event) {
-  if (event.currentTarget.contains(event.relatedTarget)) return;
-  const track = event.currentTarget.querySelector('.mini-spinner-track');
+  if (miniSpinnerDrags.has(event.currentTarget)
+    || event.currentTarget.contains(event.relatedTarget)) return;
+  const track = miniSpinnerTrack(event.currentTarget);
   track?.style.removeProperty('animation');
   track?.style.removeProperty('transform');
 }
@@ -616,6 +697,12 @@ function ContactPanels({
           <div
             className="identity-link-deck owner-link-deck mini-spinner mini-spinner--owner"
             role="group"
+            onPointerDown={startMiniSpinnerDrag}
+            onPointerMove={moveMiniSpinnerDrag}
+            onPointerUp={endMiniSpinnerDrag}
+            onPointerCancel={endMiniSpinnerDrag}
+            onClickCapture={suppressMiniSpinnerDragClick}
+            onDragStart={(event) => event.preventDefault()}
             onFocusCapture={focusMiniSpinnerLink}
             onBlurCapture={releaseMiniSpinnerLink}
             aria-label="Matt Tobaben social links"
@@ -803,7 +890,13 @@ function ContactPanels({
               <div
                 className="identity-link-deck kandy-link-deck mini-spinner mini-spinner--kandy"
                 role="group"
-                onFocusCapture={focusMiniSpinnerLink}
+                onPointerDown={startMiniSpinnerDrag}
+            onPointerMove={moveMiniSpinnerDrag}
+            onPointerUp={endMiniSpinnerDrag}
+            onPointerCancel={endMiniSpinnerDrag}
+            onClickCapture={suppressMiniSpinnerDragClick}
+            onDragStart={(event) => event.preventDefault()}
+            onFocusCapture={focusMiniSpinnerLink}
                 onBlurCapture={releaseMiniSpinnerLink}
                 aria-label="Kandy links"
               >
@@ -1933,7 +2026,13 @@ export default function App() {
             <div
               className="penny-link-deck mini-spinner mini-spinner--penny"
               role="group"
-              onFocusCapture={focusMiniSpinnerLink}
+              onPointerDown={startMiniSpinnerDrag}
+            onPointerMove={moveMiniSpinnerDrag}
+            onPointerUp={endMiniSpinnerDrag}
+            onPointerCancel={endMiniSpinnerDrag}
+            onClickCapture={suppressMiniSpinnerDragClick}
+            onDragStart={(event) => event.preventDefault()}
+            onFocusCapture={focusMiniSpinnerLink}
               onBlurCapture={releaseMiniSpinnerLink}
               aria-label="Penny links"
             >
