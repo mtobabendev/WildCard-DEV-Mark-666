@@ -491,6 +491,25 @@ function ContactForm({ onSubmit }) {
   );
 }
 
+function focusMiniSpinnerLink(event) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const track = event.currentTarget.querySelector('.mini-spinner-track');
+  const links = track ? Array.from(track.querySelectorAll('a')) : [];
+  const index = links.indexOf(event.target.closest('a'));
+  if (index < 0) return;
+
+  // Keep keyboard-focused destinations front-facing.
+  track.style.animation = 'none';
+  track.style.transform = `rotateY(${-index * 360 / links.length}deg)`;
+}
+
+function releaseMiniSpinnerLink(event) {
+  if (event.currentTarget.contains(event.relatedTarget)) return;
+  const track = event.currentTarget.querySelector('.mini-spinner-track');
+  track?.style.removeProperty('animation');
+  track?.style.removeProperty('transform');
+}
+
 function ContactPanels({
   open,
   showKandy,
@@ -595,10 +614,14 @@ function ContactPanels({
           </div>
 
           <div
-            className="identity-link-deck owner-link-deck"
+            className="identity-link-deck owner-link-deck mini-spinner mini-spinner--owner"
+            role="group"
+            onFocusCapture={focusMiniSpinnerLink}
+            onBlurCapture={releaseMiniSpinnerLink}
             aria-label="Matt Tobaben social links"
           >
-            <a
+
+            <div className="mini-spinner-track">            <a
               className="identity-link-card owner-link-card--x"
               href={WILDCARD_X_URL}
               target="_blank"
@@ -646,16 +669,6 @@ function ContactPanels({
               <span className="identity-link-card-label">GH</span>
             </a>
 
-            <div
-              className="identity-link-hub owner-link-hub"
-              aria-hidden="true"
-            >
-              <img
-                src={wildCardDevIcon}
-                alt=""
-              />
-            </div>
-
             <a
               className="identity-link-card owner-link-card--discord"
               href="https://discord.com/users/1503417641086488708"
@@ -687,6 +700,17 @@ function ContactPanels({
               </span>
               <span className="identity-link-card-label">FB</span>
             </a>
+            </div>
+            <div
+              className="identity-link-hub owner-link-hub"
+              aria-hidden="true"
+            >
+              <img
+                src={wildCardDevIcon}
+                alt=""
+              />
+            </div>
+
           </div>
 
           <div
@@ -777,10 +801,14 @@ function ContactPanels({
               </div>
 
               <div
-                className="identity-link-deck kandy-link-deck"
+                className="identity-link-deck kandy-link-deck mini-spinner mini-spinner--kandy"
+                role="group"
+                onFocusCapture={focusMiniSpinnerLink}
+                onBlurCapture={releaseMiniSpinnerLink}
                 aria-label="Kandy links"
               >
-                <a
+
+                <div className="mini-spinner-track">                <a
                   className="identity-link-card kandy-link-card--facebook"
                   href={KANDY_FACEBOOK_URL}
                   target="_blank"
@@ -821,16 +849,6 @@ function ContactPanels({
                   <span className="identity-link-card-label">SUNO</span>
                 </a>
 
-                <div
-                  className="identity-link-hub kandy-link-hub"
-                  aria-hidden="true"
-                >
-                  <img
-                    src={wildCardDevIcon}
-                    alt=""
-                  />
-                </div>
-
                 <a
                   className="identity-link-card kandy-link-card--play"
                   href={SUNO_ANDROID_URL}
@@ -862,6 +880,17 @@ function ContactPanels({
                   </span>
                   <span className="identity-link-card-label">iOS</span>
                 </a>
+                </div>
+                <div
+                  className="identity-link-hub kandy-link-hub"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={wildCardDevIcon}
+                    alt=""
+                  />
+                </div>
+
               </div>
             </div>
           </article>
@@ -1431,7 +1460,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1902,10 +1931,14 @@ export default function App() {
             </div>
 
             <div
-              className="penny-link-deck"
+              className="penny-link-deck mini-spinner mini-spinner--penny"
+              role="group"
+              onFocusCapture={focusMiniSpinnerLink}
+              onBlurCapture={releaseMiniSpinnerLink}
               aria-label="Penny links"
             >
-              <a
+
+              <div className="mini-spinner-track">              <a
                 className="penny-link-card penny-link-card--party penny-party-link"
                 href={WILDCARD_PARTY_URL}
                 target="_blank"
@@ -1928,16 +1961,6 @@ export default function App() {
                 </span>
               </a>
 
-              <div
-                className="penny-link-hub"
-                aria-hidden="true"
-              >
-                <img
-                  src={pennySpadeLogo}
-                  alt=""
-                />
-              </div>
-
               <a
                 className="penny-link-card penny-link-card--x"
                 href={WILDCARD_X_URL}
@@ -1955,6 +1978,17 @@ export default function App() {
                   X
                 </span>
               </a>
+              </div>
+              <div
+                className="penny-link-hub"
+                aria-hidden="true"
+              >
+                <img
+                  src={pennySpadeLogo}
+                  alt=""
+                />
+              </div>
+
             </div>
           </div>
         </article>
