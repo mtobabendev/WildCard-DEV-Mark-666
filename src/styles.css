@@ -3417,6 +3417,16 @@ body {
     max-width: 11.6rem;
   }
 
+  .mini-spinner {
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+  }
+
+  .mini-spinner.is-dragging {
+    cursor: grabbing;
+  }
+
   .mini-spinner .mini-spinner-track {
     position: absolute;
     z-index: 2;
@@ -3482,7 +3492,7 @@ body {
   }
 
   @keyframes wildcard-mini-spinner-turn {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
+    from { transform: rotateY(var(--mini-offset, 0deg)); }
+    to { transform: rotateY(calc(var(--mini-offset, 0deg) + 360deg)); }
   }
 }
