@@ -3490,6 +3490,40 @@ body {
     animation-play-state: paused;
   }
 
+  /* M.3.3: pre-styled jewel borders; only opacity animates.
+     Keep the glow small so the homepage videos retain performance priority. */
+  .mini-spinner .mini-spinner-track > a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    border-top-color: rgba(185, 137, 255, .88);
+    border-right-color: rgba(92, 183, 255, .84);
+    border-bottom-color: rgba(212, 223, 239, .88);
+    border-left-color: rgba(145, 120, 255, .82);
+    border-radius: inherit;
+    box-shadow: 0 0 5px rgba(142, 123, 250, .24);
+    pointer-events: none;
+    opacity: .32;
+    animation: wildcard-mini-jewel-pulse 6s ease-in-out infinite;
+  }
+
+  .mini-spinner .mini-spinner-track > a:focus-visible::after {
+    animation-play-state: paused;
+    opacity: .85;
+  }
+
+  .mini-spinner.is-dragging .mini-spinner-track > a::after,
+  .landing.is-section .mini-spinner-track > a::after,
+  .landing.is-page-hidden .mini-spinner-track > a::after {
+    animation-play-state: paused;
+  }
+
+  @keyframes wildcard-mini-jewel-pulse {
+    0%, 100% { opacity: .26; }
+    50% { opacity: .78; }
+  }
+
   @keyframes wildcard-mini-spinner-turn {
     from { transform: rotateY(var(--mini-offset, 0deg)); }
     to { transform: rotateY(calc(var(--mini-offset, 0deg) + 360deg)); }
