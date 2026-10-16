@@ -493,9 +493,74 @@ function ContactForm({ onSubmit }) {
 
 const miniSpinnerDrags = new WeakMap();
 const miniSpinnerClickBlocks = new WeakMap();
+const miniSpinnerMotion = new WeakMap();
 
 function miniSpinnerTrack(root) {
   return root.querySelector('.mini-spinner-track');
+}
+
+function stopMiniSpinnerMotion(root) {
+  const motion = miniSpinnerMotion.get(root);
+  if (!motion) return;
+  cancelAnimationFrame(motion.frame);
+  clearTimeout(motion.timer);
+  miniSpinnerMotion.delete(root);
+}
+
+function resumeMiniSpinnerAuto(root, angle) {
+  const track = miniSpinnerTrack(root);
+  if (!track) return;
+  track.style.setProperty('--mini-offset', `${angle}deg`);
+  track.style.removeProperty('animation');
+  track.style.removeProperty('transition');
+  track.style.removeProperty('transform');
+}
+
+function coastMiniSpinner(root, startAngle, velocity) {
+  const track = miniSpinnerTrack(root);
+  if (!track) return;
+
+  const motion = {
+    angle: startAngle,
+    velocity: Math.max(-0.9, Math.min(0.9, velocity)),
+    lastTime: 0,
+    frame: 0,
+    timer: 0,
+  };
+  miniSpinnerMotion.set(root, motion);
+
+  const settle = () => {
+    motion.timer = setTimeout(() => {
+      if (miniSpinnerMotion.get(root) !== motion) return;
+      miniSpinnerMotion.delete(root);
+      resumeMiniSpinnerAuto(root, motion.angle);
+    }, 1200);
+  };
+
+  if (Math.abs(motion.velocity) <= 0.002) {
+    settle();
+    return;
+  }
+
+  const tick = (time) => {
+    if (miniSpinnerMotion.get(root) !== motion) return;
+    motion.frame = 0;
+
+    if (!motion.lastTime) motion.lastTime = time;
+    const elapsed = Math.min(time - motion.lastTime, 40);
+    motion.lastTime = time;
+
+    motion.angle += motion.velocity * elapsed;
+    track.style.transform = `rotateY(${motion.angle}deg)`;
+    motion.velocity *= Math.pow(0.94, elapsed / 16.67);
+
+    if (Math.abs(motion.velocity) <= 0.002) {
+      settle();
+    } else {
+      motion.frame = requestAnimationFrame(tick);
+    }
+  };
+  motion.frame = requestAnimationFrame(tick);
 }
 
 function startMiniSpinnerDrag(event) {
@@ -504,19 +569,23 @@ function startMiniSpinnerDrag(event) {
 
   const root = event.currentTarget;
   const track = miniSpinnerTrack(root);
-  if (!track) return;
+  if (!track || miniSpinnerDrags.has(root)) return;
 
-  // Read the actual CSS rotation before taking over. No jump on first drag.
+  stopMiniSpinnerMotion(root);
+  // CSS rotateY(angle) has -sin(angle) in DOMMatrix.m13.
   const matrix = new DOMMatrixReadOnly(getComputedStyle(track).transform);
   const angle = Math.atan2(-matrix.m13, matrix.m11) * 180 / Math.PI;
   miniSpinnerDrags.set(root, {
     pointerId: event.pointerId,
     startX: event.clientX,
-    startAngle: angle,
+    lastX: event.clientX,
+    lastTime: performance.now(),
     angle,
+    velocity: 0,
     moved: false,
   });
 
+  root.classList.remove('is-keyboard-focused');
   track.style.animation = 'none';
   track.style.transition = 'none';
   track.style.transform = `rotateY(${angle}deg)`;
@@ -527,17 +596,23 @@ function moveMiniSpinnerDrag(event) {
   const drag = miniSpinnerDrags.get(root);
   if (!drag || drag.pointerId !== event.pointerId) return;
 
-  const delta = event.clientX - drag.startX;
-  if (!drag.moved && Math.abs(delta) <= 8) return;
+  const now = performance.now();
+  const deltaX = event.clientX - drag.lastX;
+  const elapsed = Math.max(now - drag.lastTime, 8);
 
-  if (!drag.moved) {
+  if (!drag.moved && Math.abs(event.clientX - drag.startX) > 8) {
     drag.moved = true;
     root.classList.add('is-dragging');
     root.setPointerCapture(event.pointerId);
   }
 
-  drag.angle = drag.startAngle + delta * 0.38;
+  // Match the main spinner: angle per pixel and smoothed angular velocity.
+  drag.angle += deltaX * 0.38;
   miniSpinnerTrack(root).style.transform = `rotateY(${drag.angle}deg)`;
+  drag.velocity = drag.velocity * 0.55
+    + ((deltaX * 0.38) / elapsed) * 0.45;
+  drag.lastX = event.clientX;
+  drag.lastTime = now;
 }
 
 function endMiniSpinnerDrag(event) {
@@ -553,12 +628,12 @@ function endMiniSpinnerDrag(event) {
     root.releasePointerCapture(event.pointerId);
   }
 
-  // Restart the existing slow CSS rotation exactly where the drag ended.
-  const track = miniSpinnerTrack(root);
-  track.style.setProperty('--mini-offset', `${drag.angle}deg`);
-  track.style.removeProperty('animation');
-  track.style.removeProperty('transition');
-  track.style.removeProperty('transform');
+  if (drag.moved && event.type !== 'pointercancel') {
+    coastMiniSpinner(root, drag.angle, drag.velocity);
+  } else {
+    // Taps and canceled vertical scrolls should resume normally.
+    resumeMiniSpinnerAuto(root, drag.angle);
+  }
 }
 
 function suppressMiniSpinnerDragClick(event) {
@@ -579,6 +654,7 @@ function focusMiniSpinnerLink(event) {
   if (index < 0) return;
 
   // Keyboard-focused destinations face forward.
+  event.currentTarget.classList.add('is-keyboard-focused');
   track.style.animation = 'none';
   track.style.transform = `rotateY(${-index * 360 / links.length}deg)`;
 }
@@ -586,6 +662,8 @@ function focusMiniSpinnerLink(event) {
 function releaseMiniSpinnerLink(event) {
   if (miniSpinnerDrags.has(event.currentTarget)
     || event.currentTarget.contains(event.relatedTarget)) return;
+  event.currentTarget.classList.remove('is-keyboard-focused');
+  if (miniSpinnerMotion.has(event.currentTarget)) return;
   const track = miniSpinnerTrack(event.currentTarget);
   track?.style.removeProperty('animation');
   track?.style.removeProperty('transform');

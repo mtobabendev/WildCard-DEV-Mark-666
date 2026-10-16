@@ -3484,8 +3484,7 @@ body {
     pointer-events: none;
   }
 
-  .mini-spinner:hover .mini-spinner-track,
-  .mini-spinner:focus-within .mini-spinner-track,
+  .mini-spinner.is-keyboard-focused .mini-spinner-track,
   .landing.is-section .mini-spinner-track,
   .landing.is-page-hidden .mini-spinner-track {
     animation-play-state: paused;
