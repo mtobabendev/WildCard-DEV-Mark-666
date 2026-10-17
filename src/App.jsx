@@ -2084,7 +2084,7 @@ export default function App() {
           <div className="imp-workshop">
             <figure className="imp-workshop-art">
               <img
-                src="/static/neon_gothic_imp_dev_workshop.png"
+                src="/static/imp-workshop.webp"
                 width="1672"
                 height="941"
                 alt="Penny in her black-and-pink French maid outfit, blonde hair with a flame-red streak, surrounded by dark-haired, brunette and redheaded adult female Coding Imps at glowing computers."
