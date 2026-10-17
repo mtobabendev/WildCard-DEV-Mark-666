@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${!isHome && activeChannel.id === 'interface' ? ' is-veil' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${!isHome && activeChannel.id === 'interface' ? ' is-veil' : ''}${!isHome && activeChannel.id === 'systems' ? ' is-arcane-forge' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1772,54 +1772,91 @@ export default function App() {
             </div>
           </div>
           ) : (
-          <div className="arcane-feature chamber-feature">
-            <p className="eyebrow">What we build</p>
-            <p className="chamber-intro">
-              WildCard DEV develops practical web and application experiences,
-              from public-facing storefronts to specialized internal tools.
-            </p>
-            <ul className="chamber-capabilities">
-              <li>
-                <strong>Web Development</strong>
-                <span>Websites, storefronts, responsive interfaces, and business web apps.</span>
-              </li>
-              <li>
-                <strong>Application Development</strong>
-                <span>Custom applications, interactive tools, and specialized workflows.</span>
-              </li>
-              <li>
-                <strong>Integrations &amp; Automation</strong>
-                <span>Connecting existing systems and reducing repetitive work.</span>
-              </li>
-              <li>
-                <strong>AI-Assisted Systems</strong>
-                <span>Purpose-built assistants and practical AI integration work, scoped to real needs.</span>
-              </li>
-            </ul>
-            <h3>Explore the work</h3>
-            <div className="arcane-project-links">
-              <a
-                href="https://pennysoffice.wildcarddev.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                PENNY’S GARAGE
-              </a>
-              <a
-                href="https://labs.wildcarddev.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                WILDCARD LABS · COMING SOON
-              </a>
-              <a
-                href="https://wildcard-showroom-enhanced-1500.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WEB &amp; APP SHOWROOM DEMO
-              </a>
+          <div className="arcane-forge">
+            <figure className="arcane-forge-art">
+              <img
+                src="/static/arcane-engineering.webp"
+                width="1280"
+                height="853"
+                alt="Penny Bella Morningstar, blonde with a bright flame-red streak, conjures holographic blueprints and systems diagrams in a pink-lit gothic engineering forge alongside her black cat."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div className="arcane-forge-intro">
+              <p className="arcane-forge-overline">♠ WildCard DEV // Chamber Two</p>
+              <h2>Arcane Engineering</h2>
+              <p className="arcane-forge-subtitle">The Forge of Creation</p>
+              <p>
+                Behind every extraordinary experience is a system that actually works.
+                We build practical technology for good people with unusual problems,
+                combining reliable engineering with a little WildCard imagination.
+              </p>
             </div>
+            <section className="arcane-forge-section" aria-labelledby="arcane-forge-capabilities">
+              <p className="arcane-forge-kicker">I. The Workshop</p>
+              <h3 id="arcane-forge-capabilities">What we forge</h3>
+              <div className="arcane-forge-grid">
+                <article className="arcane-forge-card">
+                  <span className="arcane-forge-symbol" aria-hidden="true">⌘</span>
+                  <h4>Web Development</h4>
+                  <p>Responsive sites, storefronts, and business tools designed to work in the real world.</p>
+                </article>
+                <article className="arcane-forge-card">
+                  <span className="arcane-forge-symbol" aria-hidden="true">▣</span>
+                  <h4>Applications</h4>
+                  <p>Custom apps, interactive tools, and useful experiences built around the actual task.</p>
+                </article>
+                <article className="arcane-forge-card">
+                  <span className="arcane-forge-symbol" aria-hidden="true">⛓</span>
+                  <h4>Integrations</h4>
+                  <p>Connect existing services and data flows without creating unnecessary moving parts.</p>
+                </article>
+                <article className="arcane-forge-card">
+                  <span className="arcane-forge-symbol" aria-hidden="true">⚙</span>
+                  <h4>Automation</h4>
+                  <p>Take repetitive processes off the workbench while keeping humans in control.</p>
+                </article>
+                <article className="arcane-forge-card">
+                  <span className="arcane-forge-symbol" aria-hidden="true">✧</span>
+                  <h4>AI Systems</h4>
+                  <p>Purpose-built assistants and practical AI integrations with clear boundaries.</p>
+                </article>
+              </div>
+            </section>
+            <section className="arcane-forge-section arcane-forge-portals" aria-labelledby="arcane-forge-portals">
+              <p className="arcane-forge-kicker">II. The Working Worlds</p>
+              <h3 id="arcane-forge-portals">Explore the builds</h3>
+              <div className="arcane-forge-links">
+                <a href="https://pennysoffice.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
+                  <span className="arcane-forge-symbol" aria-hidden="true">♠</span>
+                  <strong>Penny’s Garage</strong>
+                  <span>Services, storefronts, and interactive merchandise.</span>
+                  <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="https://labs.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
+                  <span className="arcane-forge-symbol" aria-hidden="true">◇</span>
+                  <strong>WildCard Labs</strong>
+                  <span>Experiments and systems under construction.</span>
+                  <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
+                  <span className="arcane-forge-symbol" aria-hidden="true">✦</span>
+                  <strong>Web &amp; App Showroom</strong>
+                  <span>Explore the Enhanced Build demonstration.</span>
+                  <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="mailto:matt@wildcarddev.com?subject=Arcane%20Engineering%20Inquiry">
+                  <span className="arcane-forge-symbol" aria-hidden="true">✉</span>
+                  <strong>Bring Us a Problem</strong>
+                  <span>Tell us what you need built, connected, or automated.</span>
+                  <span className="arcane-forge-link-arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </section>
+            <p className="arcane-forge-footer">
+              Good people. Unusual problems. Creative solutions. <span aria-hidden="true">♠</span>
+            </p>
           </div>
           )
         )}
