@@ -4141,3 +4141,213 @@ body {
     min-height: 7rem;
   }
 }
+
+/* H.6: The Veil, Penny's looking glass. The shared miniature hub spinner stays intact. */
+.landing.is-section.is-veil {
+  display: block;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  padding: clamp(6.5rem, 11vh, 8rem) 0 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse 65% 28% at 54% 3%, rgba(185, 74, 220, .22), transparent 78%),
+    linear-gradient(180deg, #100816, #090713 53%, #05040b);
+}
+.landing.is-section.is-veil .context-window--interface,
+.landing.is-section.is-veil .context-window--interface.is-active {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: min(76rem, calc(100% - 1.5rem));
+  height: auto;
+  max-height: none;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(205, 137, 243, .38);
+  border-radius: 1.2rem;
+  background: #090611;
+  box-shadow: 0 0 32px rgba(148, 70, 190, .13);
+  backdrop-filter: none;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+.landing.is-veil .context-window--interface > .eyebrow,
+.landing.is-veil .context-window--interface > h2,
+.landing.is-veil .context-window--interface > .channel-copy {
+  display: none;
+}
+.veil-realm {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  color: #f4eafd;
+}
+.veil-portal-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(226, 138, 249, .38);
+  background: radial-gradient(ellipse at 50% 45%, #3a174f, #120a20 67%, #090611);
+}
+.veil-portal-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(70svh, 46rem);
+  object-fit: contain;
+  object-position: center;
+}
+.veil-intro {
+  display: grid;
+  gap: .8rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  background: linear-gradient(165deg, rgba(50, 21, 68, .35), transparent 70%);
+}
+.veil-overline,
+.veil-kicker {
+  margin: 0;
+  color: #e6b4fd;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.veil-intro h2 {
+  margin: 0;
+  color: #fff2ff;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.15rem, 5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.06;
+  text-shadow: 0 0 28px rgba(211, 113, 244, .38);
+}
+.veil-subtitle {
+  margin: -.15rem 0 .15rem;
+  color: #d7a7f8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+  font-style: italic;
+}
+.veil-intro > p:last-child {
+  max-width: 52rem;
+  margin: 0;
+  color: #d8c9e4;
+  line-height: 1.7;
+}
+.veil-collection {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  border-top: 1px solid rgba(203, 116, 220, .24);
+}
+.veil-collection h3 {
+  margin: 0 0 .4rem;
+  color: #fff0ff;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 400;
+}
+.veil-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+}
+.veil-card,
+.veil-book,
+.veil-links > a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+  min-width: 0;
+  padding: 1.15rem;
+  border: 1px solid rgba(188, 122, 220, .34);
+  border-radius: .75rem;
+  background: linear-gradient(140deg, #21102c, #0c0917 88%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+.veil-symbol {
+  display: block;
+  color: #eeafff;
+  font-size: 1.75rem;
+  line-height: 1;
+  text-shadow: 0 0 17px rgba(226, 117, 250, .4);
+}
+.veil-card h4,
+.veil-book strong,
+.veil-links > a strong {
+  margin: 0;
+  color: #fbeefe;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.12rem;
+  font-weight: 400;
+}
+.veil-card p,
+.veil-book p,
+.veil-links > a > span:not(.veil-symbol):not(.veil-link-arrow) {
+  margin: 0;
+  color: #d5c6e2;
+  font-size: .9rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.veil-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+}
+.veil-book small {
+  margin-top: auto;
+  color: #cfb4e0;
+  font-size: .73rem;
+  line-height: 1.5;
+}
+.veil-links > a {
+  min-height: 12rem;
+  border-color: rgba(230, 161, 247, .44);
+  color: #f8f0ff;
+  text-decoration: none;
+}
+.veil-link-arrow {
+  align-self: flex-end;
+  margin-top: auto;
+  color: #ecc0ff;
+  font-size: 1.3rem;
+}
+.veil-links > a:hover,
+.veil-links > a:focus-visible {
+  border-color: #fff0ff;
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.veil-footer {
+  margin: 0;
+  padding: 1.1rem 1rem 1.4rem;
+  border-top: 1px solid rgba(203, 116, 220, .24);
+  color: #d7addf;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(.85rem, 1.6vw, 1.05rem);
+  font-style: italic;
+  letter-spacing: .03em;
+  text-align: center;
+}
+.veil-footer span { padding-left: .3rem; }
+@media (max-width: 800px) {
+  .veil-links { grid-template-columns: minmax(0, 1fr); }
+  .veil-links > a { min-height: 8rem; }
+}
+@media (max-width: 520px) {
+  .landing.is-section.is-veil { padding-top: 7rem; }
+  .landing.is-section.is-veil .context-window--interface { width: calc(100% - 1rem); }
+  .veil-portal-art img { max-height: none; }
+  .veil-intro, .veil-collection { padding: 1.1rem .9rem; }
+  .veil-grid { grid-template-columns: minmax(0, 1fr); gap: .65rem; }
+  .veil-card, .veil-book, .veil-links > a { padding: .9rem; }
+}
