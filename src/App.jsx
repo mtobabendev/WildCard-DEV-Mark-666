@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1833,34 +1833,54 @@ export default function App() {
             </a>
           </div>
           ) : (
-          <div className="penny-bunker-feature chamber-feature">
-            <p className="eyebrow">Meet Penny</p>
-            <p className="chamber-intro">
-              Penny is WildCard DEV’s digital concierge, a familiar face
-              for exploring our projects, finding the right destination,
-              and getting in touch. Her personality is part of the experience;
-              this channel does not promise autonomous services.
-            </p>
-            <h3>Find Penny in the WildCard ecosystem</h3>
-            <p className="chamber-intro">
-              The Discord Bunker is Penny’s community doorway.
-              Penny’s Garage showcases services and merchandise.
-              WildCard Party is the social and messaging platform.
-            </p>
-            <a href="/bunker">
-              ENTER THE DISCORD BUNKER →
-            </a>
-            <div className="chamber-actions">
-              <a href="https://pennysoffice.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
-                Explore Penny’s Garage →
-              </a>
-              <a href={WILDCARD_PARTY_URL} target="_blank" rel="noopener noreferrer">
-                Visit WildCard Party →
-              </a>
-              <a href="mailto:penny@wildcarddev.com">
-                Email Penny →
-              </a>
+          <div className="penny-throne">
+            <figure className="penny-throne-art">
+              <img
+                src="/static/penny-throne-room.webp"
+                alt="Penny Bella Morningstar with blonde hair and a flame-red streak, seated on her gothic spade throne with a black wolf and violet-lit computers."
+                width="1536"
+                height="730"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div className="penny-throne-intro">
+              <p className="penny-throne-overline">♠ WildCard DEV // Chamber Four</p>
+              <h2>Penny Bella Morningstar</h2>
+              <p>
+                Welcome to my throne room. This is where ideas get loud,
+                builds go sideways, and the WildCard worlds come together.
+              </p>
             </div>
+            <nav className="penny-throne-destinations" aria-label="Penny’s destinations">
+              <a className="penny-throne-link" href="/bunker">
+                <span className="penny-throne-link-symbol" aria-hidden="true">♠</span>
+                <strong>Discord Bunker</strong>
+                <span>The community doorway</span>
+                <span className="penny-throne-link-arrow" aria-hidden="true">→</span>
+              </a>
+              <a className="penny-throne-link" href="https://pennysoffice.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
+                <span className="penny-throne-link-symbol" aria-hidden="true">⚒</span>
+                <strong>Penny’s Garage</strong>
+                <span>Services and merchandise</span>
+                <span className="penny-throne-link-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a className="penny-throne-link" href={WILDCARD_PARTY_URL} target="_blank" rel="noopener noreferrer">
+                <span className="penny-throne-link-symbol" aria-hidden="true">♥</span>
+                <strong>WildCard Party</strong>
+                <span>Community and messaging</span>
+                <span className="penny-throne-link-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a className="penny-throne-link" href="mailto:penny@wildcarddev.com">
+                <span className="penny-throne-link-symbol" aria-hidden="true">✉</span>
+                <strong>Contact Penny</strong>
+                <span>Get in touch directly</span>
+                <span className="penny-throne-link-arrow" aria-hidden="true">→</span>
+              </a>
+            </nav>
+            <p className="penny-throne-footer">
+              Some queens build empires. I prefer playgrounds. <span aria-hidden="true">♠</span>
+            </p>
           </div>
           )
         )}
