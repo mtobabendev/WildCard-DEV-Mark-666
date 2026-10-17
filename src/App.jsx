@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${!isHome && activeChannel.id === 'interface' ? ' is-veil' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1681,7 +1681,7 @@ export default function App() {
 
       <section
         id="channel-content"
-        className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'penny' ? ' context-window--penny' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}`}
+        className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'penny' ? ' context-window--penny' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}${activeChannel.id === 'interface' ? ' context-window--interface' : ''}`}
         aria-live="polite"
         aria-hidden={!open || contactPanelDismissed}
         inert={!open || contactPanelDismissed}
@@ -2018,41 +2018,78 @@ export default function App() {
         )}
 
         {activeChannel.id === 'interface' && !isHome && (
-          <div className="veil-feature chamber-feature">
-            <p className="eyebrow">Interactive experience design</p>
-            <p className="chamber-intro">
-              Responsive layouts, interactive components, and purposeful motion
-              make WildCard DEV interfaces distinctive without sacrificing usability.
-            </p>
-            <ul className="chamber-capabilities">
-              <li>
-                <strong>Responsive interfaces</strong>
-                <span>Layouts designed for desktop and mobile screens.</span>
-              </li>
-              <li>
-                <strong>Interactive visuals</strong>
-                <span>Hands-on elements such as the spinner and merchandise viewer.</span>
-              </li>
-              <li>
-                <strong>Motion and transitions</strong>
-                <span>Visual feedback that supports navigation and reduced-motion preferences.</span>
-              </li>
-              <li>
-                <strong>Usable experiences</strong>
-                <span>Readable content, accessible actions, and clear ways forward.</span>
-              </li>
-            </ul>
-            <h3>Penny’s Little Black Book</h3>
-            <p className="chamber-intro">
-              A working interactive feature already built into this site.
-              Look for the small spade launcher on the right to explore it.
-              There is no separate page or second copy to open.
-            </p>
-            <div className="chamber-actions">
-              <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
-                Open the Web &amp; App Showroom demo →
-              </a>
+          <div className="veil-realm">
+            <figure className="veil-portal-art">
+              <img
+                src="/static/veil-looking-glass.webp"
+                width="1280"
+                height="1024"
+                alt="Penny Bella Morningstar, blonde with a flame-red streak, reaches through a luminous violet looking glass framed by gothic black architecture into a world of glowing digital portals."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div className="veil-intro">
+              <p className="veil-overline">♠ WildCard DEV // Chamber Six</p>
+              <h2>The Veil</h2>
+              <p className="veil-subtitle">Through the Looking Glass</p>
+              <p>
+                Every screen is a doorway. Penny invites you into interfaces that
+                feel alive, without losing sight of the person on the other side.
+                Distinctive design, practical interactions, and a little digital magic.
+              </p>
             </div>
+            <section className="veil-collection" aria-labelledby="veil-capabilities">
+              <p className="veil-kicker">I. Beyond the Glass</p>
+              <h3 id="veil-capabilities">Experiences worth exploring</h3>
+              <div className="veil-grid">
+                <article className="veil-card">
+                  <span className="veil-symbol" aria-hidden="true">◈</span>
+                  <h4>Responsive Interfaces</h4>
+                  <p>Layouts that work across desktop and mobile without sacrificing character.</p>
+                </article>
+                <article className="veil-card">
+                  <span className="veil-symbol" aria-hidden="true">✧</span>
+                  <h4>Interactive Visuals</h4>
+                  <p>Hands-on navigation, rotating merchandise, and purposeful visual feedback.</p>
+                </article>
+                <article className="veil-card">
+                  <span className="veil-symbol" aria-hidden="true">⌁</span>
+                  <h4>Motion With Purpose</h4>
+                  <p>Transitions that guide attention, with reduced-motion behavior respected.</p>
+                </article>
+                <article className="veil-card">
+                  <span className="veil-symbol" aria-hidden="true">♠</span>
+                  <h4>Usable by Design</h4>
+                  <p>Readable content, accessible controls, and clear paths to the next action.</p>
+                </article>
+              </div>
+            </section>
+            <section className="veil-collection veil-doorways" aria-labelledby="veil-doorways">
+              <p className="veil-kicker">II. Doorways</p>
+              <h3 id="veil-doorways">Step through</h3>
+              <div className="veil-links">
+                <div className="veil-book">
+                  <span className="veil-symbol" aria-hidden="true">♠</span>
+                  <strong>Penny’s Little Black Book</strong>
+                  <p>Already woven into this site. Tap the small spade launcher at the right edge to explore the real interactive book.</p>
+                  <small>One original. No duplicate or redirected copy.</small>
+                </div>
+                <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
+                  <span className="veil-symbol" aria-hidden="true">◇</span>
+                  <strong>Enhanced Build Demo</strong>
+                  <span>Explore the Web &amp; App Showroom.</span>
+                  <span className="veil-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="https://wildcard-showroom-enhanced-1500.vercel.app/launch/" target="_blank" rel="noopener noreferrer">
+                  <span className="veil-symbol" aria-hidden="true">✦</span>
+                  <strong>Launch Build Demo</strong>
+                  <span>See the simpler showroom experience.</span>
+                  <span className="veil-link-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </section>
+            <p className="veil-footer">The magic belongs in the experience, not in the maintenance. <span aria-hidden="true">♠</span></p>
           </div>
         )}
 
