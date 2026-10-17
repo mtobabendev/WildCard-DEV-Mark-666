@@ -4549,3 +4549,241 @@ body {
   .arcane-forge-links > a { padding: .9rem; }
   .arcane-forge-links > a { min-height: 7.75rem; }
 }
+
+/* H.8: Penny's Reception, scoped to the full Contact chamber only. */
+.landing.is-section.is-contact-reception {
+  display: block;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  padding: clamp(6.5rem, 11vh, 8rem) 0 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse 75% 29% at 50% 2%, rgba(220, 54, 164, .22), transparent 76%),
+    linear-gradient(180deg, #130812, #0c0714 55%, #06040c);
+}
+.landing.is-section.is-contact-reception .context-window--contact,
+.landing.is-section.is-contact-reception .context-window--contact.is-active {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: min(76rem, calc(100% - 1.5rem));
+  height: auto;
+  max-height: none;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(246, 147, 213, .38);
+  border-radius: 1.2rem;
+  background: #0b0714;
+  box-shadow: 0 0 32px rgba(204, 75, 158, .14);
+  backdrop-filter: none;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+.landing.is-contact-reception .context-window--contact > .eyebrow,
+.landing.is-contact-reception .context-window--contact > h2,
+.landing.is-contact-reception .context-window--contact > .channel-copy {
+  display: none;
+}
+.contact-reception {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  color: #f8ecfa;
+}
+.contact-reception-art {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(245, 121, 202, .38);
+  background: radial-gradient(ellipse at 50% 45%, #371024, #0b0611 70%);
+}
+.contact-reception-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(72svh, 46rem);
+  object-fit: contain;
+  object-position: center;
+}
+.contact-reception-intro {
+  display: grid;
+  gap: .8rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  background: linear-gradient(155deg, rgba(77, 21, 57, .32), transparent 72%);
+}
+.contact-reception-overline,
+.contact-reception-kicker {
+  margin: 0;
+  color: #f2b7e2;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.contact-reception-intro h2 {
+  margin: 0;
+  color: #fff0fa;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-shadow: 0 0 26px rgba(249, 114, 197, .3);
+}
+.contact-reception-subtitle {
+  margin: -.2rem 0 .15rem;
+  color: #eea8d8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-style: italic;
+}
+.contact-reception-intro > p:last-child {
+  max-width: 53rem;
+  margin: 0;
+  color: #e2cddd;
+  line-height: 1.7;
+}
+.contact-reception-section {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  border-top: 1px solid rgba(223, 108, 188, .26);
+}
+.contact-reception-section h3 {
+  margin: 0 0 .3rem;
+  color: #ffeffa;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 400;
+}
+.contact-reception-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .85rem;
+}
+.contact-reception-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .65rem;
+  min-width: 0;
+  padding: 1.15rem;
+  border: 1px solid rgba(242, 150, 217, .39);
+  border-radius: .8rem;
+  background: linear-gradient(145deg, #281025, #0e0916 88%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+.contact-reception-symbol {
+  display: block;
+  color: #ffb5e5;
+  font-size: 1.75rem;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(249, 128, 214, .32);
+}
+.contact-reception-card h4 {
+  margin: 0;
+  color: #fff0fd;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.18rem;
+  font-weight: 400;
+}
+.contact-reception-card p,
+.contact-reception-note {
+  margin: 0;
+  color: #ddc7dc;
+  font-size: .91rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.contact-reception-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: .6rem;
+  width: 100%;
+  margin-top: auto;
+  padding-top: .4rem;
+}
+.contact-reception-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 9rem;
+  min-height: 2.8rem;
+  padding: .7rem .85rem;
+  border: 1px solid rgba(255, 166, 228, .5);
+  border-radius: .6rem;
+  background: rgba(43, 17, 47, .78);
+  color: #ffe9fa;
+  font-size: .88rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+}
+.contact-reception-actions a:hover,
+.contact-reception-actions a:focus-visible {
+  border-color: #fff3ff;
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.contact-reception-inquiry .contact-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+  margin: .3rem 0 0;
+}
+.contact-reception-inquiry .contact-field {
+  gap: .45rem;
+  color: #edd2e7;
+  font-size: .76rem;
+}
+.contact-reception-inquiry .contact-field small { font-size: .68rem; }
+.contact-reception-inquiry .contact-field input,
+.contact-reception-inquiry .contact-field textarea {
+  min-height: 2.9rem;
+  border-color: rgba(241, 142, 216, .45);
+  font-size: .92rem;
+  padding: .75rem .8rem;
+}
+.contact-reception-inquiry .contact-field textarea { min-height: 7rem; }
+.contact-reception-inquiry .contact-field--message { grid-column: 1 / -1; }
+.contact-reception-inquiry .contact-submit {
+  grid-column: 1 / -1;
+  justify-self: end;
+  min-width: 12rem;
+  min-height: 3rem;
+  font-size: .93rem;
+}
+.contact-reception-footer {
+  margin: 0;
+  padding: 1rem 1rem 1.35rem;
+  border-top: 1px solid rgba(240, 117, 209, .28);
+  color: #efa9d9;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(.85rem, 1.6vw, 1.05rem);
+  font-style: italic;
+  letter-spacing: .03em;
+  text-align: center;
+}
+.contact-reception-footer span { padding-left: .35rem; }
+@media (max-width: 900px) {
+  .contact-reception-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .landing.is-section.is-contact-reception { padding-top: 7rem; }
+  .landing.is-section.is-contact-reception .context-window--contact { width: calc(100% - 1rem); }
+  .contact-reception-art img { max-height: none; }
+  .contact-reception-intro,
+  .contact-reception-section { padding: 1.1rem .9rem; }
+  .contact-reception-grid { gap: .7rem; }
+  .contact-reception-card { padding: .95rem; }
+  .contact-reception-inquiry .contact-form { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+  .contact-reception-inquiry .contact-field,
+  .contact-reception-inquiry .contact-field--message,
+  .contact-reception-inquiry .contact-submit { grid-column: 1; }
+  .contact-reception-inquiry .contact-submit { width: 100%; }
+}
