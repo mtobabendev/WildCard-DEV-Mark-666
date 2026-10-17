@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import pennySaysHelloWebm from '../assets/PennyWildCardIntro-mobile.webm';
+import pennySaysHelloWebm from '../assets/PennyWildCardIntro-new-mobile-optimized.webm';
 
 const GOOGLE_ANALYTICS_SRC =
   'https://www.googletagmanager.com/gtag/js?id=G-SQ55HQVQXX';
