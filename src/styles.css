@@ -3397,21 +3397,21 @@ body {
   }
 
   .identity-card--matt .owner-link-deck.mini-spinner {
-    --mini-radius: 4rem;
+    --mini-radius: 3.35rem;
     --mini-card-width: 3.15rem;
     width: min(100%, 14rem);
     max-width: 14rem;
   }
 
   .identity-card--kandy .kandy-link-deck.mini-spinner {
-    --mini-radius: 3rem;
+    --mini-radius: 2.5rem;
     --mini-card-width: 3.15rem;
     width: min(100%, 11.5rem);
     max-width: 11.5rem;
   }
 
   .identity-card--penny .penny-link-deck.mini-spinner {
-    --mini-radius: 2.75rem;
+    --mini-radius: 2.25rem;
     --mini-card-width: 4.1rem;
     width: min(100%, 11.6rem);
     max-width: 11.6rem;
