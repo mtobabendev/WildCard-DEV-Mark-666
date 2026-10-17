@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -2081,55 +2081,81 @@ export default function App() {
             </a>
           </div>
           ) : (
-          <div className="wildcard-social-feature chamber-feature">
-            <p className="eyebrow">Automation &amp; custom systems</p>
-            <p className="chamber-intro">
-              The right little helper handles repetitive work so people can focus
-              on decisions, creativity, and the unusual problems worth solving.
-            </p>
-            <ul className="chamber-capabilities">
-              <li>
-                <strong>Workflow Automation</strong>
-                <span>Streamlining routine tasks and administrative steps.</span>
-              </li>
-              <li>
-                <strong>System Integrations</strong>
-                <span>Connecting applications, data sources, and existing business processes.</span>
-              </li>
-              <li>
-                <strong>AI-Assisted Processes</strong>
-                <span>Support for drafting, organizing, analyzing, and routing work.</span>
-              </li>
-              <li>
-                <strong>Custom Utilities</strong>
-                <span>Focused tools for specific operational problems.</span>
-              </li>
-            </ul>
-            <h3>WildCard Party // Live</h3>
-            <p>
-              Explore our community platform with direct messaging,
-              attachments, presence, and read/unread indicators.
-              Calling functionality remains in development.
-            </p>
-            <a
-              href={WILDCARD_PARTY_URL}
-              onClick={() => {
-                trackAnalyticsEvent(
-                  'wildcard_party_click',
-                  {
+          <div className="imp-workshop">
+            <figure className="imp-workshop-art">
+              <img
+                src="/static/imp-workshop.webp"
+                width="1440"
+                height="810"
+                alt="Penny in her black and pink French maid-inspired outfit supervising an adult team of dark-haired, brunette, and redheaded coding imps at glowing computers."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <header className="imp-workshop-intro">
+              <p className="imp-workshop-overline">♠ WildCard DEV // Chamber Five</p>
+              <h2>Hell’s Little Helpers</h2>
+              <p className="imp-workshop-subtitle">The Imp Workshop</p>
+              <p>
+                Clean code. Clever automation. Less repetitive work.
+                Penny oversees the workshop where unusual ideas become
+                focused tools that actually solve problems.
+              </p>
+            </header>
+            <section className="imp-workshop-services" aria-labelledby="imp-workshop-capabilities">
+              <h3 id="imp-workshop-capabilities">What we build</h3>
+              <p className="imp-workshop-section-copy">
+                Practical solutions for the work that should not consume your day.
+              </p>
+              <div className="imp-workshop-grid">
+                <article className="imp-workshop-card">
+                  <span className="imp-workshop-symbol" aria-hidden="true">⚙</span>
+                  <h4>Workflow Automation</h4>
+                  <p>Streamlining routine tasks and administrative steps.</p>
+                </article>
+                <article className="imp-workshop-card">
+                  <span className="imp-workshop-symbol" aria-hidden="true">⌘</span>
+                  <h4>System Integrations</h4>
+                  <p>Connecting applications, data sources, and existing business processes.</p>
+                </article>
+                <article className="imp-workshop-card">
+                  <span className="imp-workshop-symbol" aria-hidden="true">✧</span>
+                  <h4>AI-Assisted Processes</h4>
+                  <p>Support for drafting, organizing, analyzing, and routing work.</p>
+                </article>
+                <article className="imp-workshop-card">
+                  <span className="imp-workshop-symbol" aria-hidden="true">♠</span>
+                  <h4>Custom Utilities</h4>
+                  <p>Focused tools for specific operational problems.</p>
+                </article>
+              </div>
+            </section>
+            <section className="imp-workshop-doors" aria-labelledby="imp-workshop-next">
+              <h3 id="imp-workshop-next">Open a workshop door</h3>
+              <p className="imp-workshop-section-copy">
+                Explore a live WildCard project or tell Penny what needs building.
+              </p>
+              <div className="imp-workshop-links">
+                <a href={WILDCARD_PARTY_URL} onClick={() => {
+                  trackAnalyticsEvent('wildcard_party_click', {
                     source: 'hells_little_helpers',
                     link_url: WILDCARD_PARTY_URL,
-                  },
-                );
-              }}
-            >
-              Enter WildCard Party →
-            </a>
-            <div className="chamber-actions">
-              <a href="mailto:penny@wildcarddev.com?subject=WildCard%20DEV%20Automation%20Inquiry">
-                Ask Penny about an automation project →
-              </a>
-            </div>
+                  });
+                }}>
+                  <span aria-hidden="true">♥</span>
+                  <strong>WildCard Party</strong>
+                  <small>Community, messages, and works in progress. Calling is still in development.</small>
+                  <span className="imp-workshop-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="mailto:penny@wildcarddev.com?subject=WildCard%20DEV%20Automation%20Inquiry">
+                  <span aria-hidden="true">✉</span>
+                  <strong>Ask Penny</strong>
+                  <small>Bring us an automation or custom-systems problem.</small>
+                  <span className="imp-workshop-link-arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </section>
+            <p className="imp-workshop-footer">Good people. Unusual problems. Creative solutions. <span aria-hidden="true">♠</span></p>
           </div>
           )
         )}
