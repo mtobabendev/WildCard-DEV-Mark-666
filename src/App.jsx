@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1867,6 +1867,36 @@ export default function App() {
 
         {activeChannel.id === 'portfolio' && (
           <div className="grimoire-collections">
+            {!isHome && (
+              <header className="grimoire-hero">
+                <div className="grimoire-hero-copy">
+                  <p className="grimoire-overline">♠ WildCard DEV // The Living Archive</p>
+                  <h2>The Grimoire</h2>
+                  <p className="grimoire-hero-lead">
+                    The living portfolio and archive of WildCard DEV.
+                  </p>
+                  <p className="grimoire-hero-description">
+                    Active builds, restored concepts, and creative work.
+                    Every page holds another story.
+                  </p>
+                  <nav className="grimoire-hero-actions" aria-label="Grimoire collections">
+                    <a href="#grimoire-living-works">Explore the Living Works ↓</a>
+                    <a href="#grimoire-resurrection">Enter the Archive ↓</a>
+                  </nav>
+                </div>
+                <div className="grimoire-hero-art">
+                  <img
+                    src="/static/grimoire-keeper.webp"
+                    alt="Penny, keeper of the Grimoire, with her spade-bound book in a candlelit gothic library"
+                    width="850"
+                    height="1062"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span aria-hidden="true" className="grimoire-hero-seal">♠</span>
+                </div>
+              </header>
+            )}
             <section className="grimoire-collection" aria-labelledby="grimoire-living-works">
               <h3 id="grimoire-living-works">I. The Living Works</h3>
               <p className="grimoire-collection-intro">
@@ -1898,9 +1928,35 @@ export default function App() {
             <section className="grimoire-collection" aria-labelledby="grimoire-resurrection">
               <h3 id="grimoire-resurrection">II. The Resurrection Chamber</h3>
               <p className="grimoire-collection-intro">
-                From the private WildCard Mark III archive. Historical prototypes
-                shown for context only, not currently available as public demos.
+                Original WildCard Mark III source and historical experiments.
+                Preserved as built, not presented as new working demos.
               </p>
+              <article className="grimoire-mark3" aria-labelledby="grimoire-mark3-title">
+                <div className="grimoire-mark3-copy">
+                  <p className="grimoire-card-status">Original archive · Unmodified source</p>
+                  <h4 id="grimoire-mark3-title">WildCard Mark III</h4>
+                  <p>
+                    The early WildCard DEV project built during incarceration,
+                    preserved in its original HTML, CSS, and supporting files.
+                    This is a record of where the work began, not a modern remake.
+                  </p>
+                  <p className="grimoire-mark3-note">
+                    Historical source view. This archive is not currently a hosted interactive demo.
+                  </p>
+                  <div className="grimoire-links">
+                    <a href="https://github.com/mtobabendev/WildCard-Mark-III/blob/main/Index.html" target="_blank" rel="noopener noreferrer">
+                      View the original Mark III HTML ↗
+                    </a>
+                    <a href="https://github.com/mtobabendev/WildCard-Mark-III" target="_blank" rel="noopener noreferrer">
+                      Browse the preserved repository ↗
+                    </a>
+                  </div>
+                </div>
+                <div className="grimoire-mark3-emblem" aria-hidden="true">
+                  <span>♠</span><span>III</span>
+                  <small>Original Edition</small>
+                </div>
+              </article>
               <div className="grimoire-grid">
                 {GRIMOIRE_ARCHIVE.map((experiment) => (
                   <article className="grimoire-card" key={experiment.name}>
