@@ -4351,3 +4351,201 @@ body {
   .veil-grid { grid-template-columns: minmax(0, 1fr); gap: .65rem; }
   .veil-card, .veil-book, .veil-links > a { padding: .9rem; }
 }
+
+/* H.7: Arcane Engineering, scoped to Chamber 02. Shared spinner untouched. */
+.landing.is-section.is-arcane-forge {
+  display: block;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  padding: clamp(6.5rem, 11vh, 8rem) 0 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse 80% 30% at 55% 1%, rgba(199, 46, 179, .23), transparent 75%),
+    linear-gradient(180deg, #110711, #0c0716 58%, #05040b);
+}
+.landing.is-section.is-arcane-forge .context-window--systems,
+.landing.is-section.is-arcane-forge .context-window--systems.is-active {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: min(76rem, calc(100% - 1.5rem));
+  height: auto;
+  max-height: none;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(232, 133, 214, .38);
+  border-radius: 1.2rem;
+  background: #0a0613;
+  box-shadow: 0 0 32px rgba(181, 47, 153, .14);
+  backdrop-filter: none;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+.landing.is-arcane-forge .context-window--systems > .eyebrow,
+.landing.is-arcane-forge .context-window--systems > h2,
+.landing.is-arcane-forge .context-window--systems > .channel-copy {
+  display: none;
+}
+.arcane-forge {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  color: #f7eaf8;
+}
+.arcane-forge-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(240, 137, 228, .43);
+  background: radial-gradient(ellipse at 50% 42%, #35102f, #0c0715 75%);
+}
+.arcane-forge-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(72svh, 46rem);
+  object-fit: contain;
+  object-position: center;
+}
+.arcane-forge-intro {
+  display: grid;
+  gap: .8rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  background: linear-gradient(160deg, rgba(69, 19, 56, .33), transparent 72%);
+}
+.arcane-forge-overline,
+.arcane-forge-kicker {
+  margin: 0;
+  color: #f2b6e7;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.arcane-forge-intro h2 {
+  margin: 0;
+  color: #fff0fd;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-shadow: 0 0 26px rgba(245, 114, 221, .31);
+}
+.arcane-forge-subtitle {
+  margin: -.15rem 0 .15rem;
+  color: #e6a8de;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-style: italic;
+}
+.arcane-forge-intro > p:last-child {
+  max-width: 52rem;
+  margin: 0;
+  color: #e0cfe4;
+  line-height: 1.7;
+}
+.arcane-forge-section {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.3rem, 3.3vw, 2.5rem);
+  border-top: 1px solid rgba(221, 103, 197, .26);
+}
+.arcane-forge-section h3 {
+  margin: 0 0 .3rem;
+  color: #fff0fc;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 400;
+}
+.arcane-forge-grid,
+.arcane-forge-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+}
+.arcane-forge-card,
+.arcane-forge-links > a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+  min-width: 0;
+  padding: 1.1rem;
+  border: 1px solid rgba(225, 121, 216, .38);
+  border-radius: .75rem;
+  background: linear-gradient(145deg, #261026, #0b0815 88%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+.arcane-forge-card:last-child { grid-column: 1 / -1; }
+.arcane-forge-symbol {
+  display: block;
+  color: #ffb6f0;
+  font-size: 1.7rem;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(247, 110, 210, .25);
+}
+.arcane-forge-card h4,
+.arcane-forge-links > a strong {
+  margin: 0;
+  color: #ffeefd;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.14rem;
+  font-weight: 400;
+}
+.arcane-forge-card p,
+.arcane-forge-links > a > span:not(.arcane-forge-symbol):not(.arcane-forge-link-arrow) {
+  margin: 0;
+  color: #dbc9e1;
+  font-size: .9rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.arcane-forge-links > a {
+  min-height: 10rem;
+  border-color: rgba(244, 154, 229, .47);
+  color: #f9f0fc;
+  text-decoration: none;
+}
+.arcane-forge-link-arrow {
+  align-self: flex-end;
+  margin-top: auto;
+  color: #f6bee9;
+  font-size: 1.3rem;
+}
+.arcane-forge-links > a:hover,
+.arcane-forge-links > a:focus-visible {
+  border-color: #fff0fb;
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.arcane-forge-footer {
+  margin: 0;
+  padding: 1rem 1rem 1.35rem;
+  border-top: 1px solid rgba(232, 117, 221, .28);
+  color: #eea7df;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(.85rem, 1.6vw, 1.05rem);
+  font-style: italic;
+  letter-spacing: .03em;
+  text-align: center;
+}
+.arcane-forge-footer span { padding-left: .35rem; }
+@media (max-width: 520px) {
+  .landing.is-section.is-arcane-forge { padding-top: 7rem; }
+  .landing.is-section.is-arcane-forge .context-window--systems { width: calc(100% - 1rem); }
+  .arcane-forge-art img { max-height: none; }
+  .arcane-forge-intro,
+  .arcane-forge-section { padding: 1.1rem .9rem; }
+  .arcane-forge-grid,
+  .arcane-forge-links { grid-template-columns: minmax(0, 1fr); gap: .65rem; }
+  .arcane-forge-card:last-child { grid-column: auto; }
+  .arcane-forge-card,
+  .arcane-forge-links > a { padding: .9rem; }
+  .arcane-forge-links > a { min-height: 7.75rem; }
+}
