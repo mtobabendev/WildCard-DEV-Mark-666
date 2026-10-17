@@ -1,0 +1,49 @@
+name: H5 Temporary Art Optimization
+on:
+  push:
+    branches:
+      - stage-h5-imp-workshop
+    paths:
+      - .github/workflows/h5-optimize-once.yml
+permissions:
+  contents: write
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Optimize existing approved image
+        run: |
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          from PIL import Image
+          source = Path('public/static/neon_gothic_imp_dev_workshop.png')
+          if hashlib.sha256(source.read_bytes()).hexdigest() != '7d2a750b4c7d73b570b97c95f50585e93820a7db09d681fa2e9cfa1dab2bce8a':
+              raise SystemExit('Unexpected artwork bytes; refusing to convert')
+          im = Image.open(source).convert('RGB')
+          if im.size != (1672, 941):
+              raise SystemExit('Unexpected artwork dimensions; refusing to convert')
+          im = im.resize((1440, 810), Image.Resampling.LANCZOS)
+          target = Path('public/static/imp-workshop.webp')
+          im.save(target, 'WEBP', quality=76, method=6)
+          app = Path('src/App.jsx')
+          content = app.read_text()
+          old = 'src="/static/neon_gothic_imp_dev_workshop.png"'
+          new = 'src="/static/imp-workshop.webp"'
+          if content.count(old) != 1:
+              raise SystemExit('Asset reference changed; refusing to edit source')
+          app.write_text(content.replace(old, new))
+          source.unlink()
+          print('WEBP', target.stat().st_size)
+          PY
+      - name: Commit optimization to feature branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/static/neon_gothic_imp_dev_workshop.png public/static/imp-workshop.webp src/App.jsx
+          git commit -m 'Optimize approved H5 workshop image to static WebP'
+          git push origin HEAD:stage-h5-imp-workshop
