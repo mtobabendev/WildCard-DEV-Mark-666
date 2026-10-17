@@ -1631,7 +1631,7 @@ export default function App() {
   );
 
   return (
-    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${!isHome && activeChannel.id === 'interface' ? ' is-veil' : ''}${!isHome && activeChannel.id === 'systems' ? ' is-arcane-forge' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
+    <main className={`landing${open ? ' is-open' : ''}${isHome ? '' : ' is-section'}${!isHome && activeChannel.id === 'portfolio' ? ' is-grimoire' : ''}${!isHome && activeChannel.id === 'penny' ? ' is-penny-throne' : ''}${!isHome && activeChannel.id === 'automation' ? ' is-imp-workshop' : ''}${!isHome && activeChannel.id === 'interface' ? ' is-veil' : ''}${!isHome && activeChannel.id === 'systems' ? ' is-arcane-forge' : ''}${!isHome && activeChannel.id === 'contact' ? ' is-contact-reception' : ''}${pageVisible ? '' : ' is-page-hidden'}`}>
       <header className="site-header">
         <div className="brand">
           <span
@@ -1707,6 +1707,7 @@ export default function App() {
         </p>
 
         {activeChannel.id === 'contact' && (
+          isHome ? (
           <>
             <div className="penny-contact-actions">
               <p className="eyebrow">Penny // Direct</p>
@@ -1748,6 +1749,136 @@ export default function App() {
               onSubmit={handleContactFormSubmit}
             />
           </>
+          ) : (
+          <div className="contact-reception">
+            <figure className="contact-reception-art">
+              <img
+                src="/static/contact-reception.webp"
+                width="1280"
+                height="853"
+                alt="Penny Bella Morningstar, blonde with a flame-red streak, welcomes guests by telephone at a black-and-pink gothic WildCard DEV reception desk."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div className="contact-reception-intro">
+              <p className="contact-reception-overline">♠ WildCard DEV // Chamber One</p>
+              <h2>Penny's Reception</h2>
+              <p className="contact-reception-subtitle">Let's Talk</p>
+              <p>
+                Every good collaboration starts with a conversation. Reach Matt,
+                Penny, or Kandy directly, or tell us about the unusual problem
+                you want to solve. We'll help you find the right door.
+              </p>
+            </div>
+            <section className="contact-reception-section" aria-labelledby="contact-reception-team">
+              <p className="contact-reception-kicker">I. Direct Lines</p>
+              <h3 id="contact-reception-team">Who would you like to reach?</h3>
+              <div className="contact-reception-grid">
+                <article className="contact-reception-card">
+                  <span className="contact-reception-symbol" aria-hidden="true">♠</span>
+                  <h4>Matt · WildCard DEV</h4>
+                  <p>Owner, development, systems, partnerships, and project inquiries.</p>
+                  <div className="contact-reception-actions">
+                    <a
+                      href="mailto:matt@wildcarddev.com"
+                      onClick={(event) => {
+                        if (shouldBypassContactAssist(event)) return;
+                        event.preventDefault();
+                        startContactAssist(
+                          'mailto:matt@wildcarddev.com',
+                          "I'll get that ready for you.",
+                        );
+                      }}
+                    >
+                      Email Matt
+                    </a>
+                    <a
+                      href="tel:+14029150789"
+                      onClick={(event) => {
+                        if (shouldBypassContactAssist(event)) return;
+                        event.preventDefault();
+                        startContactAssist(
+                          'tel:+14029150789',
+                          "I'll put you through.",
+                        );
+                      }}
+                    >
+                      Call (402) 915-0789
+                    </a>
+                  </div>
+                </article>
+                <article className="contact-reception-card">
+                  <span className="contact-reception-symbol" aria-hidden="true">✧</span>
+                  <h4>Penny · AI Concierge</h4>
+                  <p>Contact routing, guidance, and finding the right next step.</p>
+                  <div className="contact-reception-actions">
+                    <a
+                      href="mailto:penny@wildcarddev.com"
+                      onClick={(event) => {
+                        if (shouldBypassContactAssist(event)) return;
+                        event.preventDefault();
+                        startContactAssist(
+                          'mailto:penny@wildcarddev.com',
+                          "I'll open a line to Penny.",
+                          'penny-email',
+                        );
+                      }}
+                    >
+                      Email Penny
+                    </a>
+                    <a
+                      href="tel:+14029150789"
+                      onClick={(event) => {
+                        if (shouldBypassContactAssist(event)) return;
+                        event.preventDefault();
+                        startContactAssist(
+                          'tel:+14029150789',
+                          "I'll put Penny through.",
+                          'penny-phone',
+                        );
+                      }}
+                    >
+                      Call Penny
+                    </a>
+                  </div>
+                </article>
+                <article className="contact-reception-card">
+                  <span className="contact-reception-symbol" aria-hidden="true">♥</span>
+                  <h4>Kandy · Creative Studio</h4>
+                  <p>Music, media, tarot, and creative conversations.</p>
+                  <div className="contact-reception-actions">
+                    <a
+                      href="mailto:Kandy@wildcarddev.com"
+                      onClick={(event) => {
+                        if (shouldBypassContactAssist(event)) return;
+                        event.preventDefault();
+                        startContactAssist(
+                          'mailto:Kandy@wildcarddev.com',
+                          "I'll get you over to Kandy.",
+                        );
+                      }}
+                    >
+                      Email Kandy
+                    </a>
+                  </div>
+                </article>
+              </div>
+            </section>
+            <section className="contact-reception-section contact-reception-inquiry" aria-labelledby="contact-reception-inquiry">
+              <p className="contact-reception-kicker">II. Project Inquiries</p>
+              <h3 id="contact-reception-inquiry">Bring us your unusual problem</h3>
+              <p className="contact-reception-note">
+                Tell us what you're building or trying to solve. The existing inquiry
+                form prepares a message in your email app, with Penny assisting.
+              </p>
+              <ContactForm onSubmit={handleContactFormSubmit} />
+            </section>
+            <p className="contact-reception-footer">
+              Good people. Unusual problems. Creative solutions. <span aria-hidden="true">♠</span>
+            </p>
+          </div>
+          )
         )}
 
         {activeChannel.id === 'systems' && (
