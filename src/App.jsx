@@ -713,10 +713,32 @@ function ContactPanels({
     >
       <div className="identity-pair">
         <article className="identity-card identity-card--matt">
-          <img
-            src={mattAvatar}
-            alt="Matt Tobaben"
-          />
+          <div className="owner-media-stack">
+            <img
+              src={mattAvatar}
+              alt="Matt Tobaben"
+            />
+
+            <div
+              className="owner-feature-video-shell"
+              aria-hidden="true"
+            >
+              <video
+                ref={ownerFeatureVideoRef}
+                className="owner-feature-video"
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              >
+                <source
+                  src={ownerPennyKandyVideo}
+                  type="video/webm"
+                  media="(min-width: 241px) and (max-width: 520px), (min-width: 900px)"
+                />
+              </video>
+            </div>
+          </div>
 
           <p className="eyebrow">Owner</p>
           <h2>Matt Tobaben</h2>
@@ -876,26 +898,6 @@ function ContactPanels({
               />
             </div>
 
-          </div>
-
-          <div
-            className="owner-feature-video-shell"
-            aria-hidden="true"
-          >
-            <video
-              ref={ownerFeatureVideoRef}
-              className="owner-feature-video"
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            >
-              <source
-                src={ownerPennyKandyVideo}
-                type="video/webm"
-                media="(min-width: 241px) and (max-width: 520px), (min-width: 900px)"
-              />
-            </video>
           </div>
         </article>
 
