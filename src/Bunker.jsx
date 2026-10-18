@@ -113,20 +113,33 @@ export default function Bunker() {
           aria-hidden="true"
         />
 
+        <p className="bunker-eyebrow">
+          PENNY’S LITTLE BLACK BOOK
+        </p>
+
         <h1 id="bunker-title">
-          DISCORD SUMMONING IN PROGRESS
+          PENNY’S DISCORD BUNKER
         </h1>
 
         <p>
-          PENNY IS STILL WIRING THE BUNKER.
+          The doorway is open. For now, it leads to Matt’s Discord profile.
+          A dedicated server and Penny bot can come later.
         </p>
 
-        <a
-          className="bunker-return"
-          href="/"
-        >
-          RETURN TO WILDCARD DEV
-        </a>
+        <nav className="bunker-actions" aria-label="Bunker destinations">
+          <a
+            className="bunker-enter"
+            href="https://discord.com/users/1503417641086488708"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            VISIT MATT ON DISCORD ↗
+          </a>
+
+          <a className="bunker-return" href="/">
+            RETURN TO WILDCARD DEV
+          </a>
+        </nav>
       </section>
     </main>
   );
