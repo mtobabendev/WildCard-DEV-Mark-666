@@ -395,15 +395,10 @@ body {
   min-height: 2.75rem;
   margin-top: .65rem;
   padding: .55rem .85rem;
-  border: 1px solid rgba(223, 255, 63, .78);
+  border: 1px solid rgba(255, 91, 214, .58);
   border-radius: 999px;
-  background:
-    linear-gradient(
-      180deg,
-      #e8ff75,
-      #dfff3f
-    );
-  color: #0a081d;
+  background: linear-gradient(135deg, rgba(255, 91, 214, .18), rgba(141, 114, 255, .12));
+  color: #fff;
   font-size: .68rem;
   font-weight: 800;
   line-height: 1.25;
@@ -412,8 +407,8 @@ body {
   text-decoration: none;
   overflow-wrap: anywhere;
   box-shadow:
-    0 0 16px rgba(223, 255, 63, .24),
-    inset 0 1px 0 rgba(255, 255, 255, .42);
+    0 0 16px rgba(255, 91, 214, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .12);
   cursor: pointer;
   transition:
     transform 160ms ease,
@@ -426,8 +421,8 @@ body {
   transform: translateY(-1px);
   filter: brightness(1.05);
   box-shadow:
-    0 0 22px rgba(223, 255, 63, .4),
-    inset 0 1px 0 rgba(255, 255, 255, .5);
+    0 0 22px rgba(255, 91, 214, .3),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
 }
 
 .identity-card--matt .owner-labs-pill:focus-visible {
@@ -441,29 +436,22 @@ body {
 
 .identity-card--matt .owner-possibilities-pill {
   min-height: 2.75rem;
-  border-color: rgba(141, 114, 255, .78);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(141, 114, 255, .94),
-      rgba(96, 207, 255, .78)
-    );
+  border-color: rgba(141, 114, 255, .66);
+  background: linear-gradient(135deg, rgba(141, 114, 255, .22), rgba(96, 207, 255, .12));
   color: #fff;
   box-shadow:
-    0 0 16px rgba(141, 114, 255, .24),
-    0 0 12px rgba(96, 207, 255, .14),
-    inset 0 1px 0 rgba(255, 255, 255, .28);
-  animation:
-    owner-possibilities-pulse
-    4s ease-in-out infinite;
+    0 0 16px rgba(141, 114, 255, .16),
+    0 0 12px rgba(96, 207, 255, .1),
+    inset 0 1px 0 rgba(255, 255, 255, .12);
+  animation: none;
 }
 
 .identity-card--matt .owner-possibilities-pill:hover,
 .identity-card--matt .owner-possibilities-pill:focus-visible {
   box-shadow:
-    0 0 24px rgba(141, 114, 255, .36),
-    0 0 18px rgba(96, 207, 255, .24),
-    inset 0 1px 0 rgba(255, 255, 255, .34);
+    0 0 24px rgba(141, 114, 255, .28),
+    0 0 18px rgba(96, 207, 255, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
 }
 
 @keyframes owner-possibilities-pulse {
@@ -2408,16 +2396,24 @@ body {
 
   .identity-card--matt {
     grid-template-columns:
-      3.25rem
-      minmax(0, 1fr)
-      4.5rem;
-    gap: .15rem .6rem;
+      8rem
+      minmax(0, 1fr);
+    gap: .15rem .75rem;
     align-items: start;
   }
 
   .identity-card--matt > img {
     grid-column: 1;
-    grid-row: 1 / span 7;
+    grid-row: 1 / span 6;
+    width: 100%;
+    height: 15rem;
+    align-self: start;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid rgba(255, 91, 214, .45);
+    border-radius: 1.25rem;
+    background: rgba(6, 4, 22, .65);
+    box-shadow: 0 0 24px rgba(255, 91, 214, .18);
   }
 
   .identity-card--matt > .eyebrow,
@@ -2429,20 +2425,20 @@ body {
 
   .identity-card--matt .owner-project-pills {
     grid-column: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: .4rem;
     width: 100%;
-    margin-top: .25rem;
+    margin-top: .4rem;
   }
 
-  .identity-card--matt .owner-project-pills .owner-labs-pill {
-    width: fit-content;
-    min-height: 2.1rem;
+  .identity-card--matt .owner-project-pills > a {
+    grid-column: 1;
+    width: 100%;
+    min-height: 2.65rem;
     margin-top: 0;
-    padding: .28rem .55rem;
-    font-size: .58rem;
-  }
-
-  .identity-card--matt .owner-project-pills .owner-possibilities-pill {
-    min-height: 2.75rem;
+    padding: .5rem .6rem;
+    font-size: .62rem;
   }
 
   .identity-card--matt .owner-socials {
@@ -2451,15 +2447,18 @@ body {
   }
 
   .identity-card--matt .owner-link-deck {
-    grid-column: 2 / 4;
+    grid-column: 2;
+    grid-row: 7;
     margin-top: .4rem;
   }
 
   .identity-card--matt .owner-feature-video-shell {
     display: block;
-    grid-column: 3;
-    grid-row: 1 / span 6;
-    width: 100%;
+    grid-column: 1;
+    grid-row: 7;
+    justify-self: center;
+    align-self: start;
+    width: 4.5rem;
     aspect-ratio: 9 / 16;
     overflow: hidden;
     border: 1px solid rgba(255, 91, 214, .42);
@@ -2741,15 +2740,15 @@ body {
 
   .identity-card--matt {
     grid-template-columns:
-      3.25rem
-      minmax(0, 1fr)
-      4.25rem;
-    gap: .15rem .55rem;
+      7rem
+      minmax(0, 1fr);
+    gap: .15rem .75rem;
   }
 
   .identity-card--matt > img {
     grid-column: 1;
-    grid-row: 1 / span 7;
+    grid-row: 1 / span 6;
+    height: 14.5rem;
   }
 
   .identity-card--matt > .eyebrow,
@@ -2760,15 +2759,15 @@ body {
   }
 
   .identity-card--matt .owner-socials {
-    grid-column: 2 / 4;
+    grid-column: 2;
   }
 
   .identity-card--matt .owner-feature-video-shell {
     display: block;
-    grid-column: 3;
-    grid-row: 1 / span 6;
-    width: 100%;
-    max-height: 10.5rem;
+    grid-column: 1;
+    grid-row: 7;
+    width: 4.25rem;
+    max-height: none;
     aspect-ratio: 9 / 16;
   }
 
