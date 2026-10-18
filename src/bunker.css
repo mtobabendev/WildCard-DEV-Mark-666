@@ -20,7 +20,8 @@ body,
 
 body {
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: var(--bunker-ink);
   font-family:
     Inter,
@@ -143,32 +144,58 @@ a {
   letter-spacing: clamp(.08em, .45vw, .16em);
 }
 
+.bunker-panel .bunker-eyebrow {
+  margin: 0 0 .75rem;
+  color: var(--bunker-pink);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .2em;
+}
+
+.bunker-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: clamp(1rem, 3vw, 1.45rem);
+}
+
+.bunker-enter,
 .bunker-return {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  margin-top: clamp(1rem, 3vw, 1.45rem);
-  padding: .65rem 1rem;
-  border: 1px solid rgba(255, 91, 214, .68);
+  margin: 0;
+  padding: .7rem 1.15rem;
+  border: 1px solid rgba(141, 114, 255, .52);
   border-radius: 999px;
   color: var(--bunker-ink);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 91, 214, .2),
-      rgba(96, 207, 255, .16)
-    );
-  box-shadow:
-    0 0 18px rgba(255, 91, 214, .2),
-    inset 0 1px 0 rgba(255, 255, 255, .16);
+  background: rgba(10, 8, 29, .72);
   font-size: .72rem;
   font-weight: 800;
-  letter-spacing: .13em;
+  letter-spacing: .09em;
+  line-height: 1.3;
   text-align: center;
   text-decoration: none;
 }
 
+.bunker-enter {
+  border-color: rgba(255, 91, 214, .78);
+  background: linear-gradient(135deg, rgba(123, 25, 103, .84), rgba(62, 35, 117, .8));
+  box-shadow:
+    0 0 21px rgba(255, 91, 214, .24),
+    inset 0 1px 0 rgba(255, 255, 255, .2);
+}
+
+.bunker-return {
+  box-shadow:
+    0 0 16px rgba(141, 114, 255, .1),
+    inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.bunker-enter:hover,
+.bunker-enter:focus-visible,
 .bunker-return:hover,
 .bunker-return:focus-visible {
   border-color: var(--bunker-pink);
@@ -203,9 +230,16 @@ a {
     letter-spacing: .1em;
   }
 
+  .bunker-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .bunker-enter,
   .bunker-return {
     width: 100%;
-    max-width: 18rem;
+    max-width: 20rem;
     font-size: .68rem;
   }
 }
@@ -243,12 +277,21 @@ a {
     letter-spacing: .07em;
   }
 
+  .bunker-panel .bunker-eyebrow {
+    font-size: .55rem;
+    letter-spacing: .08em;
+  }
+
+  .bunker-actions {
+    margin-top: .7rem;
+  }
+
+  .bunker-enter,
   .bunker-return {
     min-height: 40px;
-    margin-top: .7rem;
     padding: .5rem .6rem;
     font-size: .58rem;
-    letter-spacing: .08em;
+    letter-spacing: .04em;
   }
 }
 
@@ -257,6 +300,7 @@ a {
     display: none;
   }
 
+  .bunker-enter,
   .bunker-return {
     transition: none;
   }
