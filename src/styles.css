@@ -471,6 +471,10 @@ body {
   }
 }
 
+.owner-media-stack {
+  display: contents;
+}
+
 .owner-feature-video-shell {
   display: none;
 }
@@ -1948,7 +1952,7 @@ body {
     padding-bottom: 1rem;
   }
 
-  .identity-card--matt > img {
+  .identity-card--matt .owner-media-stack > img {
     grid-column: 1;
     grid-row: 1 / span 7;
     width: 6rem;
@@ -2402,13 +2406,22 @@ body {
     align-items: start;
   }
 
-  .identity-card--matt > img {
+  .identity-card--matt .owner-media-stack {
+    display: flex;
+    flex-direction: column;
     grid-column: 1;
-    grid-row: 1 / span 6;
+    grid-row: 1 / span 7;
+    gap: .5rem;
     width: 100%;
-    height: 15rem;
+    min-width: 0;
     align-self: start;
-    object-fit: cover;
+  }
+
+  .identity-card--matt .owner-media-stack > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
     object-position: center;
     border: 1px solid rgba(255, 91, 214, .45);
     border-radius: 1.25rem;
@@ -2452,17 +2465,21 @@ body {
     margin-top: .4rem;
   }
 
-  .identity-card--matt .owner-feature-video-shell {
+  .identity-card--matt .owner-media-stack .owner-feature-video-shell {
+    position: relative;
     display: block;
-    grid-column: 1;
-    grid-row: 7;
-    justify-self: center;
-    align-self: start;
-    width: 4.5rem;
+    inset: auto;
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: auto;
+    align-self: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
     aspect-ratio: 9 / 16;
     overflow: hidden;
     border: 1px solid rgba(255, 91, 214, .42);
-    border-radius: .8rem;
+    border-radius: 1.25rem;
     background: rgba(6, 4, 22, .72);
     box-shadow: 0 0 14px rgba(255, 91, 214, .14);
   }
@@ -2727,10 +2744,9 @@ body {
     gap: .15rem .75rem;
   }
 
-  .identity-card--matt > img {
-    grid-column: 1;
-    grid-row: 1 / span 6;
-    height: 14.5rem;
+  .identity-card--matt .owner-media-stack > img {
+    width: 100%;
+    height: auto;
   }
 
   .identity-card--matt > .eyebrow,
@@ -2742,15 +2758,6 @@ body {
 
   .identity-card--matt .owner-socials {
     grid-column: 2;
-  }
-
-  .identity-card--matt .owner-feature-video-shell {
-    display: block;
-    grid-column: 1;
-    grid-row: 7;
-    width: 4.25rem;
-    max-height: none;
-    aspect-ratio: 9 / 16;
   }
 
   .spinner-deck {
