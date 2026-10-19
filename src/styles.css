@@ -4776,3 +4776,12 @@ body {
   .contact-reception-inquiry .contact-submit { grid-column: 1; }
   .contact-reception-inquiry .contact-submit { width: 100%; }
 }
+
+/* H.13: Keep Vatican City on the left and Lilith on the right on portrait phones.
+   Retain the source landscape proportions rather than height-cropping the artwork. */
+@media (min-width: 241px) and (max-width: 700px) and (orientation: portrait) {
+  body {
+    background-position: center, center top;
+    background-size: 100% 100%, 155vw auto;
+  }
+}
