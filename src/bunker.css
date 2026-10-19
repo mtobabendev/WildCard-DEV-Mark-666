@@ -96,6 +96,24 @@ a {
     );
 }
 
+/* On portrait phones, retain Vatican City at left and Lilith at right.
+   The landscape source cannot show both when cropped to fill a tall screen. */
+@media (min-width: 241px) and (max-width: 700px) and (orientation: portrait) {
+  .bunker-page {
+    background-size: auto, 155vw auto;
+    background-position: center, center top;
+  }
+
+  .bunker-wallpaper {
+    inset: 0 auto auto 50%;
+    width: 155vw;
+    height: 100%;
+    transform: translateX(-50%);
+    object-fit: contain;
+    object-position: center top;
+  }
+}
+
 .bunker-panel {
   width: min(46rem, calc(100vw - 2rem));
   padding: clamp(1.25rem, 4vw, 2.4rem);
