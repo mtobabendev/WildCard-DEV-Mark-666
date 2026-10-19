@@ -1405,6 +1405,7 @@ export default function App() {
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
+  const [expandedLivingWork, setExpandedLivingWork] = useState(null);
 
   useEffect(() => {
     const syncHistory = () => {
@@ -2092,26 +2093,76 @@ export default function App() {
               <p className="grimoire-collection-intro">
                 Real WildCard DEV sites, platforms, and development demonstrations.
               </p>
-              <div className="grimoire-grid">
-                {GRIMOIRE_PROJECTS.map((project) => (
-                  <article className="grimoire-card" key={project.name}>
-                    <p className="grimoire-card-status">{project.status}</p>
-                    <h4>{project.name}</h4>
-                    <p className="grimoire-card-description">{project.description}</p>
-                    <ul className="grimoire-capabilities" aria-label="Demonstrated capabilities">
-                      {project.capabilities.map((capability) => (
-                        <li key={capability}>{capability}</li>
-                      ))}
-                    </ul>
-                    <div className="grimoire-links">
-                      {project.links.map((link) => (
-                        <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-                          {link.label}
-                        </a>
-                      ))}
-                    </div>
-                  </article>
-                ))}
+              <div className="grimoire-accordion-list">
+                {GRIMOIRE_PROJECTS.map((project, index) => {
+                  const isExpanded = expandedLivingWork === project.name;
+                  const triggerId = `grimoire-work-trigger-${index}`;
+                  const panelId = `grimoire-work-panel-${index}`;
+
+                  return (
+                    <article
+                      className="grimoire-accordion-item"
+                      key={project.name}
+                    >
+                      <button
+                        id={triggerId}
+                        className="grimoire-accordion-trigger"
+                        type="button"
+                        aria-expanded={isExpanded}
+                        aria-controls={panelId}
+                        onClick={() => {
+                          setExpandedLivingWork(
+                            isExpanded ? null : project.name,
+                          );
+                        }}
+                      >
+                        <span className="grimoire-accordion-seal" aria-hidden="true">♠</span>
+                        <span className="grimoire-accordion-heading">
+                          <span className="grimoire-accordion-title">{project.name}</span>
+                          <span className="grimoire-accordion-status">{project.status}</span>
+                        </span>
+                        <span className="grimoire-accordion-chevron" aria-hidden="true">⌄</span>
+                      </button>
+
+                      <div
+                        id={panelId}
+                        className={`grimoire-accordion-reveal${isExpanded ? ' is-expanded' : ''}`}
+                        role="region"
+                        aria-labelledby={triggerId}
+                        aria-hidden={!isExpanded}
+                      >
+                        <div className="grimoire-accordion-content">
+                          <div className="grimoire-accordion-body">
+                            {isExpanded && project.video && (
+                              <video
+                                className="grimoire-accordion-video"
+                                src={project.video}
+                                poster={project.poster}
+                                controls
+                                playsInline
+                                preload="metadata"
+                                aria-label={`${project.name} project video`}
+                              />
+                            )}
+                            <p className="grimoire-card-description">{project.description}</p>
+                            <ul className="grimoire-capabilities" aria-label="Demonstrated capabilities">
+                              {project.capabilities.map((capability) => (
+                                <li key={capability}>{capability}</li>
+                              ))}
+                            </ul>
+                            <div className="grimoire-links">
+                              {project.links.map((link) => (
+                                <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                                  {link.label}
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </section>
 
