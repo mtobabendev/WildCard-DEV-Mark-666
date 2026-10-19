@@ -1396,6 +1396,48 @@ function readNavigationState() {
   return { siteMode: 'home', activeIndex: 3 };
 }
 
+function GrimoireAccordionEntry({
+  id,
+  title,
+  status,
+  expanded,
+  onToggle,
+  children,
+}) {
+  return (
+    <article className="grimoire-accordion-item">
+      <button
+        id={`${id}-trigger`}
+        className="grimoire-accordion-trigger"
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={`${id}-panel`}
+        onClick={onToggle}
+      >
+        <span className="grimoire-accordion-seal" aria-hidden="true">♠</span>
+        <span className="grimoire-accordion-heading">
+          <span className="grimoire-accordion-title">{title}</span>
+          <span className="grimoire-accordion-status">{status}</span>
+        </span>
+        <span className="grimoire-accordion-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div
+        id={`${id}-panel`}
+        className={`grimoire-accordion-reveal${expanded ? ' is-expanded' : ''}`}
+        role="region"
+        aria-labelledby={`${id}-trigger`}
+        aria-hidden={!expanded}
+      >
+        <div className="grimoire-accordion-content">
+          <div className="grimoire-accordion-body">
+            {children}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function App() {
   const open = true;
   const [navigation, setNavigation] = useState(readNavigationState);
@@ -1405,7 +1447,7 @@ export default function App() {
   const [gateOpen, setGateOpen] = useState(false);
   const [assistActive, setAssistActive] = useState(false);
   const [assistMessage, setAssistMessage] = useState('');
-  const [expandedLivingWork, setExpandedLivingWork] = useState(null);
+  const [expandedGrimoireEntry, setExpandedGrimoireEntry] = useState(null);
 
   useEffect(() => {
     const syncHistory = () => {
@@ -2095,7 +2137,8 @@ export default function App() {
               </p>
               <div className="grimoire-accordion-list">
                 {GRIMOIRE_PROJECTS.map((project, index) => {
-                  const isExpanded = expandedLivingWork === project.name;
+                  const entryKey = `living:${project.name}`;
+                  const isExpanded = expandedGrimoireEntry === entryKey;
                   const triggerId = `grimoire-work-trigger-${index}`;
                   const panelId = `grimoire-work-panel-${index}`;
 
@@ -2111,8 +2154,8 @@ export default function App() {
                         aria-expanded={isExpanded}
                         aria-controls={panelId}
                         onClick={() => {
-                          setExpandedLivingWork(
-                            isExpanded ? null : project.name,
+                          setExpandedGrimoireEntry(
+                            isExpanded ? null : entryKey,
                           );
                         }}
                       >
@@ -2172,67 +2215,105 @@ export default function App() {
                 Original WildCard Mark III source and historical experiments.
                 Preserved as built, not presented as new working demos.
               </p>
-              <article className="grimoire-mark3" aria-labelledby="grimoire-mark3-title">
-                <div className="grimoire-mark3-copy">
-                  <p className="grimoire-card-status">Original archive · Unmodified source</p>
-                  <h4 id="grimoire-mark3-title">WildCard Mark III</h4>
-                  <p>
-                    The early WildCard DEV project built during incarceration,
-                    preserved in its original HTML, CSS, and supporting files.
-                    This is a record of where the work began, not a modern remake.
-                  </p>
-                  <p className="grimoire-mark3-note">
-                    Historical source view. This archive is not currently a hosted interactive demo.
-                  </p>
-                  <div className="grimoire-links">
-                    <a href="https://github.com/mtobabendev/WildCard-Mark-III/blob/main/Index.html" target="_blank" rel="noopener noreferrer">
-                      View the original Mark III HTML ↗
-                    </a>
-                    <a href="https://github.com/mtobabendev/WildCard-Mark-III" target="_blank" rel="noopener noreferrer">
-                      Browse the preserved repository ↗
-                    </a>
+              <div className="grimoire-accordion-list">
+                <GrimoireAccordionEntry
+                  id="grimoire-mark3"
+                  title="WildCard Mark III"
+                  status="Original archive · Unmodified source"
+                  expanded={expandedGrimoireEntry === 'archive:mark3'}
+                  onToggle={() => setExpandedGrimoireEntry(
+                    expandedGrimoireEntry === 'archive:mark3' ? null : 'archive:mark3'
+                  )}
+                >
+                  <div className="grimoire-mark3 grimoire-accordion-mark3">
+                    <div className="grimoire-mark3-copy">
+                      <p>
+                        The early WildCard DEV project built during incarceration,
+                        preserved in its original HTML, CSS, and supporting files.
+                        This is a record of where the work began, not a modern remake.
+                      </p>
+                      <p className="grimoire-mark3-note">
+                        Historical source view. This archive is not currently a hosted interactive demo.
+                      </p>
+                      <div className="grimoire-links">
+                        <a href="https://github.com/mtobabendev/WildCard-Mark-III/blob/main/Index.html" target="_blank" rel="noopener noreferrer">
+                          View the original Mark III HTML ↗
+                        </a>
+                        <a href="https://github.com/mtobabendev/WildCard-Mark-III" target="_blank" rel="noopener noreferrer">
+                          Browse the preserved repository ↗
+                        </a>
+                      </div>
+                    </div>
+                    <div className="grimoire-mark3-emblem" aria-hidden="true">
+                      <span>♠</span><span>III</span>
+                      <small>Original Edition</small>
+                    </div>
                   </div>
-                </div>
-                <div className="grimoire-mark3-emblem" aria-hidden="true">
-                  <span>♠</span><span>III</span>
-                  <small>Original Edition</small>
-                </div>
-              </article>
-              <div className="grimoire-grid">
-                {GRIMOIRE_ARCHIVE.map((experiment) => (
-                  <article className="grimoire-card" key={experiment.name}>
-                    <p className="grimoire-card-status">Archive only · Restoration candidate</p>
-                    <h4>{experiment.name}</h4>
-                    <p className="grimoire-card-description">{experiment.description}</p>
-                  </article>
-                ))}
+                </GrimoireAccordionEntry>
+                {GRIMOIRE_ARCHIVE.map((experiment, index) => {
+                  const entryKey = `archive:${experiment.name}`;
+                  const isExpanded = expandedGrimoireEntry === entryKey;
+                  return (
+                    <GrimoireAccordionEntry
+                      key={experiment.name}
+                      id={`grimoire-archive-${index}`}
+                      title={experiment.name}
+                      status="Archive only · Restoration candidate"
+                      expanded={isExpanded}
+                      onToggle={() => setExpandedGrimoireEntry(isExpanded ? null : entryKey)}
+                    >
+                      {isExpanded && experiment.video && (
+                        <video
+                          className="grimoire-accordion-video"
+                          src={experiment.video}
+                          poster={experiment.poster}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          aria-label={`${experiment.name} archive video`}
+                        />
+                      )}
+                      <p className="grimoire-card-description">{experiment.description}</p>
+                    </GrimoireAccordionEntry>
+                  );
+                })}
               </div>
             </section>
 
             <section className="grimoire-collection" aria-labelledby="grimoire-creative">
               <h3 id="grimoire-creative">III. The Creative Vault</h3>
-              <div className="grimoire-feature grimoire-card">
-                <p className="grimoire-card-status">Creative showcase</p>
-                <h4>Kandy’s Soundtrack</h4>
-                <p className="grimoire-card-description">
-                  Original songs and cover art by Kopacetic Kandle.
-                </p>
-                <a
-                  href={KANDY_SUNO_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => {
-                    trackAnalyticsEvent(
-                      'kandy_suno_playlist_click',
-                      {
-                        source: 'grimoire',
-                        link_url: KANDY_SUNO_URL,
-                      },
-                    );
-                  }}
+              <div className="grimoire-accordion-list">
+                <GrimoireAccordionEntry
+                  id="grimoire-kandy"
+                  title="Kandy’s Soundtrack"
+                  status="Creative showcase"
+                  expanded={expandedGrimoireEntry === 'creative:kandy'}
+                  onToggle={() => setExpandedGrimoireEntry(
+                    expandedGrimoireEntry === 'creative:kandy' ? null : 'creative:kandy'
+                  )}
                 >
-                  Explore the playlist →
-                </a>
+                  <p className="grimoire-card-description">
+                    Original songs and cover art by Kopacetic Kandle.
+                  </p>
+                  <div className="grimoire-links">
+                    <a
+                      href={KANDY_SUNO_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => {
+                        trackAnalyticsEvent(
+                          'kandy_suno_playlist_click',
+                          {
+                            source: 'grimoire',
+                            link_url: KANDY_SUNO_URL,
+                          },
+                        );
+                      }}
+                    >
+                      Explore the playlist →
+                    </a>
+                  </div>
+                </GrimoireAccordionEntry>
               </div>
             </section>
           </div>

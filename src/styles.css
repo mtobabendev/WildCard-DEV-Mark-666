@@ -3868,6 +3868,15 @@ body {
   }
 }
 
+/* G.4: Retain Mark III's original two-column emblem inside its slide-down panel. */
+.landing.is-grimoire .grimoire-accordion-mark3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 /* H.4: Penny’s static throne room. No changes to other five hubs. */
 .landing.is-section.is-penny-throne {
   display: block;
