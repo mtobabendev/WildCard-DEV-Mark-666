@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import Spinner from './components/Spinner.jsx';
+import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
 import mattAvatar from '../assets/matt-avatar-ui.png';
 import wildCardDevIcon from '../assets/wildcard-logo-main.png';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
@@ -2391,6 +2392,7 @@ export default function App() {
                 </a>
               </div>
             </section>
+            <VeilEffectsPlayground />
             <p className="veil-footer">The magic belongs in the experience, not in the maintenance. <span aria-hidden="true">♠</span></p>
           </div>
         )}
