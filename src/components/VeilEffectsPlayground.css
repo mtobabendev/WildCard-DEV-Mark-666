@@ -1,0 +1,273 @@
+.veil-fx { min-width: 0; }
+.veil-fx-lead { max-width: 47rem; }
+.veil-fx-shell {
+  --veil-fx-accent: #ff5bd6;
+  color: #f9efff;
+  background: rgba(8, 7, 25, .85);
+  border: 1px solid rgba(164, 108, 198, .55);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 36px rgba(6, 4, 17, .28);
+}
+.veil-fx-shell button { cursor: pointer; font: inherit; }
+.veil-fx-shell button:focus-visible,
+.veil-fx-shell input:focus-visible {
+  outline: 3px solid #dfff3f;
+  outline-offset: 3px;
+}
+.veil-fx-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  padding: .8rem;
+  background: rgba(27, 17, 46, .82);
+  border-bottom: 1px solid rgba(164, 108, 198, .3);
+}
+.veil-fx-tab {
+  padding: .6rem .85rem;
+  border: 1px solid #6f5682;
+  border-radius: .6rem;
+  color: #e6d4f4;
+  background: rgba(26, 16, 45, .9);
+  font-weight: 700;
+  font-size: .85rem;
+}
+.veil-fx-tab.is-active {
+  color: #fff;
+  border-color: #f3a0e7;
+  background: rgba(120, 48, 118, .85);
+}
+.veil-fx-demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+.veil-fx-scene {
+  min-height: 22rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  border-radius: .8rem;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.25) 0 3px, transparent 3px 49px),
+    linear-gradient(125deg, #ed348e 0%, #8735d6 48%, #10afdc 100%);
+}
+.veil-fx-glass-card {
+  width: min(100%, 20rem);
+  min-height: 17rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 1.25rem;
+  border-style: solid;
+  border-color: var(--veil-fx-accent);
+  border-radius: 1.1rem;
+  text-align: center;
+  color: #fff;
+}
+.veil-fx-emblem {
+  font-size: 4.4rem;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0 16px var(--veil-fx-accent);
+}
+.veil-fx-glass-card strong {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: .12em;
+}
+.veil-fx-glass-card small {
+  font-size: .68rem;
+  letter-spacing: .14em;
+  color: #fff;
+}
+.veil-fx-demo-button {
+  margin-top: 1rem;
+  padding: .5rem 1.2rem;
+  border: 1px solid #ffd0f4;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(69, 20, 82, .95);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.veil-fx-controls {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: .5rem;
+  padding: .5rem;
+}
+.veil-fx-slider-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: .83rem;
+  font-weight: 700;
+  color: #f5dcf2;
+  margin-top: .7rem;
+}
+.veil-fx-slider-label output {
+  color: #dfff3f;
+  font-variant-numeric: tabular-nums;
+}
+.veil-fx-controls input[type="range"] {
+  width: 100%;
+  min-height: 2rem;
+  accent-color: var(--veil-fx-accent);
+  touch-action: pan-y;
+}
+.veil-fx-presets, .veil-fx-palettes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+.veil-fx-presets button,
+.veil-fx-palettes button,
+.veil-fx-bottom button {
+  border: 1px solid #80658f;
+  border-radius: .45rem;
+  padding: .4rem .6rem;
+  color: #f5e8fc;
+  background: rgba(45, 30, 61, .9);
+  font-size: .75rem;
+  font-weight: 700;
+}
+.veil-fx-control-title {
+  font-size: .83rem;
+  font-weight: 700;
+  margin: .65rem 0 .1rem;
+}
+.veil-fx-palettes button { display: inline-flex; align-items: center; gap: .4rem; }
+.veil-fx-palettes button.is-selected { border-color: #fff; background: rgba(108, 67, 117, .85); }
+.veil-fx-swatch { width: .75rem; height: .75rem; border-radius: 50%; border: 1px solid rgba(255,255,255,.6); }
+.veil-fx-flip-scene, .veil-fx-motion-scene {
+  min-height: 21rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: .8rem;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(180, 64, 174, .35), transparent 75%),
+    linear-gradient(135deg, #2c1d4c, #0c1029);
+}
+.veil-fx-flip-scene { perspective: 850px; }
+.veil-fx-flip-card {
+  position: relative;
+  width: 11.5rem;
+  height: 16rem;
+  transform-style: preserve-3d;
+  transition: transform .6s ease;
+}
+.veil-fx-flip-card.is-flipped { transform: rotateY(180deg); }
+.veil-fx-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: .25rem;
+  padding: 1rem;
+  border: 2px solid #eca3e0;
+  border-radius: .8rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  text-align: center;
+  background: linear-gradient(150deg, #5c2666, #171027);
+  box-shadow: 0 0 30px rgba(226, 105, 200, .24);
+}
+.veil-fx-face-back {
+  transform: rotateY(180deg);
+  border-color: #dfff3f;
+  background: linear-gradient(155deg, #33505a, #17192c);
+}
+.veil-fx-card-corner { align-self: flex-start; font-size: 1.5rem; line-height: 1; }
+.veil-fx-card-symbol { font-size: 5.5rem; line-height: 1.2; }
+.veil-fx-face strong { font-size: .88rem; letter-spacing: .09em; }
+.veil-fx-face small { font-size: .7rem; letter-spacing: .1em; color: #e8d9f4; }
+.veil-fx-controls-short h4 { font-size: 1.1rem; margin: 0; color: #ffdef4; }
+.veil-fx-controls-short p { font-size: .86rem; line-height: 1.5; margin: .4rem 0 .65rem; color: #dbcce8; }
+.veil-fx-primary {
+  align-self: flex-start;
+  border: 1px solid #f4b4ef;
+  border-radius: .65rem;
+  padding: .7rem 1.1rem;
+  background: #7e3e91;
+  color: #fff;
+  font-weight: 800;
+}
+.veil-fx-controls-short .veil-fx-readout { color: #dfff3f; font-size: .8rem; }
+.veil-fx-motion-scene { isolation: isolate; }
+.veil-fx-orbit {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  border: 2px dashed rgba(194, 158, 235, .85);
+  border-radius: 50%;
+  animation: veil-fx-orbit 15s linear infinite;
+}
+.veil-fx-satellite {
+  position: absolute;
+  top: -.8rem;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  color: #10071d;
+  background: #dfff3f;
+  box-shadow: 0 0 22px #dfff3f;
+}
+.veil-fx-motion-core {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: .15rem;
+  color: #ffcaee;
+  pointer-events: none;
+}
+.veil-fx-motion-core span { font-size: 3rem; line-height: 1; }
+.veil-fx-motion-core strong { font-size: .75rem; letter-spacing: .08em; }
+.veil-fx-motion-label {
+  position: absolute;
+  bottom: 1rem;
+  color: #e3d0ee;
+  font-size: .65rem;
+  letter-spacing: .16em;
+  font-weight: 800;
+}
+@keyframes veil-fx-orbit { to { transform: rotate(360deg); } }
+.veil-fx-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .6rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid rgba(164,108,198,.3);
+  background: rgba(24, 17, 42, .66);
+}
+.veil-fx-bottom span { color: #c6b7d4; font-size: .68rem; letter-spacing: .06em; }
+@media (max-width: 740px) {
+  .veil-fx-demo { grid-template-columns: minmax(0,1fr); gap: .7rem; }
+  .veil-fx-scene { min-height: 18rem; }
+  .veil-fx-flip-scene, .veil-fx-motion-scene { min-height: 18rem; }
+  .veil-fx-controls { padding: .3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .veil-fx-flip-card { transition: none; }
+  .veil-fx-orbit { animation: none !important; }
+}
