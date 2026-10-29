@@ -45,6 +45,7 @@ const GRIMOIRE_PROJECTS = [
   },
   {
     name: 'WildCard Party',
+    video: '/static/PennyRouting.webm',
     status: 'Live platform · Calling in development',
     description: 'A social and community platform with direct messaging, attachments, presence, and read/unread indicators. Calling functionality remains in development.',
     capabilities: ['Community', 'Messaging', 'Attachments'],
@@ -2183,8 +2184,8 @@ export default function App() {
                                 className="grimoire-accordion-video"
                                 src={project.video}
                                 poster={project.poster}
-                                autoPlay={project.name === "Penny's Garage"}
-                                muted={project.name === "Penny's Garage"}
+                                autoPlay={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
+                                muted={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
                                 controls
                                 playsInline
                                 preload="metadata"
