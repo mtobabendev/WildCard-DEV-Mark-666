@@ -2186,6 +2186,7 @@ export default function App() {
                                 poster={project.poster}
                                 autoPlay={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
                                 muted={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
+                                loop={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
                                 controls
                                 playsInline
                                 preload="metadata"
