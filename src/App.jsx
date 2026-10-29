@@ -35,6 +35,7 @@ const CHANNELS = [
 const GRIMOIRE_PROJECTS = [
   {
     name: "Penny's Garage",
+    video: '/static/AnimePenny3.webm',
     status: 'Production storefront',
     description: 'WildCard DEV’s interactive services and merchandise storefront, with hosted provider listings and rotatable merchandise presentation. Display merchandise may be demonstration-only.',
     capabilities: ['Storefront', 'Hosted services', 'Merchandise viewer'],
@@ -2182,6 +2183,8 @@ export default function App() {
                                 className="grimoire-accordion-video"
                                 src={project.video}
                                 poster={project.poster}
+                                autoPlay={project.name === "Penny's Garage"}
+                                muted={project.name === "Penny's Garage"}
                                 controls
                                 playsInline
                                 preload="metadata"
