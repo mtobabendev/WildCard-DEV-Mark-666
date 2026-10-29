@@ -45,7 +45,7 @@ const GRIMOIRE_PROJECTS = [
   },
   {
     name: 'WildCard Party',
-    video: '/static/PennyRouting.webm',
+    video: '/static/PennyRouting-1.webm',
     status: 'Live platform · Calling in development',
     description: 'A social and community platform with direct messaging, attachments, presence, and read/unread indicators. Calling functionality remains in development.',
     capabilities: ['Community', 'Messaging', 'Attachments'],
