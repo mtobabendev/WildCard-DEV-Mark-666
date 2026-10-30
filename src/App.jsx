@@ -87,6 +87,7 @@ const GRIMOIRE_ARCHIVE = [
   },
   {
     name: 'Flashcards',
+    video: '/static/LucyLeads.webm',
     description: 'A browser-based flashcard experiment from the earlier WildCard development era.',
   },
 ];
@@ -2288,6 +2289,9 @@ export default function App() {
                           className="grimoire-accordion-video"
                           src={experiment.video}
                           poster={experiment.poster}
+                          autoPlay={experiment.name === 'Flashcards'}
+                          muted={experiment.name === 'Flashcards'}
+                          loop={experiment.name === 'Flashcards'}
                           controls
                           playsInline
                           preload="metadata"
