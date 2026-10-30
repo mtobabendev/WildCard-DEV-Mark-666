@@ -24,7 +24,9 @@ function loadGoogleAnalytics() {
 }
 
 function SiteEntry() {
-  const [introFinished, setIntroFinished] = useState(false);
+  const [introFinished, setIntroFinished] = useState(
+    () => window.location.pathname.replace(/\/+$/, '') === '/grimoire',
+  );
   const [AppComponent, setAppComponent] = useState(null);
   const [LittleBlackBookComponent, setLittleBlackBookComponent] = useState(null);
   const videoRef = useRef(null);
@@ -110,8 +112,8 @@ function SiteEntry() {
   return (
     <>
       <div style={{ display: 'contents' }}>
-        {introFinished && AppComponent ? (
-          <AppComponent />
+        {introFinished ? (
+          AppComponent ? <AppComponent /> : null
         ) : (
           <div
           style={{
