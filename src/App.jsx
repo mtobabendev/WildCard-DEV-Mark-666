@@ -2233,6 +2233,19 @@ export default function App() {
                     expandedGrimoireEntry === 'archive:mark3' ? null : 'archive:mark3'
                   )}
                 >
+                  {expandedGrimoireEntry === 'archive:mark3' && (
+                    <video
+                      className="grimoire-accordion-video"
+                      src="/static/PennyCard3.webm"
+                      autoPlay
+                      muted
+                      loop
+                      controls
+                      playsInline
+                      preload="metadata"
+                      aria-label="WildCard Mark III archive video"
+                    />
+                  )}
                   <div className="grimoire-mark3 grimoire-accordion-mark3">
                     <div className="grimoire-mark3-copy">
                       <p>
