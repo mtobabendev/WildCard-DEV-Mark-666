@@ -2313,6 +2313,19 @@ export default function App() {
                     expandedGrimoireEntry === 'creative:kandy' ? null : 'creative:kandy'
                   )}
                 >
+                  {expandedGrimoireEntry === 'creative:kandy' && (
+                    <video
+                      className="grimoire-accordion-video"
+                      src="/static/KandyRealTarotHot.webm"
+                      autoPlay
+                      muted
+                      loop
+                      controls
+                      playsInline
+                      preload="metadata"
+                      aria-label="Kandy’s Soundtrack video"
+                    />
+                  )}
                   <p className="grimoire-card-description">
                     Original songs and cover art by Kopacetic Kandle.
                   </p>
