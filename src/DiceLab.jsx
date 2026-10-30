@@ -21,9 +21,9 @@ export default function DiceLab() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(history)); } catch { /* private mode */ }
   }, [history]);
 
-  const onRoll = ({ values, total }) => {
+  const onRoll = ({ values, total, dieType }) => {
     setHistory(prev => [{
-      values, total, id: Date.now() + Math.random(),
+      values, total, dieType, id: Date.now() + Math.random(),
     }, ...prev].slice(0, 8));
   };
 
@@ -57,7 +57,7 @@ export default function DiceLab() {
               <ol>
                 {history.map(entry => (
                   <li key={entry.id}>
-                    <span>{entry.values.length}d6</span>
+                    <span>{entry.values.length}{entry.dieType || 'd6'}</span>
                     <span>{entry.values.join(' + ')}</span>
                     <strong>{entry.total}</strong>
                   </li>
