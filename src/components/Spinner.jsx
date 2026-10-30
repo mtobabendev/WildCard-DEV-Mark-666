@@ -465,11 +465,11 @@ function Spinner({
                   }}
                   className="spinner-card-video"
                   src={channel.video}
-                  autoPlay
+                  autoPlay={!compact || index === activeIndex}
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload={compact && index !== activeIndex ? 'none' : 'metadata'}
                   aria-hidden="true"
                 />
               )}
