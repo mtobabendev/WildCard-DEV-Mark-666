@@ -83,6 +83,7 @@ const GRIMOIRE_ARCHIVE = [
   },
   {
     name: 'Dice Prototypes',
+    video: '/static/PennySanchez.webm',
     description: 'Historical dice-focused browser experiments, including multiple builds preserved in the Mark III archive.',
   },
   {
@@ -2288,6 +2289,9 @@ export default function App() {
                           className="grimoire-accordion-video"
                           src={experiment.video}
                           poster={experiment.poster}
+                          autoPlay={experiment.name === 'Dice Prototypes'}
+                          muted={experiment.name === 'Dice Prototypes'}
+                          loop={experiment.name === 'Dice Prototypes'}
                           controls
                           playsInline
                           preload="metadata"
