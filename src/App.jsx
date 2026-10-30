@@ -65,6 +65,7 @@ const GRIMOIRE_PROJECTS = [
   },
   {
     name: 'Web & App Showroom',
+    video: '/static/LucyEnters.webm',
     status: 'Package demonstrations · Not client projects',
     description: 'Explore two example web-and-app build packages: the Enhanced Build and the Launch Build.',
     capabilities: ['Web design', 'App development', 'Package demos'],
@@ -2185,9 +2186,9 @@ export default function App() {
                                 className="grimoire-accordion-video"
                                 src={project.video}
                                 poster={project.poster}
-                                autoPlay={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
-                                muted={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
-                                loop={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
+                                autoPlay={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs' || project.name === 'Web & App Showroom')}
+                                muted={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs' || project.name === 'Web & App Showroom')}
+                                loop={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs' || project.name === 'Web & App Showroom')}
                                 controls
                                 playsInline
                                 preload="metadata"
