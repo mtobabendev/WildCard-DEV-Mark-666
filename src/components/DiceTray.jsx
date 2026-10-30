@@ -42,7 +42,8 @@ function Die({ die, dieType, rolling, hasRolled }) {
       aria-label={'Die ' + (die.id + 1) + ', ' + dieType + ': '
         + (rolling ? 'rolling' : result ?? 'ready')}
     >
-      {dieType === 'd6' ? (
+      <div className="dice-lab__frostfire-shell">
+        {dieType === 'd6' ? (
         <div className="dice-lab__cube-scene" aria-hidden="true">
           <div className="dice-lab__cube" style={{
             transform: 'rotateX(' + die.rx + 'deg) rotateY(' + die.ry + 'deg)',
@@ -76,6 +77,7 @@ function Die({ die, dieType, rolling, hasRolled }) {
           value={dieType === 'd10' ? die.value % 10 : die.value}
           rollKey={die.rollKey} />
       )}
+      </div>
       <span className="dice-lab__die-label">
         {rolling ? 'Rolling…' : result ?? 'Ready'}
       </span>

@@ -219,3 +219,97 @@
     grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
+
+/* G.15 FROSTFIRE: purely visual skin shared by all seven die types. */
+.dice-lab__frostfire-shell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--edge);
+  min-width: 0;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+.dice-lab__frostfire-shell::before,
+.dice-lab__frostfire-shell::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.dice-lab__frostfire-shell::before {
+  z-index: 0;
+  inset: -19% -28%;
+  border-radius: 45% 48% 40% 46%;
+  background:
+    radial-gradient(ellipse at 23% 82%, rgba(255, 112, 29, .92) 0%, transparent 36%),
+    radial-gradient(ellipse at 76% 76%, rgba(255, 60, 20, .93) 0%, transparent 40%),
+    radial-gradient(ellipse at 43% 58%, rgba(255, 198, 67, .8) 0%, transparent 52%),
+    conic-gradient(from 20deg at 50% 64%,
+      transparent 0 12%, #ef5a19 17%, transparent 24%,
+      #ffad3e 30%, transparent 42%, #fa4328 53%,
+      transparent 65%, #ffc15e 73%, transparent 84%, #f65b19 95%, transparent);
+  clip-path: polygon(
+    0% 100%, 9% 71%, 6% 46%, 22% 64%, 29% 20%,
+    42% 52%, 50% 5%, 60% 47%, 77% 15%,
+    80% 59%, 96% 30%, 90% 72%, 100% 100%);
+  filter: blur(5px) saturate(1.45);
+  opacity: .95;
+  transform-origin: 50% 78%;
+  animation: frostfire-flame 2s ease-in-out infinite alternate;
+}
+.dice-lab__frostfire-shell::after {
+  z-index: 3;
+  inset: -13%;
+  border-radius: 35%;
+  background:
+    radial-gradient(circle at 16% 27%, #fff9 0 1.1%, transparent 2.5%),
+    radial-gradient(circle at 77% 15%, #bdffffcc 0 1.4%, transparent 3.1%),
+    radial-gradient(circle at 94% 63%, #ffde93cc 0 1%, transparent 2.7%),
+    radial-gradient(circle at 9% 87%, #78edffb0 0 1.4%, transparent 3%),
+    radial-gradient(circle at 63% 92%, #fdd8a1a6 0 1%, transparent 2.8%),
+    radial-gradient(ellipse at center, transparent 49%, #65dbff2e 63%, transparent 77%);
+  filter: drop-shadow(0 0 4px #70efff99);
+  animation: frostfire-spark 3.3s ease-in-out infinite alternate;
+}
+.dice-lab__frostfire-shell > .dice-lab__cube-scene,
+.dice-lab__frostfire-shell > .dice-lab__polyhedron,
+.dice-lab__frostfire-shell > .dice-lab__percentile {
+  position: relative;
+  z-index: 2;
+  filter:
+    drop-shadow(0 0 6px rgba(100, 242, 255, .85))
+    drop-shadow(0 0 11px rgba(255, 92, 30, .65));
+}
+.dice-lab__face {
+  background:
+    linear-gradient(124deg, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, .12) 15%, transparent 37%),
+    linear-gradient(152deg, transparent 23%, rgba(255, 255, 255, .36) 24%, transparent 25%, transparent 61%, rgba(235, 255, 255, .36) 62%, transparent 63%),
+    linear-gradient(44deg, rgba(1, 58, 111, .42), transparent 40%),
+    linear-gradient(148deg, #d9ffff 0%, #74d9ee 42%, #368dbf 73%, #17477a 100%);
+  border: 2px solid #d8ffff;
+  box-shadow:
+    inset 2px 2px 10px #f4ffffa8,
+    inset -6px -7px 14px #06517b9c,
+    0 0 7px #67deffbd,
+    0 0 3px #ff9b43bb;
+}
+.dice-lab__pip {
+  background: radial-gradient(circle at 37% 27%, #15364f, #041525 76%);
+  box-shadow: inset 1px 2px 3px #0009, 0 1px 0 #ffffffd9, 0 0 2px #ffffffbf;
+}
+.dice-lab__die-label {
+  text-shadow: 0 0 8px #64d9ff8c, 0 0 10px #ef7c3a9c;
+}
+@keyframes frostfire-flame {
+  0% { transform: translateY(2px) scaleX(.93) scaleY(.94) rotate(-4deg); opacity: .84; }
+  50% { transform: translateY(-3px) scaleX(1.07) scaleY(1.09) rotate(3deg); opacity: 1; }
+  100% { transform: translateY(1px) scaleX(.95) scaleY(1.03) rotate(-2deg); opacity: .88; }
+}
+@keyframes frostfire-spark {
+  from { opacity: .5; transform: rotate(-5deg) scale(.98); }
+  to { opacity: 1; transform: rotate(4deg) scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dice-lab__frostfire-shell::before,
+  .dice-lab__frostfire-shell::after { animation: none; }
+}
