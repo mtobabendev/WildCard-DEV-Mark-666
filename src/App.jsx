@@ -98,8 +98,9 @@ const GRIMOIRE_ARCHIVE = [
 const PENNY_SERVICES_URL = '/bunker';
 const KANDY_FACEBOOK_URL = 'https://www.facebook.com/share/1EXJvJchHu/';
 const KANDY_SUNO_URL = 'https://suno.com/s/8wuDm8yj3GZIab9M';
-const KANDY_LATEST_TRACK_URL =
+const KANDY_PREVIOUS_TRACK_URL =
   'https://suno.com/song/34d73d33-56ab-4beb-adab-cde275ca1ad3?sh=HRAX1Ir73RfDIBmF';
+const KANDY_LATEST_TRACK_URL = 'https://suno.com/s/JwxHfnS6IWD0exoW';
 const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
 const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
@@ -971,7 +972,24 @@ function ContactPanels({
                       );
                     }}
                   >
-                    Latest track: Listen now →
+                    Newest track: Listen now →
+                  </a>
+                  <a
+                    className="kandy-suno-cta"
+                    href={KANDY_PREVIOUS_TRACK_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => {
+                      trackAnalyticsEvent(
+                        'kandy_suno_previous_track_click',
+                        {
+                          source: 'kandy_card',
+                          link_url: KANDY_PREVIOUS_TRACK_URL,
+                        },
+                      );
+                    }}
+                  >
+                    Previous featured track: Listen →
                   </a>
                 </div>
               </div>
@@ -2364,6 +2382,38 @@ export default function App() {
                       }}
                     >
                       Explore the playlist →
+                    </a>
+                    <a
+                      href={KANDY_LATEST_TRACK_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => {
+                        trackAnalyticsEvent(
+                          'kandy_suno_latest_track_click',
+                          {
+                            source: 'grimoire',
+                            link_url: KANDY_LATEST_TRACK_URL,
+                          },
+                        );
+                      }}
+                    >
+                      Newest track: Listen now →
+                    </a>
+                    <a
+                      href={KANDY_PREVIOUS_TRACK_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => {
+                        trackAnalyticsEvent(
+                          'kandy_suno_previous_track_click',
+                          {
+                            source: 'grimoire',
+                            link_url: KANDY_PREVIOUS_TRACK_URL,
+                          },
+                        );
+                      }}
+                    >
+                      Previous featured track →
                     </a>
                   </div>
                 </GrimoireAccordionEntry>
