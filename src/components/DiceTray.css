@@ -136,3 +136,86 @@
 @media (prefers-reduced-motion: reduce) {
   .dice-lab__cube { transition: none; will-change: auto; }
 }
+
+/* G.14.2: Standard tabletop dice selector and actual polygonal dice. */
+.dice-lab__typebar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: .45rem;
+  padding: .72rem clamp(.65rem, 2vw, 1.25rem);
+  border-bottom: 1px solid #c58cea30;
+  background: #180f24;
+}
+.dice-lab__typebar button {
+  min-width: 0;
+  min-height: 40px;
+  padding: .4rem .15rem;
+  border-radius: .5rem;
+  border: 1px solid rgba(190, 136, 223, .43);
+  background: #30203f;
+  color: #e4d4ee;
+  font-size: .77rem;
+  font-weight: 800;
+  letter-spacing: .015em;
+  touch-action: manipulation;
+}
+.dice-lab__typebar button[aria-pressed="true"] {
+  background: #e3b3f8;
+  color: #1c0b27;
+  border-color: #fae1ff;
+  box-shadow: 0 0 0 1px #fff7 inset;
+}
+.dice-lab__polyhedron {
+  display: block;
+  width: var(--edge);
+  height: var(--edge);
+  aspect-ratio: 1;
+  background: none;
+  pointer-events: none;
+}
+.dice-lab__die--percentile {
+  --edge: clamp(142px, 27vw, 190px);
+}
+.dice-lab__percentile {
+  width: 100%;
+  display: flex;
+  gap: .1rem;
+  justify-content: center;
+}
+.dice-lab__percentile-face {
+  flex: 1 1 50%;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-width: 0;
+}
+.dice-lab__percentile-face .dice-lab__polyhedron {
+  width: 100%;
+  height: auto;
+}
+.dice-lab__percentile-face > span {
+  color: #bfa4d3;
+  font-size: .56rem;
+  letter-spacing: .08em;
+  font-weight: 800;
+}
+.dice-lab__panel--compact .dice-lab__typebar {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding: .35rem .4rem;
+  gap: .12rem;
+}
+.dice-lab__panel--compact .dice-lab__typebar button {
+  min-height: 32px;
+  font-size: .57rem;
+  padding: .35rem 0;
+  border-radius: .34rem;
+}
+.dice-lab__panel--compact .dice-lab__die--percentile { --edge: 107px; }
+.dice-lab__panel--compact .dice-lab__percentile-face > span { font-size: .45rem; }
+@media (max-width: 520px) {
+  .dice-lab__typebar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .dice-lab__typebar button { min-height: 42px; }
+  .dice-lab__panel--compact .dice-lab__typebar {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
