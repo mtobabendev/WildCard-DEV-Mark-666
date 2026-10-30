@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import Spinner from './components/Spinner.jsx';
+import DiceTray from './components/DiceTray.jsx';
 import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
 import mattAvatar from '../assets/matt-avatar-ui.png';
 import wildCardDevIcon from '../assets/wildcard-logo-main.png';
@@ -1731,6 +1732,13 @@ export default function App() {
         pageVisible={pageVisible}
         reducedMotion={reducedMotion}
       />
+
+      {isHome && !isWatch && pageVisible && (
+        <section className="home-dice-panel" aria-label="Dice beneath the WildCard spinner">
+          <DiceTray compact />
+          <a className="home-dice-panel__link" href="/dice">Open the full Dice Chamber →</a>
+        </section>
+      )}
 
       <section
         id="channel-content"

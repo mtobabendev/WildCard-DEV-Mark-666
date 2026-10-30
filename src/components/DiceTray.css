@@ -1,0 +1,138 @@
+.dice-lab__panel {
+  overflow: hidden; border: 1px solid rgba(213, 153, 251, .38);
+  border-radius: 1.25rem; background: #110b1e;
+  box-shadow: 0 16px 70px #0009, inset 0 0 30px #742a9722;
+}
+.dice-lab__panel-top {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+  padding: .85rem 1.25rem; border-bottom: 1px solid #bc7ddb26;
+  font-size: .65rem; font-weight: 700; letter-spacing: .13em; color: #c9a3e8;
+}
+.dice-lab__panel-top span:last-child { color: #c4a06b; }
+.dice-lab__tray {
+  position: relative; min-height: 265px; display: grid; place-items: center;
+  padding: 2rem 1rem 1.4rem; isolation: isolate; touch-action: pan-y;
+  background:
+    radial-gradient(ellipse at 50% 60%, #552b7e88 0%, transparent 60%),
+    linear-gradient(160deg, #211232, #140c23 65%, #10091a);
+}
+.dice-lab__tray::after {
+  content: ""; position: absolute; z-index: -1; inset: auto 7% 25px;
+  border: 1px solid #9858c13b; border-radius: 50%;
+  height: 55px; background: radial-gradient(ellipse, #240e41, #0b0712 75%);
+  box-shadow: 0 0 45px #9740bb34;
+}
+.dice-lab__tray-glow {
+  position: absolute; z-index: -1; width: 70%; height: 65%;
+  border-radius: 50%; background: #7e3abd26; filter: blur(45px); pointer-events: none;
+}
+.dice-lab__dice {
+  width: 100%; display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: center; gap: clamp(.75rem, 2.5vw, 1.8rem);
+  perspective: 950px; perspective-origin: 50% 40%;
+}
+.dice-lab__die {
+  --edge: clamp(76px, 17vw, 118px);
+  flex: 0 0 var(--edge); min-width: 0; display: grid;
+  justify-items: center; gap: 1.3rem; position: relative;
+}
+.dice-lab__cube-scene {
+  width: var(--edge); height: var(--edge); perspective: 660px;
+}
+.dice-lab__cube {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1050ms cubic-bezier(.16, .81, .18, 1);
+  will-change: transform;
+}
+.dice-lab__face {
+  position: absolute; inset: 0; display: grid; padding: 15%;
+  grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+  place-items: center; gap: 2%;
+  background: linear-gradient(125deg, #f8eafc 0%, #d5b7eb 50%, #9864bc 100%);
+  border: 2px solid #fff8; border-radius: 15%;
+  box-shadow: inset 2px 2px 9px #ffffff94, inset -6px -8px 16px #3b175378;
+  backface-visibility: hidden;
+}
+.dice-lab__face--front { transform: translateZ(calc(var(--edge) * .5)); }
+.dice-lab__face--back { transform: rotateY(180deg) translateZ(calc(var(--edge) * .5)); }
+.dice-lab__face--right { transform: rotateY(90deg) translateZ(calc(var(--edge) * .5)); }
+.dice-lab__face--left { transform: rotateY(-90deg) translateZ(calc(var(--edge) * .5)); }
+.dice-lab__face--top { transform: rotateX(-90deg) translateZ(calc(var(--edge) * .5)); }
+.dice-lab__face--bottom { transform: rotateX(90deg) translateZ(calc(var(--edge) * .5)); }
+.dice-lab__pip {
+  width: 70%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 27%, #3c164c, #150921 75%);
+  box-shadow: inset 1px 2px 3px #0008, 0 1px 0 #fff8;
+}
+.dice-lab__pip--blank { visibility: hidden; }
+.dice-lab__die-label { font-weight: 800; font-size: 1rem; color: #f4d29d; }
+.dice-lab__swipe-note {
+  position: absolute; bottom: 8px; font-size: .68rem;
+  color: #aa92b9; letter-spacing: .05em; pointer-events: none;
+}
+.dice-lab__result {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  min-height: 95px; padding: 1.1rem clamp(1.1rem, 4vw, 2rem);
+  background: #1c1229; border-top: 1px solid #d49cff30;
+}
+.dice-lab__result small, .dice-lab__quantity > span, .dice-lab__total small {
+  display: block; margin-bottom: .45rem; color: #cbaaee;
+  font-size: .66rem; font-weight: 800; letter-spacing: .15em;
+}
+.dice-lab__result strong { font-size: clamp(1rem, 3vw, 1.3rem); }
+.dice-lab__total { text-align: right; }
+.dice-lab__total strong { color: #f3ba74; font-size: 2rem; font-variant-numeric: tabular-nums; }
+.dice-lab__controls {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 1.1rem; padding: 1.15rem clamp(1.1rem, 4vw, 2rem);
+  border-top: 1px solid #c58cea20;
+}
+.dice-lab__stepper { display: flex; align-items: center; gap: .75rem; }
+.dice-lab__stepper button {
+  width: 48px; height: 48px; border: 1px solid #967ab4;
+  border-radius: .7rem; background: #322143; color: white; font-size: 1.4rem;
+}
+.dice-lab__stepper output { min-width: 1.3rem; font-size: 1.4rem; font-weight: 800; text-align: center; }
+.dice-lab__roll {
+  min-height: 54px; flex: 1; max-width: 360px; min-width: 195px;
+  padding: .8rem 1.5rem; border: 0; border-radius: .85rem;
+  background: linear-gradient(115deg, #b76af2, #e6a4fd);
+  color: #1d0b2b; font-size: 1rem; font-weight: 900; letter-spacing: .08em;
+  box-shadow: 0 6px 24px #b452d348;
+}
+.dice-lab__roll:hover:not(:disabled) { filter: brightness(1.09); }
+.dice-lab__roll span { font-size: 1.25rem; vertical-align: -.04em; margin-right: .3rem; }
+
+/* Shared, self-contained 3D dice tray. Compact mode is for the home spinner. */
+.dice-lab__panel { color: #f4ecff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+.dice-lab__panel button { font: inherit; cursor: pointer; }
+.dice-lab__panel button:disabled { opacity: .42; cursor: not-allowed; }
+.dice-lab__panel--compact { border-radius: .9rem; }
+.dice-lab__panel--compact .dice-lab__panel-top { padding: .42rem .7rem; font-size: .56rem; }
+.dice-lab__panel--compact .dice-lab__tray { min-height: 118px; padding: .8rem .4rem .8rem; }
+.dice-lab__panel--compact .dice-lab__die { --edge: 57px; gap: .35rem; }
+.dice-lab__panel--compact .dice-lab__dice { gap: .65rem; }
+.dice-lab__panel--compact .dice-lab__die-label { font-size: .72rem; }
+.dice-lab__panel--compact .dice-lab__swipe-note { display: none; }
+.dice-lab__panel--compact .dice-lab__result { min-height: 51px; padding: .35rem .7rem; }
+.dice-lab__panel--compact .dice-lab__result small,
+.dice-lab__panel--compact .dice-lab__quantity > span,
+.dice-lab__panel--compact .dice-lab__total small { font-size: .5rem; margin-bottom: .15rem; }
+.dice-lab__panel--compact .dice-lab__result strong { font-size: .76rem; }
+.dice-lab__panel--compact .dice-lab__total strong { font-size: 1.25rem; }
+.dice-lab__panel--compact .dice-lab__controls { padding: .4rem .7rem; align-items: center; gap: .5rem; }
+.dice-lab__panel--compact .dice-lab__stepper { gap: .4rem; }
+.dice-lab__panel--compact .dice-lab__stepper button { width: 30px; height: 32px; font-size: 1.1rem; }
+.dice-lab__panel--compact .dice-lab__stepper output { font-size: 1rem; min-width: 1rem; }
+.dice-lab__panel--compact .dice-lab__roll { min-height: 38px; min-width: 105px; padding: .4rem .55rem; font-size: .73rem; max-width: none; width: auto; }
+.dice-lab__panel--compact .dice-lab__roll span { font-size: .95rem; }
+@media (max-width: 520px) {
+  .dice-lab__tray { min-height: 295px; padding-top: 1.8rem; }
+  .dice-lab__die { --edge: clamp(76px, 22vw, 104px); }
+  .dice-lab__controls { align-items: stretch; }
+  .dice-lab__roll { max-width: none; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dice-lab__cube { transition: none; will-change: auto; }
+}
