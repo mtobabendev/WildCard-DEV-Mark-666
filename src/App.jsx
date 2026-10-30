@@ -79,6 +79,7 @@ const GRIMOIRE_PROJECTS = [
 const GRIMOIRE_ARCHIVE = [
   {
     name: '3D Video Carousel',
+    video: '/static/EricaTechSupport.webm',
     description: 'An earlier pointer-driven, rotating 3D carousel experiment combining image and video panels.',
   },
   {
@@ -2288,6 +2289,9 @@ export default function App() {
                           className="grimoire-accordion-video"
                           src={experiment.video}
                           poster={experiment.poster}
+                          autoPlay={experiment.name === '3D Video Carousel'}
+                          muted={experiment.name === '3D Video Carousel'}
+                          loop={experiment.name === '3D Video Carousel'}
                           controls
                           playsInline
                           preload="metadata"
