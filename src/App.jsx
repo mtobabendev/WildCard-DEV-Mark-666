@@ -55,6 +55,7 @@ const GRIMOIRE_PROJECTS = [
   },
   {
     name: 'WildCard Labs',
+    video: '/static/EricaHelpsOut.webm',
     status: 'Coming soon',
     description: 'The experimental development space for WildCard DEV. Its landing page is a preview of what is planned, not a completed project gallery.',
     capabilities: ['Research', 'Experiments'],
@@ -2184,9 +2185,9 @@ export default function App() {
                                 className="grimoire-accordion-video"
                                 src={project.video}
                                 poster={project.poster}
-                                autoPlay={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
-                                muted={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
-                                loop={project.name === "Penny's Garage" || project.name === 'WildCard Party'}
+                                autoPlay={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
+                                muted={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
+                                loop={project.name === "Penny's Garage" || (project.name === 'WildCard Party' || project.name === 'WildCard Labs')}
                                 controls
                                 playsInline
                                 preload="metadata"
