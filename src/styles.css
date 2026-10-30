@@ -3845,6 +3845,14 @@ body {
   object-fit: contain;
 }
 
+/* The Dice clip contains a 16:9 image within an encoded portrait matte. */
+.grimoire-accordion-video[src="/static/PennySanchez.webm"] {
+  aspect-ratio: 16 / 9;
+  max-width: 39rem;
+  object-fit: cover;
+  justify-self: center;
+}
+
 .grimoire-accordion-body .grimoire-capabilities {
   margin: 0;
 }
