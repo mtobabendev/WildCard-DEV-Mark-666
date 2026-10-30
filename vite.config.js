@@ -7,5 +7,6 @@ export default defineConfig({
   input: {
     home: resolve(import.meta.dirname, 'index.html'),
     grimoire: resolve(import.meta.dirname, 'grimoire/index.html'),
+    dice: resolve(import.meta.dirname, 'dice/index.html'),
   },
 });

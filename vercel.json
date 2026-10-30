@@ -12,6 +12,14 @@
     {
       "source": "/grimoire/",
       "destination": "/grimoire/index.html"
+    },
+    {
+      "source": "/dice",
+      "destination": "/dice/index.html"
+    },
+    {
+      "source": "/dice/",
+      "destination": "/dice/index.html"
     }
   ],
   "headers": [
