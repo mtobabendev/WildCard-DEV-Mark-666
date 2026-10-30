@@ -2301,6 +2301,11 @@ export default function App() {
                         />
                       )}
                       <p className="grimoire-card-description">{experiment.description}</p>
+                      {experiment.name === 'Dice Prototypes' && (
+                        <div className="grimoire-links">
+                          <a href="/dice">Launch interactive 3D Dice Lab →</a>
+                        </div>
+                      )}
                     </GrimoireAccordionEntry>
                   );
                 })}
