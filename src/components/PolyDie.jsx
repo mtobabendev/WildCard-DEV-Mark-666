@@ -171,12 +171,50 @@ function drawSolid(canvas, geometry, quaternion, sides, tens) {
       else context.lineTo(x, y);
     });
     context.closePath();
-    context.fillStyle = 'rgb(' +
-      [197, 133, 222].map(c => Math.round(Math.min(255, c * intensity))).join(',') + ')';
+    // Frosted glass, refracted facets, and a warm line of fire along each edge.
+    const minX = Math.min(...points.map(p => p[0]));
+    const maxY = Math.max(...points.map(p => p[1]));
+    const maxX = Math.max(...points.map(p => p[0]));
+    const minY = Math.min(...points.map(p => p[1]));
+    const ice = context.createLinearGradient(minX, minY, maxX + 1, maxY + 1);
+    ice.addColorStop(0, 'rgb(' +
+      [218, 253, 255].map(c => Math.round(c * intensity)).join(',') + ')');
+    ice.addColorStop(.46, 'rgb(' +
+      [112, 221, 243].map(c => Math.round(c * intensity)).join(',') + ')');
+    ice.addColorStop(1, 'rgb(' +
+      [27, 107, 167].map(c => Math.round(c * intensity)).join(',') + ')');
+    context.fillStyle = ice;
     context.fill();
-    context.lineWidth = 2.4;
-    context.strokeStyle = 'rgba(255,230,255,.74)';
+
+    context.save();
+    context.clip();
+    const mid = [
+      points.reduce((sum, point) => sum + point[0], 0) / points.length,
+      points.reduce((sum, point) => sum + point[1], 0) / points.length,
+    ];
+    context.strokeStyle = 'rgba(232,255,255,.28)';
+    context.lineWidth = 1;
+    // Crystalline fracture lines remain attached to the rotating face.
+    for (let n = 0; n < points.length; n += 2) {
+      const corner = points[n];
+      context.beginPath();
+      context.moveTo(mid[0] + (corner[0] - mid[0]) * .37, mid[1] + (corner[1] - mid[1]) * .37);
+      context.lineTo(corner[0] * .82 + mid[0] * .18, corner[1] * .82 + mid[1] * .18);
+      context.stroke();
+    }
+    context.restore();
+
+    context.lineWidth = 3.3;
+    context.strokeStyle = 'rgba(29,166,231,.95)';
+    context.shadowColor = '#6df1ff';
+    context.shadowBlur = 7;
     context.stroke();
+    context.lineWidth = 1.2;
+    context.strokeStyle = 'rgba(255,185,99,.76)';
+    context.shadowColor = '#ff6926';
+    context.shadowBlur = 5;
+    context.stroke();
+    context.shadowBlur = 0;
 
     if (face.rotatedNormal[2] < 0.16) continue;
     const center = [
@@ -189,8 +227,8 @@ function drawSolid(canvas, geometry, quaternion, sides, tens) {
     context.font = '900 ' + Math.min(29, Math.max(12, sizeOfFace * (tens ? 0.77 : 1.07))) + 'px system-ui, sans-serif';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillStyle = '#21102f';
-    context.shadowColor = '#fff';
+    context.fillStyle = '#092639';
+    context.shadowColor = '#d6ffff';
     context.shadowBlur = 3;
     const label = sides === 10
       ? (tens ? String(face.number * 10).padStart(2, '0') : String(face.number))
