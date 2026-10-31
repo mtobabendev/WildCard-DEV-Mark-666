@@ -2170,6 +2170,19 @@ body {
   }
 }
 
+/* R.2: Short desktop home layout. Keep channel panels clear of Penny and
+   the already-approved spinner without changing either neighboring element. */
+@media (min-width: 1100px) and (min-height: 821px) and (max-height: 900px) {
+  .landing:not(.is-section) .context-window:not(.context-window--contact) {
+    top: calc(clamp(22.5rem, calc(100vh - 24rem), 26rem) + 1rem);
+    width: min(23rem, calc(100vw - 4rem));
+    max-height: calc(
+      100svh - clamp(22.5rem, calc(100vh - 24rem), 26rem) - 2rem
+    );
+    overflow-y: auto;
+  }
+}
+
 @media (min-width: 1100px) and (min-height: 821px) {
   .context-window--contact {
     width: min(29rem, calc(100vw - 4rem));
