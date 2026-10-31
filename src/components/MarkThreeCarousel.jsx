@@ -13,6 +13,8 @@ const panels = [
   ['Dice Mark II', 'die2.webm', '/dice'],
 ];
 
+const DRAG_DEGREES_PER_PIXEL = .30;
+
 export default function MarkThreeCarousel() {
   const area = useRef(null);
   const dragPlane = useRef(null);
@@ -83,7 +85,7 @@ export default function MarkThreeCarousel() {
       p.moved = true;
       event.currentTarget.setPointerCapture(event.pointerId);
     }
-    turn(p.dx * .1, p.dy * .1);
+    turn(p.dx * DRAG_DEGREES_PER_PIXEL, p.dy * DRAG_DEGREES_PER_PIXEL);
   };
   const onEnd = event => {
     const p = pointer.current;
@@ -105,7 +107,7 @@ export default function MarkThreeCarousel() {
         setDragging(false);
         return;
       }
-      turn(dx * .1, dy * .1);
+      turn(dx * DRAG_DEGREES_PER_PIXEL, dy * DRAG_DEGREES_PER_PIXEL);
       frame.current = requestAnimationFrame(coast);
     };
     frame.current = requestAnimationFrame(coast);
