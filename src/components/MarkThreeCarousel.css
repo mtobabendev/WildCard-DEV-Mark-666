@@ -1,0 +1,88 @@
+/* Mark III carousel restoration. Scoped; never touches the site spinner. */
+.mark3-carousel {
+  width:100%; min-width:0; overflow:hidden; margin:.75rem 0;
+  border:1px solid #b17ee266; border-radius:1rem;
+  color:#f6ebff; background:radial-gradient(ellipse at 50% 58%,#251442,#0d0717 70%);
+}
+.mark3-carousel__viewport {
+  position:relative; width:100%; height:clamp(315px,56vw,500px);
+  overflow:hidden; perspective:1000px; touch-action:none;
+  cursor:grab; user-select:none;
+}
+.mark3-carousel__viewport.is-dragging { cursor:grabbing; }
+.mark3-carousel__drag,.mark3-carousel__orbit {
+  position:absolute; top:50%; left:50%; width:0; height:0;
+  transform-style:preserve-3d;
+}
+.mark3-carousel__drag { transform:rotateX(-11deg) rotateY(0deg); }
+.mark3-carousel__orbit { animation:mark3-archive-spin 60s linear infinite reverse; }
+.mark3-carousel__orbit.is-paused { animation-play-state:paused; }
+.mark3-carousel__tile {
+  position:absolute; left:-60px; top:-85px;
+  display:block; width:120px; height:170px; overflow:hidden;
+  border:1px solid #ffffffa6; border-radius:12px;
+  background:linear-gradient(145deg,#40234c,#151120);
+  box-shadow:0 0 11px #f8efff70;
+  
+  transform-style:preserve-3d;
+  -webkit-box-reflect:below 9px linear-gradient(transparent 60%,#0007);
+  text-decoration:none; color:#fff; -webkit-tap-highlight-color:transparent;
+}
+.mark3-carousel__tile:hover,.mark3-carousel__tile:focus-visible {
+  border-color:#ff91e8; box-shadow:0 0 20px #ff83dcaa; outline-offset:2px;
+}
+.mark3-carousel__tile video {
+  display:block; width:100%; height:100%; object-fit:cover; pointer-events:none;
+}
+.mark3-carousel__tile span {
+  position:absolute; inset:auto 0 0; padding:1rem .2rem .35rem;
+  background:linear-gradient(transparent,#05020bdf); text-align:center;
+  color:#fff; font:700 clamp(9px,1.35vw,11px)/1.2 system-ui,sans-serif;
+  pointer-events:none;
+}
+.mark3-carousel__center {
+  position:absolute; top:0; left:0; white-space:nowrap;
+  transform:translate(-50%,-50%) rotateX(30deg);
+  font:900 clamp(.85rem,2.7vw,1.4rem)/1 Georgia,serif;
+  letter-spacing:.065em; color:#8ffe09;
+  text-shadow:-2px -2px 5px #ffffffb3,0 0 16px #d397fd87;
+  animation:mark3-archive-center 1.2s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.mark3-carousel__ground {
+  position:absolute; top:66%; left:50%;
+  width:min(72%,540px); height:180px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#c68aff34,#513b7740 36%,transparent 72%);
+  transform:translate(-50%,-50%); pointer-events:none;
+}
+.mark3-carousel__toolbar {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:.8rem; padding:.5rem .75rem; border-top:1px solid #a86ec63d;
+}
+.mark3-carousel__toolbar span,.mark3-carousel__note {
+  color:#d4bbdf; font:500 .75rem/1.45 system-ui,sans-serif;
+}
+.mark3-carousel__toolbar button {
+  flex:0 0 auto; border:1px solid #b781d8a6; border-radius:.5rem;
+  background:#2b1942; color:#fff; font:700 .75rem/1 system-ui,sans-serif;
+  padding:.65rem .7rem; cursor:pointer;
+}
+.mark3-carousel__toolbar button:focus-visible { outline:2px solid #ffbafb; }
+.mark3-carousel__note { margin:0; padding:0 .75rem .7rem; }
+.mark3-carousel__recording summary { cursor:pointer; color:#ead9f8; padding:.4rem 0; }
+@keyframes mark3-archive-spin {
+  from { transform:rotateY(0deg); } to { transform:rotateY(360deg); }
+}
+@keyframes mark3-archive-center {
+  from { color:rebeccapurple; } to { color:#8ffe09; }
+}
+@media (max-width:520px) {
+  .mark3-carousel__viewport { height:345px; }
+  .mark3-carousel__tile { left:-42px; top:-58px; width:84px; height:116px; }
+  .mark3-carousel__toolbar { align-items:stretch; }
+  .mark3-carousel__toolbar span { max-width:66%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .mark3-carousel__orbit,.mark3-carousel__center { animation:none; }
+}

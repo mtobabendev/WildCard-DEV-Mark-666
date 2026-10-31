@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import Spinner from './components/Spinner.jsx';
+const MarkThreeCarousel = lazy(() => import('./components/MarkThreeCarousel.jsx'));
 import DiceTray from './components/DiceTray.jsx';
 import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
 import mattAvatar from '../assets/matt-avatar-ui.png';
@@ -81,7 +82,7 @@ const GRIMOIRE_ARCHIVE = [
   {
     name: '3D Video Carousel',
     video: '/static/EricaTechSupport.webm',
-    description: 'An earlier pointer-driven, rotating 3D carousel experiment combining image and video panels.',
+    description: 'The original Mark III eight-video carousel, restored as a draggable interactive exhibit.',
   },
   {
     name: 'Dice Prototypes',
@@ -2312,7 +2313,26 @@ export default function App() {
                       expanded={isExpanded}
                       onToggle={() => setExpandedGrimoireEntry(isExpanded ? null : entryKey)}
                     >
-                      {isExpanded && experiment.video && (
+                      {isExpanded && experiment.name === '3D Video Carousel' && (
+                        <Suspense fallback={<p>Loading original Mark III carousel…</p>}>
+                          <MarkThreeCarousel />
+                        </Suspense>
+                      )}
+                      {isExpanded && experiment.name === '3D Video Carousel' && (
+                        <details className="mark3-carousel__recording">
+                          <summary>Watch the archived recording</summary>
+                          <video
+                            className="grimoire-accordion-video"
+                            src={experiment.video}
+                            controls
+                            muted
+                            playsInline
+                            preload="none"
+                            aria-label="3D Video Carousel archive recording"
+                          />
+                        </details>
+                      )}
+                      {isExpanded && experiment.video && experiment.name !== '3D Video Carousel' && (
                         <video
                           className="grimoire-accordion-video"
                           src={experiment.video}
