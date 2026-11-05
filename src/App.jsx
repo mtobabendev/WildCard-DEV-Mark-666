@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import Spinner from './components/Spinner.jsx';
+import JennPanel from './components/JennPanel.jsx';
 const MarkThreeCarousel = lazy(() => import('./components/MarkThreeCarousel.jsx'));
 import DiceTray from './components/DiceTray.jsx';
 import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
@@ -2629,6 +2630,7 @@ export default function App() {
         aria-hidden={!isHome}
         inert={!isHome}
       >
+        <div className="concierge-pair">
         <article className="identity-card identity-card--penny">
           {!isWatch && (
             <div className="penny-video-static">
@@ -2734,6 +2736,8 @@ export default function App() {
             </div>
           </div>
         </article>
+        <JennPanel videoActive={pennyVideoActive} />
+        </div>
       </section>
 
       <PennyContactAssist
