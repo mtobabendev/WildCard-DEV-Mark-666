@@ -4992,7 +4992,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: .75rem;
-  align-items: start;
+  align-items: stretch;
 }
 .card-stage--penny .concierge-pair .identity-card {
   position: relative;
@@ -5018,8 +5018,8 @@ body {
   animation: panel-down 850ms cubic-bezier(.16,.84,.26,1) 320ms forwards;
 }
 .jenn-video-shell {
-  aspect-ratio: 2 / 3;
-  max-height: 11rem;
+  width: 100%;
+  height: 14rem;
   overflow: hidden;
   border: 1px solid rgba(255, 91, 214, .45);
   border-radius: 1.25rem;
@@ -5064,7 +5064,7 @@ body {
   .concierge-pair { grid-template-columns: minmax(0, 1fr); }
   .identity-card--jenn {
     display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr);
     align-items: center;
     gap: .5rem .75rem;
   }
@@ -5085,5 +5085,5 @@ body {
   .concierge-pair .penny-video-shell { height: 12rem; }
   .identity-card--jenn { padding: .65rem; font-size: .75rem; }
   .identity-card--jenn h2 { font-size: 1.25rem; }
-  .jenn-video-shell { max-height: 9rem; }
+  .jenn-video-shell { height: 12rem; }
 }
