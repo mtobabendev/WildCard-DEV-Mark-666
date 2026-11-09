@@ -4,13 +4,13 @@ export default function JennPanel({ videoActive }) {
       <div className="jenn-video-shell">
         {videoActive && (
           <video
-            src="/static/JennHeroClixIntro.webm"
+            src="/static/JennOrTreat2.webm"
             autoPlay
             muted
             loop
             playsInline
             preload="metadata"
-            aria-label="Jenn’s HeroClix introduction"
+            aria-label="Jenn’s introduction"
           />
         )}
       </div>
