@@ -5087,3 +5087,208 @@ body {
   .identity-card--jenn h2 { font-size: 1.25rem; }
   .jenn-video-shell { height: 12rem; }
 }
+
+
+/* R.2: Desktop home reflow. Only the open home stage is affected.
+   Keep smaller viewports, watch layouts, and internal channel pages unchanged. */
+@media (min-width: 1100px) and (min-height: 821px) {
+  body:has(.landing.is-open:not(.is-section)) {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .landing.is-open:not(.is-section) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(1rem, 2vw, 1.75rem);
+    min-height: 100vh;
+    padding: 6rem clamp(1rem, 3vw, 2.5rem) 3rem;
+  }
+
+  .landing.is-open:not(.is-section) .portal-stage.is-open {
+    display: none;
+  }
+
+  /* Row one: Kandy and Matt remain left-to-right, without crowded columns. */
+  .landing.is-open:not(.is-section) .card-stage--contacts,
+  .landing.is-open:not(.is-section) .card-stage--penny {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .landing.is-open:not(.is-section) .card-stage--contacts {
+    order: 1;
+  }
+
+  .landing.is-open:not(.is-section) .identity-pair {
+    position: relative;
+    inset: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-width: 74rem;
+    margin-inline: auto;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+    gap: clamp(.75rem, 1.5vw, 1.25rem);
+    align-items: stretch;
+  }
+
+  .landing.is-open:not(.is-section) .identity-pair .identity-card {
+    height: 100%;
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--kandy {
+    grid-template-columns: clamp(12rem, 16vw, 14rem) minmax(0, 1fr);
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--kandy .kandy-video-shell {
+    height: 100%;
+    min-height: 20rem;
+  }
+
+  .landing.is-open:not(.is-section) .kandy-copy > a {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* Row two: equal-size Penny and Jenn panels with room for their videos. */
+  .landing.is-open:not(.is-section) .card-stage--penny {
+    order: 2;
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair {
+    position: relative;
+    inset: auto;
+    top: auto;
+    right: auto;
+    width: min(68rem, 100%);
+    margin-inline: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.75rem, 1.5vw, 1.25rem);
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair .identity-card--penny {
+    grid-template-columns: minmax(11rem, 0.95fr) minmax(0, 1.05fr);
+    align-items: stretch;
+    gap: .75rem;
+    padding: 1rem;
+    font-size: .85rem;
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair .penny-video-static {
+    align-self: stretch;
+    height: 100%;
+    min-height: 19rem;
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair .penny-video-shell {
+    height: 100%;
+    min-height: 19rem;
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair .penny-copy .eyebrow {
+    font-size: .65rem;
+  }
+
+  .landing.is-open:not(.is-section) .concierge-pair .penny-destination-pill {
+    font-size: .66rem;
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--jenn {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.95fr) minmax(0, 1.05fr);
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    gap: .5rem 1rem;
+    padding: 1rem;
+    font-size: .85rem;
+    text-align: left;
+  }
+
+  .landing.is-open:not(.is-section) .jenn-video-shell {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: stretch;
+    height: 100%;
+    min-height: 19rem;
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--jenn h2,
+  .landing.is-open:not(.is-section) .identity-card--jenn .penny-destination-pill,
+  .landing.is-open:not(.is-section) .identity-card--jenn small {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--jenn h2 {
+    font-size: 1.5rem;
+  }
+
+  .landing.is-open:not(.is-section) .identity-card--jenn .penny-destination-pill {
+    align-self: start;
+    font-size: .7rem;
+  }
+
+  /* Row three: preserve the original 3D spinner, but give it its own area. */
+  .landing.is-open:not(.is-section) .spinner-stage {
+    position: relative;
+    order: 3;
+    inset: auto;
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: min(48rem, 100%);
+    height: 23rem;
+    margin: 1rem auto 0;
+    translate: none;
+  }
+
+  /* Row four: dice sit below the spinner, never on top of its cards. */
+  .landing.is-open:not(.is-section) .home-dice-panel {
+    position: relative;
+    order: 4;
+    inset: auto;
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    translate: none;
+    width: min(27rem, 100%);
+    margin: 0 auto;
+  }
+
+  /* Row five: selected channel context is a readable panel, not an overlay. */
+  .landing.is-open:not(.is-section) .context-window {
+    position: relative;
+    order: 5;
+    inset: auto;
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: min(50rem, 100%);
+    height: auto;
+    max-height: none;
+    margin: 0 auto;
+    opacity: 0;
+    transform: none;
+  }
+
+  .landing.is-open:not(.is-section) .context-window:not(.is-active) {
+    display: none;
+  }
+
+  .landing.is-open:not(.is-section) .context-window.is-active {
+    display: block;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    pointer-events: auto;
+  }
+}
