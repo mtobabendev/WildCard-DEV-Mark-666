@@ -171,7 +171,15 @@ export default function AskPenny() {
         >
           <header className="after-ask__header">
             <div className="after-ask__identity">
-              <span className="after-ask__sigil" aria-hidden="true">♠</span>
+              <span className="after-ask__sigil after-ask__sigil--photo" aria-hidden="true">
+                <img
+                  src="/static/PennyNurseOnlyFans.jpg"
+                  alt=""
+                  width="44"
+                  height="44"
+                  decoding="async"
+                />
+              </span>
               <div><strong>ASK PENNY</strong><small>WILDCARD CONCIERGE / PARTY CONNECTION</small></div>
             </div>
             <div className="after-ask__header-actions">
