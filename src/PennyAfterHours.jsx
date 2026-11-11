@@ -235,6 +235,8 @@ export default function PennyAfterHours() {
               cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard.
             </p>
           </div>
+          <PennyAfterHoursSpinner />
+
           <div className="penny-fans__actions">
             <button
               type="button"
@@ -250,8 +252,6 @@ export default function PennyAfterHours() {
             </a>
           </div>
         </section>
-
-        <PennyAfterHoursSpinner />
 
         {membershipOpen && (
           <section id="penny-fans-membership" className="penny-fans__membership" role="status">
