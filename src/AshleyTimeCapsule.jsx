@@ -3,6 +3,11 @@ import './ashley-time-capsule.css';
 
 const MEMORIES = [
   {
+    title: 'Ashley & Kandy',
+    description: 'The first new addition to the Time Capsule.',
+    src: '/static/AshleyKandyHot.webm',
+  },
+  {
     title: 'The Introduction',
     description: 'A familiar beginning.',
     src: '/static/AshleyIntroLoopmp4.webm',
@@ -117,7 +122,7 @@ export default function AshleyTimeCapsule() {
             ))}
           </div>
           <p className="capsule-footnote">
-            The collection begins with these two videos. More memories can be added as the capsule grows.
+            The capsule is growing. More memories can find their place here.
           </p>
         </section>
       )}
