@@ -177,6 +177,18 @@ if (normalizedPath === '/ashley/what-if') {
     .catch(() => {
       window.location.replace('/');
     });
+} else if (normalizedPath === '/penny/after-hours') {
+  import('./PennyAfterHours.jsx')
+    .then(({ default: PennyAfterHours }) => {
+      root.render(
+        <StrictMode>
+          <PennyAfterHours />
+        </StrictMode>,
+      );
+    })
+    .catch(() => {
+      window.location.replace('/');
+    });
 } else if (normalizedPath === '/bunker') {
   import('./Bunker.jsx')
     .then(({ default: Bunker }) => {
