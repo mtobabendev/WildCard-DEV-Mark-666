@@ -175,12 +175,15 @@ export default function AskPenny() {
                 <img
                   src="/static/PennyNurseOnlyFans.jpg"
                   alt=""
-                  width="44"
-                  height="44"
+                  width="136"
+                  height="136"
                   decoding="async"
                 />
               </span>
-              <div><strong>ASK PENNY</strong><small>WILDCARD CONCIERGE / PARTY CONNECTION</small></div>
+              <div className="after-ask__identity-copy">
+                <strong>ASK PENNY</strong>
+                <small>WILDCARD CONCIERGE / PARTY CONNECTION</small>
+              </div>
             </div>
             <div className="after-ask__header-actions">
               <button type="button" disabled={busy || messages.length === 0} onClick={clearSession}>
