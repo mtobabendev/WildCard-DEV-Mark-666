@@ -13,6 +13,11 @@ const MEMORIES = [
     src: '/static/AshleyKandyHot2-optimized.webm',
   },
   {
+    title: 'Naughty Ashley',
+    description: 'An after-hours moment with Ashley.',
+    src: '/static/NaughtyAshley.webm',
+  },
+  {
     title: 'The Introduction',
     description: 'A familiar beginning.',
     src: '/static/AshleyIntroLoopmp4.webm',
