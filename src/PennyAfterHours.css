@@ -200,6 +200,75 @@ body { margin: 0; background: #0a0614; }
   display: block; margin-top: .1rem; color: #eab8dc;
   font-size: .53rem; letter-spacing: .05em;
 }
+/* Penny After Hours support: existing WildCard DEV Square donation checkout, no subscriptions. */
+.penny-fans__support {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.3rem 0 1.1rem;
+}
+.penny-fans__support-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: clamp(1.1rem, 3vw, 1.7rem);
+  border: 1px solid rgba(250, 180, 237, .35);
+  border-radius: 1.1rem;
+  background: linear-gradient(140deg, rgba(69, 24, 78, .85), rgba(28, 12, 44, .96));
+}
+.penny-fans__support-card--tips {
+  background: linear-gradient(140deg, rgba(56, 22, 75, .92), rgba(24, 12, 46, .96));
+}
+.penny-fans__support-card h2 {
+  margin: .15rem 0 .75rem;
+  color: #fff0fa;
+  font-size: clamp(1.25rem, 2.9vw, 1.75rem);
+  line-height: 1.2;
+}
+.penny-fans__support-card h2 span { color: #ffabe2; }
+.penny-fans__support-card > p:not(.penny-fans__eyebrow) {
+  color: var(--pf-muted);
+  line-height: 1.6;
+  margin: 0 0 .9rem;
+  font-size: .94rem;
+}
+.penny-fans__support-action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .65rem;
+  min-height: 48px;
+  width: 100%;
+  margin-top: auto;
+  padding: .8rem 1rem;
+  border: 1px solid rgba(255, 211, 243, .72);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e8a1d8, #c28eee);
+  color: #22102e !important;
+  font-size: .9rem;
+  font-weight: 850;
+  text-align: center;
+  text-decoration: none;
+}
+.penny-fans__support-action--tip { background: linear-gradient(135deg, #ffb2e4, #d88bef); }
+.penny-fans__support-action:hover,
+.penny-fans__support-action:focus-visible { filter: brightness(1.08); }
+.penny-fans__support-card .penny-fans__support-note {
+  width: 100%;
+  margin: .8rem 0 0 !important;
+  color: #d9b5df;
+  font-size: .79rem !important;
+  line-height: 1.5 !important;
+}
+.penny-fans__support-note a {
+  color: #ffc8ea;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+@media (max-width: 650px) {
+  .penny-fans__support { grid-template-columns: 1fr; gap: .75rem; }
+}
 .penny-fans__tabs {
   display: flex; gap: .6rem; overflow-x: auto;
   border-bottom: 1px solid rgba(248,153,215,.28);

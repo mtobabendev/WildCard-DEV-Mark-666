@@ -299,8 +299,36 @@ export default function PennyAfterHours() {
 
         </section>
 
+        <section className="penny-fans__support" aria-label="Subscription and tips for Penny After Hours">
+          <article className="penny-fans__support-card">
+            <p className="penny-fans__eyebrow">SUBSCRIPTION</p>
+            <h2>Free to explore <span aria-hidden="true">♠</span></h2>
+            <p>Take a look around Penny After Hours. There is no paid membership or automatic renewal on this concept page.</p>
+            <a className="penny-fans__support-action" href="#penny-after-sections" onClick={() => openTab('posts')}>
+              Explore free posts
+            </a>
+            <p className="penny-fans__support-note">
+              Enjoying the show? <a href="https://square.link/u/sb0tYH9C" target="_blank" rel="noopener noreferrer">Support WildCard DEV with a donation <span aria-hidden="true">↗</span></a>
+            </p>
+          </article>
+          <article className="penny-fans__support-card penny-fans__support-card--tips">
+            <p className="penny-fans__eyebrow">TIPS / SUPPORT</p>
+            <h2>Penny's tip jar <span aria-hidden="true">💋</span></h2>
+            <p>Like what we're building? A voluntary donation supports the WildCard DEV projects behind Penny's world.</p>
+            <a
+              className="penny-fans__support-action penny-fans__support-action--tip"
+              href="https://square.link/u/sb0tYH9C"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Send a tip through WildCard DEV's Square donation page, opens in new tab"
+            >
+              ♡ Send a tip <span aria-hidden="true">↗</span>
+            </a>
+            <p className="penny-fans__support-note">Both donation links open the existing Square payment page. Donations do not create subscriptions or unlock content.</p>
+          </article>
+        </section>
 
-        <nav className="penny-fans__tabs" aria-label="Penny fan page sections">
+        <nav id="penny-after-sections" className="penny-fans__tabs" aria-label="Penny fan page sections">
           <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
           <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{PHOTOS.length}</span></button>
           <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => openTab('videos')}>Videos <span>{VIDEOS.length}</span></button>
