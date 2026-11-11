@@ -58,6 +58,10 @@ export default function PennyAfterHours() {
   const [membershipOpen, setMembershipOpen] = useState(false);
   const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
+  const [profilePaused, setProfilePaused] = useState(() => (
+    typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ));
   const [coverPaused, setCoverPaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -114,24 +118,22 @@ export default function PennyAfterHours() {
     const video = profileVideoRef.current;
     if (!video) return undefined;
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const syncProfile = () => {
-      if (document.hidden || reducedMotion.matches) {
+      if (profilePaused || document.hidden) {
         video.pause();
         return;
       }
-      video.play()?.catch?.(() => {});
+      const attempt = video.play();
+      attempt?.catch?.(() => setProfilePaused(true));
     };
 
     syncProfile();
     document.addEventListener('visibilitychange', syncProfile);
-    reducedMotion.addEventListener?.('change', syncProfile);
     return () => {
       document.removeEventListener('visibilitychange', syncProfile);
-      reducedMotion.removeEventListener?.('change', syncProfile);
       video.pause();
     };
-  }, [unlocked]);
+  }, [unlocked, profilePaused]);
 
   return (
     <main className="penny-fans">
@@ -204,16 +206,25 @@ export default function PennyAfterHours() {
               ref={profileVideoRef}
               className="penny-fans__avatar"
               src="/static/PennyOnlyFansProfile.webm"
-              poster="/static/Penny.gif"
               muted
               loop
               playsInline
-              preload="metadata"
+              autoPlay={!profilePaused}
+              preload="auto"
               aria-label="Penny's animated profile picture"
               width="128"
               height="128"
             />
           </div>
+          <button
+            type="button"
+            className="penny-fans__avatar-control"
+            aria-label={profilePaused ? 'Play Penny profile animation' : 'Pause Penny profile animation'}
+            aria-pressed={profilePaused}
+            onClick={() => setProfilePaused((value) => !value)}
+          >
+            {profilePaused ? 'Play profile' : 'Pause profile'}
+          </button>
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
