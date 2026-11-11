@@ -56,7 +56,6 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
-  const [membershipOpen, setMembershipOpen] = useState(false);
   const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profilePaused, setProfilePaused] = useState(() => (
@@ -235,44 +234,37 @@ export default function PennyAfterHours() {
               cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard.
             </p>
           </div>
+          <nav className="penny-fans__socials" aria-label="Penny social media">
+            <a className="penny-fans__social-link penny-fans__social-link--party"
+               href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer"
+               aria-label="Penny's Facebook-style community, WildCard Party">
+              <span className="penny-fans__social-symbol" aria-hidden="true">f</span><span>Party</span>
+            </a>
+            <a className="penny-fans__social-link penny-fans__social-link--x"
+               href="https://x.com/Dev_WildCard" target="_blank" rel="noopener noreferrer"
+               aria-label="WildCard DEV on X">
+              <span className="penny-fans__social-symbol" aria-hidden="true">𝕏</span><span>X</span>
+            </a>
+            <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="Stripagram coming soon">
+              <span className="penny-fans__social-symbol" aria-hidden="true">◎</span><span>Stripagram <small>SOON</small></span>
+            </span>
+            <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="Penny's video hub coming soon">
+              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>Video Hub <small>SOON</small></span>
+            </span>
+          </nav>
           <PennyAfterHoursSpinner />
 
-          <div className="penny-fans__actions">
-            <button
-              type="button"
-              className="penny-fans__cta"
-              aria-expanded={membershipOpen}
-              aria-controls="penny-fans-membership"
-              onClick={() => setMembershipOpen((value) => !value)}
-            >
-              {membershipOpen ? 'Close membership preview' : 'Preview membership'}
-            </button>
-            <a className="penny-fans__secondary" href="https://pennysoffice.wildcarddev.com/">
-              Visit Penny's Garage
-            </a>
-          </div>
         </section>
 
-        {membershipOpen && (
-          <section id="penny-fans-membership" className="penny-fans__membership" role="status">
-            <span aria-hidden="true">✧</span>
-            <div>
-              <strong>Members' room: visual mockup only</strong>
-              <p>A possible future home for creator posts, archives, and exclusive updates. No accounts, billing, private content, or subscriptions are active here.</p>
-            </div>
-          </section>
-        )}
 
         <nav className="penny-fans__tabs" aria-label="Penny fan page sections">
-          <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => setTab('posts')}>
-            The Feed
-          </button>
-          <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => setTab('about')}>
-            About Penny
-          </button>
+          <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => setTab('posts')}>Posts</button>
+          <a href="#penny-after-gallery">Photos <span>8</span></a>
+          <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => setTab('videos')}>Videos <span>1</span></button>
+          <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => setTab('about')}>About</button>
         </nav>
 
-        {tab === 'posts' ? (
+        {tab === 'posts' || tab === 'videos' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
@@ -324,7 +316,7 @@ export default function PennyAfterHours() {
                 <span>VIDEO · 00:24 · PLAY ON DEMAND</span>
               </footer>
             </article>
-            {POSTS.map((post) => (
+            {tab === 'posts' && POSTS.map((post) => (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
                 <div className="penny-fans__post-art" aria-hidden="true">
                   <span>{post.symbol}</span>
