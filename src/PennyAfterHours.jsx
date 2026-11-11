@@ -56,13 +56,8 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
-  const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profilePaused, setProfilePaused] = useState(() => (
-    typeof window !== 'undefined'
-      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ));
-  const [coverPaused, setCoverPaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ));
@@ -89,29 +84,6 @@ export default function PennyAfterHours() {
   useEffect(() => {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
   }, []);
-
-  useEffect(() => {
-    if (!unlocked) return undefined;
-    const video = coverVideoRef.current;
-    if (!video) return undefined;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const syncCover = () => {
-      if (coverPaused || document.hidden || reducedMotion.matches) {
-        video.pause();
-        return;
-      }
-      const attempt = video.play();
-      attempt?.catch?.(() => setCoverPaused(true));
-    };
-    syncCover();
-    document.addEventListener('visibilitychange', syncCover);
-    reducedMotion.addEventListener?.('change', syncCover);
-    return () => {
-      document.removeEventListener('visibilitychange', syncCover);
-      reducedMotion.removeEventListener?.('change', syncCover);
-      video.pause();
-    };
-  }, [unlocked, coverPaused]);
 
   useEffect(() => {
     if (!unlocked) return undefined;
@@ -177,31 +149,20 @@ export default function PennyAfterHours() {
       ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
-          <video
-            ref={coverVideoRef}
-            className="penny-fans__cover-video"
-            src="/static/PennyOnlyFansFinal.webm"
-            poster="/static/penny-throne-room.webp"
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Penny After Hours profile cover video"
+          <img
+            className="penny-fans__cover-image"
+            src="/static/PennyOnlyFansBanner.jpg"
+            width="1216"
+            height="832"
+            loading="eager"
+            decoding="async"
+            alt="Penny After Hours cover art with Penny Bella Morningstar, her inset portrait, and the creator handle."
           />
-          <span className="penny-fans__cover-label">WILDCARD DEV ORIGINAL / FAN-PAGE CONCEPT</span>
-          <button
-            className="penny-fans__cover-control"
-            type="button"
-            onClick={() => setCoverPaused((value) => !value)}
-            aria-label={coverPaused ? 'Play cover video' : 'Pause cover video'}
-            aria-pressed={coverPaused}
-          >
-            {coverPaused ? 'Play cover' : 'Pause cover'}
-          </button>
         </div>
 
         <section className="penny-fans__profile" aria-labelledby="penny-fans-title">
-          <div className="penny-fans__avatar-slot">
+          <div className="penny-fans__profile-media">
+            <div className="penny-fans__avatar-slot">
             <video
               ref={profileVideoRef}
               className="penny-fans__avatar"
@@ -215,8 +176,8 @@ export default function PennyAfterHours() {
               width="128"
               height="128"
             />
-          </div>
-          <button
+            </div>
+            <button
             type="button"
             className="penny-fans__avatar-control"
             aria-label={profilePaused ? 'Play Penny profile animation' : 'Pause Penny profile animation'}
@@ -224,7 +185,8 @@ export default function PennyAfterHours() {
             onClick={() => setProfilePaused((value) => !value)}
           >
             {profilePaused ? 'Play profile' : 'Pause profile'}
-          </button>
+            </button>
+          </div>
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
