@@ -4,7 +4,7 @@ export default function JennPanel({ videoActive }) {
       <div className="jenn-video-shell">
         {videoActive && (
           <video
-            src="/static/JennOrTreat2.webm"
+            src="/static/JennIntro.webm"
             autoPlay
             muted
             loop
