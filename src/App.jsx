@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import './styles.css';
 import Spinner from './components/Spinner.jsx';
 import JennPanel from './components/JennPanel.jsx';
+import AshleyPanel from './components/AshleyPanel.jsx';
 const MarkThreeCarousel = lazy(() => import('./components/MarkThreeCarousel.jsx'));
 import DiceTray from './components/DiceTray.jsx';
 import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
@@ -1097,6 +1098,7 @@ function ContactPanels({
             </div>
           </article>
         )}
+        <AshleyPanel active={open && pageVisible} />
       </div>
     </section>
   );
