@@ -43,6 +43,12 @@ const PHOTOS = [
   },
 ];
 
+const PHOTO_GALLERIES = [
+  { id: 'portraits-01-06', title: 'Portraits 01–06', photos: PHOTOS.slice(0, 6) },
+  { id: 'portraits-07-08', title: 'Portraits 07–08', photos: PHOTOS.slice(6, 8) },
+  { id: 'cover-reveal', title: 'After Hours cover reveal', photos: PHOTOS.slice(8, 9) },
+];
+
 const VIDEOS = [
   {
     id: 'velvet-mode',
@@ -128,9 +134,11 @@ export default function PennyAfterHours() {
   };
 
   const changePhoto = (offset) => {
-    setSelectedPhoto((current) => (
-      current === null ? null : (current + offset + PHOTOS.length) % PHOTOS.length
-    ));
+    setSelectedPhoto((current) => {
+      if (current === null) return null;
+      const length = PHOTO_GALLERIES[current.galleryIndex].photos.length;
+      return { ...current, photoIndex: (current.photoIndex + offset + length) % length };
+    });
   };
 
   useEffect(() => {
@@ -441,20 +449,20 @@ export default function PennyAfterHours() {
           <section className="penny-fans__media-gallery" aria-label="Penny's photo gallery">
             <header className="penny-fans__gallery-heading">
               <p className="penny-fans__eyebrow">THE VELVET VAULT / PHOTOS</p>
-              <h2>Photo gallery <span>{PHOTOS.length} photographs</span></h2>
-              <p>Choose a portrait for full-size viewing. The original eight-photo 3D spinner remains above.</p>
+              <h2>Photo gallery <span>{PHOTOS.length} photographs · {PHOTO_GALLERIES.length} collections</span></h2>
+              <p>Choose a collection to browse its photos. The original eight-photo 3D spinner remains above.</p>
             </header>
             <div className="penny-fans__photo-grid">
-              {PHOTOS.map((photo, index) => (
+              {PHOTO_GALLERIES.map((gallery, galleryIndex) => (
                 <button
                   className="penny-fans__photo-tile"
                   type="button"
-                  key={photo.id}
-                  onClick={() => setSelectedPhoto(index)}
-                  aria-label={`View ${photo.title}, image ${index + 1} of ${PHOTOS.length}`}
+                  key={gallery.id}
+                  onClick={() => setSelectedPhoto({ galleryIndex, photoIndex: 0 })}
+                  aria-label={'Open ' + gallery.title + ', ' + gallery.photos.length + ' photographs'}
                 >
-                  <img src={photo.src} alt="" loading="lazy" decoding="async" />
-                  <span>{photo.title}</span>
+                  <img src={gallery.photos[0].src} alt="" loading="lazy" decoding="async" />
+                  <span>{gallery.title}<small>{gallery.photos.length} {gallery.photos.length === 1 ? 'PHOTO' : 'PHOTOS'}</small></span>
                 </button>
               ))}
             </div>
@@ -476,17 +484,21 @@ export default function PennyAfterHours() {
               {selectedPhoto !== null && (
                 <div className="penny-fans__photo-dialog-body">
                   <header>
-                    <strong>{PHOTOS[selectedPhoto].title}</strong>
+                    <strong>
+                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].title}
+                      {' · '}
+                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
+                    </strong>
                     <button type="button" onClick={() => setSelectedPhoto(null)} aria-label="Close photo viewer">Close ✕</button>
                   </header>
                   <img
-                    src={PHOTOS[selectedPhoto].src}
-                    alt={`Penny After Hours: ${PHOTOS[selectedPhoto].title}`}
+                    src={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].src}
+                    alt={'Penny After Hours: ' + PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
                   />
                   <nav aria-label="Photo navigation">
-                    <button type="button" onClick={() => changePhoto(-1)}>← Previous</button>
-                    <span>{selectedPhoto + 1} / {PHOTOS.length}</span>
-                    <button type="button" onClick={() => changePhoto(1)}>Next →</button>
+                    <button type="button" onClick={() => changePhoto(-1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>← Previous</button>
+                    <span>{selectedPhoto.photoIndex + 1} / {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length}</span>
+                    <button type="button" onClick={() => changePhoto(1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>Next →</button>
                   </nav>
                 </div>
               )}
