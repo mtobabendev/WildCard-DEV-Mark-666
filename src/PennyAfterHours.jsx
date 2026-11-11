@@ -205,7 +205,7 @@ export default function PennyAfterHours() {
             <video
               ref={profileVideoRef}
               className="penny-fans__avatar"
-              src="/static/PennyOnlyFansProfile.webm"
+              src="/static/PennyOnlyFanzProfile-web.webm"
               muted
               loop
               playsInline
