@@ -8,6 +8,11 @@ const MEMORIES = [
     src: '/static/AshleyKandyHot.webm',
   },
   {
+    title: 'Ashley & Kandy II',
+    description: 'Another moment together.',
+    src: '/static/AshleyKandyHot2-optimized.webm',
+  },
+  {
     title: 'The Introduction',
     description: 'A familiar beginning.',
     src: '/static/AshleyIntroLoopmp4.webm',
