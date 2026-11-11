@@ -217,6 +217,86 @@ body { margin: 0; background: #0a0614; }
 .penny-fans__tabs a:hover, .penny-fans__tabs a:focus-visible { color: #fff; border-bottom-color: #e8a6d3; }
 .penny-fans__tabs span { color: #e8b5d9; font-size: .73rem; }
 #penny-after-gallery { scroll-margin-top: 1rem; }
+
+/* Dedicated tabs reuse existing photo and video assets, without altering the 3D spinner. */
+.penny-fans__media-gallery {
+  padding: clamp(1rem, 3vw, 1.65rem);
+  border: 1px solid rgba(250, 180, 237, .28);
+  border-radius: 1.1rem;
+  background: rgba(25, 12, 41, .89);
+}
+.penny-fans__gallery-heading { margin-bottom: 1.15rem; }
+.penny-fans__gallery-heading h2 {
+  margin: .35rem 0 .4rem;
+  color: #fff0fa;
+  font-size: clamp(1.35rem, 3.5vw, 2rem);
+}
+.penny-fans__gallery-heading h2 span { color: #e7bbdf; font-size: .66em; font-weight: 700; }
+.penny-fans__gallery-heading > p:last-child { max-width: 65ch; margin: .4rem 0 0; color: var(--pf-muted); line-height: 1.55; }
+.penny-fans__photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+.penny-fans__photo-tile {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 183, 234, .5);
+  border-radius: .9rem;
+  background: #1a0a29;
+  color: #fff3fb;
+}
+.penny-fans__photo-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.penny-fans__photo-tile::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(12, 4, 22, .91)); pointer-events: none; }
+.penny-fans__photo-tile span { position: absolute; z-index: 1; bottom: .8rem; left: .8rem; right: .8rem; text-align: left; font-size: .82rem; font-weight: 800; text-shadow: 0 1px 5px #10041b; }
+.penny-fans__photo-tile:focus-visible { outline: 3px solid #ffe0f5; outline-offset: 3px; }
+.penny-fans__photo-dialog {
+  width: min(900px, 94vw);
+  max-width: 94vw;
+  max-height: 92dvh;
+  padding: 0;
+  border: 1px solid rgba(255, 183, 234, .65);
+  border-radius: 1rem;
+  background: #160a24;
+  color: #fff3fc;
+  overflow: auto;
+}
+.penny-fans__photo-dialog::backdrop { background: rgba(4, 1, 11, .94); }
+.penny-fans__photo-dialog-body { display: grid; gap: .65rem; justify-items: center; padding: .75rem; }
+.penny-fans__photo-dialog-body header,
+.penny-fans__photo-dialog-body nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .65rem;
+  width: 100%;
+}
+.penny-fans__photo-dialog-body button {
+  min-height: 44px;
+  padding: .55rem .85rem;
+  border: 1px solid rgba(255, 192, 242, .52);
+  border-radius: .6rem;
+  background: #522360;
+  color: #fff2fc;
+}
+.penny-fans__photo-dialog-body > img { display: block; max-width: 100%; max-height: 72dvh; width: auto; height: auto; object-fit: contain; border-radius: .4rem; }
+.penny-fans__photo-dialog-body nav span { color: #ffc9ed; font-weight: 800; font-variant-numeric: tabular-nums; }
+.penny-fans__video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; }
+.penny-fans__gallery-video { overflow: hidden; border: 1px solid rgba(255, 176, 228, .34); border-radius: .95rem; background: #1d102c; }
+.penny-fans__gallery-video video { display: block; width: 100%; height: auto; aspect-ratio: 720 / 416; background: #080410; }
+.penny-fans__gallery-video-info { padding: .95rem 1rem; }
+.penny-fans__gallery-video-info h3 { margin: 0 0 .5rem; font-size: 1.08rem; }
+.penny-fans__gallery-video-info span { color: #d6afd8; font-size: .75rem; letter-spacing: .05em; }
+@media (max-width: 540px) {
+  .penny-fans__photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+  .penny-fans__media-gallery { padding: .8rem; }
+  .penny-fans__photo-tile span { font-size: .73rem; }
+}
+
 .penny-fans__feed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 
 /* Premiered, full-width creator video; the three existing teaser cards remain below it. */

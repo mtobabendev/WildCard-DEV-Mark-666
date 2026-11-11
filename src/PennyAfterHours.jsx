@@ -30,6 +30,29 @@ const POSTS = [
   },
 ];
 
+const PHOTOS = [
+  ...Array.from({ length: 8 }, (_, index) => ({
+    id: `portrait-${index + 1}`,
+    src: `/static/${index + 1}.jpg`,
+    title: `Portrait ${String(index + 1).padStart(2, '0')}`,
+  })),
+  {
+    id: 'cover-reveal',
+    src: '/static/PennyOnlyFansBanner.jpg',
+    title: 'After Hours cover reveal',
+  },
+];
+
+const VIDEOS = [
+  {
+    id: 'velvet-mode',
+    title: 'Patch Notes: Velvet Mode v1.0 ♠',
+    src: '/static/PennyAfterHoursPatchNotes.webm',
+    poster: '/static/PennyAfterHoursPatchNotes.webp',
+    runtime: '00:24',
+  },
+];
+
 function PennyCombinationDial({ digit, position, onChange }) {
   const change = (step) => onChange((digit + step + 10) % 10);
 
@@ -56,6 +79,8 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const photoDialogRef = useRef(null);
   const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profilePaused, setProfilePaused] = useState(() => (
@@ -89,6 +114,24 @@ export default function PennyAfterHours() {
   useEffect(() => {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
   }, []);
+
+  useEffect(() => {
+    const dialog = photoDialogRef.current;
+    if (!dialog) return;
+    if (selectedPhoto !== null && !dialog.open) dialog.showModal();
+    if (selectedPhoto === null && dialog.open) dialog.close();
+  }, [selectedPhoto]);
+
+  const openTab = (nextTab) => {
+    setSelectedPhoto(null);
+    setTab(nextTab);
+  };
+
+  const changePhoto = (offset) => {
+    setSelectedPhoto((current) => (
+      current === null ? null : (current + offset + PHOTOS.length) % PHOTOS.length
+    ));
+  };
 
   useEffect(() => {
     if (!unlocked) return undefined;
@@ -258,13 +301,13 @@ export default function PennyAfterHours() {
 
 
         <nav className="penny-fans__tabs" aria-label="Penny fan page sections">
-          <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => setTab('posts')}>Posts</button>
-          <a href="#penny-after-gallery">Photos <span>8</span></a>
-          <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => setTab('videos')}>Videos <span>1</span></button>
-          <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => setTab('about')}>About</button>
+          <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
+          <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{PHOTOS.length}</span></button>
+          <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => openTab('videos')}>Videos <span>{VIDEOS.length}</span></button>
+          <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => openTab('about')}>About</button>
         </nav>
 
-        {tab === 'posts' || tab === 'videos' ? (
+        {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
@@ -365,6 +408,89 @@ export default function PennyAfterHours() {
                 </div>
               </article>
             ))}
+          </section>
+        ) : tab === 'photos' ? (
+          <section className="penny-fans__media-gallery" aria-label="Penny's photo gallery">
+            <header className="penny-fans__gallery-heading">
+              <p className="penny-fans__eyebrow">THE VELVET VAULT / PHOTOS</p>
+              <h2>Photo gallery <span>{PHOTOS.length} photographs</span></h2>
+              <p>Choose a portrait for full-size viewing. The original eight-photo 3D spinner remains above.</p>
+            </header>
+            <div className="penny-fans__photo-grid">
+              {PHOTOS.map((photo, index) => (
+                <button
+                  className="penny-fans__photo-tile"
+                  type="button"
+                  key={photo.id}
+                  onClick={() => setSelectedPhoto(index)}
+                  aria-label={`View ${photo.title}, image ${index + 1} of ${PHOTOS.length}`}
+                >
+                  <img src={photo.src} alt="" loading="lazy" decoding="async" />
+                  <span>{photo.title}</span>
+                </button>
+              ))}
+            </div>
+            <dialog
+              ref={photoDialogRef}
+              className="penny-fans__photo-dialog"
+              aria-label="Penny gallery photo viewer"
+              onClose={() => setSelectedPhoto(null)}
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                  event.preventDefault();
+                  changePhoto(event.key === 'ArrowRight' ? 1 : -1);
+                }
+              }}
+              onClick={(event) => {
+                if (event.target === event.currentTarget) setSelectedPhoto(null);
+              }}
+            >
+              {selectedPhoto !== null && (
+                <div className="penny-fans__photo-dialog-body">
+                  <header>
+                    <strong>{PHOTOS[selectedPhoto].title}</strong>
+                    <button type="button" onClick={() => setSelectedPhoto(null)} aria-label="Close photo viewer">Close ✕</button>
+                  </header>
+                  <img
+                    src={PHOTOS[selectedPhoto].src}
+                    alt={`Penny After Hours: ${PHOTOS[selectedPhoto].title}`}
+                  />
+                  <nav aria-label="Photo navigation">
+                    <button type="button" onClick={() => changePhoto(-1)}>← Previous</button>
+                    <span>{selectedPhoto + 1} / {PHOTOS.length}</span>
+                    <button type="button" onClick={() => changePhoto(1)}>Next →</button>
+                  </nav>
+                </div>
+              )}
+            </dialog>
+          </section>
+        ) : tab === 'videos' ? (
+          <section className="penny-fans__media-gallery" aria-label="Penny's video gallery">
+            <header className="penny-fans__gallery-heading">
+              <p className="penny-fans__eyebrow">AFTER HOURS / MOVING PICTURES</p>
+              <h2>Video gallery <span>{VIDEOS.length} video</span></h2>
+              <p>Penny's published creator clips, ready to play. The animated cover and profile stay in the header.</p>
+            </header>
+            <div className="penny-fans__video-grid">
+              {VIDEOS.map((video) => (
+                <article className="penny-fans__gallery-video" key={video.id}>
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={video.poster}
+                    aria-label={video.title}
+                  >
+                    <source src={video.src} type="video/webm" />
+                    Your browser does not support WebM playback.
+                  </video>
+                  <div className="penny-fans__gallery-video-info">
+                    <h3>{video.title}</h3>
+                    <span>VIDEO · {video.runtime} · PLAY ON DEMAND</span>
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
         ) : (
           <section className="penny-fans__about" aria-label="About Penny">
