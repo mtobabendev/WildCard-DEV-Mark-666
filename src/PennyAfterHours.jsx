@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './PennyAfterHours.css';
+import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
 
 const POSTS = [
   {
@@ -79,6 +80,8 @@ export default function PennyAfterHours() {
             </a>
           </div>
         </section>
+
+        <PennyAfterHoursSpinner />
 
         {membershipOpen && (
           <section id="penny-fans-membership" className="penny-fans__membership" role="status">
