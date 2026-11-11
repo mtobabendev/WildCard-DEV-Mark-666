@@ -126,6 +126,7 @@ export default function AshleyTimeCapsule() {
                   <video
                     src={memory.src}
                     controls
+                    loop
                     playsInline
                     preload="metadata"
                     aria-label={memory.title}
