@@ -5088,23 +5088,32 @@ body {
   .jenn-video-shell { height: 12rem; }
 }
 
-/* Ashley tribute: same contact-stage family, without shrinking Matt or Kandy. */
+/* Ashley tribute: two portrait videos side by side, without resizing other cards. */
 .identity-pair .identity-card--ashley {
   order: 3;
   grid-column: 1 / -1;
   width: min(100%, 22rem);
   display: grid;
-  grid-template-columns: 5.25rem minmax(0, 1fr);
-  gap: .8rem;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .65rem;
   padding: .75rem;
   border-color: rgba(255, 157, 192, .48);
   background: linear-gradient(145deg, rgba(36, 14, 38, .84), rgba(10, 8, 29, .86));
+  text-align: center;
 }
 .card-stage.is-active .identity-card--ashley {
   animation: panel-up 850ms cubic-bezier(.16, .84, .26, 1) 360ms forwards;
 }
+.ashley-video-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  width: 100%;
+  max-width: 21rem;
+  margin-inline: auto;
+}
 .ashley-video-shell {
+  min-width: 0;
   width: 100%;
   aspect-ratio: 2 / 3;
   overflow: hidden;
@@ -5133,7 +5142,7 @@ body {
   font-size: .78rem;
   line-height: 1.4;
 }
-/* On sufficiently wide desktops, Ashley sits to the right of Kandy and Matt. */
+/* Wide desktop: Ashley remains the rightmost of the three contact cards. */
 @media (min-width: 1500px) and (min-height: 821px) {
   .identity-pair {
     grid-template-columns:
@@ -5144,19 +5153,15 @@ body {
   .identity-pair .identity-card--ashley {
     grid-column: auto;
     width: 100%;
-    grid-template-columns: 1fr;
     align-content: start;
     gap: .55rem;
-    text-align: center;
   }
-  .ashley-video-shell { max-width: 10rem; margin-inline: auto; }
 }
 @media (max-width: 1099px), (max-height: 820px) {
   .identity-pair .identity-card--ashley {
     order: initial;
     grid-column: 1 / -1;
     width: 100%;
-    grid-template-columns: clamp(7rem, 21vw, 10rem) minmax(0, 1fr);
   }
   .card-stage.is-active .identity-card--ashley {
     animation: none;
@@ -5166,7 +5171,9 @@ body {
 }
 @media (max-width: 520px) {
   .identity-pair .identity-card--ashley {
-    grid-template-columns: 7rem minmax(0, 1fr);
     gap: .65rem;
+  }
+  .ashley-video-pair {
+    gap: .45rem;
   }
 }
