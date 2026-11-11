@@ -273,7 +273,57 @@ export default function PennyAfterHours() {
         </nav>
 
         {tab === 'posts' ? (
-          <section className="penny-fans__feed" aria-label="Sample creator posts">
+          <section className="penny-fans__feed" aria-label="Penny's creator posts">
+            <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
+              <header className="penny-fans__featured-header">
+                <img
+                  className="penny-fans__featured-avatar"
+                  src="/static/Penny.gif"
+                  alt=""
+                  width="52"
+                  height="52"
+                  loading="lazy"
+                />
+                <div className="penny-fans__featured-author">
+                  <strong>Penny Bella Morningstar <span aria-label="WildCard creator">♠</span></strong>
+                  <small>@PennyAfterHours · Creator video</small>
+                </div>
+                <span className="penny-fans__featured-label">18+ · PREVIEW</span>
+              </header>
+              <div className="penny-fans__featured-copy">
+                <p className="penny-fans__eyebrow">FIRST TRANSMISSION / AFTER HOURS</p>
+                <h2 id="penny-velvet-post-title">Patch Notes: Velvet Mode v1.0 ♠</h2>
+                <p>
+                  Some features deserve a proper release.
+                  Others deserve the lights turned down first. 💋
+                </p>
+                <div className="penny-fans__patch-notes">
+                  <span>✦ Velvet mode: <strong>enabled</strong></span>
+                  <span>✦ Curiosity filter: <strong>disabled</strong></span>
+                  <span>✦ Camera shyness: <strong>not found</strong></span>
+                </div>
+                <p>
+                  Press play. The code is clean.
+                  I make no promises about your concentration. 🔥
+                </p>
+              </div>
+              <div className="penny-fans__featured-media">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/static/PennyAfterHoursPatchNotes.webp"
+                  aria-label="Penny After Hours Velvet Mode video preview"
+                >
+                  <source src="/static/PennyAfterHoursPatchNotes.webm" type="video/webm" />
+                  Your browser does not support WebM playback.
+                </video>
+              </div>
+              <footer className="penny-fans__featured-footer">
+                <span>♠ WILDCARD DEV ORIGINAL</span>
+                <span>VIDEO · 00:24 · PLAY ON DEMAND</span>
+              </footer>
+            </article>
             {POSTS.map((post) => (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
                 <div className="penny-fans__post-art" aria-hidden="true">
