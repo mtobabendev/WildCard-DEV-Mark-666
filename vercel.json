@@ -2,6 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/ashley/what-if",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ashley/what-if/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/bunker",
       "destination": "/index.html"
     },
@@ -29,6 +37,24 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/ashley/what-if",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/ashley/what-if/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
         }
       ]
     }

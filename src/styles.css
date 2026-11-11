@@ -5177,3 +5177,49 @@ body {
     gap: .45rem;
   }
 }
+
+/* Ashley's right-hand video opens the What If Time Capsule. */
+.ashley-video-portal {
+  position: relative;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  isolation: isolate;
+  cursor: pointer;
+}
+.ashley-video-portal .ashley-video {
+  pointer-events: none;
+}
+.ashley-video-portal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 50%, rgba(9, 5, 18, .86) 100%);
+}
+.ashley-video-portal-label {
+  position: absolute;
+  z-index: 2;
+  left: .25rem;
+  right: .25rem;
+  bottom: .55rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .35rem;
+  color: #fff;
+  font-size: clamp(.6rem, 1.2vw, .78rem);
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-shadow: 0 1px 8px #090512;
+  pointer-events: none;
+}
+.ashley-video-portal:hover,
+.ashley-video-portal:focus-visible {
+  border-color: #ffdde9;
+  box-shadow: 0 0 24px rgba(255, 166, 204, .4);
+  outline: 2px solid #ffe0eb;
+  outline-offset: 3px;
+}
+.ashley-video-lock { font-size: 1rem; }

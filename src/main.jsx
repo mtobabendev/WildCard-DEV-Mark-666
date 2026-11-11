@@ -165,7 +165,19 @@ function SiteEntry() {
 const root = createRoot(document.getElementById('root'));
 const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
 
-if (normalizedPath === '/bunker') {
+if (normalizedPath === '/ashley/what-if') {
+  import('./AshleyTimeCapsule.jsx')
+    .then(({ default: AshleyTimeCapsule }) => {
+      root.render(
+        <StrictMode>
+          <AshleyTimeCapsule />
+        </StrictMode>,
+      );
+    })
+    .catch(() => {
+      window.location.replace('/');
+    });
+} else if (normalizedPath === '/bunker') {
   import('./Bunker.jsx')
     .then(({ default: Bunker }) => {
       root.render(
