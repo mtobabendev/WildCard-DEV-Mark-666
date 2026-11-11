@@ -18,6 +18,11 @@ const MEMORIES = [
     src: '/static/NaughtyAshley.webm',
   },
   {
+    title: 'Ashley, Penny & Kandy | Club Night',
+    description: 'A night out together.',
+    src: '/static/AshleyPennyKandyClub.webm',
+  },
+  {
     title: 'The Introduction',
     description: 'A familiar beginning.',
     src: '/static/AshleyIntroLoopmp4.webm',
