@@ -29,9 +29,52 @@ const POSTS = [
   },
 ];
 
+function PennyCombinationDial({ digit, position, onChange }) {
+  const change = (step) => onChange((digit + step + 10) % 10);
+
+  return (
+    <div className="penny-fans__dial">
+      <button
+        type="button"
+        aria-label={`Increase combination digit ${position}`}
+        onClick={() => change(1)}
+      >
+        ▲
+      </button>
+      <output aria-label={`Combination digit ${position}`}>{digit}</output>
+      <button
+        type="button"
+        aria-label={`Decrease combination digit ${position}`}
+        onClick={() => change(-1)}
+      >
+        ▼
+      </button>
+    </div>
+  );
+}
+
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
   const [membershipOpen, setMembershipOpen] = useState(false);
+  const [digits, setDigits] = useState([0, 0, 0]);
+  const [unlocked, setUnlocked] = useState(false);
+  const [message, setMessage] = useState('Turn the three dials to enter Penny After Hours.');
+
+  const changeDigit = (position, value) => {
+    setDigits((current) => current.map((digit, index) => (
+      index === position ? value : digit
+    )));
+    setMessage('Turn the three dials to enter Penny After Hours.');
+  };
+
+  const unlock = (event) => {
+    event.preventDefault();
+    if (digits.join('') === '216') {
+      setUnlocked(true);
+      return;
+    }
+    setMessage('That combination did not open Penny After Hours. Try again.');
+  };
 
   useEffect(() => {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
@@ -48,6 +91,35 @@ export default function PennyAfterHours() {
         <a className="penny-fans__back" href="/">← Back to Penny</a>
       </header>
 
+      {!unlocked ? (
+        <section className="penny-fans__lock" aria-labelledby="penny-fans-lock-title">
+          <p className="penny-fans__eyebrow">A VELVET DOOR / THREE DIGITS</p>
+          <h1 id="penny-fans-lock-title">Penny After Hours ♠</h1>
+          <p className="penny-fans__lock-lead">
+            A private entrance to Penny's WildCard DEV fan-page concept.
+            Turn the combination to step inside.
+          </p>
+          <form onSubmit={unlock}>
+            <fieldset className="penny-fans__dials">
+              <legend>Three-digit combination</legend>
+              {digits.map((digit, position) => (
+                <PennyCombinationDial
+                  key={position}
+                  digit={digit}
+                  position={position + 1}
+                  onChange={(value) => changeDigit(position, value)}
+                />
+              ))}
+            </fieldset>
+            <button className="penny-fans__unlock" type="submit">
+              Unlock Penny After Hours
+            </button>
+          </form>
+          <p className="penny-fans__lock-message" role="status" aria-live="polite">
+            {message}
+          </p>
+        </section>
+      ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
           <img src="/static/penny-throne-room.webp" alt="Penny's cinematic violet throne room artwork" />
@@ -141,6 +213,7 @@ export default function PennyAfterHours() {
           <a href="/">Return to WildCard DEV</a>
         </footer>
       </div>
+      )}
     </main>
   );
 }

@@ -197,3 +197,95 @@ body { margin: 0; background: #0a0614; }
 @media (prefers-reduced-motion: reduce) {
   .penny-fans *, .penny-fans *::before, .penny-fans *::after { transition: none !important; animation: none !important; }
 }
+
+
+/* Fictional three-dial gate, matching the Time Capsule interaction. */
+.penny-fans__lock {
+  width: min(100%, 38rem);
+  margin: clamp(3rem, 10vh, 6rem) auto;
+  padding: clamp(1.3rem, 5vw, 2.8rem);
+  border: 1px solid rgba(255, 176, 222, .5);
+  border-radius: 1.4rem;
+  background: rgba(22, 11, 36, .92);
+  box-shadow: 0 20px 65px rgba(0, 0, 0, .4), 0 0 42px rgba(221, 79, 171, .17);
+  text-align: center;
+}
+.penny-fans__lock h1 {
+  margin: .35rem 0 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+.penny-fans__lock-lead {
+  max-width: 34rem;
+  margin: 1rem auto 1.5rem;
+  color: var(--pf-muted);
+  line-height: 1.6;
+}
+.penny-fans__dials {
+  display: flex;
+  justify-content: center;
+  gap: clamp(.5rem, 3vw, 1rem);
+  margin: 0 auto 1.3rem;
+  padding: 0;
+  border: 0;
+}
+.penny-fans__dials legend {
+  width: 100%;
+  margin-bottom: .9rem;
+  color: #f1cce5;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+.penny-fans__dial {
+  display: grid;
+  justify-items: center;
+  gap: .4rem;
+  width: clamp(4rem, 18vw, 5.5rem);
+  padding: .55rem .4rem;
+  border: 1px solid rgba(255, 174, 223, .4);
+  border-radius: .9rem;
+  background: rgba(10, 6, 25, .85);
+}
+.penny-fans__dial button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: .6rem;
+  background: rgba(255, 171, 218, .1);
+  color: #ffc2e8;
+}
+.penny-fans__dial button:hover,
+.penny-fans__dial button:focus-visible {
+  background: rgba(255, 171, 218, .24);
+  outline: 2px solid #ffe0f0;
+}
+.penny-fans__dial output {
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.penny-fans__unlock {
+  min-height: 48px;
+  width: min(100%, 21rem);
+  padding: .8rem 1.1rem;
+  border: 1px solid #ffdaee;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c84998, #783790);
+  color: #fff;
+  font-weight: 850;
+}
+.penny-fans__unlock:hover,
+.penny-fans__unlock:focus-visible {
+  filter: brightness(1.12);
+  outline: 2px solid #ffe0f0;
+  outline-offset: 3px;
+}
+.penny-fans__lock-message {
+  min-height: 1.5rem;
+  margin: 1rem auto 0;
+  color: #eac6df;
+  font-size: .84rem;
+}
