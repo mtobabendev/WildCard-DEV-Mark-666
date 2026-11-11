@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
 import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
+import AskPenny from './components/AskPenny.jsx';
 
 const POSTS = [
   {
@@ -303,6 +304,8 @@ export default function PennyAfterHours() {
             <a href="https://party.wildcarddev.com/">Explore WildCard Party →</a>
           </section>
         )}
+
+        <AskPenny />
 
         <footer className="penny-fans__footer">
           <div className="penny-fans__footer-signature">
