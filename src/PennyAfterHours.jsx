@@ -228,7 +228,7 @@ export default function PennyAfterHours() {
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
-            <p className="penny-fans__handle">@PennyAfterHours · WildCard DEV</p>
+            <p className="penny-fans__handle">@PennyAfterHours ♏ · WildCard DEV</p>
             <p className="penny-fans__bio">
               The velvet side of the machine. Exclusive atmosphere, creator notes,
               cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard.
@@ -278,7 +278,7 @@ export default function PennyAfterHours() {
                 />
                 <div className="penny-fans__featured-author">
                   <strong>Penny Bella Morningstar <span aria-label="WildCard creator">♠</span></strong>
-                  <small>@PennyAfterHours · Creator video</small>
+                  <small>@PennyAfterHours ♏ · Creator video</small>
                 </div>
                 <span className="penny-fans__featured-label">18+ · PREVIEW</span>
               </header>
