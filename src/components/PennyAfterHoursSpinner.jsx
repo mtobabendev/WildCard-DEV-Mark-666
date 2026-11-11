@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
 import './PennyAfterHoursSpinner.css';
 
-const EMPTY_PANELS = Array.from({ length: 8 }, (_, index) => index);
+const PANEL_IMAGES = Array.from({ length: 8 }, (_, index) => ({
+  number: index + 1,
+  src: `/static/${index + 1}.jpg`,
+}));
 
 export default function PennyAfterHoursSpinner() {
   const pointer = useRef(null);
@@ -40,16 +43,16 @@ export default function PennyAfterHoursSpinner() {
   };
 
   return (
-    <section className="penny-after-orbit" aria-label="Penny's empty 3D spinner">
+    <section className="penny-after-orbit" aria-label="Penny's eight-image 3D spinner">
       <div className="penny-after-orbit__heading">
-        <span className="penny-after-orbit__eyebrow">PENNY / THE EMPTY ORBIT</span>
-        <span className="penny-after-orbit__subline">Eight blank canvases for future surprises.</span>
+        <span className="penny-after-orbit__eyebrow">PENNY / THE AFTER HOURS ORBIT</span>
+        <span className="penny-after-orbit__subline">Eight portraits in motion.</span>
       </div>
       <div
         className="penny-after-orbit__viewport"
         tabIndex={0}
         role="group"
-        aria-label="Eight empty 3D panels. Drag horizontally or use the left and right arrow keys to rotate."
+        aria-label="Eight photograph panels. Drag horizontally or use the left and right arrow keys to rotate."
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerEnd}
@@ -63,14 +66,21 @@ export default function PennyAfterHoursSpinner() {
         >
           <div
             className={'penny-after-orbit__ring' + (paused || dragging ? ' is-paused' : '')}
-            aria-hidden="true"
           >
-            {EMPTY_PANELS.map((index) => (
+            {PANEL_IMAGES.map(({ number, src }, index) => (
               <div
                 className="penny-after-orbit__panel"
-                key={index}
+                key={number}
                 style={{ '--orbit-slot': index }}
-              />
+              >
+                <img
+                  src={src}
+                  alt={`Penny After Hours gallery photo ${number}`}
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
             ))}
           </div>
         </div>

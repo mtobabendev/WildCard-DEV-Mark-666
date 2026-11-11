@@ -1,6 +1,6 @@
 /* Penny After Hours' self-contained eight-panel 3D carousel. */
 .penny-after-orbit {
-  --penny-after-radius: clamp(112px, 22vw, 200px);
+  --penny-after-radius: clamp(155px, 26vw, 230px);
   width: 100%;
   margin: 1.5rem auto 0;
   overflow: hidden;
@@ -30,7 +30,7 @@
 .penny-after-orbit__viewport {
   position: relative;
   width: 100%;
-  height: clamp(275px, 45vw, 400px);
+  height: clamp(300px, 45vw, 410px);
   perspective: 1000px;
   overflow: hidden;
   touch-action: pan-y;
@@ -63,16 +63,25 @@
 .penny-after-orbit__ring.is-paused { animation-play-state: paused; }
 .penny-after-orbit__panel {
   position: absolute;
-  left: -54px;
-  top: -77px;
-  width: 108px;
-  height: 154px;
+  left: -78px;
+  top: -55px;
+  width: 156px;
+  height: 110px;
+  overflow: hidden;
   border: 1px solid rgba(255, 190, 235, .8);
   border-radius: 12px;
   background: linear-gradient(145deg, rgba(233, 102, 197, .22), rgba(28, 9, 43, .62));
   box-shadow: inset 0 0 24px rgba(255, 177, 241, .1), 0 0 15px rgba(241, 110, 223, .23);
   backface-visibility: hidden;
   transform: rotateY(calc(var(--orbit-slot) * 45deg)) translateZ(var(--penny-after-radius));
+}
+.penny-after-orbit__panel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #14091f;
+  pointer-events: none;
 }
 .penny-after-orbit__panel::after {
   content: '';
@@ -114,13 +123,13 @@
   to { transform: rotateY(360deg); }
 }
 @media (max-width: 520px) {
-  .penny-after-orbit { --penny-after-radius: 122px; }
+  .penny-after-orbit { --penny-after-radius: 150px; }
   .penny-after-orbit__viewport { height: 300px; }
   .penny-after-orbit__panel {
-    left: -42px;
-    top: -60px;
-    width: 84px;
-    height: 120px;
+    left: -58px;
+    top: -41px;
+    width: 116px;
+    height: 82px;
   }
   .penny-after-orbit__toolbar span { max-width: 65%; }
 }
