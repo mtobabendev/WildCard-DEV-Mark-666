@@ -58,44 +58,73 @@ body { margin: 0; background: #0a0614; }
   overflow: hidden;
   border: 1px solid rgba(247, 163, 232, .35);
   border-radius: 1.1rem 1.1rem .5rem .5rem;
-  background: linear-gradient(135deg, #401451, #1a0c33);
+  background:
+    linear-gradient(90deg, rgba(24, 7, 43, .72), rgba(65, 17, 67, .18) 50%, rgba(24, 7, 43, .72)),
+    url('/static/penny-throne-room.webp') center/cover;
 }
-.penny-fans__cover img {
-  display: block; width: 100%; height: 100%;
-  object-fit: cover; object-position: center 43%;
+.penny-fans__cover-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(8, 3, 17, .36);
 }
 .penny-fans__cover::after {
   content: ''; position: absolute; inset: 35% 0 0;
   background: linear-gradient(transparent, rgba(9, 5, 18, .82));
 }
 .penny-fans__cover-label {
-  position: absolute; z-index: 1; left: 1rem; bottom: 1rem;
+  position: absolute; z-index: 2; left: 1rem; top: 1rem;
   font-size: .69rem; font-weight: 900; letter-spacing: .12em;
   color: #ffdeed;
   text-shadow: 0 2px 8px #12071b;
+}
+.penny-fans__cover-control {
+  position: absolute;
+  z-index: 3;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 44px;
+  padding: .6rem .9rem;
+  border: 1px solid rgba(255, 214, 240, .76);
+  border-radius: 999px;
+  background: rgba(20, 8, 34, .85);
+  color: #fff4fa;
+  font-size: .79rem;
+  font-weight: 800;
 }
 .penny-fans__profile {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem 1.3rem;
   position: relative;
-  padding: 1.5rem clamp(1rem, 4vw, 2rem) clamp(1.4rem, 4vw, 2rem);
+  padding: 5.2rem clamp(1rem, 4vw, 2rem) clamp(1.4rem, 4vw, 2rem);
   background: rgba(20, 12, 34, .95);
   border: 1px solid rgba(247, 163, 232, .26);
   border-top: 0;
   border-radius: 0 0 1.1rem 1.1rem;
 }
-.penny-fans__avatar {
+.penny-fans__avatar-slot {
   position: absolute;
-  top: -3.2rem;
-  right: clamp(1rem, 4vw, 2rem);
-  width: 6.3rem;
-  height: 6.3rem;
+  top: -3.9rem;
+  left: clamp(1rem, 4vw, 2rem);
+  display: grid;
+  place-items: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  overflow: hidden;
   border: 4px solid #200e2f;
   border-radius: 50%;
-  background: #16091e;
+  background: radial-gradient(circle at 35% 30%, #7b376f, #16091e);
+  box-shadow: 0 0 24px rgba(255, 126, 216, .36);
+}
+.penny-fans__avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 24px rgba(255, 126, 216, .32);
 }
 .penny-fans__intro { min-width: 0; max-width: 740px; }
 .penny-fans__eyebrow {
@@ -180,7 +209,7 @@ body { margin: 0; background: #0a0614; }
 .penny-fans__footer strong { letter-spacing: .12em; }
 .penny-fans__footer span { max-width: 65ch; }
 @media (max-width: 850px) {
-  .penny-fans__profile { grid-template-columns: 1fr; padding-top: 3.7rem; }
+  .penny-fans__profile { grid-template-columns: 1fr; padding-top: 4.5rem; }
   .penny-fans__actions { flex-direction: row; flex-wrap: wrap; }
   .penny-fans__actions > * { flex: 1 1 200px; }
   .penny-fans__feed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -188,7 +217,7 @@ body { margin: 0; background: #0a0614; }
 @media (max-width: 540px) {
   .penny-fans__topbar { gap: .4rem; }
   .penny-fans__edition { order: 3; width: 100%; }
-  .penny-fans__cover { height: 230px; }
+  .penny-fans__cover { height: 280px; }
   .penny-fans__cover-label { font-size: .62rem; }
   .penny-fans__feed { grid-template-columns: 1fr; }
   .penny-fans__post-art { height: 170px; }

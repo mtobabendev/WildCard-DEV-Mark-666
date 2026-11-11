@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
 import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
 
@@ -56,6 +56,11 @@ function PennyCombinationDial({ digit, position, onChange }) {
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
   const [membershipOpen, setMembershipOpen] = useState(false);
+  const coverVideoRef = useRef(null);
+  const [coverPaused, setCoverPaused] = useState(() => (
+    typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ));
   const [digits, setDigits] = useState([0, 0, 0]);
   const [unlocked, setUnlocked] = useState(false);
   const [message, setMessage] = useState('Turn the three dials to enter Penny After Hours.');
@@ -79,6 +84,29 @@ export default function PennyAfterHours() {
   useEffect(() => {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
   }, []);
+
+  useEffect(() => {
+    if (!unlocked) return undefined;
+    const video = coverVideoRef.current;
+    if (!video) return undefined;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncCover = () => {
+      if (coverPaused || document.hidden || reducedMotion.matches) {
+        video.pause();
+        return;
+      }
+      const attempt = video.play();
+      attempt?.catch?.(() => setCoverPaused(true));
+    };
+    syncCover();
+    document.addEventListener('visibilitychange', syncCover);
+    reducedMotion.addEventListener?.('change', syncCover);
+    return () => {
+      document.removeEventListener('visibilitychange', syncCover);
+      reducedMotion.removeEventListener?.('change', syncCover);
+      video.pause();
+    };
+  }, [unlocked, coverPaused]);
 
   return (
     <main className="penny-fans">
@@ -122,12 +150,39 @@ export default function PennyAfterHours() {
       ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
-          <img src="/static/penny-throne-room.webp" alt="Penny's cinematic violet throne room artwork" />
+          <video
+            ref={coverVideoRef}
+            className="penny-fans__cover-video"
+            src="/static/PennyOnlyFans.webm"
+            poster="/static/penny-throne-room.webp"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Penny After Hours profile cover video"
+          />
           <span className="penny-fans__cover-label">WILDCARD DEV ORIGINAL / FAN-PAGE CONCEPT</span>
+          <button
+            className="penny-fans__cover-control"
+            type="button"
+            onClick={() => setCoverPaused((value) => !value)}
+            aria-label={coverPaused ? 'Play cover video' : 'Pause cover video'}
+            aria-pressed={coverPaused}
+          >
+            {coverPaused ? 'Play cover' : 'Pause cover'}
+          </button>
         </div>
 
         <section className="penny-fans__profile" aria-labelledby="penny-fans-title">
-          <img className="penny-fans__avatar" src="/static/Penny.gif" alt="Penny's WildCard DEV avatar" />
+          <div className="penny-fans__avatar-slot">
+            <img
+              className="penny-fans__avatar"
+              src="/static/Penny.gif"
+              alt="Penny's profile picture"
+              width="128"
+              height="128"
+            />
+          </div>
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
