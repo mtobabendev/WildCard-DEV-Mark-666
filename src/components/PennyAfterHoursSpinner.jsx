@@ -62,7 +62,7 @@ export default function PennyAfterHoursSpinner() {
         <div className="penny-after-orbit__glow" aria-hidden="true" />
         <div
           className="penny-after-orbit__tilt"
-          style={{ transform: 'rotateX(-11deg) rotateY(' + rotation + 'deg)' }}
+          style={{ transform: 'rotateX(-8deg) rotateY(' + rotation + 'deg)' }}
         >
           <div
             className={'penny-after-orbit__ring' + (paused || dragging ? ' is-paused' : '')}
@@ -73,15 +73,27 @@ export default function PennyAfterHoursSpinner() {
                 key={number}
                 style={{ '--orbit-slot': index }}
               >
-                <img
-                  src={src}
-                  alt={`Penny After Hours gallery photo ${number}`}
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                />
+                <div className="penny-after-orbit__face penny-after-orbit__face--front">
+                  <img
+                    src={src}
+                    alt={`Penny After Hours gallery photo ${number}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                </div>
+                <div className="penny-after-orbit__face penny-after-orbit__face--back" aria-hidden="true">
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                </div>
               </div>
             ))}
+            <strong className="penny-after-orbit__center" aria-hidden="true">Penny ♠ After Hours</strong>
           </div>
         </div>
       </div>

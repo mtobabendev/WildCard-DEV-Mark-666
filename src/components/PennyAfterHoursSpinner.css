@@ -1,12 +1,15 @@
-/* Penny After Hours' self-contained eight-panel 3D carousel. */
+/* Penny After Hours carousel: Mark III-style eight-sided, two-faced 3D orbit. */
 .penny-after-orbit {
-  --penny-after-radius: clamp(155px, 26vw, 230px);
+  --penny-after-radius: clamp(205px, 27vw, 350px);
+  --penny-after-card-width: clamp(185px, 20vw, 245px);
+  --penny-after-card-height: clamp(235px, 28vw, 300px);
   width: 100%;
+  min-width: 0;
   margin: 1.5rem auto 0;
   overflow: hidden;
   border: 1px solid rgba(255, 158, 228, .42);
   border-radius: 1.15rem;
-  background: radial-gradient(ellipse at 50% 60%, #40164c, #140920 72%);
+  background: radial-gradient(ellipse at 50% 58%, #40164c, #140920 72%);
   box-shadow: 0 18px 52px rgba(0, 0, 0, .28);
 }
 .penny-after-orbit__heading {
@@ -30,9 +33,9 @@
 .penny-after-orbit__viewport {
   position: relative;
   width: 100%;
-  height: clamp(300px, 45vw, 410px);
-  perspective: 1000px;
+  height: clamp(350px, 47vw, 500px);
   overflow: hidden;
+  perspective: 1100px;
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
@@ -44,14 +47,19 @@
 }
 .penny-after-orbit__glow {
   position: absolute;
-  inset: 30% 12% 8%;
+  top: 67%;
+  left: 50%;
+  width: min(80%, 700px);
+  height: 180px;
+  border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 70%, rgba(255, 131, 225, .25), transparent 68%);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(255, 131, 225, .24), transparent 70%);
 }
 .penny-after-orbit__tilt,
 .penny-after-orbit__ring {
   position: absolute;
-  top: 50%;
+  top: 46%;
   left: 50%;
   width: 0;
   height: 0;
@@ -63,32 +71,56 @@
 .penny-after-orbit__ring.is-paused { animation-play-state: paused; }
 .penny-after-orbit__panel {
   position: absolute;
-  left: -78px;
-  top: -55px;
-  width: 156px;
-  height: 110px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 190, 235, .8);
-  border-radius: 12px;
-  background: linear-gradient(145deg, rgba(233, 102, 197, .22), rgba(28, 9, 43, .62));
-  box-shadow: inset 0 0 24px rgba(255, 177, 241, .1), 0 0 15px rgba(241, 110, 223, .23);
-  backface-visibility: hidden;
+  left: calc(var(--penny-after-card-width) / -2);
+  top: calc(var(--penny-after-card-height) / -2);
+  width: var(--penny-after-card-width);
+  height: var(--penny-after-card-height);
+  transform-style: preserve-3d;
   transform: rotateY(calc(var(--orbit-slot) * 45deg)) translateZ(var(--penny-after-radius));
 }
-.penny-after-orbit__panel img {
+.penny-after-orbit__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 190, 235, .85);
+  border-radius: 13px;
+  background: linear-gradient(145deg, #452148, #1b0b2c);
+  box-shadow: inset 0 0 24px rgba(255, 177, 241, .11), 0 0 18px rgba(241, 110, 223, .27);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.penny-after-orbit__face--back {
+  transform: rotateY(180deg);
+  border-color: rgba(202, 152, 255, .77);
+  box-shadow: 0 0 14px rgba(178, 125, 250, .20);
+}
+.penny-after-orbit__face img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   background: #14091f;
   pointer-events: none;
 }
-.penny-after-orbit__panel::after {
+.penny-after-orbit__face::after {
   content: '';
   position: absolute;
-  inset: 7px;
-  border: 1px solid rgba(255, 211, 239, .19);
+  inset: 8px;
+  border: 1px solid rgba(255, 211, 239, .22);
   border-radius: 7px;
+  pointer-events: none;
+}
+.penny-after-orbit__center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) rotateX(27deg);
+  color: #ffbcf3;
+  font: 850 clamp(.8rem, 2.5vw, 1.3rem)/1.2 Georgia, serif;
+  letter-spacing: .075em;
+  text-shadow: 0 0 13px rgba(248, 150, 249, .76);
   pointer-events: none;
 }
 .penny-after-orbit__toolbar {
@@ -123,13 +155,14 @@
   to { transform: rotateY(360deg); }
 }
 @media (max-width: 520px) {
-  .penny-after-orbit { --penny-after-radius: 150px; }
-  .penny-after-orbit__viewport { height: 300px; }
-  .penny-after-orbit__panel {
-    left: -58px;
-    top: -41px;
-    width: 116px;
-    height: 82px;
+  .penny-after-orbit {
+    --penny-after-radius: 190px;
+    --penny-after-card-width: 154px;
+    --penny-after-card-height: 220px;
+  }
+  .penny-after-orbit__viewport {
+    height: 370px;
+    perspective: 950px;
   }
   .penny-after-orbit__toolbar span { max-width: 65%; }
 }
