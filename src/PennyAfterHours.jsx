@@ -57,6 +57,7 @@ export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
   const [membershipOpen, setMembershipOpen] = useState(false);
   const coverVideoRef = useRef(null);
+  const profileVideoRef = useRef(null);
   const [coverPaused, setCoverPaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -107,6 +108,30 @@ export default function PennyAfterHours() {
       video.pause();
     };
   }, [unlocked, coverPaused]);
+
+  useEffect(() => {
+    if (!unlocked) return undefined;
+    const video = profileVideoRef.current;
+    if (!video) return undefined;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncProfile = () => {
+      if (document.hidden || reducedMotion.matches) {
+        video.pause();
+        return;
+      }
+      video.play()?.catch?.(() => {});
+    };
+
+    syncProfile();
+    document.addEventListener('visibilitychange', syncProfile);
+    reducedMotion.addEventListener?.('change', syncProfile);
+    return () => {
+      document.removeEventListener('visibilitychange', syncProfile);
+      reducedMotion.removeEventListener?.('change', syncProfile);
+      video.pause();
+    };
+  }, [unlocked]);
 
   return (
     <main className="penny-fans">
@@ -175,10 +200,16 @@ export default function PennyAfterHours() {
 
         <section className="penny-fans__profile" aria-labelledby="penny-fans-title">
           <div className="penny-fans__avatar-slot">
-            <img
+            <video
+              ref={profileVideoRef}
               className="penny-fans__avatar"
-              src="/static/Penny.gif"
-              alt="Penny's profile picture"
+              src="/static/PennyOnlyFansProfile.webm"
+              poster="/static/Penny.gif"
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Penny's animated profile picture"
               width="128"
               height="128"
             />
@@ -263,7 +294,16 @@ export default function PennyAfterHours() {
         )}
 
         <footer className="penny-fans__footer">
-          <strong>WILDCARD DEV / LAB CONCEPT</strong>
+          <div className="penny-fans__footer-signature">
+            <img
+              src="/static/Penny.gif"
+              alt="Penny's original animated avatar"
+              width="40"
+              height="40"
+              loading="lazy"
+            />
+            <strong>WILDCARD DEV / LAB CONCEPT</strong>
+          </div>
           <span>Fictional creator profile. This is not OnlyFans and is not affiliated with OnlyFans. No purchases or membership access are offered.</span>
           <a href="/">Return to WildCard DEV</a>
         </footer>

@@ -125,6 +125,8 @@ body { margin: 0; background: #0a0614; }
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center;
+  background: #16091e;
 }
 .penny-fans__intro { min-width: 0; max-width: 740px; }
 .penny-fans__eyebrow {
@@ -207,6 +209,19 @@ body { margin: 0; background: #0a0614; }
   color: #d3afd0; font-size: .76rem; line-height: 1.5;
 }
 .penny-fans__footer strong { letter-spacing: .12em; }
+.penny-fans__footer-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+}
+.penny-fans__footer-signature img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 169, 228, .43);
+  border-radius: 50%;
+  object-fit: cover;
+}
 .penny-fans__footer span { max-width: 65ch; }
 @media (max-width: 850px) {
   .penny-fans__profile { grid-template-columns: 1fr; padding-top: 4.5rem; }
