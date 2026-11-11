@@ -232,8 +232,13 @@ export default function AskPenny() {
         aria-expanded={open}
         onClick={() => open ? closePanel() : setOpen(true)}
       >
-        <span className="after-ask__dock-sigil" aria-hidden="true">♠</span>
-        <span><strong>ASK PENNY</strong><small>{open ? 'CLOSE CHAT' : 'CONCIERGE'}</small></span>
+        <span className="after-ask__dock-avatar" aria-hidden="true">
+          <img src="/static/Penny.gif" alt="" width="56" height="56" />
+        </span>
+        <span className="after-ask__dock-copy">
+          <strong>ASK PENNY</strong>
+          <small>{open ? 'CLOSE CHAT' : 'LIVE CONCIERGE'}</small>
+        </span>
         <span className="after-ask__dock-light" aria-hidden="true" />
       </button>
     </div>
