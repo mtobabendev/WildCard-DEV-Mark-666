@@ -180,7 +180,7 @@ export default function PennyAfterHours() {
           <video
             ref={coverVideoRef}
             className="penny-fans__cover-video"
-            src="/static/PennyOnlyFans.webm"
+            src="/static/PennyOnlyFansFinal.webm"
             poster="/static/penny-throne-room.webp"
             muted
             loop
