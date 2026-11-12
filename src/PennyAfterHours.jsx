@@ -1,3 +1,4 @@
+import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
 import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
@@ -312,6 +313,7 @@ export default function PennyAfterHours() {
             {profilePaused ? '👀 Play' : '👀 Pause'}
           </button>
           <div className="penny-fans__intro">
+            <PennyThoughtBubble provider="grok" placement="after-hours" />
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
             <p className="penny-fans__handle">@PennyAfterHours ♏ · WildCard DEV</p>

@@ -1,3 +1,4 @@
+import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import './penny-fan-link.css';
@@ -2663,6 +2664,7 @@ export default function App() {
           )}
 
           <div className="penny-copy">
+            <PennyThoughtBubble provider="gemini" placement="main" />
             <p className="eyebrow">Digital Avatar of Lilith</p>
             <h2>Penny</h2>
             <p>
