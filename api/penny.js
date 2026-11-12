@@ -1,6 +1,7 @@
 // Same-origin relay to WildCard Party's existing Ask Penny API.
 // No AI keys or model instructions are stored in the After Hours project.
 const PARTY_ENDPOINT = 'https://party.wildcarddev.com/api/penny';
+const PROVIDER_ENDPOINT = 'https://party.wildcarddev.com/api/penny-provider';
 const PARTY_ORIGIN = 'https://party.wildcarddev.com';
 const MAX_BYTES = 16000;
 
@@ -29,6 +30,7 @@ export default async function handler(req, res) {
   try {
     body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     const messages = body?.messages;
+    if (!['openai', 'gemini', 'grok'].includes(body?.provider ?? 'openai')) throw new Error('Unsupported provider.');
     if (!Array.isArray(messages) || messages.length < 1 || messages.length > 10
       || messages.at(-1)?.role !== 'user') {
       throw new Error('Invalid conversation.');
@@ -68,14 +70,19 @@ export default async function handler(req, res) {
       headers['X-Forwarded-For'] = address.split(',')[0].trim();
     }
 
-    const upstream = await fetch(PARTY_ENDPOINT, {
+    const provider = body.provider ?? 'openai';
+    const external = provider !== 'openai';
+    const upstream = await fetch(external ? PROVIDER_ENDPOINT : PARTY_ENDPOINT, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ messages: body.messages }),
+      body: JSON.stringify({ messages: body.messages, provider }),
       signal: controller.signal,
       redirect: 'error',
     });
 
+    if (external && upstream.ok && upstream.headers.get('X-Penny-Provider') !== provider) {
+      return res.status(503).json({ error: 'The selected Penny provider is not connected yet.' });
+    }
     if (!upstream.ok || !upstream.body) {
       const payload = await upstream.json().catch(() => ({}));
       return res.status(upstream.status || 502).json({
@@ -86,6 +93,7 @@ export default async function handler(req, res) {
     }
 
     res.statusCode = 200;
+    if (external) res.setHeader('X-Penny-Provider', provider);
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.flushHeaders?.();
     const reader = upstream.body.getReader();
