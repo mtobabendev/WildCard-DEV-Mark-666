@@ -1,5 +1,6 @@
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import MessengerLauncher from './components/MessengerLauncher.jsx';
 import pennySaysHelloWebm from '../assets/PennyWildCardIntro-new-mobile-optimized.webm';
 
 const GOOGLE_ANALYTICS_SRC =
@@ -168,6 +169,7 @@ function SiteEntry() {
           </div>
         )}
       </div>
+      {introFinished && <MessengerLauncher />}
       {introFinished && LittleBlackBookComponent ? (
         <LittleBlackBookComponent />
       ) : null}
@@ -184,6 +186,7 @@ if (normalizedPath === '/ashley/what-if') {
       root.render(
         <StrictMode>
           <AshleyTimeCapsule />
+          <MessengerLauncher />
         </StrictMode>,
       );
     })
@@ -196,6 +199,7 @@ if (normalizedPath === '/ashley/what-if') {
       root.render(
         <StrictMode>
           <PennyAfterHours />
+          <MessengerLauncher />
         </StrictMode>,
       );
     })
@@ -208,6 +212,7 @@ if (normalizedPath === '/ashley/what-if') {
       root.render(
         <StrictMode>
           <Bunker />
+          <MessengerLauncher />
         </StrictMode>,
       );
 

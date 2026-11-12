@@ -1,0 +1,24 @@
+.wildcard-messenger-launcher {
+  position: fixed;
+  z-index: 70;
+  top: 65%;
+  left: max(6px, env(safe-area-inset-left, 0px));
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(201,210,223,.75);
+  border-radius: 14px;
+  background: #100b20;
+  color: #ff9fe5;
+  box-shadow: 0 0 18px rgba(255,91,214,.22);
+  text-decoration: none;
+}
+.wildcard-messenger-launcher:hover,
+.wildcard-messenger-launcher:focus-visible {
+  color: #fff;
+  outline: 2px solid #c9d2df;
+  outline-offset: 3px;
+}
