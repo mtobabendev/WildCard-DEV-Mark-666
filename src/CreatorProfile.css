@@ -31,7 +31,7 @@
 .creator-profile__handle { margin: .5rem 0; font-weight: 700; }
 .creator-profile .creator-profile__eyebrow { color: var(--cp-accent); font-size: .69rem; letter-spacing: .12em; font-weight: 850; margin: 0; }
 .creator-profile__action { display: inline-flex; align-items: center; justify-content: space-between; gap: .6rem; min-height: 44px; padding: .65rem 1rem; border: 1px solid #d99bdb; border-radius: 999px; background: #e2b1e5; color: #261332 !important; text-decoration: none; font-weight: 800; font-size: .86rem; }
-.creator-profile__tabs { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); margin: 1.25rem 0 .85rem; border-bottom: 1px solid #805b93; }
+.creator-profile__tabs { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); margin: 1.25rem 0 .85rem; border-bottom: 1px solid #805b93; }
 .creator-profile__tabs button { min-height: 48px; padding: .5rem; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--cp-muted); font-weight: 700; }
 .creator-profile__tabs button[aria-current="page"] { color: var(--cp-ink); border-bottom-color: var(--cp-accent); }
 .creator-profile__content { display: grid; gap: .85rem; }
@@ -39,3 +39,7 @@
 .creator-profile__card h2 { font-size: 1.3rem; margin: .45rem 0; }
 .creator-profile__card p { margin: .5rem 0 1rem; }
 .creator-profile__footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1.5rem 0; color: var(--cp-muted); font-size: .75rem; }
+
+@media (max-width: 540px) {
+  .creator-profile__tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

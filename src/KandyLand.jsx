@@ -18,7 +18,7 @@ const KANDY = {
     { id: 'tarot', category: 'TAROT', title: 'The reading room', text: 'A space for tarot reflections and creative inspiration. New reading-room entries will appear here as they are approved.' },
   ],
 };
-const TABS = ['Posts', 'Music', 'Tarot', 'About'];
+const TABS = ['Posts', 'Photos', 'Videos', 'Music', 'Tarot', 'About'];
 
 function ExternalLink({ href, children }) {
   return <a className="creator-profile__action" href={href} target="_blank" rel="noopener noreferrer">{children} <span aria-hidden="true">↗</span></a>;
@@ -63,6 +63,16 @@ function CreatorProfile({ creator }) {
               {post.href && <ExternalLink href={post.href}>{post.label}</ExternalLink>}
             </article>
           ))}
+          {tab === 'Photos' && <article className="creator-profile__card">
+            <p className="creator-profile__eyebrow">♦ CREATIVE PHOTOGRAPHY</p>
+            <h2>Photo gallery</h2>
+            <p>Kandy's approved cover art, creative portraits, and behind-the-scenes photography will appear here.</p>
+          </article>}
+          {tab === 'Videos' && <article className="creator-profile__card">
+            <p className="creator-profile__eyebrow">♦ CREATIVE VIDEO</p>
+            <h2>Video gallery</h2>
+            <p>Kandy's approved music videos, tarot demonstrations, and creative project clips will appear here.</p>
+          </article>}
           {tab === 'Music' && creator.music.map(track => (
             <article className="creator-profile__card" key={track.href}>
               <p className="creator-profile__eyebrow">♫ KOPACETIC KANDLE</p>
