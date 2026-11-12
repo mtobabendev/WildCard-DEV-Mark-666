@@ -14,6 +14,7 @@ export default function JennArt() {
       <section>
         <p className="jenn-art__eyebrow">WILDCARD DEV · ART</p>
         <h1>Jenn’s Art</h1>
+        <p><a href="mailto:Jenn@WildCardDEV.com">Jenn@WildCardDEV.com</a></p>
         <p>HeroClix-inspired character art and moving-image exhibits.</p>
         <ShowcaseOrbit label="Jenn navigation" items={[{label:'Home',href:'/',icon:'♠'},{label:'Facebook',href:'https://www.facebook.com/jennifer.mcbride.946517',icon:'f'},{label:'Art',href:'#jenn-exhibits',icon:'✦'}]} />
         <div id="jenn-exhibits"><CreatorDisplayOrbit name="Jenn" symbol="✦" items={[

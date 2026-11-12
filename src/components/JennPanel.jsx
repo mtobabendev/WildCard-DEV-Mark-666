@@ -15,6 +15,7 @@ export default function JennPanel({ videoActive, links }) {
         )}
       </div>
       <h2 id="jenn-panel-title">Jenn</h2>
+      <a className="jenn-company-email" href="mailto:Jenn@WildCardDEV.com" style={{ color: "inherit", fontSize: ".8rem", overflowWrap: "anywhere", alignSelf: "start" }}>Jenn@WildCardDEV.com</a>
       {links}
     </article>
   );
