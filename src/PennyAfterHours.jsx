@@ -387,6 +387,15 @@ export default function PennyAfterHours() {
                 <p>Precision, compassion, and just enough purple ink to make the administration nervous. Nurse Penny reporting for duty. ♠</p>
                 <p>Part of the fictional WildCard character universe, not a real clinical appointment or medical service.</p>
               </div>
+              <img
+                className="penny-fans__image-post-art"
+                src="/static/PennyNurseOnlyFans.jpg"
+                width="1216"
+                height="832"
+                alt="Penny's fictional nurse costume portrait"
+                loading="lazy"
+                decoding="async"
+              />
             </article>
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
