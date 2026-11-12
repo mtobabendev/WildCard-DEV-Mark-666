@@ -21,7 +21,7 @@ import pennyCardVideo from '../assets/PennyShowsOff.webm';
 import pennyCardVideo2 from '../assets/WitchPennyAndKandy6.webm';
 import pennyCardVideo3 from '../assets/WitchPennyAndKandy1.webm';
 import pennyCardVideo4 from '../assets/WitchPennyAndKandy3.webm';
-import pennyContactAssistVideo from '../assets/PennyContactAssistVideo.webm';
+import { requestContactRoute } from './components/PennyContactRouter.jsx';
 import ownerPennyKandyVideo from '../assets/WitchPennyAndKandy2-silent.webm';
 import witchHalloweenHookUp from '../assets/WitchPennyKandyHookUp.webm';
 import witchHalloween20 from '../assets/WitchPennyKandy20.webm';
@@ -110,7 +110,6 @@ const WILDCARD_PARTY_URL = 'https://party.wildcarddev.com/';
 const WILDCARD_X_URL = 'https://x.com/Dev_WildCard';
 const SUNO_ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.suno.android';
 const SUNO_IOS_URL = 'https://apps.apple.com/us/app/suno-ai-songs-music-lyrics/id6480136315';
-const CONTACT_ASSIST_TIMEOUT_MS = 8000;
 
 function trackAnalyticsEvent(name, parameters = {}) {
   if (
@@ -356,91 +355,6 @@ function KandyVideo({ active }) {
     >
       <source src={kandyKandleWebm} type="video/webm" />
     </video>
-  );
-}
-
-function PennyContactAssist({
-  active,
-  message,
-  fallbackType,
-  videoRef,
-  onComplete,
-  onClose,
-}) {
-  return (
-    <aside
-      className={`penny-contact-assist${active ? ' is-active' : ''}`}
-      aria-hidden={!active}
-      inert={!active}
-    >
-      <button
-        className="penny-contact-assist-close"
-        type="button"
-        aria-label="Close Contact Assist"
-        onClick={onClose}
-      >
-        ×
-      </button>
-
-      <div className="penny-contact-assist-video-shell">
-        <video
-          ref={videoRef}
-          className="penny-contact-assist-video"
-          playsInline
-          preload="none"
-          aria-hidden="true"
-          onEnded={() => {
-            if (active) {
-              onComplete();
-            }
-          }}
-        />
-      </div>
-
-      <div className="penny-contact-assist-content">
-        <div
-          className="penny-contact-assist-bubble"
-          role="status"
-          aria-live="polite"
-        >
-          {active ? message : ''}
-        </div>
-
-        {active && fallbackType === 'penny-phone' && (
-          <div
-            className="penny-contact-assist-actions"
-            aria-label="Penny phone fallback actions"
-          >
-            <a
-              href="tel:+14029150789"
-              onClick={onClose}
-            >
-              CALL PENNY
-            </a>
-            <a
-              href="sms:+14029150789"
-              onClick={onClose}
-            >
-              TEXT PENNY
-            </a>
-          </div>
-        )}
-
-        {active && fallbackType === 'penny-email' && (
-          <div
-            className="penny-contact-assist-actions"
-            aria-label="Penny email fallback action"
-          >
-            <a
-              href="mailto:penny@wildcarddev.com"
-              onClick={onClose}
-            >
-              OPEN EMAIL
-            </a>
-          </div>
-        )}
-      </div>
-    </aside>
   );
 }
 
@@ -1509,8 +1423,6 @@ export default function App() {
   const isHome = siteMode === 'home';
   const [contactPanelClosed, setContactPanelClosed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
-  const [assistActive, setAssistActive] = useState(false);
-  const [assistMessage, setAssistMessage] = useState('');
   const [expandedGrimoireEntry, setExpandedGrimoireEntry] = useState(null);
 
   useEffect(() => {
@@ -1527,159 +1439,7 @@ export default function App() {
     setGateOpen(false);
   }, []);
 
-  const assistVideoRef = useRef(null);
-  const assistTimeoutRef = useRef(0);
-  const assistRunningRef = useRef(false);
-  const assistCompletionRef = useRef(false);
-  const pendingHrefRef = useRef('');
-  const assistFallbackRef = useRef('');
-
-  const completeContactAssist = useCallback(() => {
-    if (
-      !assistRunningRef.current
-      || assistCompletionRef.current
-    ) {
-      return;
-    }
-
-    assistCompletionRef.current = true;
-
-    if (assistTimeoutRef.current) {
-      window.clearTimeout(assistTimeoutRef.current);
-      assistTimeoutRef.current = 0;
-    }
-
-    const destination = pendingHrefRef.current;
-    const video = assistVideoRef.current;
-
-    if (video) {
-      video.pause();
-
-      try {
-        video.currentTime = 0;
-      } catch {
-        // Some browsers can reject seeking before metadata is ready.
-      }
-
-      video.removeAttribute('src');
-      video.load();
-    }
-
-    assistRunningRef.current = false;
-    pendingHrefRef.current = '';
-    assistFallbackRef.current = '';
-    setAssistActive(false);
-    setAssistMessage('');
-
-    if (destination) {
-      window.location.href = destination;
-    }
-  }, []);
-
-  const cancelContactAssist = useCallback(() => {
-    if (assistTimeoutRef.current) {
-      window.clearTimeout(assistTimeoutRef.current);
-      assistTimeoutRef.current = 0;
-    }
-
-    const video = assistVideoRef.current;
-
-    if (video) {
-      video.pause();
-
-      try {
-        video.currentTime = 0;
-      } catch {
-        // Some browsers can reject seeking before metadata is ready.
-      }
-
-      video.removeAttribute('src');
-      video.load();
-    }
-
-    assistRunningRef.current = false;
-    assistCompletionRef.current = false;
-    pendingHrefRef.current = '';
-    assistFallbackRef.current = '';
-    setAssistActive(false);
-    setAssistMessage('');
-  }, []);
-
-  const startContactAssist = useCallback((
-    href,
-    message,
-    fallbackType = '',
-  ) => {
-    if (assistRunningRef.current) {
-      return false;
-    }
-
-    const video = assistVideoRef.current;
-
-    if (!video) {
-      window.location.href = href;
-      return true;
-    }
-
-    assistRunningRef.current = true;
-    assistCompletionRef.current = false;
-    pendingHrefRef.current = href;
-    assistFallbackRef.current = fallbackType;
-
-    setAssistMessage(message);
-    setAssistActive(true);
-
-    if (assistTimeoutRef.current) {
-      window.clearTimeout(assistTimeoutRef.current);
-    }
-
-    assistTimeoutRef.current = window.setTimeout(
-      completeContactAssist,
-      CONTACT_ASSIST_TIMEOUT_MS,
-    );
-
-    video.pause();
-    video.src = pennyContactAssistVideo;
-    video.load();
-    video.muted = false;
-    video.volume = 1;
-
-    try {
-      video.currentTime = 0;
-    } catch {
-      // Seeking will be retried naturally when playback begins.
-    }
-
-    try {
-      const playAttempt = video.play();
-
-      if (playAttempt?.catch) {
-        playAttempt.catch(() => {
-          completeContactAssist();
-        });
-      }
-    } catch {
-      completeContactAssist();
-    }
-
-    return true;
-  }, [completeContactAssist]);
-
-  useEffect(() => (
-    () => {
-      if (assistTimeoutRef.current) {
-        window.clearTimeout(assistTimeoutRef.current);
-      }
-
-      const video = assistVideoRef.current;
-
-      if (video) {
-        video.pause();
-        video.removeAttribute('src');
-        video.load();
-      }
-    }
-  ), []);
+  const startContactAssist = requestContactRoute;
 
   const handleContactFormSubmit = useCallback((event) => {
     event.preventDefault();
@@ -2802,14 +2562,6 @@ export default function App() {
         </div>
       </section>
 
-      <PennyContactAssist
-        active={assistActive}
-        message={assistMessage}
-        fallbackType={assistFallbackRef.current}
-        videoRef={assistVideoRef}
-        onComplete={completeContactAssist}
-        onClose={cancelContactAssist}
-      />
 
       <CombinationGate
         open={gateOpen}
