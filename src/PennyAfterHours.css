@@ -642,3 +642,56 @@ body { margin: 0; background: #0a0614; }
   color: #eac6df;
   font-size: .84rem;
 }
+
+/* Generic mobile-first navigation. Reserved space prevents overlap with concierge. */
+.penny-fans__shell { padding-bottom: calc(148px + env(safe-area-inset-bottom, 0px)); }
+.penny-fans__bottom-nav {
+  position: fixed;
+  z-index: 79;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(100%, 680px);
+  padding: .35rem max(.35rem, env(safe-area-inset-right, 0px)) calc(.35rem + env(safe-area-inset-bottom, 0px)) max(.35rem, env(safe-area-inset-left, 0px));
+  border: 1px solid rgba(248, 153, 215, .35);
+  border-radius: 1rem 1rem 0 0;
+  background: #160b23;
+  box-shadow: 0 -6px 24px rgba(0,0,0,.4);
+}
+.penny-fans__bottom-nav button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: .24rem;
+  min-width: 0;
+  min-height: 56px;
+  padding: .2rem;
+  border: 0;
+  border-radius: .65rem;
+  background: transparent;
+  color: var(--pf-muted);
+  font-size: clamp(.62rem, 2vw, .8rem);
+}
+.penny-fans__bottom-nav button[aria-current="page"] { background: rgba(248,153,215,.12); color: #ffc1ed; }
+.penny-fans__bottom-nav svg { width: 23px; height: 23px; }
+.penny-fans__bottom-dialog {
+  width: min(420px, 92vw);
+  border: 1px solid #ad73aa;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: var(--pf-text);
+  background: #1d102c;
+}
+.penny-fans__bottom-dialog::backdrop { background: rgba(0,0,0,.8); }
+.penny-fans__bottom-dialog header { display: flex; align-items: center; justify-content: space-between; gap: .8rem; }
+.penny-fans__bottom-dialog h2 { margin: 0; font-size: 1.2rem; }
+.penny-fans__bottom-dialog p { color: var(--pf-muted); line-height: 1.6; }
+.penny-fans__bottom-dialog button { min-height: 44px; padding: .5rem .8rem; color: var(--pf-text); background: #472051; border: 1px solid #ad73aa; border-radius: .6rem; }
+/* More specificity than the original dock rules, including phone overrides. */
+.penny-fans .after-ask__dock { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+.penny-fans .after-ask__panel { bottom: calc(154px + env(safe-area-inset-bottom, 0px)); max-height: min(630px, calc(100dvh - 174px - env(safe-area-inset-bottom, 0px))); }
+@media (max-height: 480px) {
+  .penny-fans .after-ask__panel { top: 6px; bottom: calc(154px + env(safe-area-inset-bottom, 0px)); height: auto; max-height: none; }
+}

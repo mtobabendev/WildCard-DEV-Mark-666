@@ -59,6 +59,14 @@ const VIDEOS = [
   },
 ];
 
+const BOTTOM_NAV = [
+  { id: 'home', label: 'Home', path: 'M3 10.5 12 3l9 7.5V21h-6v-7H9v7H3Z' },
+  { id: 'notifications', label: 'Alerts', path: 'M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4' },
+  { id: 'explore', label: 'Explore', path: 'M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20m4 6-2 6-6 2 2-6Z' },
+  { id: 'messages', label: 'Messages', path: 'M4 3h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm3 6h10m-10 4h7' },
+  { id: 'profile', label: 'Profile', path: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21v-2a8 8 0 0 1 16 0v2Z' },
+];
+
 function PennyCombinationDial({ digit, position, onChange }) {
   const change = (step) => onChange((digit + step + 10) % 10);
 
@@ -85,6 +93,8 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
+  const [bottomPage, setBottomPage] = useState(null);
+  const bottomDialogRef = useRef(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const photoDialogRef = useRef(null);
   const coverVideoRef = useRef(null);
@@ -131,6 +141,24 @@ export default function PennyAfterHours() {
   const openTab = (nextTab) => {
     setSelectedPhoto(null);
     setTab(nextTab);
+  };
+
+  useEffect(() => {
+    const dialog = bottomDialogRef.current;
+    if (!dialog) return;
+    if (bottomPage && !dialog.open) dialog.showModal();
+    if (!bottomPage && dialog.open) dialog.close();
+  }, [bottomPage]);
+
+  const selectBottomPage = (id) => {
+    if (id === 'home' || id === 'profile') {
+      setBottomPage(null);
+      openTab(id === 'home' ? 'posts' : 'about');
+      if (id === 'home') window.scrollTo({ top: 0, behavior: 'auto' });
+      else document.getElementById('penny-after-sections')?.scrollIntoView({ block: 'start' });
+      return;
+    }
+    setBottomPage(id);
   };
 
   const changePhoto = (offset) => {
@@ -345,6 +373,21 @@ export default function PennyAfterHours() {
 
         {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
+            <article className="penny-fans__featured-post" aria-labelledby="penny-nurse-news">
+              <header className="penny-fans__featured-header">
+                <div className="penny-fans__featured-author">
+                  <strong>Penny Bella Morningstar ♏</strong>
+                  <small>@PennyAfterHours ♏ · Character announcement</small>
+                </div>
+              </header>
+              <div className="penny-fans__featured-copy">
+                <p className="penny-fans__eyebrow">NEW ASSIGNMENT / FICTIONAL ROLE</p>
+                <h2 id="penny-nurse-news">Paging Nurse Morningstar ♏</h2>
+                <p>New assignment: the fertility clinic. The lab coat is pressed, the clipboard is ready, and the paperwork has been warned.</p>
+                <p>Precision, compassion, and just enough purple ink to make the administration nervous. Nurse Penny reporting for duty. ♠</p>
+                <p>Part of the fictional WildCard character universe, not a real clinical appointment or medical service.</p>
+              </div>
+            </article>
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
                 <img
@@ -549,6 +592,34 @@ export default function PennyAfterHours() {
             <a href="https://party.wildcarddev.com/">Explore WildCard Party →</a>
           </section>
         )}
+
+        <nav className="penny-fans__bottom-nav" aria-label="After Hours main navigation">
+          {BOTTOM_NAV.map((item) => (
+            <button
+              type="button"
+              key={item.id}
+              aria-current={bottomPage === item.id || (!bottomPage && (tab === 'about' ? item.id === 'profile' : item.id === 'home')) ? 'page' : undefined}
+              onClick={() => selectBottomPage(item.id)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d={item.path} />
+              </svg>
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </nav>
+        <dialog ref={bottomDialogRef} className="penny-fans__bottom-dialog" aria-labelledby="penny-bottom-title" onClose={() => setBottomPage(null)} onClick={(event) => { if (event.target === event.currentTarget) setBottomPage(null); }}>
+          {bottomPage && (
+            <div>
+              <header>
+                <h2 id="penny-bottom-title">{BOTTOM_NAV.find((item) => item.id === bottomPage)?.label}</h2>
+                <button type="button" onClick={() => setBottomPage(null)} aria-label="Close">×</button>
+              </header>
+              <p>{bottomPage === 'messages' ? 'Messaging is not connected yet. WildCard Party COMMS integration is planned.' : bottomPage === 'notifications' ? 'Notifications are not connected yet. No unread count is simulated.' : 'Discovery is not connected yet.'}</p>
+              <button type="button" onClick={() => setBottomPage(null)}>Back</button>
+            </div>
+          )}
+        </dialog>
 
         <AskPenny />
 
