@@ -1,4 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import ShowcaseOrbit from './ShowcaseOrbit.jsx';
+
+const memorialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100083462238607', icon: 'f' },
+  { label: 'Memorial', href: '/ashley/memorial', icon: '✦' },
+  { label: 'Home', href: '/', icon: '♠' },
+];
 
 const MEMORY_PHOTO = '/static/AshleyPenthouseMemory.webp';
 const FLIP_INTERVAL_MS = 30000;
@@ -138,6 +145,7 @@ export default function AshleyPanel({ active }) {
         <h2 id="ashley-panel-title">Ashley</h2>
         <p>Forever part of our story.</p>
       </div>
+      <ShowcaseOrbit label="Ashley memorial links" items={memorialLinks} compact />
     </article>
   );
 }

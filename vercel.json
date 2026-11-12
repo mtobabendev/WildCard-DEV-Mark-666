@@ -2,6 +2,46 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/ashley/memorial/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ashley/memorial",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/erica/showcase/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/erica/showcase",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/lucy/showcase/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/lucy/showcase",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kandy/showcase/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kandy/showcase",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/creators/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/creators",
+      "destination": "/index.html"
+    },
+    {
       "source": "/ashley/what-if",
       "destination": "/index.html"
     },
