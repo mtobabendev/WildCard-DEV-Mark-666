@@ -28,6 +28,7 @@ export default function AskPenny() {
   const abortRef = useRef(null);
   const transcriptRef = useRef(null);
   const triggerRef = useRef(null);
+  const avatarVideoRef = useRef(null);
 
   useEffect(() => {
     if (busy) return;
@@ -52,6 +53,7 @@ export default function AskPenny() {
   }, []);
 
   function closePanel() {
+    avatarVideoRef.current?.pause();
     abortRef.current?.abort();
     setOpen(false);
     triggerRef.current?.focus();
@@ -171,13 +173,18 @@ export default function AskPenny() {
         >
           <header className="after-ask__header">
             <div className="after-ask__identity">
-              <span className="after-ask__sigil after-ask__sigil--photo" aria-hidden="true">
-                <img
-                  src="/static/PennyNurseOnlyFans.jpg"
-                  alt=""
+              <span className="after-ask__sigil after-ask__sigil--video" aria-hidden="true">
+                <video
+                  ref={avatarVideoRef}
+                  src="/static/PennyShowsTheWay.webm"
                   width="136"
                   height="136"
-                  decoding="async"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  disablePictureInPicture
                 />
               </span>
               <div className="after-ask__identity-copy">
