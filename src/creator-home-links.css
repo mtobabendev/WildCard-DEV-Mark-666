@@ -1,0 +1,8 @@
+.identity-card--kandy .kandy-link-deck.mini-spinner .kandy-link-card--showcase { grid-area: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .identity-card--kandy .mini-spinner--kandy .mini-spinner-track > a:nth-child(1) { --mini-angle: 0deg; }
+  .identity-card--kandy .mini-spinner--kandy .mini-spinner-track > a:nth-child(2) { --mini-angle: 72deg; }
+  .identity-card--kandy .mini-spinner--kandy .mini-spinner-track > a:nth-child(3) { --mini-angle: 144deg; }
+  .identity-card--kandy .mini-spinner--kandy .mini-spinner-track > a:nth-child(4) { --mini-angle: 216deg; }
+  .identity-card--kandy .mini-spinner--kandy .mini-spinner-track > a:nth-child(5) { --mini-angle: 288deg; }
+}

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import './penny-fan-link.css';
+import './creator-home-links.css';
 import Spinner from './components/Spinner.jsx';
 import JennPanel from './components/JennPanel.jsx';
 import AshleyPanel from './components/AshleyPanel.jsx';
@@ -1083,6 +1084,10 @@ function ContactPanels({
                     <AppleIcon />
                   </span>
                   <span className="identity-link-card-label">iOS</span>
+                </a>
+                <a className="identity-link-card kandy-link-card--showcase" href="/kandy/showcase" aria-label="Kandy's creative showcase">
+                  <span className="identity-link-card-icon" aria-hidden="true">♦</span>
+                  <span className="identity-link-card-label">FANS</span>
                 </a>
                 </div>
                 <div

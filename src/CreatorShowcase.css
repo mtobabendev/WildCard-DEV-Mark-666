@@ -1,0 +1,21 @@
+body:has(.wc-showcase) { overflow: auto; margin: 0; background: #0b0813; color: #f5f0ff; }
+.wc-showcase, .wc-showcase * { box-sizing: border-box; }
+.wc-showcase { min-height: 100svh; max-width: 72rem; margin: auto; padding: 1rem clamp(.85rem, 4vw, 3rem) 3rem; font-family: Inter, system-ui, sans-serif; color: #f5f0ff; background: radial-gradient(ellipse at 50% 8%, color-mix(in srgb, var(--showcase-accent) 16%, transparent), transparent 60%); }
+.wc-showcase a { color: inherit; }
+.wc-showcase a:focus-visible { outline: 2px solid var(--showcase-accent); outline-offset: 3px; }
+.wc-showcase__header, .wc-showcase__footer { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: .75rem; font-size: .78rem; padding: 1rem 0; border-bottom: 1px solid #ffffff22; }
+.wc-showcase__header span { color: var(--showcase-accent); letter-spacing: .12em; }
+.wc-showcase__hero { text-align: center; padding: 2rem 0 1rem; }
+.wc-showcase__eyebrow { font-size: .69rem; letter-spacing: .18em; color: var(--showcase-accent); }
+.wc-showcase__emblem { font-size: clamp(3rem,9vw,5.5rem); color: var(--showcase-accent); }
+.wc-showcase__hero h1 { font-size: clamp(2.4rem,8vw,4.5rem); line-height: 1.05; margin: .35rem 0; }
+.wc-showcase__hero h2 { font-size: clamp(1rem,3vw,1.4rem); font-weight: 500; color: var(--showcase-accent); margin: .7rem 0; }
+.wc-showcase__hero > p:last-child { max-width: 40rem; margin: .8rem auto; line-height: 1.55; color: #ddd4ea; }
+.wc-showcase__grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,15rem),1fr)); gap: .85rem; margin: 2rem 0; }
+.wc-showcase__card { min-width: 0; display: block; border: 1px solid #ffffff25; border-radius: 1rem; background: #191326; padding: 1.25rem; text-decoration: none; }
+.wc-showcase__card > span { color: var(--showcase-accent); font-size: 1.6rem; }
+.wc-showcase__card h2 { margin: .45rem 0; font-size: 1.25rem; }
+.wc-showcase__card p { line-height: 1.55; color: #ddd4ea; }
+.wc-showcase__card a, .wc-showcase__card strong { color: var(--showcase-accent); }
+.wc-showcase__footer { border-bottom: 0; border-top: 1px solid #ffffff22; }
+.wc-showcase__portrait { display: block; width: min(100%, 27rem); height: auto; margin: 1rem auto 1.3rem; border: 1px solid var(--showcase-accent); border-radius: 1.2rem; box-shadow: 0 0 28px #c5a0ff30; }
