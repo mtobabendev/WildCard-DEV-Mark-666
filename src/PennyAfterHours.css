@@ -95,15 +95,20 @@ body { margin: 0; background: #0a0614; }
   font-weight: 800;
 }
 .penny-fans__profile {
+  --pf-avatar-size: 7.5rem;
+  --pf-profile-top: 5.2rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem 1.3rem;
   position: relative;
-  padding: 5.2rem clamp(1rem, 4vw, 2rem) clamp(1.4rem, 4vw, 2rem);
+  padding: calc(var(--pf-profile-top) + var(--pf-avatar-size) - 7.5rem) clamp(1rem, 4vw, 2rem) clamp(1.4rem, 4vw, 2rem);
   background: rgba(20, 12, 34, .95);
   border: 1px solid rgba(247, 163, 232, .26);
   border-top: 0;
   border-radius: 0 0 1.1rem 1.1rem;
+}
+.penny-fans__profile--avatar-expanded {
+  --pf-avatar-size: clamp(9rem, 42vw, 13rem);
 }
 .penny-fans__avatar-slot {
   position: absolute;
@@ -111,16 +116,21 @@ body { margin: 0; background: #0a0614; }
   left: clamp(1rem, 4vw, 2rem);
   display: grid;
   place-items: center;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: var(--pf-avatar-size);
+  height: var(--pf-avatar-size);
+  padding: 0;
+  appearance: none;
+  cursor: zoom-in;
   overflow: hidden;
   border: 4px solid #200e2f;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #7b376f, #16091e);
   box-shadow: 0 0 24px rgba(255, 126, 216, .36);
 }
+.penny-fans__avatar-slot[aria-pressed="true"] { cursor: zoom-out; }
 .penny-fans__avatar {
   display: block;
+  pointer-events: none;
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -131,7 +141,7 @@ body { margin: 0; background: #0a0614; }
 .penny-fans__avatar-control {
   position: absolute;
   top: .75rem;
-  left: calc(clamp(1rem, 4vw, 2rem) + 8.25rem);
+  left: calc(clamp(1rem, 4vw, 2rem) + var(--pf-avatar-size) + .75rem);
   min-height: 44px;
   padding: .55rem .75rem;
   border: 1px solid rgba(255, 194, 237, .6);
@@ -532,7 +542,7 @@ body { margin: 0; background: #0a0614; }
 }
 .penny-fans__footer span { max-width: 65ch; }
 @media (max-width: 850px) {
-  .penny-fans__profile { grid-template-columns: 1fr; padding-top: 4.5rem; }
+  .penny-fans__profile { grid-template-columns: 1fr; --pf-profile-top: 4.5rem; }
   .penny-fans__socials { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .penny-fans__feed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
