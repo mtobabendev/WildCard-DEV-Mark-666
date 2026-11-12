@@ -926,6 +926,10 @@ function ContactPanels({
             <div className="kandy-copy">
               <h2>Kandy</h2>
 
+              <a className="kandy-suno-cta" href="/kandy/creator">
+                Explore KandyLand ♦
+              </a>
+
               <a
                 href="mailto:Kandy@wildcarddev.com"
                 onClick={(event) => {

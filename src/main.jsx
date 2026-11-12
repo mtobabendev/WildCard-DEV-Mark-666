@@ -202,6 +202,18 @@ if (normalizedPath === '/ashley/what-if') {
     .catch(() => {
       window.location.replace('/');
     });
+} else if (normalizedPath === '/kandy/creator') {
+  import('./KandyLand.jsx')
+    .then(({ default: KandyLand }) => {
+      root.render(
+        <StrictMode>
+          <KandyLand />
+        </StrictMode>,
+      );
+    })
+    .catch(() => {
+      window.location.replace('/');
+    });
 } else if (normalizedPath === '/bunker') {
   import('./Bunker.jsx')
     .then(({ default: Bunker }) => {
