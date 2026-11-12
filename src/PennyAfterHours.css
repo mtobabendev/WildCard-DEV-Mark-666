@@ -670,7 +670,8 @@ body { margin: 0; background: #0a0614; }
   background: #160b23;
   box-shadow: 0 -6px 24px rgba(0,0,0,.4);
 }
-.penny-fans__bottom-nav button {
+.penny-fans__bottom-nav button,
+.penny-fans__bottom-nav a {
   display: grid;
   justify-items: center;
   align-content: center;
@@ -684,6 +685,8 @@ body { margin: 0; background: #0a0614; }
   color: var(--pf-muted);
   font-size: clamp(.62rem, 2vw, .8rem);
 }
+.penny-fans__bottom-nav a { text-decoration: none; }
+.penny-fans__bottom-nav a:focus-visible { outline: 2px solid #ffc1ed; outline-offset: -2px; }
 .penny-fans__bottom-nav button[aria-current="page"] { background: rgba(248,153,215,.12); color: #ffc1ed; }
 .penny-fans__bottom-nav svg { width: 23px; height: 23px; }
 .penny-fans__bottom-dialog {

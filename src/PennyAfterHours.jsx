@@ -625,7 +625,14 @@ export default function PennyAfterHours() {
         )}
 
         <nav className="penny-fans__bottom-nav" aria-label="After Hours main navigation">
-          {BOTTOM_NAV.map((item) => (
+          {BOTTOM_NAV.map((item) => item.id === 'messages' ? (
+            <a key={item.id} href="https://party.wildcarddev.com/?app=messenger" target="_blank" rel="noopener noreferrer" aria-label="Messages: open WildCard Messenger in a new tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d={item.path} />
+              </svg>
+              <span>{item.label}</span>
+            </a>
+          ) : (
             <button
               type="button"
               key={item.id}
@@ -646,7 +653,7 @@ export default function PennyAfterHours() {
                 <h2 id="penny-bottom-title">{BOTTOM_NAV.find((item) => item.id === bottomPage)?.label}</h2>
                 <button type="button" onClick={() => setBottomPage(null)} aria-label="Close">×</button>
               </header>
-              <p>{bottomPage === 'messages' ? 'Messaging is not connected yet. WildCard Party COMMS integration is planned.' : bottomPage === 'notifications' ? 'Notifications are not connected yet. No unread count is simulated.' : 'Discovery is not connected yet.'}</p>
+              <p>{bottomPage === 'notifications' ? 'Notifications are not connected yet. No unread count is simulated.' : 'Discovery is not connected yet.'}</p>
               <button type="button" onClick={() => setBottomPage(null)}>Back</button>
             </div>
           )}
