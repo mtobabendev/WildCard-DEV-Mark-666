@@ -18,3 +18,4 @@ body:has(.wc-showcase) { overflow: auto; margin: 0; background: #0b0813; color: 
 .wc-showcase__card p { line-height: 1.55; color: #ddd4ea; }
 .wc-showcase__card a, .wc-showcase__card strong { color: var(--showcase-accent); }
 .wc-showcase__footer { border-bottom: 0; border-top: 1px solid #ffffff22; }
+.wc-showcase__portrait { display: block; width: min(100%, 27rem); height: auto; margin: 1rem auto 1.3rem; border: 1px solid var(--showcase-accent); border-radius: 1.2rem; box-shadow: 0 0 28px #c5a0ff30; }

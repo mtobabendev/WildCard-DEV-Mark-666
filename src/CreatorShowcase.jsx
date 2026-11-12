@@ -32,7 +32,11 @@ export default function CreatorShowcase({ profileId }) {
       <header className="wc-showcase__header"><a href="/">← WildCard DEV</a><span>CREATIVE SHOWCASES</span><a href="/creators">Directory</a></header>
       <section className="wc-showcase__hero">
         <p className="wc-showcase__eyebrow">{profileId === 'ashley' ? 'MEMORIAL' : 'WILDCARD DEV / CREATIVE PORTFOLIO'}</p>
-        <div className="wc-showcase__emblem" aria-hidden="true">{profile?.symbol || '♠'}</div>
+        {profileId === 'kandy' ? (
+          <img className="wc-showcase__portrait" src="/static/KandyOnlyFansFinal.jpg" alt="Kandy in a candlelit room" width={1216} height={832} decoding="async" />
+        ) : (
+          <div className="wc-showcase__emblem" aria-hidden="true">{profile?.symbol || '♠'}</div>
+        )}
         <h1>{directory ? 'Meet the creators' : profile.name}</h1>
         <h2>{directory ? 'Three distinct creative spaces' : profile.headline}</h2>
         <p>{directory ? 'Explore music, design, and technology through the WildCard DEV creative showcases.' : profile.description}</p>
