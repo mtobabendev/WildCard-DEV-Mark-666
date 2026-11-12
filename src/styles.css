@@ -5241,3 +5241,187 @@ body {
   border-radius: .65rem;
 }
 .penny-character-spotlight__copy small { color: #d2afd8; }
+
+/* D.1: desktop homepage layout. Keep the mobile/compact layout byte-for-byte.
+   Normal-flow rows reserve space for the panels, spinner and dice chamber. */
+@media (min-width: 1100px) and (min-height: 821px) {
+  body:has(.landing:not(.is-section)) {
+    overflow-x: clip;
+    overflow-y: auto;
+    background-attachment: fixed, fixed, fixed;
+  }
+
+  .landing:not(.is-section) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(21rem, 30%);
+    grid-template-rows: auto auto auto;
+    align-content: start;
+    align-items: start;
+    justify-items: stretch;
+    gap: 1rem;
+    padding: 6rem clamp(1rem, 2vw, 2.5rem) 2rem;
+  }
+
+  .landing:not(.is-section) > .card-stage--contacts {
+    grid-area: 1 / 1;
+  }
+
+  .landing:not(.is-section) > .card-stage--penny {
+    grid-area: 1 / 2;
+  }
+
+  .landing:not(.is-section) > .card-stage {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .landing:not(.is-section) .identity-pair,
+  .landing:not(.is-section) .concierge-pair {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+    gap: .8rem;
+  }
+
+  .landing:not(.is-section) .identity-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card {
+    min-width: 0;
+    padding: .85rem;
+  }
+
+  .landing:not(.is-section) .identity-card--kandy {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: .65rem;
+  }
+
+  .landing:not(.is-section) .identity-card--kandy .kandy-video-shell {
+    grid-row: 1;
+    height: 100%;
+    min-height: 16rem;
+  }
+
+  .landing:not(.is-section) .identity-card--matt {
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+    grid-template-rows: repeat(6, auto) minmax(5.75rem, 1fr);
+    gap: .2rem .65rem;
+    align-content: start;
+  }
+
+  .landing:not(.is-section) .identity-card--matt .owner-media-stack {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 1 / span 7;
+    gap: .55rem;
+    min-width: 0;
+    align-self: stretch;
+  }
+
+  .landing:not(.is-section) .identity-card--matt .owner-media-stack > img {
+    width: min(100%, 6rem);
+    height: auto;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+
+  .landing:not(.is-section) .owner-feature-video-shell {
+    width: 100%;
+    max-height: none;
+    min-height: 0;
+    aspect-ratio: 9 / 16;
+    flex: 1 1 auto;
+  }
+
+  .landing:not(.is-section) .identity-card--matt > a {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .landing:not(.is-section) .identity-card--matt .owner-project-pills {
+    align-self: start;
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card--ashley {
+    grid-column: 1 / -1;
+    width: 100%;
+    align-content: center;
+  }
+
+  .landing:not(.is-section) .concierge-pair {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+
+  .landing:not(.is-section) .concierge-pair .identity-card--penny,
+  .landing:not(.is-section) .concierge-pair .identity-card--jenn {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    align-content: start;
+    align-items: start;
+    gap: .55rem;
+    padding: .75rem;
+  }
+
+  .landing:not(.is-section) .concierge-pair .penny-video-shell,
+  .landing:not(.is-section) .concierge-pair .jenn-video-shell {
+    height: clamp(12rem, 17vw, 17rem);
+  }
+
+  .landing:not(.is-section) .concierge-pair .penny-copy {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .landing:not(.is-section) .concierge-pair .penny-destination-pill {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .landing:not(.is-section) > .spinner-stage {
+    grid-area: 2 / 1;
+    position: relative;
+    inset: auto;
+    translate: none;
+    width: min(48rem, 100%);
+    height: 24rem;
+    justify-self: center;
+    align-self: start;
+  }
+
+  .landing:not(.is-section) > .context-window {
+    grid-area: 2 / 2;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-width: 0;
+    align-self: start;
+  }
+
+  .landing:not(.is-section) > .home-dice-panel {
+    grid-area: 3 / 1;
+    position: relative;
+    inset: auto;
+    translate: none;
+    justify-self: center;
+    width: min(17rem, 100%);
+  }
+}
+
+@media (min-width: 1500px) and (min-height: 821px) {
+  .landing:not(.is-section) .identity-pair {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.25fr) minmax(0, .8fr);
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card--ashley {
+    grid-column: auto;
+    align-content: start;
+  }
+}
