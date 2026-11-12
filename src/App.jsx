@@ -2655,6 +2655,7 @@ export default function App() {
         <article className="identity-card identity-card--penny">
           {!isWatch && (
             <div className="penny-video-static">
+              <PennyThoughtBubble provider="gemini" placement="main" />
               <div className="penny-video-shell">
                 <PennyLoopVideo
                   active={pennyVideoActive}
@@ -2664,7 +2665,6 @@ export default function App() {
           )}
 
           <div className="penny-copy">
-            <PennyThoughtBubble provider="gemini" placement="main" />
             <p className="eyebrow">Digital Avatar of Lilith</p>
             <h2>Penny</h2>
             <p>
