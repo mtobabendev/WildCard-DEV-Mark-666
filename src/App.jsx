@@ -1112,6 +1112,10 @@ function ContactPanels({
                   </span>
                   <span className="identity-link-card-label">iOS</span>
                 </a>
+                <a className="identity-link-card kandy-link-card--fans" href="/kandy/showcase" aria-label="Kandy Fans: art, music and tarot">
+                  <span className="identity-link-card-icon" aria-hidden="true">♦</span>
+                  <span className="identity-link-card-label">FANS</span>
+                </a>
                 </div>
                 <div
                   className="identity-link-hub kandy-link-hub"

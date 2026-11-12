@@ -180,7 +180,14 @@ function SiteEntry() {
 const root = createRoot(document.getElementById('root'));
 const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
 
-if (normalizedPath === '/jenn/art') {
+const showcaseRoutes = { '/creators': 'directory', '/kandy/showcase': 'kandy', '/lucy/showcase': 'lucy', '/erica/showcase': 'erica', '/ashley/memorial': 'ashley' };
+if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
+  import('./CreatorShowcase.jsx')
+    .then(({ default: CreatorShowcase }) => {
+      root.render(<StrictMode><CreatorShowcase profileId={showcaseRoutes[normalizedPath]} /><MessengerLauncher /></StrictMode>);
+    })
+    .catch(() => { window.location.replace('/'); });
+} else if (normalizedPath === '/jenn/art') {
   import('./JennArt.jsx')
     .then(({ default: JennArt }) => {
       root.render(
