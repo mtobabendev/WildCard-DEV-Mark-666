@@ -36,6 +36,14 @@
     {
       "source": "/dice/",
       "destination": "/dice/index.html"
+    },
+    {
+      "source": "/kandy/kandyland",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kandy/kandyland/",
+      "destination": "/index.html"
     }
   ],
   "headers": [

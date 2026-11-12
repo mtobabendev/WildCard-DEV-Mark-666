@@ -941,6 +941,7 @@ function ContactPanels({
               </a>
 
               <div className="kandy-suno-feature">
+                <a className="kandy-suno-cta" href="/kandy/kandyland">Explore KandyLand ♦</a>
                 <p>Original music and cover art by Kopacetic Kandle.</p>
                 <a
                   className="kandy-suno-cta"
