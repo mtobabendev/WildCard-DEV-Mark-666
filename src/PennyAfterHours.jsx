@@ -382,12 +382,21 @@ export default function PennyAfterHours() {
 
         {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
-            <article className="penny-fans__featured-post" aria-labelledby="penny-nurse-news">
+            <article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-nurse-news">
               <header className="penny-fans__featured-header">
+                <img
+                  className="penny-fans__featured-avatar"
+                  src="/static/Penny.gif"
+                  alt=""
+                  width="52"
+                  height="52"
+                  loading="lazy"
+                />
                 <div className="penny-fans__featured-author">
                   <strong>Penny Bella Morningstar ♏</strong>
                   <small>@PennyAfterHours ♏ · Character announcement</small>
                 </div>
+                <span className="penny-fans__featured-label">PHOTO · PREVIEW</span>
               </header>
               <div className="penny-fans__featured-copy">
                 <p className="penny-fans__eyebrow">NEW ASSIGNMENT / FICTIONAL ROLE</p>
@@ -396,6 +405,19 @@ export default function PennyAfterHours() {
                 <p>Precision, compassion, and just enough purple ink to make the administration nervous. Nurse Penny reporting for duty. ♠</p>
                 <p>Part of the fictional WildCard character universe, not a real clinical appointment or medical service.</p>
               </div>
+              <img
+                className="penny-fans__image-post-art"
+                src="/static/NursePennyPortrait.jpg"
+                width="1496"
+                height="1023"
+                loading="lazy"
+                decoding="async"
+                alt="Nurse Penny in a fictional costume portrait with violet curtains and candlelight."
+              />
+              <footer className="penny-fans__featured-footer">
+                <span>♠ WILDCARD DEV ORIGINAL</span>
+                <span>IMAGE · CHARACTER REVEAL</span>
+              </footer>
             </article>
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
