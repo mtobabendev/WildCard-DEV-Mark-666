@@ -1,5 +1,4 @@
 import PennyContactRouter from './components/PennyContactRouter.jsx';
-import pennyContactAssistVideo from '../assets/PennyContactAssistVideo.webm';
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import MessengerLauncher from './components/MessengerLauncher.jsx';
@@ -186,7 +185,7 @@ const showcaseRoutes = { '/creators': 'directory', '/kandy/showcase': 'kandy', '
 if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
   import('./CreatorShowcase.jsx')
     .then(({ default: CreatorShowcase }) => {
-      root.render(<StrictMode><CreatorShowcase profileId={showcaseRoutes[normalizedPath]} /><MessengerLauncher /><PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>);
+      root.render(<StrictMode><CreatorShowcase profileId={showcaseRoutes[normalizedPath]} /><MessengerLauncher /><PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>);
     })
     .catch(() => { window.location.replace('/'); });
 } else if (normalizedPath === '/jenn/art') {
@@ -196,7 +195,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
         <StrictMode>
           <JennArt />
           <MessengerLauncher />
-        <PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>,
+        <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
     })
     .catch(() => { window.location.replace('/'); });
@@ -207,7 +206,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
         <StrictMode>
           <AshleyTimeCapsule />
           <MessengerLauncher />
-        <PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>,
+        <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
     })
     .catch(() => {
@@ -220,7 +219,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
         <StrictMode>
           <PennyAfterHours />
           <MessengerLauncher />
-        <PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>,
+        <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
     })
     .catch(() => {
@@ -233,7 +232,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
         <StrictMode>
           <Bunker />
           <MessengerLauncher />
-        <PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>,
+        <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
 
       if ('requestIdleCallback' in window) {
@@ -249,6 +248,6 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
   root.render(
     <StrictMode>
       <SiteEntry />
-    <PennyContactRouter videoSource={pennyContactAssistVideo} /></StrictMode>,
+    <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
   );
 }

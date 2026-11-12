@@ -41,7 +41,8 @@ export default function PennyContactRouter({ videoSource }) {
       if (node) { node.pause(); node.removeAttribute('src'); node.load(); }
     };
     const finish = id => {
-      if (pending.current?.id !== id) return;
+      if (pending.current?.id !== id || pending.current.finished) return;
+      pending.current.finished = true;
       stop();
       setReady(true);
     };
