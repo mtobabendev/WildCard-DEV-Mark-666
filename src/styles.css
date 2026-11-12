@@ -5223,3 +5223,28 @@ body {
   outline-offset: 3px;
 }
 .ashley-video-lock { font-size: 1rem; }
+
+/* Public fictional character spotlight: scoped to Penny's throne room. */
+.penny-character-spotlight {
+  margin: 0 clamp(1rem, 4vw, 2rem) 1rem;
+  border: 1px solid rgba(233, 140, 239, .32);
+  border-radius: 1rem;
+  background: #140b20;
+  color: #f2daee;
+}
+.penny-character-spotlight summary {
+  cursor: pointer;
+  padding: .9rem 1rem;
+  font-weight: 700;
+  color: #f3b9ec;
+}
+.penny-character-spotlight__copy { padding: 0 1rem 1rem; }
+.penny-character-spotlight__copy h3 { margin: .6rem 0; color: #fff; }
+.penny-character-spotlight__copy p { line-height: 1.6; }
+.penny-character-spotlight__portrait { margin: .85rem 0; }
+.penny-character-spotlight__portrait[hidden] { display: none; }
+.penny-character-spotlight__portrait img {
+  display: block; width: 100%; max-width: 720px; height: auto;
+  border-radius: .65rem;
+}
+.penny-character-spotlight__copy small { color: #d2afd8; }

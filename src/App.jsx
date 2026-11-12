@@ -2104,6 +2104,26 @@ export default function App() {
                 builds go sideways, and the WildCard worlds come together.
               </p>
             </div>
+            <details className="penny-character-spotlight">
+              <summary>Paging Nurse Morningstar ♠</summary>
+              <div className="penny-character-spotlight__copy">
+                <p className="penny-throne-overline">WILDCARD DEV / CHARACTER SPOTLIGHT</p>
+                <h3>Nurse Penny</h3>
+                <p>Meet another character from the fictional WildCard DEV universe. Nurse Morningstar brings precision, compassion, and her signature violet flair to the story.</p>
+                <figure className="penny-character-spotlight__portrait">
+                  <img
+                    src="/static/NursePennyPortrait.jpg"
+                    alt="Fictional Nurse Penny costume portrait"
+                    width="1496"
+                    height="1023"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(event) => { event.currentTarget.parentElement.hidden = true; }}
+                  />
+                </figure>
+                <small>Fictional character artwork. Not a medical service or clinical appointment.</small>
+              </div>
+            </details>
             <nav className="penny-throne-destinations" aria-label="Penny’s destinations">
               <a className="penny-throne-link" href="/bunker">
                 <span className="penny-throne-link-symbol" aria-hidden="true">♠</span>
