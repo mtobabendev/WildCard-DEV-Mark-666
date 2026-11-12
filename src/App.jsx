@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
+import './penny-fan-link.css';
 import Spinner from './components/Spinner.jsx';
 import JennPanel from './components/JennPanel.jsx';
 import AshleyPanel from './components/AshleyPanel.jsx';
@@ -2723,6 +2724,15 @@ export default function App() {
                 <span className="penny-link-card-label">
                   X
                 </span>
+              </a>
+              <a
+                className="penny-link-card penny-link-card--fans"
+                href="/penny/after-hours"
+                aria-label="Penny's After Hours fan page concept"
+                title="Penny's After Hours · Original fan page mockup"
+              >
+                <span className="penny-link-card-icon penny-link-card-icon--fans" aria-hidden="true">♠</span>
+                <span className="penny-link-card-label">FANS</span>
               </a>
               </div>
               <div

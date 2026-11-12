@@ -10,6 +10,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/penny/after-hours",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/penny/after-hours/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/bunker",
       "destination": "/index.html"
     },
@@ -51,6 +59,24 @@
     },
     {
       "source": "/ashley/what-if/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/penny/after-hours",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/penny/after-hours/",
       "headers": [
         {
           "key": "X-Robots-Tag",

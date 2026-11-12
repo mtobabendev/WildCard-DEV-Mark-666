@@ -106,6 +106,7 @@ function SiteEntry() {
   }, [introFinished]);
 
   const finishIntro = () => {
+    videoRef.current?.pause();
     setIntroFinished(true);
   };
 
@@ -135,6 +136,17 @@ function SiteEntry() {
             muted
             playsInline
             preload="auto"
+            role="button"
+            tabIndex={0}
+            aria-label="Penny introduction video. Tap, click, Enter, or Space to skip."
+            title="Tap or click to skip Penny's intro"
+            onClick={finishIntro}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                finishIntro();
+              }
+            }}
             onEnded={finishIntro}
             onError={finishIntro}
             style={{
@@ -146,6 +158,7 @@ function SiteEntry() {
               objectFit: 'contain',
               objectPosition: 'center',
               background: '#000',
+              cursor: 'pointer',
             }}
           >
             {!window.matchMedia('(prefers-reduced-motion: reduce)').matches && (
@@ -171,6 +184,18 @@ if (normalizedPath === '/ashley/what-if') {
       root.render(
         <StrictMode>
           <AshleyTimeCapsule />
+        </StrictMode>,
+      );
+    })
+    .catch(() => {
+      window.location.replace('/');
+    });
+} else if (normalizedPath === '/penny/after-hours') {
+  import('./PennyAfterHours.jsx')
+    .then(({ default: PennyAfterHours }) => {
+      root.render(
+        <StrictMode>
+          <PennyAfterHours />
         </StrictMode>,
       );
     })

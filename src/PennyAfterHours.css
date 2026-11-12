@@ -1,0 +1,697 @@
+/* Penny After Hours: original WildCard DEV fan-page concept. No global site styles. */
+:root { color-scheme: dark; }
+body { margin: 0; background: #0a0614; }
+.penny-fans, .penny-fans * { box-sizing: border-box; }
+.penny-fans {
+  --pf-pink: #f899d7;
+  --pf-text: #f9effc;
+  --pf-muted: #d9badf;
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  padding: clamp(1rem, 3vw, 1.7rem);
+  color: var(--pf-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: #0a0614;
+}
+.penny-fans__wash {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 83% 2%, rgba(191, 61, 143, .21), transparent 47%),
+    radial-gradient(ellipse at 4% 62%, rgba(97, 61, 191, .19), transparent 47%),
+    linear-gradient(150deg, #160a21, #090512 64%, #13091d);
+}
+.penny-fans a { color: inherit; }
+.penny-fans button { font: inherit; cursor: pointer; }
+.penny-fans a:focus-visible, .penny-fans button:focus-visible { outline: 2px solid #ffc1ed; outline-offset: 3px; }
+.penny-fans__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .65rem;
+  max-width: 1100px;
+  margin: 0 auto 1.25rem;
+  color: #f6cbeb;
+  font-size: .81rem;
+}
+.penny-fans__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.penny-fans__brand span { font-size: 1.5rem; color: #ff80cf; }
+.penny-fans__edition { font-size: .72rem; letter-spacing: .13em; font-weight: 800; }
+.penny-fans__back { text-underline-offset: .2em; }
+.penny-fans__shell { max-width: 1100px; margin: 0 auto; }
+.penny-fans__cover {
+  position: relative;
+  min-height: 190px;
+  height: clamp(210px, 37vw, 380px);
+  overflow: hidden;
+  border: 1px solid rgba(247, 163, 232, .35);
+  border-radius: 1.1rem 1.1rem .5rem .5rem;
+  background:
+    linear-gradient(90deg, rgba(24, 7, 43, .72), rgba(65, 17, 67, .18) 50%, rgba(24, 7, 43, .72)),
+    url('/static/penny-throne-room.webp') center/cover;
+}
+.penny-fans__cover-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(8, 3, 17, .36);
+}
+.penny-fans__cover::after {
+  content: ''; position: absolute; inset: 35% 0 0;
+  background: linear-gradient(transparent, rgba(9, 5, 18, .82));
+}
+.penny-fans__cover-label {
+  position: absolute; z-index: 2; left: 1rem; top: 1rem;
+  font-size: .69rem; font-weight: 900; letter-spacing: .12em;
+  color: #ffdeed;
+  text-shadow: 0 2px 8px #12071b;
+}
+.penny-fans__cover-control {
+  position: absolute;
+  z-index: 3;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 44px;
+  padding: .6rem .9rem;
+  border: 1px solid rgba(255, 214, 240, .76);
+  border-radius: 999px;
+  background: rgba(20, 8, 34, .85);
+  color: #fff4fa;
+  font-size: .79rem;
+  font-weight: 800;
+}
+.penny-fans__profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem 1.3rem;
+  position: relative;
+  padding: 5.2rem clamp(1rem, 4vw, 2rem) clamp(1.4rem, 4vw, 2rem);
+  background: rgba(20, 12, 34, .95);
+  border: 1px solid rgba(247, 163, 232, .26);
+  border-top: 0;
+  border-radius: 0 0 1.1rem 1.1rem;
+}
+.penny-fans__avatar-slot {
+  position: absolute;
+  top: -3.9rem;
+  left: clamp(1rem, 4vw, 2rem);
+  display: grid;
+  place-items: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  overflow: hidden;
+  border: 4px solid #200e2f;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7b376f, #16091e);
+  box-shadow: 0 0 24px rgba(255, 126, 216, .36);
+}
+.penny-fans__avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background: #16091e;
+}
+.penny-fans__avatar-control {
+  position: absolute;
+  top: .75rem;
+  left: calc(clamp(1rem, 4vw, 2rem) + 8.25rem);
+  min-height: 44px;
+  padding: .55rem .75rem;
+  border: 1px solid rgba(255, 194, 237, .6);
+  border-radius: 999px;
+  color: #ffedf9;
+  background: rgba(66, 27, 76, .72);
+  font-size: .76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.penny-fans__intro { min-width: 0; max-width: 740px; }
+.penny-fans__eyebrow {
+  margin: 0 0 .65rem;
+  color: var(--pf-pink);
+  letter-spacing: .14em;
+  font-size: .72rem; font-weight: 900;
+}
+.penny-fans__intro h1 {
+  margin: 0;
+  font: 850 clamp(1.7rem, 4.2vw, 3rem)/1.08 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -.035em;
+}
+.penny-fans__intro h1 span { color: #ff8cce; font-size: .7em; white-space: nowrap; }
+.penny-fans__handle {
+  margin: .5rem 0 .9rem;
+  color: #daa5d9; font-size: .86rem;
+  overflow-wrap: anywhere;
+}
+.penny-fans__bio { max-width: 650px; margin: 0; line-height: 1.65; color: var(--pf-muted); }
+.penny-fans__profile > .penny-after-orbit {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: .25rem 0 .35rem;
+}
+.penny-fans__socials {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: .65rem;
+  margin: .15rem 0 .5rem;
+}
+.penny-fans__social-link {
+  display: flex; align-items: center; justify-content: center;
+  gap: .55rem; min-width: 0; min-height: 54px;
+  padding: .6rem .45rem;
+  border: 1px solid rgba(255,175,229,.42);
+  border-radius: 999px;
+  background: rgba(75,34,90,.55);
+  color: #ffeafd; text-align: center; text-decoration: none;
+  font-size: .82rem; font-weight: 800; white-space: nowrap;
+}
+.penny-fans__social-link[href]:hover,
+.penny-fans__social-link[href]:focus-visible {
+  border-color: #ffc5eb; background: rgba(116,53,140,.73);
+}
+.penny-fans__social-symbol {
+  flex: 0 0 30px; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  color: #230a2e; background: linear-gradient(140deg,#ffaddf,#c58aff);
+  font-size: 1.15rem; font-weight: 900;
+}
+.penny-fans__social-link--party .penny-fans__social-symbol { background: #4975bc; color: #fff; }
+.penny-fans__social-link--x .penny-fans__social-symbol { background: #111; color: #fff; }
+.penny-fans__social-link--planned { border-style: dashed; opacity: .74; cursor: default; }
+.penny-fans__social-link small {
+  display: block; margin-top: .1rem; color: #eab8dc;
+  font-size: .53rem; letter-spacing: .05em;
+}
+/* Penny After Hours support: existing WildCard DEV Square donation checkout, no subscriptions. */
+.penny-fans__support {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.3rem 0 1.1rem;
+}
+.penny-fans__support-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: clamp(1.1rem, 3vw, 1.7rem);
+  border: 1px solid rgba(250, 180, 237, .35);
+  border-radius: 1.1rem;
+  background: linear-gradient(140deg, rgba(69, 24, 78, .85), rgba(28, 12, 44, .96));
+}
+.penny-fans__support-card--tips {
+  background: linear-gradient(140deg, rgba(56, 22, 75, .92), rgba(24, 12, 46, .96));
+}
+.penny-fans__support-card h2 {
+  margin: .15rem 0 .75rem;
+  color: #fff0fa;
+  font-size: clamp(1.25rem, 2.9vw, 1.75rem);
+  line-height: 1.2;
+}
+.penny-fans__support-card h2 span { color: #ffabe2; }
+.penny-fans__support-card > p:not(.penny-fans__eyebrow) {
+  color: var(--pf-muted);
+  line-height: 1.6;
+  margin: 0 0 .9rem;
+  font-size: .94rem;
+}
+.penny-fans__support-action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .65rem;
+  min-height: 48px;
+  width: 100%;
+  margin-top: auto;
+  padding: .8rem 1rem;
+  border: 1px solid rgba(255, 211, 243, .72);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e8a1d8, #c28eee);
+  color: #22102e !important;
+  font-size: .9rem;
+  font-weight: 850;
+  text-align: center;
+  text-decoration: none;
+}
+.penny-fans__support-action--tip { background: linear-gradient(135deg, #ffb2e4, #d88bef); }
+.penny-fans__support-action:hover,
+.penny-fans__support-action:focus-visible { filter: brightness(1.08); }
+.penny-fans__support-card .penny-fans__support-note {
+  width: 100%;
+  margin: .8rem 0 0 !important;
+  color: #d9b5df;
+  font-size: .79rem !important;
+  line-height: 1.5 !important;
+}
+.penny-fans__support-note a {
+  color: #ffc8ea;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+@media (max-width: 650px) {
+  .penny-fans__support { grid-template-columns: 1fr; gap: .75rem; }
+}
+.penny-fans__tabs {
+  display: flex; gap: .6rem; overflow-x: auto;
+  border-bottom: 1px solid rgba(248,153,215,.28);
+  margin: 1.65rem 0 1.35rem; scrollbar-width: thin;
+}
+.penny-fans__tabs button, .penny-fans__tabs a {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .3rem; flex: 1 0 auto;
+  min-height: 48px; padding: .65rem .85rem;
+  border: 0; border-bottom: 3px solid transparent;
+  background: transparent; color: #cbb4d6;
+  text-decoration: none; font-weight: 800; white-space: nowrap;
+}
+.penny-fans__tabs button[aria-current="page"] { color: #fff; border-bottom-color: #f3a1e6; }
+.penny-fans__tabs a:hover, .penny-fans__tabs a:focus-visible { color: #fff; border-bottom-color: #e8a6d3; }
+.penny-fans__tabs span { color: #e8b5d9; font-size: .73rem; }
+#penny-after-gallery { scroll-margin-top: 1rem; }
+
+/* Dedicated tabs reuse existing photo and video assets, without altering the 3D spinner. */
+.penny-fans__media-gallery {
+  padding: clamp(1rem, 3vw, 1.65rem);
+  border: 1px solid rgba(250, 180, 237, .28);
+  border-radius: 1.1rem;
+  background: rgba(25, 12, 41, .89);
+}
+.penny-fans__gallery-heading { margin-bottom: 1.15rem; }
+.penny-fans__gallery-heading h2 {
+  margin: .35rem 0 .4rem;
+  color: #fff0fa;
+  font-size: clamp(1.35rem, 3.5vw, 2rem);
+}
+.penny-fans__gallery-heading h2 span { color: #e7bbdf; font-size: .66em; font-weight: 700; }
+.penny-fans__gallery-heading > p:last-child { max-width: 65ch; margin: .4rem 0 0; color: var(--pf-muted); line-height: 1.55; }
+.penny-fans__photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+.penny-fans__photo-tile {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 183, 234, .5);
+  border-radius: .9rem;
+  background: #1a0a29;
+  color: #fff3fb;
+}
+.penny-fans__photo-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.penny-fans__photo-tile::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(12, 4, 22, .91)); pointer-events: none; }
+.penny-fans__photo-tile span { position: absolute; z-index: 1; bottom: .8rem; left: .8rem; right: .8rem; text-align: left; font-size: .82rem; font-weight: 800; text-shadow: 0 1px 5px #10041b; }
+.penny-fans__photo-tile span small {
+  display: block;
+  margin-top: .25rem;
+  color: #ffc6e7;
+  font-size: .7rem;
+  letter-spacing: .08em;
+}
+.penny-fans__photo-tile:focus-visible { outline: 3px solid #ffe0f5; outline-offset: 3px; }
+.penny-fans__photo-dialog {
+  width: min(900px, 94vw);
+  max-width: 94vw;
+  max-height: 92dvh;
+  padding: 0;
+  border: 1px solid rgba(255, 183, 234, .65);
+  border-radius: 1rem;
+  background: #160a24;
+  color: #fff3fc;
+  overflow: auto;
+}
+.penny-fans__photo-dialog::backdrop { background: rgba(4, 1, 11, .94); }
+.penny-fans__photo-dialog-body { display: grid; gap: .65rem; justify-items: center; padding: .75rem; }
+.penny-fans__photo-dialog-body header,
+.penny-fans__photo-dialog-body nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .65rem;
+  width: 100%;
+}
+.penny-fans__photo-dialog-body button {
+  min-height: 44px;
+  padding: .55rem .85rem;
+  border: 1px solid rgba(255, 192, 242, .52);
+  border-radius: .6rem;
+  background: #522360;
+  color: #fff2fc;
+}
+.penny-fans__photo-dialog-body button:disabled { opacity: .45; cursor: default; }
+.penny-fans__photo-dialog-body > img { display: block; max-width: 100%; max-height: 72dvh; width: auto; height: auto; object-fit: contain; border-radius: .4rem; }
+.penny-fans__photo-dialog-body nav span { color: #ffc9ed; font-weight: 800; font-variant-numeric: tabular-nums; }
+.penny-fans__video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; }
+.penny-fans__gallery-video { overflow: hidden; border: 1px solid rgba(255, 176, 228, .34); border-radius: .95rem; background: #1d102c; }
+.penny-fans__gallery-video video { display: block; width: 100%; height: auto; aspect-ratio: 720 / 416; background: #080410; }
+.penny-fans__gallery-video-info { padding: .95rem 1rem; }
+.penny-fans__gallery-video-info h3 { margin: 0 0 .5rem; font-size: 1.08rem; }
+.penny-fans__gallery-video-info span { color: #d6afd8; font-size: .75rem; letter-spacing: .05em; }
+@media (max-width: 540px) {
+  .penny-fans__photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+  .penny-fans__media-gallery { padding: .8rem; }
+  .penny-fans__photo-tile span { font-size: .73rem; }
+}
+
+.penny-fans__feed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+
+/* Premiered, full-width creator video; the three existing teaser cards remain below it. */
+.penny-fans__featured-post {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(250, 180, 237, .42);
+  border-radius: 1.1rem;
+  background: #1d102c;
+  box-shadow: 0 16px 40px rgba(4, 0, 12, .35);
+}
+.penny-fans__featured-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .9rem clamp(.9rem, 3vw, 1.4rem);
+  border-bottom: 1px solid rgba(250, 180, 237, .15);
+}
+.penny-fans__featured-avatar {
+  display: block;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  border: 2px solid rgba(255, 175, 234, .73);
+  border-radius: 50%;
+  background: #261332;
+  object-fit: cover;
+}
+.penny-fans__featured-author { flex: 1; min-width: 0; }
+.penny-fans__featured-author strong {
+  display: block;
+  font-size: clamp(.83rem, 2vw, 1rem);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.penny-fans__featured-author strong span { color: #ff94d7; }
+.penny-fans__featured-author small {
+  display: block;
+  margin-top: .2rem;
+  color: #cda8d3;
+  font-size: .76rem;
+}
+.penny-fans__featured-label {
+  flex: 0 0 auto;
+  padding: .4rem .55rem;
+  border: 1px solid rgba(250, 163, 231, .46);
+  border-radius: 999px;
+  color: #ffd6ef;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.penny-fans__featured-copy { padding: 1.3rem clamp(1rem, 4vw, 2rem) 1.1rem; }
+.penny-fans__featured-copy h2 {
+  margin: .15rem 0 1rem;
+  font-size: clamp(1.4rem, 3.6vw, 2.2rem);
+  line-height: 1.15;
+  color: #fff0fa;
+}
+.penny-fans__featured-copy p:not(.penny-fans__eyebrow) {
+  max-width: 66ch;
+  color: #f4ddec;
+  line-height: 1.65;
+  margin: .6rem 0;
+  font-size: clamp(.95rem, 2.25vw, 1.07rem);
+}
+.penny-fans__patch-notes {
+  display: grid;
+  gap: .45rem;
+  margin: 1rem 0;
+  color: #e8c6ef;
+  font-size: clamp(.89rem, 2vw, 1rem);
+}
+.penny-fans__patch-notes strong { color: #ffc0e5; }
+.penny-fans__featured-media {
+  width: 100%;
+  background: #080410;
+}
+.penny-fans__featured-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(72vh, 610px);
+  aspect-ratio: 720 / 416;
+  object-fit: contain;
+  background: #080410;
+}
+.penny-fans__featured-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  padding: .75rem clamp(1rem, 4vw, 2rem);
+  color: #d6afd8;
+  font-size: .72rem;
+  letter-spacing: .055em;
+}
+@media (max-width: 540px) {
+  .penny-fans__featured-header { gap: .55rem; padding: .75rem; }
+  .penny-fans__featured-avatar { width: 44px; height: 44px; flex-basis: 44px; }
+  .penny-fans__featured-label { font-size: .56rem; padding: .3rem .4rem; }
+  .penny-fans__featured-author small { font-size: .68rem; }
+  .penny-fans__featured-copy { padding: 1.05rem .85rem; }
+  .penny-fans__featured-footer { font-size: .64rem; }
+}
+
+.penny-fans__image-post-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #080410;
+}
+.penny-fans__post {
+  min-width: 0; overflow: hidden;
+  border: 1px solid rgba(250, 180, 237, .26);
+  border-radius: 1rem;
+  background: #1d102c;
+}
+.penny-fans__post-art { display: grid; place-items: center; height: 200px; overflow: hidden; }
+.penny-fans__post-art span { font-size: 5rem; line-height: 1; filter: drop-shadow(0 0 25px rgba(255, 222, 248, .27)); }
+.penny-fans__post--throne .penny-fans__post-art { background: radial-gradient(circle, #ab5eac, #371452 65%, #1b0c30); }
+.penny-fans__post--vault .penny-fans__post-art { background: radial-gradient(circle at 45% 45%, #804782, #281132 68%, #100921); }
+.penny-fans__post--letter .penny-fans__post-art { background: radial-gradient(circle at 40% 50%, #ad5390, #411642 68%, #210d36); }
+.penny-fans__post-copy { padding: 1rem 1.1rem 1.3rem; }
+.penny-fans__post-label { color: #f2a7d2; letter-spacing: .11em; font-size: .67rem; font-weight: 900; }
+.penny-fans__post h2 { margin: .65rem 0; font-size: 1.2rem; line-height: 1.25; }
+.penny-fans__post p { margin: 0; color: var(--pf-muted); line-height: 1.6; font-size: .92rem; }
+.penny-fans__about {
+  padding: clamp(1.3rem, 4vw, 2.2rem);
+  border: 1px solid rgba(250, 180, 237, .26);
+  border-radius: 1rem; background: rgba(25, 12, 41, .9);
+}
+.penny-fans__about h2 { font-size: clamp(1.35rem, 3.5vw, 2.1rem); margin: .2rem 0 1rem; }
+.penny-fans__about p:not(.penny-fans__eyebrow) { max-width: 65ch; color: var(--pf-muted); line-height: 1.75; }
+.penny-fans__about a { display: inline-block; margin-top: .4rem; font-weight: 800; color: #ffb6e5; }
+.penny-fans__footer {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: .8rem;
+  padding: 1.75rem .1rem;
+  color: #d3afd0; font-size: .76rem; line-height: 1.5;
+}
+.penny-fans__footer strong { letter-spacing: .12em; }
+.penny-fans__footer-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+}
+.penny-fans__footer-signature img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 169, 228, .43);
+  border-radius: 50%;
+  object-fit: cover;
+}
+.penny-fans__footer span { max-width: 65ch; }
+@media (max-width: 850px) {
+  .penny-fans__profile { grid-template-columns: 1fr; padding-top: 4.5rem; }
+  .penny-fans__socials { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .penny-fans__feed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 540px) {
+  .penny-fans__topbar { gap: .4rem; }
+  .penny-fans__edition { order: 3; width: 100%; }
+  .penny-fans__cover { height: 280px; }
+  .penny-fans__cover-label { font-size: .62rem; }
+  .penny-fans__feed { grid-template-columns: 1fr; }
+  .penny-fans__post-art { height: 170px; }
+  .penny-fans__socials { gap: .45rem; }
+  .penny-fans__social-link { gap: .4rem; min-height: 50px; padding: .55rem .35rem; font-size: .75rem; }
+  .penny-fans__social-symbol { width: 27px; height: 27px; flex-basis: 27px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-fans *, .penny-fans *::before, .penny-fans *::after { transition: none !important; animation: none !important; }
+}
+
+
+/* Fictional three-dial gate, matching the Time Capsule interaction. */
+.penny-fans__lock {
+  width: min(100%, 38rem);
+  margin: clamp(3rem, 10vh, 6rem) auto;
+  padding: clamp(1.3rem, 5vw, 2.8rem);
+  border: 1px solid rgba(255, 176, 222, .5);
+  border-radius: 1.4rem;
+  background: rgba(22, 11, 36, .92);
+  box-shadow: 0 20px 65px rgba(0, 0, 0, .4), 0 0 42px rgba(221, 79, 171, .17);
+  text-align: center;
+}
+.penny-fans__lock h1 {
+  margin: .35rem 0 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+.penny-fans__lock-lead {
+  max-width: 34rem;
+  margin: 1rem auto 1.5rem;
+  color: var(--pf-muted);
+  line-height: 1.6;
+}
+.penny-fans__dials {
+  display: flex;
+  justify-content: center;
+  gap: clamp(.5rem, 3vw, 1rem);
+  margin: 0 auto 1.3rem;
+  padding: 0;
+  border: 0;
+}
+.penny-fans__dials legend {
+  width: 100%;
+  margin-bottom: .9rem;
+  color: #f1cce5;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+.penny-fans__dial {
+  display: grid;
+  justify-items: center;
+  gap: .4rem;
+  width: clamp(4rem, 18vw, 5.5rem);
+  padding: .55rem .4rem;
+  border: 1px solid rgba(255, 174, 223, .4);
+  border-radius: .9rem;
+  background: rgba(10, 6, 25, .85);
+}
+.penny-fans__dial button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: .6rem;
+  background: rgba(255, 171, 218, .1);
+  color: #ffc2e8;
+}
+.penny-fans__dial button:hover,
+.penny-fans__dial button:focus-visible {
+  background: rgba(255, 171, 218, .24);
+  outline: 2px solid #ffe0f0;
+}
+.penny-fans__dial output {
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.penny-fans__unlock {
+  min-height: 48px;
+  width: min(100%, 21rem);
+  padding: .8rem 1.1rem;
+  border: 1px solid #ffdaee;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c84998, #783790);
+  color: #fff;
+  font-weight: 850;
+}
+.penny-fans__unlock:hover,
+.penny-fans__unlock:focus-visible {
+  filter: brightness(1.12);
+  outline: 2px solid #ffe0f0;
+  outline-offset: 3px;
+}
+.penny-fans__lock-message {
+  min-height: 1.5rem;
+  margin: 1rem auto 0;
+  color: #eac6df;
+  font-size: .84rem;
+}
+
+/* Generic mobile-first navigation. Reserved space prevents overlap with concierge. */
+.penny-fans__shell { padding-bottom: calc(148px + env(safe-area-inset-bottom, 0px)); }
+.penny-fans__bottom-nav {
+  position: fixed;
+  z-index: 79;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(100%, 680px);
+  padding: .35rem max(.35rem, env(safe-area-inset-right, 0px)) calc(.35rem + env(safe-area-inset-bottom, 0px)) max(.35rem, env(safe-area-inset-left, 0px));
+  border: 1px solid rgba(248, 153, 215, .35);
+  border-radius: 1rem 1rem 0 0;
+  background: #160b23;
+  box-shadow: 0 -6px 24px rgba(0,0,0,.4);
+}
+.penny-fans__bottom-nav button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: .24rem;
+  min-width: 0;
+  min-height: 56px;
+  padding: .2rem;
+  border: 0;
+  border-radius: .65rem;
+  background: transparent;
+  color: var(--pf-muted);
+  font-size: clamp(.62rem, 2vw, .8rem);
+}
+.penny-fans__bottom-nav button[aria-current="page"] { background: rgba(248,153,215,.12); color: #ffc1ed; }
+.penny-fans__bottom-nav svg { width: 23px; height: 23px; }
+.penny-fans__bottom-dialog {
+  width: min(420px, 92vw);
+  border: 1px solid #ad73aa;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: var(--pf-text);
+  background: #1d102c;
+}
+.penny-fans__bottom-dialog::backdrop { background: rgba(0,0,0,.8); }
+.penny-fans__bottom-dialog header { display: flex; align-items: center; justify-content: space-between; gap: .8rem; }
+.penny-fans__bottom-dialog h2 { margin: 0; font-size: 1.2rem; }
+.penny-fans__bottom-dialog p { color: var(--pf-muted); line-height: 1.6; }
+.penny-fans__bottom-dialog button { min-height: 44px; padding: .5rem .8rem; color: var(--pf-text); background: #472051; border: 1px solid #ad73aa; border-radius: .6rem; }
+/* More specificity than the original dock rules, including phone overrides. */
+.penny-fans .after-ask__dock { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+.penny-fans .after-ask__panel { bottom: calc(154px + env(safe-area-inset-bottom, 0px)); max-height: min(630px, calc(100dvh - 174px - env(safe-area-inset-bottom, 0px))); }
+@media (max-height: 480px) {
+  .penny-fans .after-ask__panel { top: 6px; bottom: calc(154px + env(safe-area-inset-bottom, 0px)); height: auto; max-height: none; }
+}
