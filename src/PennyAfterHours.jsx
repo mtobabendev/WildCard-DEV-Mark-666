@@ -3,6 +3,15 @@ import './PennyAfterHours.css';
 import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
 import AskPenny from './components/AskPenny.jsx';
 
+function pennySmsHref() {
+  const appleMobile = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
+  const body = encodeURIComponent('Hi Penny! I found you through Penny After Hours and wanted to say hello.');
+  return 'sms:+14029150789' + (appleMobile ? '&' : '?') + 'body=' + body;
+}
+
 const POSTS = [
   {
     id: 'throne',
@@ -589,6 +598,27 @@ export default function PennyAfterHours() {
               posts, and a members' room concept, built to demonstrate what a
               creator-focused WildCard experience could become.
             </p>
+            <section className="penny-fans__contact" aria-labelledby="penny-contact-heading">
+              <h3 id="penny-contact-heading">CONTACT PENNY</h3>
+              <div className="penny-fans__contact-row">
+                <span>Birthday</span>
+                <time dateTime="10-31">10/31</time>
+              </div>
+              <details className="penny-fans__contact-phone">
+                <summary className="penny-fans__contact-row">
+                  <span>Phone</span>
+                  <span className="penny-fans__contact-number">(402) 915-0789</span>
+                </summary>
+                <div className="penny-fans__contact-actions">
+                  <a href="tel:+14029150789">Call Penny</a>
+                  <a href={pennySmsHref()}>Text Penny</a>
+                </div>
+              </details>
+              <div className="penny-fans__contact-row">
+                <span>Email</span>
+                <a href="mailto:Penny@WildCardDEV.com?subject=Hello%20Penny&body=Hi%20Penny%2C%0A%0AI%20found%20you%20through%20Penny%20After%20Hours%20and%20wanted%20to%20get%20in%20touch.%0A%0A">Penny@WildCardDEV.com</a>
+              </div>
+            </section>
             <a href="https://party.wildcarddev.com/">Explore WildCard Party →</a>
           </section>
         )}

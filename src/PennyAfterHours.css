@@ -510,6 +510,20 @@ body { margin: 0; background: #0a0614; }
 .penny-fans__about h2 { font-size: clamp(1.35rem, 3.5vw, 2.1rem); margin: .2rem 0 1rem; }
 .penny-fans__about p:not(.penny-fans__eyebrow) { max-width: 65ch; color: var(--pf-muted); line-height: 1.75; }
 .penny-fans__about a { display: inline-block; margin-top: .4rem; font-weight: 800; color: #ffb6e5; }
+.penny-fans__contact { max-width: 65ch; margin: 1.25rem 0; padding: 1rem; border: 1px solid rgba(250, 180, 237, .26); border-radius: .85rem; background: rgba(248, 153, 215, .04); }
+.penny-fans__contact h3 { margin: 0 0 .55rem; color: var(--pf-pink); font-size: .75rem; letter-spacing: .12em; font-weight: 900; }
+.penny-fans__contact-row { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; min-height: 44px; padding: .6rem 0; font-size: .95rem; border-top: 1px solid rgba(250, 180, 237, .14); }
+.penny-fans__contact-row > span:first-child { color: var(--pf-muted); }
+.penny-fans__contact-row > a, .penny-fans__contact-number { min-width: 0; overflow-wrap: anywhere; color: #ffb6e5; text-decoration: underline; text-underline-offset: 3px; font-weight: 800; }
+.penny-fans__contact-row > a { margin: 0; }
+.penny-fans__contact-phone summary { cursor: pointer; list-style: none; }
+.penny-fans__contact-phone summary::-webkit-details-marker { display: none; }
+.penny-fans__contact-phone summary:focus-visible { outline: 2px solid #ffc1ed; outline-offset: 3px; border-radius: .3rem; }
+.penny-fans__contact-number::after { content: ' ▾'; display: inline-block; text-decoration: none; }
+.penny-fans__contact-phone[open] .penny-fans__contact-number::after { content: ' ▴'; }
+.penny-fans__contact-actions { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0 0 .7rem; }
+.penny-fans__contact-actions a { display: inline-flex; flex: 1 1 7rem; align-items: center; justify-content: center; min-height: 44px; margin: 0; padding: .5rem .75rem; border-radius: .65rem; border: 1px solid rgba(250, 180, 237, .4); background: rgba(248, 153, 215, .09); text-decoration: none; }
+.penny-fans__contact-actions a:hover { background: rgba(248, 153, 215, .18); }
 .penny-fans__footer {
   display: flex; flex-wrap: wrap; align-items: center;
   justify-content: space-between; gap: .8rem;
