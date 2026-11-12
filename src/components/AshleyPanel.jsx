@@ -1,3 +1,11 @@
+import ShowcaseOrbit from './ShowcaseOrbit.jsx';
+
+const memorialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100083462238607', icon: 'f' },
+  { label: 'Memorial', href: '/ashley/memorial', icon: '✦' },
+  { label: 'Home', href: '/', icon: '♠' },
+];
+
 export default function AshleyPanel({ active }) {
   return (
     <article className="identity-card identity-card--ashley" aria-labelledby="ashley-panel-title">
@@ -44,6 +52,7 @@ export default function AshleyPanel({ active }) {
         <h2 id="ashley-panel-title">Ashley</h2>
         <p>Forever part of our story.</p>
       </div>
+      <ShowcaseOrbit label="Ashley memorial links" items={memorialLinks} compact />
     </article>
   );
 }
