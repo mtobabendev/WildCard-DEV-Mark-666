@@ -336,9 +336,11 @@ export default function PennyAfterHours() {
             <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="Stripagram coming soon">
               <span className="penny-fans__social-symbol" aria-hidden="true">◎</span><span>Stripagram <small>SOON</small></span>
             </span>
-            <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="PennyTV coming soon">
-              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV <small>SOON</small></span>
-            </span>
+            <a className="penny-fans__social-link"
+               href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer"
+               aria-label="PennyTV: The Silver Screen">
+              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
+            </a>
           </nav>
           <PennyAfterHoursSpinner />
 
