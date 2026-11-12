@@ -178,7 +178,15 @@ function SiteEntry() {
 const root = createRoot(document.getElementById('root'));
 const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
 
-if (normalizedPath === '/ashley/what-if') {
+const showcaseRoutes = { '/creators': 'directory', '/kandy/showcase': 'kandy', '/lucy/showcase': 'lucy', '/erica/showcase': 'erica', '/ashley/memorial': 'ashley' };
+
+if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
+  import('./CreatorShowcase.jsx')
+    .then(({ default: CreatorShowcase }) => {
+      root.render(<StrictMode><CreatorShowcase profileId={showcaseRoutes[normalizedPath]} /></StrictMode>);
+    })
+    .catch(() => { window.location.replace('/'); });
+} else if (normalizedPath === '/ashley/what-if') {
   import('./AshleyTimeCapsule.jsx')
     .then(({ default: AshleyTimeCapsule }) => {
       root.render(
