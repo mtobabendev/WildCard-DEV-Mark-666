@@ -5425,3 +5425,35 @@ body {
     align-content: start;
   }
 }
+
+
+/* Two-card link trees use the existing mini-spinner interaction engine. */
+.identity-card .mini-spinner--two-person {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 11rem);
+  margin: .55rem auto 0;
+}
+.mini-spinner--two-person .two-person-link-hub { display: none; }
+.identity-card .mini-spinner--two-person .identity-link-card { min-height: 44px; }
+.identity-card--jenn > .mini-spinner--two-person { align-self: start; }
+@media (prefers-reduced-motion: no-preference) {
+  .identity-card .mini-spinner--two-person {
+    --mini-radius: 2rem;
+    --mini-card-width: 3.6rem;
+    position: relative;
+    display: block;
+    height: 5rem;
+    min-height: 5rem;
+    perspective: 500px;
+    overflow: visible;
+    isolation: isolate;
+  }
+  .mini-spinner--two-person .mini-spinner-track > a:nth-child(1) { --mini-angle: 0deg; }
+  .mini-spinner--two-person .mini-spinner-track > a:nth-child(2) { --mini-angle: 180deg; }
+  .mini-spinner--two-person .two-person-link-hub {
+    position: absolute; z-index: 1; top: 50%; left: 50%;
+    display: grid; width: 2.4rem; height: 2.4rem;
+    transform: translate(-50%, -50%); pointer-events: none;
+  }
+  .mini-spinner--two-person .two-person-link-hub img { width: 1.7rem; height: 1.7rem; object-fit: contain; }
+}

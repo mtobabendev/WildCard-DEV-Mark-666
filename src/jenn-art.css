@@ -1,0 +1,11 @@
+.jenn-art { box-sizing: border-box; min-height: 100dvh; padding: clamp(1rem,4vw,3rem); background: radial-gradient(ellipse at top,#26173b,#090611 70%); color:#f7edff; font: 1rem/1.5 Inter,system-ui,sans-serif; }
+.jenn-art * { box-sizing: border-box; }
+.jenn-art header { display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; max-width:65rem; margin:0 auto 2rem; }
+.jenn-art a { color:#ffb5e8; text-decoration:underline; }
+.jenn-art section { max-width:65rem; margin:auto; }
+.jenn-art h1 { font-size:clamp(2rem,5vw,3.5rem); margin:.2rem 0; }
+.jenn-art__eyebrow { color:#ffb5e8; font-size:.75rem; letter-spacing:.15em; font-weight:700; }
+.jenn-art__grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr)); gap:1rem; margin-top:2rem; }
+.jenn-art figure { margin:0; border:1px solid #ab75ce; border-radius:1rem; overflow:hidden; background:#170e24; }
+.jenn-art video { display:block; width:100%; max-height:65vh; background:#080611; }
+.jenn-art figcaption { padding:1rem; }

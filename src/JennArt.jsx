@@ -1,0 +1,23 @@
+import { useEffect } from 'react';
+import './jenn-art.css';
+
+export default function JennArt() {
+  useEffect(() => { document.title = 'Jenn’s Art | WildCard DEV'; }, []);
+  return (
+    <main className="jenn-art">
+      <header>
+        <a href="/">← WildCard DEV</a>
+        <a href="https://www.facebook.com/jennifer.mcbride.946517" target="_blank" rel="noopener noreferrer">Jenn on Facebook ↗</a>
+      </header>
+      <section>
+        <p className="jenn-art__eyebrow">WILDCARD DEV · ART</p>
+        <h1>Jenn’s Art</h1>
+        <p>HeroClix-inspired character art and moving-image exhibits.</p>
+        <div className="jenn-art__grid">
+          <figure><video src="/static/JennHeroClixIntro.webm" controls playsInline preload="metadata" /><figcaption>HeroClix character showcase</figcaption></figure>
+          <figure><video src="/static/JennOrTreat2.webm" controls playsInline preload="metadata" /><figcaption>Jenn or Treat</figcaption></figure>
+        </div>
+      </section>
+    </main>
+  );
+}

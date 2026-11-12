@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 const MEMORY_PHOTO = '/static/AshleyPenthouseMemory.webp';
 const FLIP_INTERVAL_MS = 30000;
 
-export default function AshleyPanel({ active }) {
+export default function AshleyPanel({ active, links }) {
   const [flipped, setFlipped] = useState(false);
   const [photoReady, setPhotoReady] = useState(false);
   const videoRef = useRef(null);
@@ -137,6 +137,7 @@ export default function AshleyPanel({ active }) {
         <p className="eyebrow">In loving memory</p>
         <h2 id="ashley-panel-title">Ashley</h2>
         <p>Forever part of our story.</p>
+        {links}
       </div>
     </article>
   );

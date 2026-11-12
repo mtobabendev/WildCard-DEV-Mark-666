@@ -180,7 +180,18 @@ function SiteEntry() {
 const root = createRoot(document.getElementById('root'));
 const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
 
-if (normalizedPath === '/ashley/what-if') {
+if (normalizedPath === '/jenn/art') {
+  import('./JennArt.jsx')
+    .then(({ default: JennArt }) => {
+      root.render(
+        <StrictMode>
+          <JennArt />
+          <MessengerLauncher />
+        </StrictMode>,
+      );
+    })
+    .catch(() => { window.location.replace('/'); });
+} else if (normalizedPath === '/ashley/what-if') {
   import('./AshleyTimeCapsule.jsx')
     .then(({ default: AshleyTimeCapsule }) => {
       root.render(

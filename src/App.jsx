@@ -684,6 +684,33 @@ function releaseMiniSpinnerLink(event) {
   track?.style.removeProperty('transform');
 }
 
+function TwoLinkSpinner({ person, facebook, destination, label, symbol }) {
+  return (
+    <div className="identity-link-deck mini-spinner mini-spinner--two-person" role="group"
+      aria-label={person + ' links'}
+      onPointerDown={startMiniSpinnerDrag}
+      onPointerMove={moveMiniSpinnerDrag}
+      onPointerUp={endMiniSpinnerDrag}
+      onPointerCancel={endMiniSpinnerDrag}
+      onClickCapture={suppressMiniSpinnerDragClick}
+      onDragStart={event => event.preventDefault()}
+      onFocusCapture={focusMiniSpinnerLink}
+      onBlurCapture={releaseMiniSpinnerLink}>
+      <div className="mini-spinner-track">
+        <a className="identity-link-card" href={facebook} target="_blank" rel="noopener noreferrer" aria-label={person + ' on Facebook'}>
+          <span className="identity-link-card-icon"><FacebookIcon /></span>
+          <span className="identity-link-card-label">FB</span>
+        </a>
+        <a className="identity-link-card" href={destination} aria-label={person + ' ' + label}>
+          <span className="identity-link-card-icon" aria-hidden="true">{symbol}</span>
+          <span className="identity-link-card-label">{label}</span>
+        </a>
+      </div>
+      <div className="identity-link-hub two-person-link-hub" aria-hidden="true"><img src={wildCardDevIcon} alt="" /></div>
+    </div>
+  );
+}
+
 function ContactPanels({
   open,
   showKandy,
@@ -1100,7 +1127,7 @@ function ContactPanels({
             </div>
           </article>
         )}
-        <AshleyPanel active={open && pageVisible} />
+        <AshleyPanel active={open && pageVisible} links={<TwoLinkSpinner person="Ashley" facebook="https://www.facebook.com/profile.php?id=100083462238607" destination="/ashley/what-if" label="FANS" symbol="♠" />} />
       </div>
     </section>
   );
@@ -2767,7 +2794,7 @@ export default function App() {
             </div>
           </div>
         </article>
-        <JennPanel videoActive={pennyVideoActive} />
+        <JennPanel videoActive={pennyVideoActive} links={<TwoLinkSpinner person="Jenn" facebook="https://www.facebook.com/jennifer.mcbride.946517" destination="/jenn/art" label="ART" symbol="✦" />} />
         </div>
       </section>
 
