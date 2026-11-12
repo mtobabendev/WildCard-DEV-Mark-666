@@ -99,6 +99,7 @@ export default function PennyAfterHours() {
   const photoDialogRef = useRef(null);
   const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
+  const [profileExpanded, setProfileExpanded] = useState(false);
   const [profilePaused, setProfilePaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -275,12 +276,18 @@ export default function PennyAfterHours() {
             aria-label={coverPaused ? 'Play cover video' : 'Pause cover video'}
             aria-pressed={coverPaused}
           >
-            {coverPaused ? 'Play cover' : 'Pause cover'}
+            {coverPaused ? 'Play 😈' : 'Pause 😈'}
           </button>
         </div>
 
-        <section className="penny-fans__profile" aria-labelledby="penny-fans-title">
-          <div className="penny-fans__avatar-slot">
+        <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '')} aria-labelledby="penny-fans-title">
+          <button
+            type="button"
+            className="penny-fans__avatar-slot"
+            aria-label="Enlarge profile picture"
+            aria-pressed={profileExpanded}
+            onClick={() => setProfileExpanded((value) => !value)}
+          >
             <video
               ref={profileVideoRef}
               className="penny-fans__avatar"
@@ -290,11 +297,11 @@ export default function PennyAfterHours() {
               playsInline
               autoPlay={!profilePaused}
               preload="auto"
-              aria-label="Penny's animated profile picture"
+              aria-hidden="true"
               width="128"
               height="128"
             />
-          </div>
+          </button>
           <button
             type="button"
             className="penny-fans__avatar-control"
@@ -302,7 +309,7 @@ export default function PennyAfterHours() {
             aria-pressed={profilePaused}
             onClick={() => setProfilePaused((value) => !value)}
           >
-            {profilePaused ? 'Play profile' : 'Pause profile'}
+            {profilePaused ? '👀 Play' : '👀 Pause'}
           </button>
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST</p>
@@ -327,8 +334,8 @@ export default function PennyAfterHours() {
             <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="Stripagram coming soon">
               <span className="penny-fans__social-symbol" aria-hidden="true">◎</span><span>Stripagram <small>SOON</small></span>
             </span>
-            <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="Penny's video hub coming soon">
-              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>Video Hub <small>SOON</small></span>
+            <span className="penny-fans__social-link penny-fans__social-link--planned" aria-label="PennyTV coming soon">
+              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV <small>SOON</small></span>
             </span>
           </nav>
           <PennyAfterHoursSpinner />
