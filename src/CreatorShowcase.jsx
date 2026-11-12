@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import ShowcaseOrbit from './components/ShowcaseOrbit.jsx';
+import CreatorDisplayOrbit from './components/CreatorDisplayOrbit.jsx';
 import './CreatorShowcase.css';
 
 const profiles = {
@@ -42,6 +43,11 @@ export default function CreatorShowcase({ profileId }) {
         <p>{directory ? 'Explore music, design, and technology through the WildCard DEV creative showcases.' : profile.description}</p>
       </section>
       <ShowcaseOrbit label={directory ? 'Creator directory' : profile.name + ' navigation'} items={destinations} />
+      {!directory && <CreatorDisplayOrbit name={profile.name} symbol={profile.symbol} items={profile.sections.map(([title, description]) => ({
+        title, description, icon: profile.symbol,
+        ...(profileId === 'kandy' && title === 'Music' ? { href: profile.links[0].href } : {}),
+        ...(profileId === 'ashley' && title === 'Connections' ? { href: profile.links[0].href } : {}),
+      }))} />}
       <section className="wc-showcase__grid" aria-label={directory ? 'Creators' : 'Creative sections'}>
         {directory ? creators.map((id) => <a className="wc-showcase__card" key={id} href={'/'+id+'/showcase'}>
           <span style={{color:profiles[id].accent}}>{profiles[id].symbol}</span><h2>{profiles[id].name}</h2><p>{profiles[id].headline}</p><strong>Explore →</strong>
