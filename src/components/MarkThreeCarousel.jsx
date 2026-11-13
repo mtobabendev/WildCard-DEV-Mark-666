@@ -148,8 +148,7 @@ export default function MarkThreeCarousel() {
         </button>
       </div>
       <p className="mark3-carousel__note">
-        Mark III original-era exhibit. Historic source links may require repository access.
-        JARVIS uses the alternate archived clip.
+        Straight from the Mark III vault. Some original project links require permission to open. JARVIS features its alternate original recording.
       </p>
     </section>
   );

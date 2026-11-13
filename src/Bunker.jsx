@@ -122,8 +122,7 @@ export default function Bunker() {
         </h1>
 
         <p>
-          The doorway is open. For now, it leads to Matt’s Discord profile.
-          A dedicated server and Penny bot can come later.
+          The door is open. For now, you can find Matt on Discord. The Bunker’s own community and Penny bot are not open yet.
         </p>
 
         <nav className="bunker-actions" aria-label="Bunker destinations">

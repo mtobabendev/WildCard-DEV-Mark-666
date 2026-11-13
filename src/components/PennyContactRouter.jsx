@@ -111,7 +111,7 @@ export default function PennyContactRouter({ videoSource }) {
       <button type="button" className="penny-route-close" onClick={close} aria-label="Cancel routing">×</button>
       <div className="penny-route-video" hidden={ready}><video ref={video} playsInline preload="none" aria-hidden="true" /></div>
       <div className="penny-route-copy">
-        <strong>♠ Penny · Contact Assist</strong>
+        <strong>♠ Penny · Opening the door</strong>
         <p role="status">{route?.message}</p>
         {route && <div className="penny-route-actions">
           <a href={route.href} target={route.target || undefined} rel={route.target === '_blank' ? 'noopener noreferrer' : undefined} onClick={close}>{ready ? 'Continue' : 'Skip animation & continue'}</a>
