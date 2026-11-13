@@ -2365,6 +2365,90 @@ body {
   }
 }
 
+/* RWD: fill the missing intermediate-width owner media layout.
+   Both identity cards remain in the existing two-column contact grid. */
+@media (min-width: 521px) and (max-width: 899px) {
+  .identity-pair .identity-card--matt {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    grid-template-rows: repeat(6, auto) minmax(5.75rem, 1fr);
+    gap: .15rem .6rem;
+    align-items: start;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .identity-card--matt .owner-media-stack {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    gap: .4rem;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .identity-card--matt .owner-media-stack > img {
+    width: min(100%, 4.8rem);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    align-self: center;
+  }
+
+  .identity-card--matt .owner-feature-video-shell {
+    position: relative;
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 8rem;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border: 1px solid rgba(255, 91, 214, .42);
+    border-radius: 1rem;
+    background: #0b0715;
+  }
+
+  .identity-card--matt .owner-feature-video {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .identity-card--matt > .eyebrow,
+  .identity-card--matt > h2,
+  .identity-card--matt > p,
+  .identity-card--matt > a:not(.owner-labs-pill),
+  .identity-card--matt .owner-project-pills {
+    grid-column: 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .identity-card--matt .owner-project-pills {
+    gap: .35rem;
+    align-self: start;
+  }
+
+  .identity-card--matt .owner-project-pills .owner-labs-pill {
+    min-height: 2.25rem;
+    padding: .4rem .5rem;
+  }
+
+  .identity-card--matt .owner-link-deck {
+    grid-column: 1 / -1;
+    grid-row: 7;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
 /* Keep the owner feature visible in roomy compact desktop layouts. */
 @media (min-width: 900px) and (max-width: 1099px),
        (min-width: 1100px) and (max-height: 820px) {
