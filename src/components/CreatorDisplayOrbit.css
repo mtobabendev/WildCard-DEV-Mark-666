@@ -9,3 +9,11 @@
 .creator-display__viewer a { color:#ffc1ed; }
 .creator-display__emblem { font-size:4rem; color:#e0b1ff; }
 @media (max-width:520px) { .creator-display { --penny-after-radius:115px; --penny-after-card-width:118px; --penny-after-card-height:175px; } }
+
+/* Classic video-card artwork is opt-in; icon exhibits retain their existing presentation. */
+.creator-display--video-cards { --penny-after-radius: clamp(145px, 23vw, 260px); --penny-after-card-width: clamp(132px, 18vw, 220px); --penny-after-card-height: clamp(220px, 32vw, 350px); }
+.creator-display__card-art { position: relative; width: 100%; height: 100%; overflow: hidden; background: #14091f; }
+.creator-display__card-art img, .creator-display__card-art .creator-display__card-video { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; pointer-events: none; }
+.creator-display--video-cards .penny-after-orbit__tile { aspect-ratio: 9 / 16; }
+.creator-display--video-cards .penny-after-orbit__viewport { height: clamp(350px, 48vw, 520px); }
+@media (max-width: 520px) { .creator-display--video-cards { --penny-after-radius: 115px; --penny-after-card-width: 118px; --penny-after-card-height: 205px; } .creator-display--video-cards .penny-after-orbit__viewport { height: 340px; } }

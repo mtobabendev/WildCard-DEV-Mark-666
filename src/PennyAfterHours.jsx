@@ -1,7 +1,8 @@
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
+import { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
+import PennyClassicCards from './components/PennyClassicCards.jsx';
 import AskPenny from './components/AskPenny.jsx';
 
 function pennySmsHref() {
@@ -353,7 +354,7 @@ export default function PennyAfterHours() {
               <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
             </a>
           </nav>
-          <PennyAfterHoursSpinner />
+          <PennyClassicCards />
 
         </section>
 

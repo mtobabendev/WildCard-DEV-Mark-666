@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import GallerySlideshow from './GallerySlideshow.jsx';
+import ExhibitVideoPreview from './ExhibitVideoPreview.jsx';
 import { galleryStep } from './gallery-slideshow.js';
 import './PennyAfterHoursSpinner.css';
 import './CreatorDisplayOrbit.css';
 
-export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = false }) {
+export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = false, videoCards = false }) {
   const id = useId();
   const pointer = useRef(null);
   const dialog = useRef(null);
   const trigger = useRef(null);
+  const stageRef = useRef(null);
+  const [stageVisible, setStageVisible] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -32,21 +35,35 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
     setDragging(false);
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   };
-  const face = item => <div className="creator-display__face"><span aria-hidden="true">{item.icon || symbol}</span><strong>{item.title}</strong></div>;
+  useEffect(() => {
+    const node = stageRef.current;
+    if (!videoCards || !visible || !node) { setStageVisible(false); return; }
+    if (typeof IntersectionObserver === 'undefined') { setStageVisible(true); return; }
+    const observer = new IntersectionObserver(([entry]) => setStageVisible(Boolean(entry?.isIntersecting)), { threshold: .05 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [videoCards, visible]);
+  const face = (item, moving = false) => videoCards && item.poster
+    ? <div className="creator-display__card-art">
+        {moving && item.video
+          ? <ExhibitVideoPreview video={item.video} poster={item.poster} active={stageVisible && !paused && selected === null} />
+          : <img src={item.poster} alt="" loading="lazy" decoding="async" />}
+      </div>
+    : <div className="creator-display__face"><span aria-hidden="true">{item.icon || symbol}</span><strong>{item.title}</strong></div>;
 
   return (
-    <section className="penny-after-orbit creator-display" aria-label={name + ' display gallery'}>
+    <section className={'penny-after-orbit creator-display' + (videoCards ? ' creator-display--video-cards' : '')} aria-label={name + ' display gallery'}>
       <div className="penny-after-orbit__heading">
         <div className="penny-after-orbit__heading-copy">
           <span className="penny-after-orbit__eyebrow">{name.toUpperCase()} / DISPLAY GALLERY</span>
-          <span className="penny-after-orbit__subline">{count} exhibits · Select a tile to explore</span>
+          <span className="penny-after-orbit__subline">{count} {videoCards ? 'original video cards' : 'exhibits'} · Select a tile to explore</span>
         </div>
         <button type="button" className="penny-after-orbit__toggle" aria-expanded={visible} aria-controls={id} onClick={() => setVisible(value => !value)}>{visible ? 'Hide 3D orbit' : 'Explore in 3D'}</button>
       </div>
       <div className="penny-after-orbit__tiles">
-        {items.map((item, index) => <button key={item.title} className="penny-after-orbit__tile" type="button" onClick={event => { trigger.current = event.currentTarget; setSelected(index); }} aria-label={'Open ' + item.title}>{face(item)}<span className="penny-after-orbit__tile-label">EXHIBIT {String(index + 1).padStart(2, '0')}</span></button>)}
+        {items.map((item, index) => <button key={item.title} className="penny-after-orbit__tile" type="button" onClick={event => { trigger.current = event.currentTarget; setSelected(index); }} aria-label={'Open ' + item.title}>{face(item)}<span className="penny-after-orbit__tile-label">{videoCards ? 'CARD' : 'EXHIBIT'} {String(index + 1).padStart(2, '0')}</span></button>)}
       </div>
-      {visible && <div id={id} className="penny-after-orbit__stage">
+      {visible && <div ref={stageRef} id={id} className="penny-after-orbit__stage">
         <div className="penny-after-orbit__viewport" tabIndex={0} role="group" aria-label="3D display orbit. Drag or use arrow keys to rotate. Select a tile above to open an exhibit."
           onPointerDown={event => { if (event.button !== 0 || !event.isPrimary) return; pointer.current = { id: event.pointerId, x: event.clientX }; event.currentTarget.setPointerCapture(event.pointerId); setDragging(true); }}
           onPointerMove={event => { const drag = pointer.current; if (!drag || drag.id !== event.pointerId) return; const delta = event.clientX - drag.x; drag.x = event.clientX; setRotation(value => value + delta * .4); }}
@@ -54,9 +71,9 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
           onKeyDown={event => { if (!['ArrowLeft','ArrowRight'].includes(event.key)) return; event.preventDefault(); setRotation(value => value + (event.key === 'ArrowRight' ? 360/count : -360/count)); }}>
           <div className="penny-after-orbit__glow" aria-hidden="true" />
           <div className="penny-after-orbit__tilt" style={{transform: 'rotateX(-8deg) rotateY(' + rotation + 'deg)'}}>
-            <div className={'penny-after-orbit__ring' + (paused || dragging || active ? ' is-paused' : '')}>
+            <div className={'penny-after-orbit__ring' + (paused || dragging || active || (videoCards && !stageVisible) ? ' is-paused' : '')}>
               {items.map((item,index) => <div key={item.title} className="penny-after-orbit__panel" style={{ '--display-angle': (index * 360/count) + 'deg' }}>
-                <div className="penny-after-orbit__face penny-after-orbit__face--front">{face(item)}</div>
+                <div className="penny-after-orbit__face penny-after-orbit__face--front">{face(item, true)}</div>
                 <div className="penny-after-orbit__face penny-after-orbit__face--back" aria-hidden="true">{face(item)}</div>
               </div>)}
               <strong className="penny-after-orbit__center" aria-hidden="true">{name} {symbol}</strong>
@@ -71,7 +88,7 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
         onClick={event => { if (event.target === event.currentTarget) setSelected(null); }}>
         {active && <div className="penny-after-orbit__viewer-inner">
           <header><strong>{active.title}</strong><button type="button" onClick={() => setSelected(null)}>Close ✕</button></header>
-          {active.video && <video key={active.video} src={active.video} controls playsInline preload="metadata" aria-label={active.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onEnded={() => setVideoPlaying(false)} />}
+          {active.video && <video key={active.video} src={active.video} poster={active.poster} controls playsInline preload="metadata" aria-label={active.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onEnded={() => setVideoPlaying(false)} />}
           {!active.video && <div className="creator-display__emblem" aria-hidden="true">{active.icon || symbol}</div>}
           <p>{active.description}</p>
           {active.href && <a href={active.href}>Explore {active.title} →</a>}
