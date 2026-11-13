@@ -33,6 +33,11 @@ const MEMORIES = [
     description: 'Another glimpse of Ashley.',
     src: '/static/AshleyHotLoop.webm',
   },
+  {
+    title: 'Naughty Ashley',
+    description: 'A playful moment with Ashley.',
+    src: '/static/NaughtyAshley.webm',
+  },
 ];
 
 function CapsuleDial({ digit, position, onChange }) {
