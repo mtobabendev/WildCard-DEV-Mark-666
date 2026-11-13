@@ -3,6 +3,7 @@ import './PennyThoughtBubble.css'
 import PennyActiveAvatar from './PennyActiveAvatar.jsx'
 import { usePennyAwareness } from './penny-awareness-client.js'
 import { CITIES, SIGNS } from './penny-awareness-data.js'
+import { CABARET_GREETINGS, CABARET_QUIPS, cabaretAwarenessLine } from './penny-presentation.js'
 
 const AWARENESS_ENDPOINT = '/api/penny-awareness'
 
@@ -37,12 +38,12 @@ export default function PennyThoughtBubble({ provider = 'gemini', placement = 'm
   const period = getPeriod(clock.getHours())
   const afterHours = placement === 'after-hours'
   const name = provider === 'grok' ? 'Grok' : 'Gemini'
-  const greeting = greetings[period][0]
-  const quip = quipIndex % 3 === 0 ? greetings[period][afterHours ? 2 : 1] : quips[period][(quipIndex - 1) % 2]
+  const greeting = afterHours ? CABARET_GREETINGS[period][0] : greetings[period][0]
+  const quip = afterHours ? (quipIndex % 3 === 0 ? CABARET_GREETINGS[period][1] : CABARET_QUIPS[quipIndex % CABARET_QUIPS.length]) : (quipIndex % 3 === 0 ? greetings[period][1] : quips[period][(quipIndex - 1) % 2])
   const awareness = usePennyAwareness(AWARENESS_ENDPOINT, clock)
   const thought = awareness.alerts[0] || (quipIndex % 2 === 1 ? awareness.cards[Math.floor(quipIndex / 2) % awareness.cards.length] : null)
   const heading = thought?.label || greeting
-  const line = thought?.text || quip
+  const line = thought ? (afterHours ? cabaretAwarenessLine(thought) : thought.text) : quip
   useEffect(() => {
     const timer = window.setInterval(() => {
       if (!document.hidden) { setClock(new Date()); if (!dialog.current?.open) setQuipIndex(value => value + 1) }
@@ -75,7 +76,7 @@ export default function PennyThoughtBubble({ provider = 'gemini', placement = 'm
       const response = await fetch('/api/penny', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider, messages: [...history, user] }),
+        body: JSON.stringify({ provider, messages: [...history, user], presentation: afterHours ? 'cabaret' : 'standard' }),
         signal: controller.signal,
       })
       if (!response.ok) {

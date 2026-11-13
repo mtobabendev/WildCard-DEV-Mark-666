@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import './AskPenny.css';
 import PennyActiveAvatar from './PennyActiveAvatar.jsx';
 import PennyPixelAvatar from './PennyPixelAvatar.jsx';
+import { presentationForPath } from './penny-presentation.js';
 
 // Extracted from WildCard Party's Ask Penny experience.
 // Calls the shared Party backend via this site's same-origin /api/penny relay.
 const SESSION_KEY = 'wildcard-after-hours:ask-penny-v1';
 
-function loadMessages() {
+function loadMessages(sessionKey) {
   try {
-    const value = JSON.parse(window.sessionStorage.getItem(SESSION_KEY) || '[]');
+    const value = JSON.parse(window.sessionStorage.getItem(sessionKey) || '[]');
     return Array.isArray(value)
       ? value.filter((item) => (
         (item?.role === 'user' || item?.role === 'assistant')
@@ -22,9 +23,12 @@ function loadMessages() {
 }
 
 export default function AskPenny({ embedded = false, onClose } = {}) {
+  const presentation = embedded ? 'standard' : presentationForPath(window.location.pathname);
+  const cabaret = presentation === 'cabaret';
+  const sessionKey = cabaret ? SESSION_KEY + ':cabaret' : SESSION_KEY;
   const [open, setOpen] = useState(embedded);
   const [draft, setDraft] = useState('');
-  const [messages, setMessages] = useState(loadMessages);
+  const [messages, setMessages] = useState(() => loadMessages(sessionKey));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const abortRef = useRef(null);
@@ -35,13 +39,13 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
     if (busy) return;
     try {
       window.sessionStorage.setItem(
-        SESSION_KEY,
+        sessionKey,
         JSON.stringify(messages.slice(-20).map(({ id, role, text }) => ({ id, role, text }))),
       );
     } catch {
       // Chat remains available when session storage is disabled.
     }
-  }, [busy, messages]);
+  }, [busy, messages, sessionKey]);
 
   useEffect(() => {
     if (open && transcriptRef.current) {
@@ -65,7 +69,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
     setMessages([]);
     setDraft('');
     setError('');
-    try { window.sessionStorage.removeItem(SESSION_KEY); } catch { /* optional */ }
+    try { window.sessionStorage.removeItem(sessionKey); } catch { /* optional */ }
   }
 
   async function sendMessage(event) {
@@ -97,7 +101,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
       const response = await fetch('/api/penny', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: outgoing }),
+        body: JSON.stringify({ messages: outgoing, presentation }),
         signal: controller.signal,
       });
 
@@ -161,7 +165,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
   }
 
   return (
-    <div className="after-ask" data-embedded={embedded ? 'true' : undefined}>
+    <div className="after-ask" data-embedded={embedded ? 'true' : undefined} data-presentation={presentation}>
       {open && (
         <section
           className="after-ask__panel"
@@ -179,7 +183,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
               </span>
               <div className="after-ask__identity-copy">
                 <strong>ASK PENNY</strong>
-                <small>WILDCARD CONCIERGE / PARTY CONNECTION</small>
+                <small>{cabaret ? 'AFTER HOURS / CABARET CONCIERGE' : 'WILDCARD CONCIERGE / PARTY CONNECTION'}</small>
               </div>
             </div>
             <div className="after-ask__header-actions">
@@ -193,7 +197,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
             {messages.length === 0 && (
               <div className="after-ask__message after-ask__message--penny">
                 <span>PENNY / LIVE CHAT</span>
-                <p>Door's open. What do you need?</p>
+                <p>{cabaret ? 'Welcome behind the velvet curtain. Pull up a chair, darling. What’s on your mind?' : "Door's open. What do you need?"}</p>
               </div>
             )}
             {messages.map((message) => (
@@ -221,7 +225,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
                 }
               }}
               aria-label="Message Penny"
-              placeholder={busy ? 'Penny is answering…' : 'Ask Penny anything…'}
+              placeholder={busy ? 'Penny is answering…' : (cabaret ? 'Tell Penny what’s on your mind…' : 'Ask Penny anything…')}
               rows={2}
               maxLength={2000}
             />

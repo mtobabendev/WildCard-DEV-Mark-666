@@ -1,0 +1,5 @@
+.wc-gallery-slideshow { display:flex; flex-wrap:wrap; justify-content:space-between; gap:.5rem; align-items:center; margin-top:.7rem; font:inherit; }
+.wc-gallery-slideshow button,.wc-gallery-slideshow select { padding:.45rem .65rem; min-height:40px; border:1px solid #bd89cc; border-radius:.55rem; background:#291636; color:#f9effc; font:inherit; }
+.wc-gallery-slideshow button:disabled { opacity:.5; }
+.wc-gallery-slideshow label { display:flex; gap:.4rem; align-items:center; font-size:.8rem; }
+.wc-gallery-slideshow button:focus-visible,.wc-gallery-slideshow select:focus-visible { outline:2px solid #fff; outline-offset:2px; }

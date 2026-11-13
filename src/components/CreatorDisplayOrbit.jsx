@@ -1,8 +1,10 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import GallerySlideshow from './GallerySlideshow.jsx';
+import { galleryStep } from './gallery-slideshow.js';
 import './PennyAfterHoursSpinner.css';
 import './CreatorDisplayOrbit.css';
 
-export default function CreatorDisplayOrbit({ name, symbol, items }) {
+export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = false }) {
   const id = useId();
   const pointer = useRef(null);
   const dialog = useRef(null);
@@ -12,6 +14,7 @@ export default function CreatorDisplayOrbit({ name, symbol, items }) {
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const count = items.length;
   const active = selected === null ? null : items[selected];
 
@@ -21,7 +24,8 @@ export default function CreatorDisplayOrbit({ name, symbol, items }) {
     if (selected !== null && !node.open) node.showModal();
     if (selected === null && node.open) node.close();
   }, [selected]);
-  const step = direction => setSelected(index => index === null ? null : (index + direction + count) % count);
+  const step = useCallback(direction => { setVideoPlaying(false); setSelected(index => index === null ? null : galleryStep(index, count, direction)); }, [count]);
+  const advance = useCallback(() => step(1), [step]);
   const end = event => {
     if (pointer.current?.id !== event.pointerId) return;
     pointer.current = null;
@@ -62,16 +66,17 @@ export default function CreatorDisplayOrbit({ name, symbol, items }) {
         <div className="penny-after-orbit__toolbar"><span>Drag to rotate · Arrow keys supported</span><button type="button" onClick={() => setPaused(value => !value)}>{paused ? 'Resume spin' : 'Pause spin'}</button></div>
       </div>}
       <dialog ref={dialog} className="penny-after-orbit__viewer creator-display__viewer" aria-label={name + ' exhibit viewer'}
-        onClose={() => { setSelected(null); trigger.current?.focus(); }}
+        onClose={() => { setSelected(null); setVideoPlaying(false); trigger.current?.focus(); }}
         onKeyDown={event => { if (['ArrowLeft','ArrowRight'].includes(event.key) && event.target.tagName !== 'VIDEO') { event.preventDefault(); step(event.key === 'ArrowRight' ? 1 : -1); } }}
         onClick={event => { if (event.target === event.currentTarget) setSelected(null); }}>
         {active && <div className="penny-after-orbit__viewer-inner">
           <header><strong>{active.title}</strong><button type="button" onClick={() => setSelected(null)}>Close ✕</button></header>
-          {active.video && <video key={active.video} src={active.video} controls playsInline preload="metadata" aria-label={active.title} />}
+          {active.video && <video key={active.video} src={active.video} controls playsInline preload="metadata" aria-label={active.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onEnded={() => setVideoPlaying(false)} />}
           {!active.video && <div className="creator-display__emblem" aria-hidden="true">{active.icon || symbol}</div>}
           <p>{active.description}</p>
           {active.href && <a href={active.href}>Explore {active.title} →</a>}
           <nav aria-label="Exhibit navigation"><button type="button" onClick={() => step(-1)}>← Previous</button><span>{selected+1} / {count}</span><button type="button" onClick={() => step(1)}>Next →</button></nav>
+          {slideshow && <GallerySlideshow enabled={slideshow} open={selected !== null} count={count} onAdvance={advance} blocked={videoPlaying} />}
         </div>}
       </dialog>
     </section>

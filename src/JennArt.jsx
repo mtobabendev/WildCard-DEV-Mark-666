@@ -18,7 +18,7 @@ export default function JennArt() {
         <p><a href="mailto:Jenn@WildCardDEV.com">Jenn@WildCardDEV.com</a></p>
         <p>HeroClix-inspired character art and moving-image exhibits.</p>
         <ShowcaseOrbit label="Jenn navigation" items={[{label:'Home',href:'/',icon:'♠'},{label:'Facebook',href:'https://www.facebook.com/jennifer.mcbride.946517',icon:'f'},{label:'Art',href:'#jenn-exhibits',icon:'✦'}]} />
-        <div id="jenn-exhibits"><CreatorDisplayOrbit name="Jenn" symbol="✦" items={[
+        <div id="jenn-exhibits"><CreatorDisplayOrbit name="Jenn" symbol="✦" slideshow items={[
           {title:'HeroClix',description:'HeroClix-inspired character showcase.',icon:'✦',video:'/static/JennHeroClixIntro.webm'},
           {title:'Jenn or Treat',description:'Seasonal character art.',icon:'◇',video:'/static/JennOrTreat2.webm'}
         ]} /></div>

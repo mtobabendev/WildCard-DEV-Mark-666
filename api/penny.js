@@ -30,6 +30,7 @@ export default async function handler(req, res) {
   try {
     body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     const messages = body?.messages;
+    if (!['standard', 'cabaret'].includes(body?.presentation ?? 'standard')) throw new Error('Unsupported presentation.');
     if (!['openai', 'gemini', 'grok'].includes(body?.provider ?? 'openai')) throw new Error('Unsupported provider.');
     if (!Array.isArray(messages) || messages.length < 1 || messages.length > 10
       || messages.at(-1)?.role !== 'user') {
@@ -75,7 +76,7 @@ export default async function handler(req, res) {
     const upstream = await fetch(external ? PROVIDER_ENDPOINT : PARTY_ENDPOINT, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ messages: body.messages, provider }),
+      body: JSON.stringify({ messages: body.messages, provider, presentation: body.presentation ?? 'standard' }),
       signal: controller.signal,
       redirect: 'error',
     });
