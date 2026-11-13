@@ -1,7 +1,9 @@
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
+import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
+import PhotoGallery, { countGalleryPhotos } from './components/PhotoGallery.jsx';
+import { PHOTO_GALLERIES } from './data/pennyPhotoCollections.js';
 import AskPenny from './components/AskPenny.jsx';
 
 function pennySmsHref() {
@@ -38,25 +40,6 @@ const POSTS = [
     symbol: '✦',
     theme: 'letter',
   },
-];
-
-const PHOTOS = [
-  ...PANEL_IMAGES.map(({ number, src }) => ({
-    id: `portrait-${number}`,
-    src,
-    title: `Portrait ${String(number).padStart(2, '0')}`,
-  })),
-  {
-    id: 'cover-reveal',
-    src: '/static/PennyOnlyFansBanner.jpg',
-    title: 'After Hours cover reveal',
-  },
-];
-
-const PHOTO_GALLERIES = [
-  { id: 'portraits-01-06', title: 'Portraits 01–06', photos: PHOTOS.slice(0, 6) },
-  { id: 'portraits-07-08', title: 'Portraits 07–08', photos: PHOTOS.slice(6, 8) },
-  { id: 'cover-reveal', title: 'After Hours cover reveal', photos: PHOTOS.slice(8, 9) },
 ];
 
 const VIDEOS = [
@@ -105,8 +88,6 @@ export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
   const [bottomPage, setBottomPage] = useState(null);
   const bottomDialogRef = useRef(null);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const photoDialogRef = useRef(null);
   const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
@@ -142,15 +123,7 @@ export default function PennyAfterHours() {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
   }, []);
 
-  useEffect(() => {
-    const dialog = photoDialogRef.current;
-    if (!dialog) return;
-    if (selectedPhoto !== null && !dialog.open) dialog.showModal();
-    if (selectedPhoto === null && dialog.open) dialog.close();
-  }, [selectedPhoto]);
-
   const openTab = (nextTab) => {
-    setSelectedPhoto(null);
     setTab(nextTab);
   };
 
@@ -170,14 +143,6 @@ export default function PennyAfterHours() {
       return;
     }
     setBottomPage(id);
-  };
-
-  const changePhoto = (offset) => {
-    setSelectedPhoto((current) => {
-      if (current === null) return null;
-      const length = PHOTO_GALLERIES[current.galleryIndex].photos.length;
-      return { ...current, photoIndex: (current.photoIndex + offset + length) % length };
-    });
   };
 
   useEffect(() => {
@@ -388,7 +353,7 @@ export default function PennyAfterHours() {
 
         <nav id="penny-after-sections" className="penny-fans__tabs" aria-label="Penny fan page sections">
           <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
-          <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{PHOTOS.length}</span></button>
+          <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{countGalleryPhotos(PHOTO_GALLERIES)}</span></button>
           <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => openTab('videos')}>Videos <span>{VIDEOS.length}</span></button>
           <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => openTab('about')}>About</button>
         </nav>
@@ -533,64 +498,12 @@ export default function PennyAfterHours() {
             ))}
           </section>
         ) : tab === 'photos' ? (
-          <section className="penny-fans__media-gallery" aria-label="Penny's photo gallery">
-            <header className="penny-fans__gallery-heading">
-              <p className="penny-fans__eyebrow">THE VELVET VAULT / PHOTOS</p>
-              <h2>Photo gallery <span>{PHOTOS.length} photographs · {PHOTO_GALLERIES.length} collections</span></h2>
-              <p>Choose a collection to browse its photos. The original eight-photo 3D spinner remains above.</p>
-            </header>
-            <div className="penny-fans__photo-grid">
-              {PHOTO_GALLERIES.map((gallery, galleryIndex) => (
-                <button
-                  className="penny-fans__photo-tile"
-                  type="button"
-                  key={gallery.id}
-                  onClick={() => setSelectedPhoto({ galleryIndex, photoIndex: 0 })}
-                  aria-label={'Open ' + gallery.title + ', ' + gallery.photos.length + ' photographs'}
-                >
-                  <img src={gallery.photos[0].src} alt="" loading="lazy" decoding="async" />
-                  <span>{gallery.title}<small>{gallery.photos.length} {gallery.photos.length === 1 ? 'PHOTO' : 'PHOTOS'}</small></span>
-                </button>
-              ))}
-            </div>
-            <dialog
-              ref={photoDialogRef}
-              className="penny-fans__photo-dialog"
-              aria-label="Penny gallery photo viewer"
-              onClose={() => setSelectedPhoto(null)}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                  event.preventDefault();
-                  changePhoto(event.key === 'ArrowRight' ? 1 : -1);
-                }
-              }}
-              onClick={(event) => {
-                if (event.target === event.currentTarget) setSelectedPhoto(null);
-              }}
-            >
-              {selectedPhoto !== null && (
-                <div className="penny-fans__photo-dialog-body">
-                  <header>
-                    <strong>
-                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].title}
-                      {' · '}
-                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
-                    </strong>
-                    <button type="button" onClick={() => setSelectedPhoto(null)} aria-label="Close photo viewer">Close ✕</button>
-                  </header>
-                  <img
-                    src={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].src}
-                    alt={'Penny After Hours: ' + PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
-                  />
-                  <nav aria-label="Photo navigation">
-                    <button type="button" onClick={() => changePhoto(-1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>← Previous</button>
-                    <span>{selectedPhoto.photoIndex + 1} / {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length}</span>
-                    <button type="button" onClick={() => changePhoto(1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>Next →</button>
-                  </nav>
-                </div>
-              )}
-            </dialog>
-          </section>
+          <PhotoGallery
+            collections={PHOTO_GALLERIES}
+            label="Penny's photo gallery"
+            eyebrow="THE VELVET VAULT / PHOTOS"
+            description="Choose a collection to browse its photos. The original eight-photo 3D spinner remains above."
+          />
         ) : tab === 'videos' ? (
           <section className="penny-fans__media-gallery" aria-label="Penny's video gallery">
             <header className="penny-fans__gallery-heading">
