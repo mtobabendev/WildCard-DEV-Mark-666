@@ -1,7 +1,7 @@
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
+import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import AskPenny from './components/AskPenny.jsx';
 
 function pennySmsHref() {
@@ -41,10 +41,10 @@ const POSTS = [
 ];
 
 const PHOTOS = [
-  ...Array.from({ length: 8 }, (_, index) => ({
-    id: `portrait-${index + 1}`,
-    src: `/static/${index + 1}.jpg`,
-    title: `Portrait ${String(index + 1).padStart(2, '0')}`,
+  ...PANEL_IMAGES.map(({ number, src }) => ({
+    id: `portrait-${number}`,
+    src,
+    title: `Portrait ${String(number).padStart(2, '0')}`,
   })),
   {
     id: 'cover-reveal',

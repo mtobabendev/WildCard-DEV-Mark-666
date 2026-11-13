@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHoursSpinner.css';
 
-const PANEL_IMAGES = Array.from({ length: 8 }, (_, index) => ({
+export const PANEL_IMAGES = [2, 1, 3, 4, 5, 6, 7, 8].map((imageNumber, index) => ({
   number: index + 1,
-  src: `/static/${index + 1}.jpg`,
+  src: `/static/${imageNumber}.jpg`,
 }));
 
 export default function PennyAfterHoursSpinner() {
