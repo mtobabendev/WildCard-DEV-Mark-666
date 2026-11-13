@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './AskPenny.css';
 import PennyActiveAvatar, { PENNY_AVATAR_POSTER } from './PennyActiveAvatar.jsx';
+import PennyPixelAvatar from './PennyPixelAvatar.jsx';
 
 // Extracted from WildCard Party's Ask Penny experience.
 // Calls the shared Party backend via this site's same-origin /api/penny relay.
@@ -20,7 +21,8 @@ function loadMessages() {
   }
 }
 
-export default function AskPenny() {
+export default function AskPenny({ avatar = 'pixel' }) {
+  const nurse = avatar === 'nurse';
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState(loadMessages);
@@ -159,7 +161,7 @@ export default function AskPenny() {
   }
 
   return (
-    <div className="after-ask">
+    <div className="after-ask" data-avatar={nurse ? 'nurse' : 'pixel'}>
       {open && (
         <section
           className="after-ask__panel"
@@ -173,7 +175,7 @@ export default function AskPenny() {
           <header className="after-ask__header">
             <div className="after-ask__identity">
               <span className="after-ask__sigil" aria-hidden="true">
-                <PennyActiveAvatar />
+                {nurse ? <PennyActiveAvatar /> : <PennyPixelAvatar />}
               </span>
               <div className="after-ask__identity-copy">
                 <strong>ASK PENNY</strong>
@@ -239,7 +241,7 @@ export default function AskPenny() {
         onClick={() => open ? closePanel() : setOpen(true)}
       >
         <span className="after-ask__dock-avatar" aria-hidden="true">
-          <img src={PENNY_AVATAR_POSTER} decoding="async" alt="" width="56" height="56" />
+          {nurse ? <img src={PENNY_AVATAR_POSTER} decoding="async" alt="" width="56" height="56" /> : <PennyPixelAvatar />}
         </span>
         <span className="after-ask__dock-copy">
           <strong>ASK PENNY</strong>

@@ -661,7 +661,7 @@ export default function PennyAfterHours() {
           )}
         </dialog>
 
-        <AskPenny />
+        <AskPenny avatar="nurse" />
 
         <footer className="penny-fans__footer">
           <div className="penny-fans__footer-signature">

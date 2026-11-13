@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import './PennyThoughtBubble.css'
 import PennyActiveAvatar from './PennyActiveAvatar.jsx'
+import PennyPixelAvatar from './PennyPixelAvatar.jsx'
 
 const greetings = [
   ['Good morning', 'Coffee first, world domination second.', 'Coffee, darling?'],
@@ -102,7 +103,7 @@ export default function PennyThoughtBubble({ provider = 'gemini', placement = 'm
       </button>
       <dialog ref={dialog} className="penny-thought__dialog" aria-labelledby={titleId} onClose={close} onCancel={() => setDialogOpen(false)}>
         <div className="penny-thought__header">
-          {dialogOpen && <span className="penny-thought__avatar" aria-hidden="true"><PennyActiveAvatar /></span>}
+          {dialogOpen && <span className="penny-thought__avatar" aria-hidden="true">{afterHours ? <PennyActiveAvatar /> : <PennyPixelAvatar />}</span>}
           <h2 id={titleId}>♠ Penny · {name}</h2>
           <button type="button" onClick={() => { setDialogOpen(false); dialog.current?.close() }} aria-label="Close conversation">×</button>
         </div>

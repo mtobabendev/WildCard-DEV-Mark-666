@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import './jenn-art.css';
+import AskPenny from './components/AskPenny.jsx';
 import ShowcaseOrbit from './components/ShowcaseOrbit.jsx';
 import CreatorDisplayOrbit from './components/CreatorDisplayOrbit.jsx';
 
@@ -26,6 +27,7 @@ export default function JennArt() {
           <figure><video src="/static/JennOrTreat2.webm" controls playsInline preload="metadata" /><figcaption>Jenn or Treat</figcaption></figure>
         </div>
       </section>
+      <AskPenny avatar="nurse" />
     </main>
   );
 }

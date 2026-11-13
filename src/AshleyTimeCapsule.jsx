@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './ashley-time-capsule.css';
+import AskPenny from './components/AskPenny.jsx';
 
 const MEMORIES = [
   {
@@ -142,6 +143,7 @@ export default function AshleyTimeCapsule() {
           </p>
         </section>
       )}
+      {unlocked && <AskPenny avatar="nurse" />}
     </main>
   );
 }

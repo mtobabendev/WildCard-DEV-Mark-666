@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import ShowcaseOrbit from './components/ShowcaseOrbit.jsx';
 import CreatorDisplayOrbit from './components/CreatorDisplayOrbit.jsx';
 import './CreatorShowcase.css';
+import AskPenny from './components/AskPenny.jsx';
 
 const profiles = {
   kandy: { name: 'Kandy', accent: '#c5a0ff', symbol: '♦', headline: 'Art, music & tarot', description: 'A creative corner for original art, music, storytelling, and tarot-inspired reflection.', sections: [
@@ -54,6 +55,7 @@ export default function CreatorShowcase({ profileId }) {
         </a>) : profile.sections.map(([heading, copy]) => <article className="wc-showcase__card" key={heading}><span>{profile.symbol}</span><h2>{heading}</h2><p>{copy}</p>{profileId === 'kandy' && heading === 'Music' && <a href={profile.links[0].href}>Listen on Suno →</a>}{profileId === 'ashley' && heading === 'Connections' && <a href={profile.links[0].href}>Visit Facebook →</a>}</article>)}
       </section>
       <footer className="wc-showcase__footer"><a href="/">Return to WildCard DEV</a><span>{profileId === 'ashley' ? 'A memorial space.' : 'Creative showcase · more projects to come.'}</span></footer>
+      <AskPenny avatar={creators.includes(profileId) ? 'nurse' : 'pixel'} />
     </main>
   );
 }
