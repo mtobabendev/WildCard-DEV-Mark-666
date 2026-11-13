@@ -8,6 +8,10 @@ on:
       - 'src/components/AskPenny.*'
       - 'src/comms/PennyCore.jsx'
       - 'test/penny-avatar.test.js'
+      - 'test/concierge-origin.test.js'
+      - 'src/components/concierge-origin.js'
+      - 'src/ask-penny-main.jsx'
+      - 'public/static/ask-penny.js'
       - '.github/workflows/penny-avatar.yml'
   workflow_dispatch:
 permissions:
@@ -20,4 +24,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test test/penny-avatar.test.js
+      - run: node --test test/penny-avatar.test.js test/concierge-origin.test.js
