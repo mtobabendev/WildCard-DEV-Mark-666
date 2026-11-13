@@ -227,6 +227,12 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
     .catch(() => {
       window.location.replace('/');
     });
+} else if (normalizedPath === '/kandy/kandyland') {
+  import('./KandyLand.jsx')
+    .then(({ default: KandyLand }) => {
+      root.render(<StrictMode><KandyLand /></StrictMode>);
+    })
+    .catch(() => { window.location.replace('/'); });
 } else if (normalizedPath === '/bunker') {
   import('./Bunker.jsx')
     .then(({ default: Bunker }) => {
