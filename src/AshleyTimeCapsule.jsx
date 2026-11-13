@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CapsuleEmptySpinner from './components/CapsuleEmptySpinner.jsx';
 import './ashley-time-capsule.css';
 import AskPenny from './components/AskPenny.jsx';
 
@@ -115,6 +116,7 @@ export default function AshleyTimeCapsule() {
         </section>
       ) : (
         <section className="capsule-gallery" aria-labelledby="capsule-gallery-title">
+          <CapsuleEmptySpinner />
           <p className="capsule-kicker">The door is open</p>
           <h1 id="capsule-gallery-title">Ashley's “What If” Time Capsule</h1>
           <p className="capsule-lead">
