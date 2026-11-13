@@ -4,6 +4,15 @@ import './PennyAfterHours.css';
 import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx';
 import AskPenny from './components/AskPenny.jsx';
 
+function pennySmsHref() {
+  const appleMobile = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  )
+  const body = encodeURIComponent('Hi Penny! I found you through Penny After Hours and wanted to say hello.')
+  return 'sms:+14029150789' + (appleMobile ? '&' : '?') + 'body=' + body
+}
+
 const POSTS = [
   {
     id: 'throne',
@@ -624,6 +633,35 @@ export default function PennyAfterHours() {
               posts, and a members' room concept, built to demonstrate what a
               creator-focused WildCard experience could become.
             </p>
+            <section aria-label="Penny's contact information" style={{ borderTop: '1px solid rgba(250, 180, 237, .26)', paddingTop: '1.1rem', marginTop: '1.25rem', marginBottom: '1.25rem' }}>
+              <p className="penny-fans__eyebrow">CONTACT INFORMATION</p>
+              <dl style={{ display: 'grid', gap: '.85rem', margin: '.75rem 0', fontSize: '.95rem', overflowWrap: 'anywhere' }}>
+                <div>
+                  <dt style={{ color: 'var(--pf-muted)', fontSize: '.8rem' }}>Birthday</dt>
+                  <dd style={{ margin: '.15rem 0 0' }}><time dateTime="--10-31">10/31</time></dd>
+                </div>
+                <div>
+                  <dt style={{ color: 'var(--pf-muted)', fontSize: '.8rem' }}>Phone</dt>
+                  <dd style={{ margin: '.15rem 0 0' }}>
+                    <details>
+                      <summary style={{ cursor: 'pointer', fontWeight: 800, color: '#ffb6e5', padding: '.25rem 0' }}>(402) 915-0789</summary>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem 1.25rem', padding: '.4rem 0' }}>
+                        <a href="tel:+14029150789">Call Penny</a>
+                        <a href={pennySmsHref()}>Text Penny</a>
+                      </div>
+                    </details>
+                  </dd>
+                </div>
+                <div>
+                  <dt style={{ color: 'var(--pf-muted)', fontSize: '.8rem' }}>Email</dt>
+                  <dd style={{ margin: '.15rem 0 0' }}><a href="mailto:Penny@WildCardDEV.com?subject=Hello%20Penny&body=Hi%20Penny%2C%0A%0AI%20found%20you%20through%20Penny%20After%20Hours%20and%20wanted%20to%20get%20in%20touch.%0A%0A">Penny@WildCardDEV.com</a></dd>
+                </div>
+                <div>
+                  <dt style={{ color: 'var(--pf-muted)', fontSize: '.8rem' }}>Website</dt>
+                  <dd style={{ margin: '.15rem 0 0' }}><a href="https://www.wildcarddev.com/">www.wildcarddev.com</a></dd>
+                </div>
+              </dl>
+            </section>
             <a href="https://party.wildcarddev.com/">Explore WildCard Party →</a>
           </section>
         )}
