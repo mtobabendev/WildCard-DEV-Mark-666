@@ -1,6 +1,6 @@
-/* Penny's third mini-spinner link. Scope strictly to Penny. */
+/* Penny's additional mini-spinner links. Scope strictly to Penny. */
 .penny-link-deck.mini-spinner .penny-link-card--fans {
-  grid-column: 1 / -1;
+  grid-column: 1;
   grid-row: 2;
   justify-self: center;
   width: 4.1rem;
@@ -22,9 +22,20 @@
     --mini-radius: 3rem;
   }
   .identity-card--penny .mini-spinner--penny .mini-spinner-track > a:nth-child(2) {
-    --mini-angle: 120deg;
+    --mini-angle: 90deg;
   }
   .identity-card--penny .mini-spinner--penny .mini-spinner-track > a:nth-child(3) {
-    --mini-angle: 240deg;
+    --mini-angle: 180deg;
   }
+}
+
+.penny-link-deck.mini-spinner .penny-link-card--stripagram {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: center;
+  width: 4.1rem;
+}
+.identity-card--penny .penny-link-card--stripagram { color: #ffb4d5; }
+@media (prefers-reduced-motion: no-preference) {
+  .identity-card--penny .mini-spinner--penny .mini-spinner-track > a:nth-child(4) { --mini-angle: 270deg; }
 }
