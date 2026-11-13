@@ -51,12 +51,23 @@ const PHOTOS = [
     src: '/static/PennyOnlyFansBanner.jpg',
     title: 'After Hours cover reveal',
   },
+  {
+    id: 'nurse-penny-01',
+    src: '/static/PennyNurseOnlyFans.jpg',
+    title: 'Nurse Penny 01',
+  },
+  {
+    id: 'nurse-penny-02',
+    src: '/static/NursePennyGallery02.jpg',
+    title: 'Nurse Penny 02',
+  },
 ];
 
 const PHOTO_GALLERIES = [
   { id: 'portraits-01-06', title: 'Portraits 01–06', photos: PHOTOS.slice(0, 6) },
   { id: 'portraits-07-08', title: 'Portraits 07–08', photos: PHOTOS.slice(6, 8) },
   { id: 'cover-reveal', title: 'After Hours cover reveal', photos: PHOTOS.slice(8, 9) },
+  { id: 'nurse-penny', title: 'Nurse Penny', photos: PHOTOS.slice(9, 11) },
 ];
 
 const VIDEOS = [
