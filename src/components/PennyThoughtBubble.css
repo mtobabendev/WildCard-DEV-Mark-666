@@ -77,8 +77,8 @@
 @media (prefers-reduced-motion: reduce) { .penny-thought__bubble { animation: none; } }
 
 .penny-thought__avatar {
-  display: block; flex: 0 0 auto; width: clamp(72px, 20vw, 108px); aspect-ratio: 1;
-  overflow: hidden; border-radius: 50%; border: 2px solid #f899d7;
+  display: block; flex: 0 0 auto; width: clamp(72px, 20vw, 108px); aspect-ratio: 4 / 5;
+  overflow: hidden; border-radius: .9rem; border: 2px solid #f899d7;
   background: #21132d; box-shadow: 0 0 18px #f899d744;
 }
 .penny-thought__header h2 { flex: 1; min-width: 0; overflow-wrap: anywhere; }

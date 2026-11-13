@@ -5242,8 +5242,13 @@ body {
 }
 .penny-character-spotlight__copy small { color: #d2afd8; }
 
-/* D.1: desktop homepage layout. Keep the mobile/compact layout byte-for-byte.
-   Normal-flow rows reserve space for the panels, spinner and dice chamber. */
+/* D.2: desktop homepage uses independent natural-height columns.
+   Keep the existing mobile, watch and channel layouts through display: contents. */
+.home-primary-column,
+.home-secondary-column {
+  display: contents;
+}
+
 @media (min-width: 1100px) and (min-height: 821px) {
   body:has(.landing:not(.is-section)) {
     overflow-x: clip;
@@ -5254,26 +5259,49 @@ body {
   .landing:not(.is-section) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(21rem, 30%);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     align-content: start;
     align-items: start;
     justify-items: stretch;
-    gap: 1rem;
-    padding: 6rem clamp(1rem, 2vw, 2.5rem) 2rem;
+    gap: .65rem .85rem;
+    min-height: 100svh;
+    padding: 0 clamp(.85rem, 1.7vw, 2rem) 1rem;
   }
 
-  .landing:not(.is-section) > .card-stage--contacts {
-    grid-area: 1 / 1;
+  .landing:not(.is-section) > .site-header {
+    position: relative;
+    inset: auto;
+    grid-column: 1 / -1;
+    min-height: 4rem;
+    padding: .55rem 1rem;
   }
 
-  .landing:not(.is-section) > .card-stage--penny {
-    grid-area: 1 / 2;
+  .landing:not(.is-section) > .home-primary-column,
+  .landing:not(.is-section) > .home-secondary-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+    gap: .65rem;
   }
 
-  .landing:not(.is-section) > .card-stage {
+  .landing:not(.is-section) > .home-primary-column {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+  }
+  .landing:not(.is-section) > .home-secondary-column { grid-column: 2; }
+
+  .landing:not(.is-section) .home-secondary-column > .card-stage--penny { order: -1; }
+
+  .landing:not(.is-section) .home-primary-column > .card-stage,
+  .landing:not(.is-section) .home-secondary-column > .card-stage {
     position: relative;
     inset: auto;
     min-width: 0;
+    min-height: 0;
+    height: auto;
     width: 100%;
   }
 
@@ -5283,35 +5311,72 @@ body {
     inset: auto;
     width: 100%;
     min-width: 0;
-    align-items: stretch;
-    gap: .8rem;
+    align-items: start;
+    gap: .65rem;
   }
 
-  .landing:not(.is-section) .identity-pair {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Keep the semantic contact group; let its cards occupy the primary grid. */
+  .landing:not(.is-section) .home-primary-column > .card-stage--contacts,
+  .landing:not(.is-section) .home-primary-column .identity-pair {
+    display: contents;
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card--kandy {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+    align-self: stretch;
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card--matt {
+    grid-column: 7 / span 6;
+    grid-row: 1;
+    align-self: stretch;
   }
 
   .landing:not(.is-section) .identity-pair .identity-card {
     min-width: 0;
-    padding: .85rem;
+    padding: .7rem;
+    align-content: start;
   }
 
   .landing:not(.is-section) .identity-card--kandy {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: .65rem;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: .6rem;
+    align-items: stretch;
   }
 
   .landing:not(.is-section) .identity-card--kandy .kandy-video-shell {
+    position: relative;
     grid-row: 1;
-    height: 100%;
-    min-height: 16rem;
+    height: auto;
+    min-height: 13rem;
+    align-self: stretch;
+  }
+
+  .landing:not(.is-section) .identity-card--kandy .kandy-video {
+    position: absolute;
+    inset: 0;
+  }
+
+  .landing:not(.is-section) .kandy-copy h2 { margin: .15rem 0 .3rem; }
+  .landing:not(.is-section) .kandy-copy > a { margin-top: .25rem; }
+  .landing:not(.is-section) .kandy-suno-feature { margin-top: .4rem; }
+  .landing:not(.is-section) .kandy-suno-feature p { margin-bottom: .35rem; }
+  .landing:not(.is-section) .kandy-suno-latest {
+    display: grid;
+    gap: .25rem;
+    margin-top: .3rem;
+  }
+  .landing:not(.is-section) .kandy-copy .kandy-suno-cta {
+    min-height: 2.15rem;
+    padding: .4rem .5rem;
   }
 
   .landing:not(.is-section) .identity-card--matt {
     grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
     grid-template-rows: repeat(6, auto) minmax(5.75rem, 1fr);
-    gap: .2rem .65rem;
-    align-content: start;
+    gap: .15rem .6rem;
+    align-content: stretch;
   }
 
   .landing:not(.is-section) .identity-card--matt .owner-media-stack {
@@ -5319,39 +5384,71 @@ body {
     flex-direction: column;
     grid-column: 1;
     grid-row: 1 / span 7;
-    gap: .55rem;
+    gap: .4rem;
     min-width: 0;
+    min-height: 0;
     align-self: stretch;
   }
 
   .landing:not(.is-section) .identity-card--matt .owner-media-stack > img {
-    width: min(100%, 6rem);
+    width: min(100%, 4.8rem);
     height: auto;
     aspect-ratio: 1;
     align-self: center;
   }
 
   .landing:not(.is-section) .owner-feature-video-shell {
+    position: relative;
     width: 100%;
+    height: auto;
     max-height: none;
-    min-height: 0;
-    aspect-ratio: 9 / 16;
-    flex: 1 1 auto;
+    min-height: 9.5rem;
+    aspect-ratio: auto;
+    flex: 1 1 0;
+    background: #0b0715;
+  }
+
+  .landing:not(.is-section) .owner-feature-video-shell .owner-feature-video {
+    position: absolute;
+    inset: 0;
+    object-fit: contain;
+    object-position: center top;
   }
 
   .landing:not(.is-section) .identity-card--matt > a {
     min-width: 0;
+    margin-top: .2rem;
     overflow-wrap: anywhere;
   }
 
   .landing:not(.is-section) .identity-card--matt .owner-project-pills {
     align-self: start;
+    margin-top: .35rem;
+    gap: .3rem;
+  }
+
+  .landing:not(.is-section) .identity-card--matt .owner-project-pills .owner-labs-pill {
+    min-height: 2.25rem;
+    padding: .4rem .6rem;
   }
 
   .landing:not(.is-section) .identity-pair .identity-card--ashley {
-    grid-column: 1 / -1;
+    grid-column: 1 / span 3;
+    grid-row: 2;
     width: 100%;
-    align-content: center;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    align-items: start;
+    gap: .45rem;
+  }
+
+  .landing:not(.is-section) .ashley-video-pair {
+    width: 100%;
+    max-width: none;
+    gap: .4rem;
+  }
+  .landing:not(.is-section) .ashley-video-shell {
+    max-height: 11rem;
   }
 
   .landing:not(.is-section) .concierge-pair {
@@ -5362,16 +5459,25 @@ body {
   .landing:not(.is-section) .concierge-pair .identity-card--jenn {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: max-content;
     align-content: start;
     align-items: start;
-    gap: .55rem;
-    padding: .75rem;
+    gap: .4rem;
+    padding: .65rem;
   }
 
   .landing:not(.is-section) .concierge-pair .penny-video-shell,
   .landing:not(.is-section) .concierge-pair .jenn-video-shell {
-    height: clamp(12rem, 17vw, 17rem);
+    height: clamp(10.5rem, 18vh, 14rem);
+  }
+  .landing:not(.is-section) .concierge-pair .penny-video-static > .penny-thought--main {
+    width: 100%;
+    margin: 0 0 .7rem;
+  }
+  .landing:not(.is-section) .concierge-pair .penny-thought__bubble {
+    padding: .4rem .5rem;
+    gap: .15rem;
   }
 
   .landing:not(.is-section) .concierge-pair .penny-copy {
@@ -5380,52 +5486,75 @@ body {
     min-width: 0;
   }
 
+  .landing:not(.is-section) .concierge-pair .penny-destination-pills {
+    margin-top: .35rem;
+    gap: .3rem;
+  }
+
   .landing:not(.is-section) .concierge-pair .penny-destination-pill {
+    min-height: 2.25rem;
+    padding: .4rem .45rem;
     white-space: normal;
     overflow-wrap: anywhere;
   }
 
-  .landing:not(.is-section) > .spinner-stage {
-    grid-area: 2 / 1;
+  .landing:not(.is-section) .identity-card--jenn h2 { margin: .15rem 0; }
+  .landing:not(.is-section) .identity-card--jenn .jenn-company-email { margin: 0; }
+
+  .landing:not(.is-section) .home-primary-column > .spinner-stage {
+    grid-column: 4 / -1;
+    grid-row: 2;
     position: relative;
     inset: auto;
     translate: none;
     width: min(48rem, 100%);
-    height: 24rem;
-    justify-self: center;
+    height: clamp(18rem, 30vh, 21rem);
     align-self: start;
+    justify-self: center;
   }
 
-  .landing:not(.is-section) > .context-window {
-    grid-area: 2 / 2;
+  .landing:not(.is-section) .home-secondary-column > .context-window {
     position: relative;
     inset: auto;
     width: 100%;
     min-width: 0;
+    min-height: 0;
     align-self: start;
+    padding: .85rem 1rem;
   }
 
-  .landing:not(.is-section) > .home-dice-panel {
-    grid-area: 3 / 1;
+  .landing:not(.is-section) .home-primary-column > .home-dice-panel {
+    grid-column: 4 / -1;
+    grid-row: 3;
+    justify-self: center;
     position: relative;
     inset: auto;
     translate: none;
-    justify-self: center;
+    align-self: center;
     width: min(17rem, 100%);
+    margin: 0;
   }
 }
 
 @media (min-width: 1500px) and (min-height: 821px) {
-  .landing:not(.is-section) .identity-pair {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.25fr) minmax(0, .8fr);
+  .landing:not(.is-section) .identity-pair .identity-card--kandy {
+    grid-column: 1 / span 4;
+  }
+
+  .landing:not(.is-section) .identity-pair .identity-card--matt {
+    grid-column: 5 / span 5;
   }
 
   .landing:not(.is-section) .identity-pair .identity-card--ashley {
-    grid-column: auto;
-    align-content: start;
+    grid-column: 10 / span 3;
+    grid-row: 1;
+  }
+
+  .landing:not(.is-section) .home-primary-column > .spinner-stage,
+  .landing:not(.is-section) .home-primary-column > .home-dice-panel {
+    grid-column: 1 / -1;
   }
 }
-
 
 /* Two-card link trees use the existing mini-spinner interaction engine. */
 .identity-card .mini-spinner--two-person {

@@ -1530,6 +1530,7 @@ export default function App() {
         </button>
       )}
 
+      <div className="home-primary-column">
       <ContactPanels
         open={isHome}
         showKandy={!isWatch}
@@ -1555,6 +1556,9 @@ export default function App() {
         </section>
       )}
 
+      </div>
+
+      <div className="home-secondary-column">
       <section
         id="channel-content"
         className={`context-window${open && !contactPanelDismissed ? ' is-active' : ''}${activeChannel.id === 'contact' ? ' context-window--contact' : ''}${activeChannel.id === 'systems' ? ' context-window--systems' : ''}${activeChannel.id === 'portfolio' ? ' context-window--portfolio' : ''}${activeChannel.id === 'penny' ? ' context-window--penny' : ''}${activeChannel.id === 'automation' ? ' context-window--automation' : ''}${activeChannel.id === 'interface' ? ' context-window--interface' : ''}`}
@@ -2562,6 +2566,8 @@ export default function App() {
         </div>
       </section>
 
+
+      </div>
 
       <CombinationGate
         open={gateOpen}
