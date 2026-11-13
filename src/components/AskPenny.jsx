@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './AskPenny.css';
-import PennyActiveAvatar, { PENNY_AVATAR_POSTER } from './PennyActiveAvatar.jsx';
+import PennyActiveAvatar from './PennyActiveAvatar.jsx';
 import PennyPixelAvatar from './PennyPixelAvatar.jsx';
 
 // Extracted from WildCard Party's Ask Penny experience.
@@ -21,9 +21,8 @@ function loadMessages() {
   }
 }
 
-export default function AskPenny({ avatar = 'pixel' }) {
-  const nurse = avatar === 'nurse';
-  const [open, setOpen] = useState(false);
+export default function AskPenny({ embedded = false, onClose } = {}) {
+  const [open, setOpen] = useState(embedded);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState(loadMessages);
   const [busy, setBusy] = useState(false);
@@ -58,6 +57,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
     abortRef.current?.abort();
     setOpen(false);
     triggerRef.current?.focus();
+    if (embedded) onClose?.();
   }
 
   function clearSession() {
@@ -161,7 +161,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
   }
 
   return (
-    <div className="after-ask" data-avatar={nurse ? 'nurse' : 'pixel'}>
+    <div className="after-ask" data-embedded={embedded ? 'true' : undefined}>
       {open && (
         <section
           className="after-ask__panel"
@@ -175,7 +175,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
           <header className="after-ask__header">
             <div className="after-ask__identity">
               <span className="after-ask__sigil" aria-hidden="true">
-                {nurse ? <PennyActiveAvatar /> : <PennyPixelAvatar />}
+                <PennyActiveAvatar />
               </span>
               <div className="after-ask__identity-copy">
                 <strong>ASK PENNY</strong>
@@ -232,7 +232,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
           <p className="after-ask__disclaimer">Messages use WildCard Party's existing Penny service. This browser session only.</p>
         </section>
       )}
-      <button
+      {!embedded && <button
         ref={triggerRef}
         className="after-ask__dock"
         type="button"
@@ -241,14 +241,14 @@ export default function AskPenny({ avatar = 'pixel' }) {
         onClick={() => open ? closePanel() : setOpen(true)}
       >
         <span className="after-ask__dock-avatar" aria-hidden="true">
-          {nurse ? <img src={PENNY_AVATAR_POSTER} decoding="async" alt="" width="56" height="56" /> : <PennyPixelAvatar />}
+          {open ? <span className="penny-pixel-avatar penny-pixel-avatar--still">♠</span> : <PennyPixelAvatar />}
         </span>
         <span className="after-ask__dock-copy">
           <strong>ASK PENNY</strong>
           <small>{open ? 'CLOSE CHAT' : 'LIVE CONCIERGE'}</small>
         </span>
         <span className="after-ask__dock-light" aria-hidden="true" />
-      </button>
+      </button>}
     </div>
   );
 }

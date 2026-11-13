@@ -2,6 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/ask-penny/",
+      "destination": "/ask-penny/index.html"
+    },
+    {
+      "source": "/ask-penny",
+      "destination": "/ask-penny/index.html"
+    },
+    {
       "source": "/ashley/memorial/",
       "destination": "/index.html"
     },
@@ -129,6 +137,54 @@
         {
           "key": "X-Robots-Tag",
           "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/ask-penny",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://wildcarddev.com https://*.wildcarddev.com https://wildcard-office.vercel.app https://wildcard-showroom-enhanced-1500.vercel.app https://pennytube.vercel.app https://wildcard-party.vercel.app https://wild-card-dev-mark-666.vercel.app"
+        }
+      ]
+    },
+    {
+      "source": "/ask-penny/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://wildcarddev.com https://*.wildcarddev.com https://wildcard-office.vercel.app https://wildcard-showroom-enhanced-1500.vercel.app https://pennytube.vercel.app https://wildcard-party.vercel.app https://wild-card-dev-mark-666.vercel.app"
+        }
+      ]
+    },
+    {
+      "source": "/ask-penny/index.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://wildcarddev.com https://*.wildcarddev.com https://wildcard-office.vercel.app https://wildcard-showroom-enhanced-1500.vercel.app https://pennytube.vercel.app https://wildcard-party.vercel.app https://wild-card-dev-mark-666.vercel.app"
+        }
+      ]
+    },
+    {
+      "source": "/static/ask-penny.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
         }
       ]
     }

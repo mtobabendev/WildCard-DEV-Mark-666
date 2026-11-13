@@ -27,7 +27,7 @@ export default function JennArt() {
           <figure><video src="/static/JennOrTreat2.webm" controls playsInline preload="metadata" /><figcaption>Jenn or Treat</figcaption></figure>
         </div>
       </section>
-      <AskPenny avatar="nurse" />
+      <AskPenny />
     </main>
   );
 }

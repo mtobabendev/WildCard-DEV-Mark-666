@@ -2,6 +2,7 @@ import PennyContactRouter from './components/PennyContactRouter.jsx';
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import MessengerLauncher from './components/MessengerLauncher.jsx';
+import AskPenny from './components/AskPenny.jsx';
 import pennySaysHelloWebm from '../assets/PennyWildCardIntro-new-mobile-optimized.webm';
 
 const GOOGLE_ANALYTICS_SRC =
@@ -171,6 +172,7 @@ function SiteEntry() {
         )}
       </div>
       {introFinished && <MessengerLauncher />}
+      {introFinished && <AskPenny />}
       {introFinished && LittleBlackBookComponent ? (
         <LittleBlackBookComponent />
       ) : null}
@@ -231,6 +233,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
       root.render(
         <StrictMode>
           <Bunker />
+          <AskPenny />
           <MessengerLauncher />
         <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
