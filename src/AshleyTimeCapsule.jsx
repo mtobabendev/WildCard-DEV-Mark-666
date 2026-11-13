@@ -143,7 +143,7 @@ export default function AshleyTimeCapsule() {
           </p>
         </section>
       )}
-      {unlocked && <AskPenny avatar="nurse" />}
+      <AskPenny avatar={unlocked ? "nurse" : "pixel"} />
     </main>
   );
 }

@@ -21,9 +21,9 @@ function loadMessages() {
   }
 }
 
-export default function AskPenny({ avatar = 'pixel' }) {
+export default function AskPenny({ avatar = 'pixel', embedded = false, onClose }) {
   const nurse = avatar === 'nurse';
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(embedded);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState(loadMessages);
   const [busy, setBusy] = useState(false);
@@ -58,6 +58,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
     abortRef.current?.abort();
     setOpen(false);
     triggerRef.current?.focus();
+    if (embedded) onClose?.();
   }
 
   function clearSession() {
@@ -161,7 +162,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
   }
 
   return (
-    <div className="after-ask" data-avatar={nurse ? 'nurse' : 'pixel'}>
+    <div className="after-ask" data-avatar={nurse ? 'nurse' : 'pixel'} data-embedded={embedded ? 'true' : undefined}>
       {open && (
         <section
           className="after-ask__panel"
@@ -232,7 +233,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
           <p className="after-ask__disclaimer">Messages use WildCard Party's existing Penny service. This browser session only.</p>
         </section>
       )}
-      <button
+      {!embedded && <button
         ref={triggerRef}
         className="after-ask__dock"
         type="button"
@@ -248,7 +249,7 @@ export default function AskPenny({ avatar = 'pixel' }) {
           <small>{open ? 'CLOSE CHAT' : 'LIVE CONCIERGE'}</small>
         </span>
         <span className="after-ask__dock-light" aria-hidden="true" />
-      </button>
+      </button>}
     </div>
   );
 }

@@ -222,3 +222,8 @@
   .after-ask__typing { animation:none; }
   .after-ask__dock { transition: none; transform: none; }
 }
+
+/* A hosted chat panel fills only its own bounded iframe, never the host page. */
+.after-ask[data-embedded="true"] { position: fixed; inset: 0; }
+.after-ask[data-embedded="true"] .after-ask__panel { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; }
+.after-ask[data-embedded="true"] .after-ask__transcript { min-height: 0; }
