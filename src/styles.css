@@ -5139,6 +5139,16 @@ body {
   .concierge-pair .identity-card--penny {
     grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr);
   }
+  /* The landscape second clip uses its intrinsic ratio on the compact layout.
+     Vite preserves the asset basename when adding its production hash. */
+  .concierge-pair .penny-video-shell:has(> .penny-loop-video[src*="ClubPennyLapDance1"]) {
+    height: auto;
+    aspect-ratio: auto;
+  }
+  .concierge-pair .penny-loop-video[src*="ClubPennyLapDance1"] {
+    height: auto;
+    aspect-ratio: auto 16 / 9;
+  }
   .card-stage.is-active .identity-card--jenn {
     animation: none;
     opacity: 1;
