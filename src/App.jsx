@@ -643,7 +643,7 @@ function ContactPanels({
 }) {
   const ownerFeatureVideoRef = useRef(null);
   const ownerFeatureVideoSupported = useMediaQuery(
-    '(min-width: 241px) and (max-width: 520px), (min-width: 900px)',
+    '(min-width: 241px)',
   );
 
   useEffect(() => {
@@ -685,25 +685,26 @@ function ContactPanels({
               alt="Matt Tobaben"
             />
 
-            <div
-              className="owner-feature-video-shell"
-              aria-hidden="true"
-            >
-              <video
-                ref={ownerFeatureVideoRef}
-                className="owner-feature-video"
-                loop
-                muted
-                playsInline
-                preload="metadata"
+            {ownerFeatureVideoSupported && (
+              <div
+                className="owner-feature-video-shell"
+                aria-hidden="true"
               >
-                <source
-                  src={ownerPennyKandyVideo}
-                  type="video/webm"
-                  media="(min-width: 241px) and (max-width: 520px), (min-width: 900px)"
-                />
-              </video>
-            </div>
+                <video
+                  ref={ownerFeatureVideoRef}
+                  className="owner-feature-video"
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                >
+                  <source
+                    src={ownerPennyKandyVideo}
+                    type="video/webm"
+                  />
+                </video>
+              </div>
+            )}
           </div>
 
           <p className="eyebrow">Owner</p>
