@@ -130,13 +130,6 @@
     0 0 0 3px rgba(255, 120, 210, .12),
     0 0 22px rgba(255, 120, 210, .23);
 }
-.after-ask__sigil--photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 64% 24%;
-}
 .after-ask__header-actions {
   grid-column: 2;
   grid-row: 2;

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './AskPenny.css';
+import PennyActiveAvatar, { PENNY_AVATAR_POSTER } from './PennyActiveAvatar.jsx';
 
 // Extracted from WildCard Party's Ask Penny experience.
 // Calls the shared Party backend via this site's same-origin /api/penny relay.
@@ -171,14 +172,8 @@ export default function AskPenny() {
         >
           <header className="after-ask__header">
             <div className="after-ask__identity">
-              <span className="after-ask__sigil after-ask__sigil--photo" aria-hidden="true">
-                <img
-                  src="/static/PennyNurseOnlyFans.jpg"
-                  alt=""
-                  width="136"
-                  height="136"
-                  decoding="async"
-                />
+              <span className="after-ask__sigil" aria-hidden="true">
+                <PennyActiveAvatar />
               </span>
               <div className="after-ask__identity-copy">
                 <strong>ASK PENNY</strong>
@@ -244,7 +239,7 @@ export default function AskPenny() {
         onClick={() => open ? closePanel() : setOpen(true)}
       >
         <span className="after-ask__dock-avatar" aria-hidden="true">
-          <img src="/static/Penny.gif" alt="" width="56" height="56" />
+          <img src={PENNY_AVATAR_POSTER} decoding="async" alt="" width="56" height="56" />
         </span>
         <span className="after-ask__dock-copy">
           <strong>ASK PENNY</strong>
