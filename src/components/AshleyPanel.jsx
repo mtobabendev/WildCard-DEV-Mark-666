@@ -29,6 +29,26 @@ export default function AshleyPanel({ active, links }) {
   return (
     <article className="identity-card identity-card--ashley" aria-labelledby="ashley-panel-title">
       <style>{`
+        /* Keep this nested grid independent of the generic mobile identity-card rules. */
+        .identity-card--ashley .ashley-video-pair > .ashley-video-shell {
+          grid-row: 1;
+          min-width: 0;
+          margin: 0;
+          padding: 0;
+          align-self: start;
+        }
+        .identity-card--ashley .ashley-video-pair > .ashley-memory-flip {
+          grid-column: 1;
+        }
+        .identity-card--ashley .ashley-video-pair > .ashley-video-portal {
+          grid-column: 2;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .identity-card--ashley .mini-spinner--two-person .mini-spinner-track > a {
+            grid-column: auto;
+            grid-row: auto;
+          }
+        }
         .ashley-memory-flip {
           position: relative;
           display: block;
