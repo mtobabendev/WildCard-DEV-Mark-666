@@ -43,7 +43,7 @@ const POSTS = [
 const PHOTOS = [
   ...Array.from({ length: 8 }, (_, index) => ({
     id: `portrait-${index + 1}`,
-    src: `/static/${index + 1}.jpg`,
+    src: `/static/${index < 2 ? 2 - index : index + 1}.jpg`,
     title: `Portrait ${String(index + 1).padStart(2, '0')}`,
   })),
   {
