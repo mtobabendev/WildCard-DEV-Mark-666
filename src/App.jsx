@@ -247,6 +247,16 @@ function FacebookIcon() {
   );
 }
 
+function StripagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="5" fill="none" />
+      <circle cx="12" cy="12" r="4" fill="none" />
+      <path d="m17.5 5.5.65 1.35 1.35.65-1.35.65-.65 1.35-.65-1.35-1.35-.65 1.35-.65Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 function SunoIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1029,6 +1039,10 @@ function ContactPanels({
                 <a className="identity-link-card kandy-link-card--fans" href="/kandy/showcase" aria-label="Kandy Fans: art, music and tarot">
                   <span className="identity-link-card-icon" aria-hidden="true">♦</span>
                   <span className="identity-link-card-label">FANS</span>
+                </a>
+                <a className="identity-link-card kandy-link-card--stripagram" href="https://party.wildcarddev.com/stripagram/?profile=kandy" target="_blank" rel="noopener noreferrer" aria-label="Kandy on Stripagram" title="Kandy on Stripagram">
+                  <span className="identity-link-card-icon" aria-hidden="true"><StripagramIcon /></span>
+                  <span className="identity-link-card-label">STRIPA</span>
                 </a>
                 </div>
                 <div
@@ -2547,6 +2561,10 @@ export default function App() {
               >
                 <span className="penny-link-card-icon penny-link-card-icon--fans" aria-hidden="true">♠</span>
                 <span className="penny-link-card-label">FANS</span>
+              </a>
+              <a className="penny-link-card penny-link-card--stripagram" href="https://party.wildcarddev.com/stripagram/?profile=penny" target="_blank" rel="noopener noreferrer" aria-label="Penny on Stripagram" title="Penny on Stripagram">
+                <span className="penny-link-card-icon" aria-hidden="true"><StripagramIcon /></span>
+                <span className="penny-link-card-label">STRIPA</span>
               </a>
               </div>
               <div

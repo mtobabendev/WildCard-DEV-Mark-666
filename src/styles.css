@@ -1024,7 +1024,8 @@ body {
     minmax(3.25rem, 1fr);
   grid-template-areas:
     "facebook hub suno"
-    "play hub apple";
+    "play hub apple"
+    "fans hub stripagram";
   max-width: 11.5rem;
 }
 
@@ -3450,9 +3451,9 @@ body {
   .mini-spinner--owner .mini-spinner-track > a:nth-child(4) { --mini-angle: 216deg; }
   .mini-spinner--owner .mini-spinner-track > a:nth-child(5) { --mini-angle: 288deg; }
 
-  .mini-spinner--kandy .mini-spinner-track > a:nth-child(2) { --mini-angle: 72deg; }
-  .mini-spinner--kandy .mini-spinner-track > a:nth-child(3) { --mini-angle: 144deg; }
-  .mini-spinner--kandy .mini-spinner-track > a:nth-child(4) { --mini-angle: 216deg; }
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(2) { --mini-angle: 60deg; }
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(3) { --mini-angle: 120deg; }
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(4) { --mini-angle: 180deg; }
 
   .mini-spinner--penny .mini-spinner-track > a:nth-child(2) { --mini-angle: 180deg; }
 
@@ -5587,5 +5588,10 @@ body {
   .mini-spinner--two-person .two-person-link-hub img { width: 1.7rem; height: 1.7rem; object-fit: contain; }
 }
 
-@media (prefers-reduced-motion: no-preference) { .mini-spinner--kandy .mini-spinner-track > a:nth-child(5) { --mini-angle: 288deg; } }
-.kandy-link-card--fans { color: #ff9fe5; }
+@media (prefers-reduced-motion: no-preference) { .mini-spinner--kandy .mini-spinner-track > a:nth-child(5) { --mini-angle: 240deg; } }
+.kandy-link-card--fans { color: #ff9fe5; grid-area: fans; }
+.identity-card--kandy .kandy-link-card--stripagram { grid-area: stripagram; color: #ffb4d5; }
+@media (prefers-reduced-motion: no-preference) {
+  .mini-spinner--kandy .mini-spinner-track > a:nth-child(6) { --mini-angle: 300deg; }
+  .identity-card--kandy .kandy-link-deck.mini-spinner { --mini-radius: 3.2rem; }
+}
