@@ -68,7 +68,7 @@ export default function DiceLab() {
         </details>
 
         <footer className="dice-lab__footer">
-          <span>♠ WILDCARD DEV · NO BACKEND · HISTORY STAYS IN THIS BROWSER</span>
+          <span>♠ WILDCARD DEV · YOUR ROLLS STAY IN THIS BROWSER</span>
           <a href="/grimoire">Return to The Grimoire ↗</a>
         </footer>
       </main>

@@ -157,7 +157,7 @@ export default function DiceTray({ compact = false, onRoll }) {
     <section className={`dice-lab__panel${compact ? ' dice-lab__panel--compact' : ''}`} aria-label="Three-dimensional dice tray">
               <div className="dice-lab__panel-top">
                 <span>THE ROLLING TABLE</span>
-                <span>FULL POLYHEDRAL SET · OFFLINE READY</span>
+                <span>THE WHOLE DICE SET · PLAY OFFLINE</span>
               </div>
     
               <div className="dice-lab__typebar" role="group" aria-label="Select dice type">

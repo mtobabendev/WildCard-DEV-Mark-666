@@ -30,21 +30,21 @@ import witchHalloweenIntro from '../assets/WitchPennyIntroKandy.webm';
 import witchHalloweenReading from '../assets/WitchPennyKandyTarotReading.webm';
 
 const CHANNELS = [
-  { id: 'contact', number: '01', title: 'Contact', copy: 'Direct operator access for WildCard DEV, Matt, Penny, and Kandy, an accomplished Tarot reader and up-and-coming author.', video: witchHalloweenHookUp },
-  { id: 'systems', number: '02', title: 'Arcane Engineering', copy: 'Web, apps, automation, and AI built with cinematic precision.', video: witchHalloween20 },
-  { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'A living archive of WildCard DEV builds, experiments, strange ideas, and systems summoned into existence.', video: witchHalloweenTarot },
-  { id: 'penny', number: '04', title: 'Penny', copy: 'The digital avatar of Lilith — concierge guidance, contact routing, and controlled chaos.', penny: true, video: pennyKandyAvaVideo },
-  { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Where bold ideas become working systems. Automation, AI, and a little digital sorcery handle the repetitive bullshit, leaving talented women like Kandy free to create, write, read the cards, and build what comes next.', video: witchHalloweenIntro },
-  { id: 'interface', number: '06', title: 'The Veil', copy: 'Distinctive digital experiences built to feel responsive, useful, and alive. See that little spade on the right? That’s Penny’s Little Black Book. Give it a tap.', video: witchHalloweenReading },
+  { id: 'contact', number: '01', title: 'Contact', copy: 'Every good adventure starts with a conversation. Meet Matt, Penny, and Kandy, our musician, artist, Tarot reader, and aspiring author.', video: witchHalloweenHookUp },
+  { id: 'systems', number: '02', title: 'Arcane Engineering', copy: 'Websites with character. Apps with purpose. AI and automation that earn their keep.', video: witchHalloween20 },
+  { id: 'portfolio', number: '03', title: 'The Grimoire', copy: 'Our book of wonders: working worlds, strange experiments, original art, and the ideas that refused to stay on paper.', video: witchHalloweenTarot },
+  { id: 'penny', number: '04', title: 'Penny', copy: 'The digital avatar of Lilith. Your guide to the WildCard worlds, keeper of the keys, and a little controlled chaos.', penny: true, video: pennyKandyAvaVideo },
+  { id: 'automation', number: '05', title: 'Hell’s Little Helpers', copy: 'Let the imps handle the repetitive bullshit. We build tools that give good people more time to create, dream, and do what they love.', video: witchHalloweenIntro },
+  { id: 'interface', number: '06', title: 'The Veil', copy: 'Every screen is a doorway. See that little spade on the right? That’s Penny’s Little Black Book. Go ahead. Give it a tap.', video: witchHalloweenReading },
 ];
 
 const GRIMOIRE_PROJECTS = [
   {
     name: "Penny's Garage",
     video: '/static/AnimePenny3.webm',
-    status: 'Production storefront',
-    description: 'WildCard DEV’s interactive services and merchandise storefront, with hosted provider listings and rotatable merchandise presentation. Display merchandise may be demonstration-only.',
-    capabilities: ['Storefront', 'Hosted services', 'Merchandise viewer'],
+    status: 'Open for business',
+    description: 'Step into Penny’s Garage. Browse services, meet independent sellers, and turn featured merchandise to see it from every angle. Some display pieces are just for show.',
+    capabilities: ['Shop', 'Services', '360° previews'],
     links: [
       { label: 'Explore Penny’s Garage →', href: 'https://pennysoffice.wildcarddev.com/' },
     ],
@@ -52,8 +52,8 @@ const GRIMOIRE_PROJECTS = [
   {
     name: 'WildCard Party',
     video: '/static/PennyRouting-1.webm',
-    status: 'Live platform · Calling in development',
-    description: 'A social and community platform with direct messaging, attachments, presence, and read/unread indicators. Calling functionality remains in development.',
+    status: 'Doors open · Calls coming later',
+    description: 'The party is on. Send messages, share files, see who is around, and keep track of what you have read. Calling is not available yet.',
     capabilities: ['Community', 'Messaging', 'Attachments'],
     links: [
       { label: 'Visit WildCard Party →', href: 'https://party.wildcarddev.com/' },
@@ -63,21 +63,21 @@ const GRIMOIRE_PROJECTS = [
     name: 'WildCard Labs',
     video: '/static/EricaHelpsOut.webm',
     status: 'Coming soon',
-    description: 'The experimental development space for WildCard DEV. Its landing page is a preview of what is planned, not a completed project gallery.',
+    description: 'Behind the lab doors, strange ideas are taking shape. Peek inside for a first look at what we have planned; the full exhibit is still to come.',
     capabilities: ['Research', 'Experiments'],
     links: [
-      { label: 'Visit the Labs landing page →', href: 'https://labs.wildcarddev.com/' },
+      { label: 'Peek inside the Labs →', href: 'https://labs.wildcarddev.com/' },
     ],
   },
   {
     name: 'Web & App Showroom',
     video: '/static/LucyEnters.webm',
-    status: 'Package demonstrations · Not client projects',
-    description: 'Explore two example web-and-app build packages: the Enhanced Build and the Launch Build.',
-    capabilities: ['Web design', 'App development', 'Package demos'],
+    status: 'Try our examples · Not client work',
+    description: 'Take two of our website and app examples for a spin: the Enhanced Build and the Launch Build. See what your own idea could become.',
+    capabilities: ['Websites', 'Apps', 'Try the examples'],
     links: [
-      { label: 'Open Enhanced Build demo →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/' },
-      { label: 'Open Launch Build demo →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/launch/' },
+      { label: 'Explore Enhanced Build →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/' },
+      { label: 'Explore Launch Build →', href: 'https://wildcard-showroom-enhanced-1500.vercel.app/launch/' },
     ],
   },
 ];
@@ -86,17 +86,17 @@ const GRIMOIRE_ARCHIVE = [
   {
     name: '3D Video Carousel',
     video: '/static/EricaTechSupport.webm',
-    description: 'The original Mark III eight-video carousel, restored as a draggable interactive exhibit.',
+    description: 'Eight moving cards from the original Mark III, brought back to life. Grab the wheel and give it a spin.',
   },
   {
     name: 'Dice Prototypes',
     video: '/static/PennySanchez.webm',
-    description: 'Historical dice-focused browser experiments, including multiple builds preserved in the Mark III archive.',
+    description: 'Before the Dice Chamber, there were these early experiments. Explore the original rolls preserved from Mark III.',
   },
   {
     name: 'Flashcards',
     video: '/static/LucyLeads.webm',
-    description: 'A browser-based flashcard experiment from the earlier WildCard development era.',
+    description: 'A little piece of WildCard history: an early tool for learning one card at a time.',
   },
 ];
 
@@ -424,7 +424,7 @@ function ContactForm({ onSubmit }) {
         className="contact-submit"
         type="submit"
       >
-        Send inquiry
+        Open email draft
       </button>
     </form>
   );
@@ -1673,7 +1673,7 @@ export default function App() {
                 <article className="contact-reception-card">
                   <span className="contact-reception-symbol" aria-hidden="true">♠</span>
                   <h4>Matt · WildCard DEV</h4>
-                  <p>Owner, development, systems, partnerships, and project inquiries.</p>
+                  <p>The man behind WildCard DEV. Talk ideas, business, partnerships, or the next thing we can build together.</p>
                   <div className="contact-reception-actions">
                     <a
                       href="mailto:matt@wildcarddev.com"
@@ -1706,7 +1706,7 @@ export default function App() {
                 <article className="contact-reception-card">
                   <span className="contact-reception-symbol" aria-hidden="true">✧</span>
                   <h4>Penny · AI Concierge</h4>
-                  <p>Contact routing, guidance, and finding the right next step.</p>
+                  <p>Not sure which door to open? Penny will help you find the right person and the next step.</p>
                   <div className="contact-reception-actions">
                     <a
                       href="mailto:penny@wildcarddev.com"
@@ -1764,8 +1764,7 @@ export default function App() {
               <p className="contact-reception-kicker">II. Project Inquiries</p>
               <h3 id="contact-reception-inquiry">Bring us your unusual problem</h3>
               <p className="contact-reception-note">
-                Tell us what you're building or trying to solve. The existing inquiry
-                form prepares a message in your email app, with Penny assisting.
+                Tell us what you have in mind. Penny will prepare an email for you to review and send.
               </p>
               <ContactForm onSubmit={handleContactFormSubmit} />
             </section>
@@ -1826,27 +1825,27 @@ export default function App() {
                 <article className="arcane-forge-card">
                   <span className="arcane-forge-symbol" aria-hidden="true">⌘</span>
                   <h4>Web Development</h4>
-                  <p>Responsive sites, storefronts, and business tools designed to work in the real world.</p>
+                  <p>Websites, shops, and business tools that look good and work wherever your customers find you.</p>
                 </article>
                 <article className="arcane-forge-card">
                   <span className="arcane-forge-symbol" aria-hidden="true">▣</span>
                   <h4>Applications</h4>
-                  <p>Custom apps, interactive tools, and useful experiences built around the actual task.</p>
+                  <p>Apps and interactive tools made for the way you actually live and work.</p>
                 </article>
                 <article className="arcane-forge-card">
                   <span className="arcane-forge-symbol" aria-hidden="true">⛓</span>
-                  <h4>Integrations</h4>
-                  <p>Connect existing services and data flows without creating unnecessary moving parts.</p>
+                  <h4>Make It All Work Together</h4>
+                  <p>Make the tools you already use talk to each other, without adding a mess of new ones.</p>
                 </article>
                 <article className="arcane-forge-card">
                   <span className="arcane-forge-symbol" aria-hidden="true">⚙</span>
                   <h4>Automation</h4>
-                  <p>Take repetitive processes off the workbench while keeping humans in control.</p>
+                  <p>Hand the busywork to the imps. You keep the reins.</p>
                 </article>
                 <article className="arcane-forge-card">
                   <span className="arcane-forge-symbol" aria-hidden="true">✧</span>
                   <h4>AI Systems</h4>
-                  <p>Purpose-built assistants and practical AI integrations with clear boundaries.</p>
+                  <p>AI assistants built for a real job, with you in control of what they can do.</p>
                 </article>
               </div>
             </section>
@@ -1857,25 +1856,25 @@ export default function App() {
                 <a href="https://pennysoffice.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
                   <span className="arcane-forge-symbol" aria-hidden="true">♠</span>
                   <strong>Penny’s Garage</strong>
-                  <span>Services, storefronts, and interactive merchandise.</span>
+                  <span>Shop, find services, and take the merchandise for a spin.</span>
                   <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
                 </a>
                 <a href="https://labs.wildcarddev.com/" target="_blank" rel="noopener noreferrer">
                   <span className="arcane-forge-symbol" aria-hidden="true">◇</span>
                   <strong>WildCard Labs</strong>
-                  <span>Experiments and systems under construction.</span>
+                  <span>A sneak peek at the strange things brewing in our lab.</span>
                   <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
                 </a>
                 <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
                   <span className="arcane-forge-symbol" aria-hidden="true">✦</span>
                   <strong>Web &amp; App Showroom</strong>
-                  <span>Explore the Enhanced Build demonstration.</span>
+                  <span>Take the Enhanced Build for a test drive.</span>
                   <span className="arcane-forge-link-arrow" aria-hidden="true">↗</span>
                 </a>
                 <a href="mailto:matt@wildcarddev.com?subject=Arcane%20Engineering%20Inquiry">
                   <span className="arcane-forge-symbol" aria-hidden="true">✉</span>
                   <strong>Bring Us a Problem</strong>
-                  <span>Tell us what you need built, connected, or automated.</span>
+                  <span>Tell us what you wish existed, or what you are tired of doing by hand.</span>
                   <span className="arcane-forge-link-arrow" aria-hidden="true">→</span>
                 </a>
               </div>
@@ -1911,8 +1910,7 @@ export default function App() {
               <p className="penny-throne-overline">♠ WildCard DEV // Chamber Four</p>
               <h2>Penny Bella Morningstar</h2>
               <p>
-                Welcome to my throne room. This is where ideas get loud,
-                builds go sideways, and the WildCard worlds come together.
+                Welcome to my throne room. Ideas get loud here, ordinary rules get questioned, and the WildCard worlds come together.
               </p>
             </div>
             <article className="penny-character-spotlight" aria-labelledby="nurse-penny-spotlight-title">
@@ -1973,11 +1971,10 @@ export default function App() {
                   <p className="grimoire-overline">♠ WildCard DEV // The Living Archive</p>
                   <h2>The Grimoire</h2>
                   <p className="grimoire-hero-lead">
-                    The living portfolio and archive of WildCard DEV.
+                    Every WildCard has a story. This is our book.
                   </p>
                   <p className="grimoire-hero-description">
-                    Active builds, restored concepts, and creative work.
-                    Every page holds another story.
+                    Explore our living worlds, rediscover the originals, and lose yourself in a little creativity.
                   </p>
                   <nav className="grimoire-hero-actions" aria-label="Grimoire collections">
                     <a href="#grimoire-living-works">Explore the Living Works ↓</a>
@@ -2000,7 +1997,7 @@ export default function App() {
             <section className="grimoire-collection" aria-labelledby="grimoire-living-works">
               <h3 id="grimoire-living-works">I. The Living Works</h3>
               <p className="grimoire-collection-intro">
-                Real WildCard DEV sites, platforms, and development demonstrations.
+                Open the doors to our working worlds and try examples of what we can create for you.
               </p>
               <div className="grimoire-accordion-list">
                 {GRIMOIRE_PROJECTS.map((project, index) => {
@@ -2082,14 +2079,13 @@ export default function App() {
             <section className="grimoire-collection" aria-labelledby="grimoire-resurrection">
               <h3 id="grimoire-resurrection">II. The Resurrection Chamber</h3>
               <p className="grimoire-collection-intro">
-                Original WildCard Mark III source and historical experiments.
-                Preserved as built, not presented as new working demos.
+                The original Mark III and the experiments that started it all. Preserved as they were, not dressed up as new creations.
               </p>
               <div className="grimoire-accordion-list">
                 <GrimoireAccordionEntry
                   id="grimoire-mark3"
                   title="WildCard Mark III"
-                  status="Original archive · Unmodified source"
+                  status="Original edition · Preserved as built"
                   expanded={expandedGrimoireEntry === 'archive:mark3'}
                   onToggle={() => setExpandedGrimoireEntry(
                     expandedGrimoireEntry === 'archive:mark3' ? null : 'archive:mark3'
@@ -2111,19 +2107,17 @@ export default function App() {
                   <div className="grimoire-mark3 grimoire-accordion-mark3">
                     <div className="grimoire-mark3-copy">
                       <p>
-                        The early WildCard DEV project built during incarceration,
-                        preserved in its original HTML, CSS, and supporting files.
-                        This is a record of where the work began, not a modern remake.
+                        WildCard DEV began behind bars. Here is the original Mark III, preserved with its original code and files. Not a remake. A piece of our history.
                       </p>
                       <p className="grimoire-mark3-note">
-                        Historical source view. This archive is not currently a hosted interactive demo.
+                        Read the original code and explore its history. This edition is not available to play online.
                       </p>
                       <div className="grimoire-links">
                         <a href="https://github.com/mtobabendev/WildCard-Mark-III/blob/main/Index.html" target="_blank" rel="noopener noreferrer">
-                          View the original Mark III HTML ↗
+                          Read the original Mark III code ↗
                         </a>
                         <a href="https://github.com/mtobabendev/WildCard-Mark-III" target="_blank" rel="noopener noreferrer">
-                          Browse the preserved repository ↗
+                          Explore the original project files ↗
                         </a>
                       </div>
                     </div>
@@ -2291,9 +2285,7 @@ export default function App() {
               <h2>The Veil</h2>
               <p className="veil-subtitle">Through the Looking Glass</p>
               <p>
-                Every screen is a doorway. Penny invites you into interfaces that
-                feel alive, without losing sight of the person on the other side.
-                Distinctive design, practical interactions, and a little digital magic.
+                Every screen is a doorway. Penny invites you into worlds that feel alive, look unmistakably yours, and never forget the person on the other side.
               </p>
             </div>
             <section className="veil-collection" aria-labelledby="veil-capabilities">
@@ -2302,23 +2294,23 @@ export default function App() {
               <div className="veil-grid">
                 <article className="veil-card">
                   <span className="veil-symbol" aria-hidden="true">◈</span>
-                  <h4>Responsive Interfaces</h4>
-                  <p>Layouts that work across desktop and mobile without sacrificing character.</p>
+                  <h4>Magic on Every Screen</h4>
+                  <p>From a phone to a desktop, the experience stays unmistakably yours.</p>
                 </article>
                 <article className="veil-card">
                   <span className="veil-symbol" aria-hidden="true">✧</span>
                   <h4>Interactive Visuals</h4>
-                  <p>Hands-on navigation, rotating merchandise, and purposeful visual feedback.</p>
+                  <p>Spin it, flip it, explore it. Give your visitors something worth touching.</p>
                 </article>
                 <article className="veil-card">
                   <span className="veil-symbol" aria-hidden="true">⌁</span>
                   <h4>Motion With Purpose</h4>
-                  <p>Transitions that guide attention, with reduced-motion behavior respected.</p>
+                  <p>Movement that guides the eye, never gets in the way, and respects your reduced-motion settings.</p>
                 </article>
                 <article className="veil-card">
                   <span className="veil-symbol" aria-hidden="true">♠</span>
                   <h4>Usable by Design</h4>
-                  <p>Readable content, accessible controls, and clear paths to the next action.</p>
+                  <p>Easy to read, easy to use, and easy to find your way around.</p>
                 </article>
               </div>
             </section>
@@ -2329,19 +2321,19 @@ export default function App() {
                 <div className="veil-book">
                   <span className="veil-symbol" aria-hidden="true">♠</span>
                   <strong>Penny’s Little Black Book</strong>
-                  <p>Already woven into this site. Tap the small spade launcher at the right edge to explore the real interactive book.</p>
-                  <small>One original. No duplicate or redirected copy.</small>
+                  <p>See the little spade on the right? Tap it and open Penny’s book.</p>
+                  <small>Your little corner of the WildCard world.</small>
                 </div>
                 <a href="https://wildcard-showroom-enhanced-1500.vercel.app/" target="_blank" rel="noopener noreferrer">
                   <span className="veil-symbol" aria-hidden="true">◇</span>
-                  <strong>Enhanced Build Demo</strong>
+                  <strong>Enhanced Build</strong>
                   <span>Explore the Web &amp; App Showroom.</span>
                   <span className="veil-link-arrow" aria-hidden="true">↗</span>
                 </a>
                 <a href="https://wildcard-showroom-enhanced-1500.vercel.app/launch/" target="_blank" rel="noopener noreferrer">
                   <span className="veil-symbol" aria-hidden="true">✦</span>
-                  <strong>Launch Build Demo</strong>
-                  <span>See the simpler showroom experience.</span>
+                  <strong>Launch Build</strong>
+                  <span>See what a smaller, focused website can do.</span>
                   <span className="veil-link-arrow" aria-hidden="true">↗</span>
                 </a>
               </div>
@@ -2357,8 +2349,7 @@ export default function App() {
             <p className="eyebrow">WildCard Social // Live</p>
             <h3>Penny took the keys.</h3>
             <p>
-              An ad-free social network with live feeds, direct messaging,
-              rooms, and Penny’s AI presence woven into the experience.
+              An ad-free place to meet, share, chat, explore rooms, and get a little help from Penny.
             </p>
             <a
               href={WILDCARD_PARTY_URL}
@@ -2392,43 +2383,41 @@ export default function App() {
               <h2>Hell’s Little Helpers</h2>
               <p className="imp-workshop-subtitle">The Imp Workshop</p>
               <p>
-                Clean code. Clever automation. Less repetitive work.
-                Penny oversees the workshop where unusual ideas become
-                focused tools that actually solve problems.
+                The imps are on the clock so you do not have to be. Penny runs the workshop where unusual ideas become tools that make life easier.
               </p>
             </header>
             <section className="imp-workshop-services" aria-labelledby="imp-workshop-capabilities">
               <h3 id="imp-workshop-capabilities">What we build</h3>
               <p className="imp-workshop-section-copy">
-                Practical solutions for the work that should not consume your day.
+                Take your day back. Here is what the imps can do for you.
               </p>
               <div className="imp-workshop-grid">
                 <article className="imp-workshop-card">
                   <span className="imp-workshop-symbol" aria-hidden="true">⚙</span>
-                  <h4>Workflow Automation</h4>
-                  <p>Streamlining routine tasks and administrative steps.</p>
+                  <h4>Leave the Busywork to Us</h4>
+                  <p>Let the imps take care of the routine chores and paperwork.</p>
                 </article>
                 <article className="imp-workshop-card">
                   <span className="imp-workshop-symbol" aria-hidden="true">⌘</span>
-                  <h4>System Integrations</h4>
-                  <p>Connecting applications, data sources, and existing business processes.</p>
+                  <h4>Connect the Dots</h4>
+                  <p>Bring your apps, information, and daily work together.</p>
                 </article>
                 <article className="imp-workshop-card">
                   <span className="imp-workshop-symbol" aria-hidden="true">✧</span>
-                  <h4>AI-Assisted Processes</h4>
-                  <p>Support for drafting, organizing, analyzing, and routing work.</p>
+                  <h4>A Little AI Magic</h4>
+                  <p>Get a hand with writing, organizing, making sense of information, and getting work to the right people.</p>
                 </article>
                 <article className="imp-workshop-card">
                   <span className="imp-workshop-symbol" aria-hidden="true">♠</span>
-                  <h4>Custom Utilities</h4>
-                  <p>Focused tools for specific operational problems.</p>
+                  <h4>Tools Made for You</h4>
+                  <p>Have one stubborn problem? We can build a tool for that.</p>
                 </article>
               </div>
             </section>
             <section className="imp-workshop-doors" aria-labelledby="imp-workshop-next">
               <h3 id="imp-workshop-next">Open a workshop door</h3>
               <p className="imp-workshop-section-copy">
-                Explore a live WildCard project or tell Penny what needs building.
+                Step into one of our worlds or tell Penny what you wish the imps could take off your plate.
               </p>
               <div className="imp-workshop-links">
                 <a href={WILDCARD_PARTY_URL} onClick={() => {
@@ -2439,13 +2428,13 @@ export default function App() {
                 }}>
                   <span aria-hidden="true">♥</span>
                   <strong>WildCard Party</strong>
-                  <small>Community, messages, and works in progress. Calling is still in development.</small>
+                  <small>Meet people, share messages, and join the party. Calls are not available yet.</small>
                   <span className="imp-workshop-link-arrow" aria-hidden="true">↗</span>
                 </a>
                 <a href="mailto:penny@wildcarddev.com?subject=WildCard%20DEV%20Automation%20Inquiry">
                   <span aria-hidden="true">✉</span>
                   <strong>Ask Penny</strong>
-                  <small>Bring us an automation or custom-systems problem.</small>
+                  <small>Tell Penny what you wish could work better.</small>
                   <span className="imp-workshop-link-arrow" aria-hidden="true">→</span>
                 </a>
               </div>
@@ -2478,7 +2467,7 @@ export default function App() {
             <p className="eyebrow">Digital Avatar of Lilith</p>
             <h2>Penny</h2>
             <p>
-              Concierge guidance, contact routing, and controlled chaos.
+              Your guide, keeper of the keys, and a little controlled chaos.
             </p>
 
             <div className="penny-destination-pills">

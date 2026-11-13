@@ -5,14 +5,14 @@ import './CreatorShowcase.css';
 import AskPenny from './components/AskPenny.jsx';
 
 const profiles = {
-  kandy: { name: 'Kandy', accent: '#c5a0ff', symbol: '♦', headline: 'Art, music & tarot', description: 'A creative corner for original art, music, storytelling, and tarot-inspired reflection.', sections: [
+  kandy: { name: 'Kandy', accent: '#c5a0ff', symbol: '♦', headline: 'Art, music & tarot', description: 'Follow the diamonds into Kandy’s world of original art, music, stories, and tarot.', sections: [
     ['Music', 'Explore Kandy’s music on Suno.'], ['Art', 'Original visual art and creative projects.'], ['Tarot', 'A home for tarot reflections and creative inspiration.']
   ], links: [{label:'Music on Suno', href:'https://suno.com/s/JwxHfnS6IWD0exoW', icon:'♫'}, {label:'Facebook', href:'https://www.facebook.com/share/1EXJvJchHu/', icon:'f'}, {label:'Stripagram', href:'https://party.wildcarddev.com/stripagram/?profile=kandy', icon:'◎'}] },
-  lucy: { name: 'Lucy', accent: '#ff8a9e', symbol: '♥', headline: 'Design & creative experiments', description: 'A WildCard DEV showcase for design concepts, visual storytelling, and creative experiments.', sections: [
-    ['Design', 'Future design projects will be featured here.'], ['Experiments', 'A space for original interactive concepts.'], ['Notes', 'Creative updates and announcements will appear here.']
+  lucy: { name: 'Lucy', accent: '#ff8a9e', symbol: '♥', headline: 'Design & creative experiments', description: 'Welcome to Lucy’s corner of WildCard DEV, where design tells a story and imagination gets room to play.', sections: [
+    ['Design', 'The next designs are still taking shape. Come back to see what Lucy creates.'], ['Experiments', 'Ideas you can touch, turn, and explore as they come to life.'], ['Notes', 'Lucy’s latest creative news will find its home here.']
   ], links: [] },
-  erica: { name: 'Erica', accent: '#75e4b3', symbol: '♣', headline: 'Technology & experimentation', description: 'A WildCard DEV showcase for technical ideas, prototypes, and creative exploration.', sections: [
-    ['Projects', 'A space for future project showcases.'], ['Experiments', 'Prototype notes and technical concepts.'], ['Updates', 'Announcements and project updates will appear here.']
+  erica: { name: 'Erica', accent: '#75e4b3', symbol: '♣', headline: 'Inventions & experiments', description: 'Erica’s lab is where strange questions become clever inventions. Come see what she dreams up next.', sections: [
+    ['Projects', 'The next inventions are on the workbench.'], ['Experiments', 'Early ideas and experiments from the lab.'], ['Updates', 'News from Erica’s lab will appear here.']
   ], links: [] },
   ashley: { name: 'Ashley', accent: '#f5b5d5', symbol: '✦', headline: 'In loving memory', description: 'Forever part of our story. A quiet space to celebrate Ashley’s life and the memories worth keeping.', sections: [
     ['Remembrance', 'A place for personal reflections and remembrance.'], ['Memories', 'Family-approved tributes can be shared here in the future.'], ['Connections', 'Remember Ashley through her Facebook profile.']
@@ -54,15 +54,15 @@ function KandyCreativeProfile() {
         </>}
         {tab === 'art' && <>
           <h3>Art gallery</h3>
-          <div className="kandy-creative__empty"><span aria-hidden="true">♦</span><p>Reserved for Kandy’s original artwork. New exhibits will appear here when available.</p></div>
+          <div className="kandy-creative__empty"><span aria-hidden="true">♦</span><p>The gallery awaits Kandy’s original artwork. Come back as new pieces arrive.</p></div>
         </>}
         {tab === 'tarot' && <>
           <h3>Tarot & inspiration</h3>
-          <div className="kandy-creative__empty"><span aria-hidden="true">✦</span><p>Explore the creative tarot exhibit in the display orbit above.</p><a href="#kandy-exhibits">Explore exhibits ↑</a></div>
+          <div className="kandy-creative__empty"><span aria-hidden="true">✦</span><p>Follow the cards in the rotating gallery above.</p><a href="#kandy-exhibits">Explore exhibits ↑</a></div>
         </>}
         {tab === 'about' && <>
           <h3>About Kandy</h3>
-          <p>A WildCard DEV creative space for music, original art, storytelling and tarot-inspired reflection.</p>
+          <p>Kandy’s world is made of music, original art, stories, and a little wisdom from the cards.</p>
           <h4>Connect with Kandy</h4>
           <div className="kandy-creative__links">
             <a href="https://www.facebook.com/share/1EXJvJchHu/" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
@@ -97,8 +97,8 @@ export default function CreatorShowcase({ profileId }) {
           <div className="wc-showcase__emblem" aria-hidden="true">{profile?.symbol || '♠'}</div>
         )}
         <h1>{directory ? 'Meet the creators' : profile.name}</h1>
-        <h2>{directory ? 'Three distinct creative spaces' : profile.headline}</h2>
-        <p>{directory ? 'Explore music, design, and technology through the WildCard DEV creative showcases.' : profile.description}</p>
+        <h2>{directory ? 'Three creators. Three worlds.' : profile.headline}</h2>
+        <p>{directory ? 'Follow the suits into three very different worlds of music, design, and invention.' : profile.description}</p>
       </section>
       <ShowcaseOrbit label={directory ? 'Creator directory' : profile.name + ' navigation'} items={destinations} />
       {!directory && <div id={profileId === 'kandy' ? 'kandy-exhibits' : undefined}><CreatorDisplayOrbit name={profile.name} symbol={profile.symbol} items={profile.sections.map(([title, description]) => ({

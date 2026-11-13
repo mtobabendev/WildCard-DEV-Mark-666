@@ -118,7 +118,7 @@ export default function PennyThoughtBubble({ provider = 'gemini', placement = 'm
         <p>{thought ? line : greeting + '! ' + quip}</p>
         {thought && <p className="penny-thought__source">
           {thought.url ? <a href={thought.url} target="_blank" rel="noopener noreferrer">{thought.source} ↗</a> : thought.source}
-          {thought.observedAt && <small> · {thought.discoveredBy ? 'Indexed' : 'Source time'} {new Date(thought.observedAt).toLocaleString()}</small>}
+          {thought.observedAt && <small> · {thought.discoveredBy ? 'Found' : 'Reported'} {new Date(thought.observedAt).toLocaleString()}</small>}
           {thought.discoveryUrl && <> · <a href={thought.discoveryUrl} target="_blank" rel="noopener noreferrer">GDELT</a></>}
           {thought.day && <small> · {thought.day}</small>}
         </p>}
@@ -130,9 +130,9 @@ export default function PennyThoughtBubble({ provider = 'gemini', placement = 'm
           <label>Daily reflection <select value={awareness.prefs.sign} onChange={event=>awareness.choose('sign',event.target.value)}>
             {SIGNS.map(sign=><option key={sign} value={sign}>{sign}</option>)}
           </select></label>
-          <small>Omaha is the WildCard default. No GPS requested. Preferences stay in this browser. Weather is informational; check official warnings. Horoscopes are for entertainment.</small>
+          <small>I start in Omaha and never ask for your GPS location here. Your choices stay in this browser. Check official weather warnings when it matters. The stars are for entertainment.</small>
         </details>
-        <p className="penny-thought__status">Messages you send are processed by {name} when the connection is enabled. Avoid sensitive information. Local greetings do not call the AI.</p>
+        <p className="penny-thought__status">When our connection is available, {name} helps me answer your messages. Keep sensitive details out of the chat. My everyday greetings do not contact the AI.</p>
         <div className="penny-thought__transcript" aria-live="polite">
           {messages.map((message, i) => (
             <div className={'penny-thought__turn penny-thought__turn--' + message.role} key={i}>

@@ -37,8 +37,7 @@ export default function VeilEffectsPlayground() {
       <p className="veil-kicker">III. Effects Playground</p>
       <h3 id="veil-fx-heading">Don't just look. Play.</h3>
       <p className="veil-fx-lead">
-        Adjust live visual effects to see how a tiny design choice changes an experience.
-        These controls only affect the demonstration below.
+        Bend the light, turn the cards, and make the world move. Play freely; your changes only affect this little playground.
       </p>
 
       <div className="veil-fx-shell" style={{ '--veil-fx-accent': accent }}>
@@ -129,8 +128,8 @@ export default function VeilEffectsPlayground() {
               </div>
             </div>
             <div className="veil-fx-controls veil-fx-controls-short">
-              <h4>Two sides. One interaction.</h4>
-              <p>Flip the card to reveal a genuinely separate back face. This is a visual demonstration, not the site's actual merchandise viewer.</p>
+              <h4>Every card has another side.</h4>
+              <p>Flip the card to discover the other side. This is a little taste of the magic, just for play.</p>
               <button type="button" className="veil-fx-primary" onClick={() => setFlipped((value) => !value)}>
                 {flipped ? 'Show front' : 'Flip card'}
               </button>
@@ -153,7 +152,7 @@ export default function VeilEffectsPlayground() {
             </div>
             <div className="veil-fx-controls veil-fx-controls-short">
               <h4>Motion with a purpose.</h4>
-              <p>Speed up, slow down, or stop the motion. System reduced-motion preferences are respected.</p>
+              <p>Make it dance, slow it down, or let it rest. Your device’s reduced-motion preferences are respected.</p>
               <label className="veil-fx-slider-label" htmlFor="veil-fx-speed">
                 Orbit speed <output htmlFor="veil-fx-speed">{speed}%</output>
               </label>
@@ -169,7 +168,7 @@ export default function VeilEffectsPlayground() {
         )}
 
         <div className="veil-fx-bottom">
-          <span>LIVE DEMONSTRATION · NO SETTINGS SAVED</span>
+          <span>PLAY FREELY · CHANGES ARE NOT SAVED</span>
           <button type="button" onClick={reset}>Reset effects ↺</button>
         </div>
       </div>

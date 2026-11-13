@@ -183,7 +183,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
               </span>
               <div className="after-ask__identity-copy">
                 <strong>ASK PENNY</strong>
-                <small>{cabaret ? 'AFTER HOURS / CABARET CONCIERGE' : 'WILDCARD CONCIERGE / PARTY CONNECTION'}</small>
+                <small>{cabaret ? 'AFTER HOURS / CABARET CONCIERGE' : 'YOUR WILDCARD CONCIERGE'}</small>
               </div>
             </div>
             <div className="after-ask__header-actions">
@@ -233,7 +233,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
               {busy ? 'LIVE' : 'SEND'}
             </button>
           </form>
-          <p className="after-ask__disclaimer">Messages use WildCard Party's existing Penny service. This browser session only.</p>
+          <p className="after-ask__disclaimer">I answer through WildCard Party. This chat is kept in your current browser session.</p>
         </section>
       )}
       {!embedded && <button
