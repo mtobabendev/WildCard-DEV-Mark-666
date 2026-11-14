@@ -1,4 +1,5 @@
-import { authorized, validateRecord, validateQuery, createQuery, readRecords, appendRecord } from '../lib/pennycore.js';
+import { validateRecord, validateQuery, createQuery, readRecords, appendRecord } from '../lib/pennycore.js';
+import { authenticatePrincipal, authorizeRead, authorizeWrite, attributeRecord } from '../lib/pennycore-authz.js';
 
 export function createHandler(env = process.env, fetcher = globalThis.fetch) {
   return async function handler(req, res) {
@@ -8,9 +9,9 @@ export function createHandler(env = process.env, fetcher = globalThis.fetch) {
       res.setHeader('Allow', 'GET, POST');
       return res.status(405).json({ error: 'Method not allowed.' });
     }
-    // Owner CLI/agent endpoint, not a browser session or public chat interface.
     if (req.headers?.origin) return res.status(403).json({ error: 'Browser-origin requests are not supported.' });
-    if (!authorized(req.headers?.authorization, req.method, env)) return res.status(401).json({ error: 'Unauthorized.' });
+    const authentication = authenticatePrincipal(req.headers?.authorization, env);
+    if (!authentication.ok) return res.status(authentication.status).json({ error: authentication.error });
     const filter = req.method === 'GET' ? validateQuery(req.query || {}) : null;
     let body;
     if (req.method === 'POST') {
@@ -20,13 +21,19 @@ export function createHandler(env = process.env, fetcher = globalThis.fetch) {
     }
     const record = req.method === 'POST' ? validateRecord(body) : null;
     if (req.method === 'GET' ? !filter : !record) return res.status(400).json({ error: 'Invalid record or query.' });
+    const permission = req.method === 'GET'
+      ? authorizeRead(authentication.principal, filter)
+      : authorizeWrite(authentication.principal, record, env.PENNYCORE_PINK_STATE);
+    if (!permission.ok) return res.status(permission.status).json({ error: permission.error });
     try {
       const query = createQuery(env.PENNYCORE_DATABASE_URL, fetcher);
       if (filter) {
         const records = await readRecords(query, filter);
         return res.status(200).json({ records, nextAfter: records.length ? records.at(-1).id : filter.after });
       }
-      const result = await appendRecord(query, record);
+      const attributedRecord = attributeRecord(record, authentication.principal, permission.projectId);
+      if (!attributedRecord) return res.status(413).json({ error: 'Attributed payload exceeds the 16 KiB limit.' });
+      const result = await appendRecord(query, attributedRecord);
       return res.status(result.status).json(result.error ? { error: result.error } : { record: result.record });
     } catch {
       // Never log a connection string, token, payload, or raw database error.
