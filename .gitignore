@@ -3,3 +3,7 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Local MCP configuration and encrypted credentials
+/.mcp.json
+*.dpapi

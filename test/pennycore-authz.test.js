@@ -172,6 +172,23 @@ test('malformed or ambiguous principal configuration fails closed', () => {
   }
 });
 
+test('supplemental principals are additive in Preview and fail closed elsewhere', () => {
+  const base = [entries[0]];
+  const previewAgent = principal('agent-copilot-mcp', 'vscode-copilot-mcp', 'synthetic-mcp-preview-token-0000000000', 'agent', ['read', 'agent_event_write'], ['pennycore-preview']);
+  const configuration = {
+    PENNYCORE_PRINCIPALS: JSON.stringify(base),
+    PENNYCORE_PREVIEW_PRINCIPALS: JSON.stringify([previewAgent]),
+    VERCEL_ENV: 'preview',
+  };
+  const authenticated = authenticatePrincipal(bearer('synthetic-mcp-preview-token-0000000000'), configuration);
+  assert.equal(authenticated.ok, true);
+  assert.equal(authenticated.principal.id, 'agent-copilot-mcp');
+
+  assert.equal(authenticatePrincipal(bearer(tokens.copilot), configuration).ok, true);
+  assert.equal(authenticatePrincipal(bearer('synthetic-mcp-preview-token-0000000000'), { ...configuration, VERCEL_ENV: 'production' }).status, 503);
+  assert.equal(authenticatePrincipal(bearer(tokens.copilot), { ...configuration, PENNYCORE_PREVIEW_PRINCIPALS: 'invalid' }).status, 503);
+});
+
 test('same request ID from another principal conflicts after trusted attribution', async () => {
   const untrusted = record('memory', 'alpha/events/build', 'b4111111-2222-3333-4444-555555555555', { status: 'done' });
   const copilotRecord = attributeRecord(untrusted, identity(tokens.copilot), 'alpha');
@@ -199,4 +216,13 @@ test('attributed payload remains within the existing 16 KiB record limit', () =>
   const nearLimit = record('memory', 'alpha/events/build', 'b5111111-2222-3333-4444-555555555555', { detail: 'x'.repeat(16200) });
   assert.ok(nearLimit);
   assert.equal(attributeRecord(nearLimit, copilot, 'alpha'), null);
+});
+test('independent Ollama principal is additive and confined to synthetic Preview scope', () => {
+  const ollama = principal('agent-ollama-preview', 'ollama-local', 'synthetic-ollama-preview-token-00000000', 'agent', ['read', 'agent_event_write'], ['pennycore-preview']);
+  const copilot = principal('agent-copilot-mcp-preview', 'vscode-copilot-mcp', 'synthetic-copilot-preview-token-00000000', 'agent', ['read', 'agent_event_write'], ['pennycore-preview']);
+  const config = { PENNYCORE_PRINCIPALS: JSON.stringify([entries[0]]), PENNYCORE_PREVIEW_PRINCIPALS: JSON.stringify([copilot]), PENNYCORE_PREVIEW_OLLAMA_PRINCIPALS: JSON.stringify([ollama]), VERCEL_ENV: 'preview' };
+  assert.equal(authenticatePrincipal(bearer('synthetic-ollama-preview-token-00000000'), config).principal.id, 'agent-ollama-preview');
+  assert.equal(authenticatePrincipal(bearer('synthetic-copilot-preview-token-00000000'), config).principal.id, 'agent-copilot-mcp-preview');
+  assert.equal(authenticatePrincipal(bearer('synthetic-ollama-preview-token-00000000'), { ...config, VERCEL_ENV: 'production' }).status, 503);
+  assert.equal(authenticatePrincipal(bearer('synthetic-ollama-preview-token-00000000'), { ...config, PENNYCORE_PREVIEW_OLLAMA_PRINCIPALS: JSON.stringify([{ ...ollama, projects: ['alpha'] }]) }).status, 503);
 });
