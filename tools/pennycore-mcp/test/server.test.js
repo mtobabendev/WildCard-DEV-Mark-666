@@ -30,8 +30,8 @@ function waitForMessage(child, id, pending, timeout = 10000) {
 }
 
 test('stdio MCP server completes initialization and exposes only the four prototype tools', async () => {
-  const serverPath = fileURLToPath(new URL('../run.cmd', import.meta.url));
-  const child = spawn('cmd.exe', ['/d', '/c', serverPath], {
+  const serverPath = fileURLToPath(new URL('../src/launcher.js', import.meta.url));
+  const child = spawn(process.execPath, [serverPath], {
     env: {
       PATH: process.env.PATH,
       SystemRoot: process.env.SystemRoot,

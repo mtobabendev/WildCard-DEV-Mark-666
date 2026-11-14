@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install isolated MCP dependencies
+        run: npm ci --prefix tools/pennycore-mcp
+
       - name: Build application
         run: npm run build
 
