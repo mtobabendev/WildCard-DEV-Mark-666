@@ -101,7 +101,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
       const response = await fetch('/api/penny', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: outgoing, presentation }),
+        body: JSON.stringify({ messages: outgoing, presentation, provider: 'gemini' }),
         signal: controller.signal,
       });
 

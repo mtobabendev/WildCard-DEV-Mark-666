@@ -322,7 +322,7 @@ export default function PennyAfterHours() {
           >
             {profilePaused ? '👀 Play' : '👀 Pause'}
           </button>
-          <PennyThoughtBubble provider="grok" placement="after-hours" />
+          <PennyThoughtBubble provider="gemini" placement="after-hours" />
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST · <span className="penny-fans__online" title="Digital host available around the clock">ONLINE <span className="penny-fans__online-dot" aria-hidden="true" /></span></p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
