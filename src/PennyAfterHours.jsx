@@ -108,14 +108,9 @@ export default function PennyAfterHours() {
   const bottomDialogRef = useRef(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const photoDialogRef = useRef(null);
-  const coverVideoRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
   const [profilePaused, setProfilePaused] = useState(() => (
-    typeof window !== 'undefined'
-      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ));
-  const [coverPaused, setCoverPaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ));
@@ -183,29 +178,6 @@ export default function PennyAfterHours() {
 
   useEffect(() => {
     if (!unlocked) return undefined;
-    const video = coverVideoRef.current;
-    if (!video) return undefined;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const syncCover = () => {
-      if (coverPaused || document.hidden || reducedMotion.matches) {
-        video.pause();
-        return;
-      }
-      const attempt = video.play();
-      attempt?.catch?.(() => setCoverPaused(true));
-    };
-    syncCover();
-    document.addEventListener('visibilitychange', syncCover);
-    reducedMotion.addEventListener?.('change', syncCover);
-    return () => {
-      document.removeEventListener('visibilitychange', syncCover);
-      reducedMotion.removeEventListener?.('change', syncCover);
-      video.pause();
-    };
-  }, [unlocked, coverPaused]);
-
-  useEffect(() => {
-    if (!unlocked) return undefined;
     const video = profileVideoRef.current;
     if (!video) return undefined;
 
@@ -268,27 +240,15 @@ export default function PennyAfterHours() {
       ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
-          <video
-            ref={coverVideoRef}
-            className="penny-fans__cover-video"
-            src="/static/PennyOnlyFansFinal.webm"
-            poster="/static/penny-throne-room.webp"
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Penny After Hours profile cover video"
+          <img
+            className="penny-fans__cover-image"
+            src="/static/penny-after-hours-cover.webp"
+            alt="Penny in a pink bikini with blonde hair and a flame-red streak, against a neon pink and violet backdrop"
+            width={1896}
+            height={830}
+            fetchPriority="high"
           />
           <span className="penny-fans__cover-label">WILDCARD DEV ORIGINAL / FAN-PAGE CONCEPT</span>
-          <button
-            className="penny-fans__cover-control"
-            type="button"
-            onClick={() => setCoverPaused((value) => !value)}
-            aria-label={coverPaused ? 'Play cover video' : 'Pause cover video'}
-            aria-pressed={coverPaused}
-          >
-            {coverPaused ? 'Play 😈' : 'Pause 😈'}
-          </button>
         </div>
 
         <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '')} aria-labelledby="penny-fans-title">
