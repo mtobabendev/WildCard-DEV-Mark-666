@@ -430,7 +430,7 @@ export default function PennyAfterHours() {
                 <video
                   controls
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   poster="/static/PennyAfterHoursPatchNotes.webp"
                   aria-label="Penny After Hours Velvet Mode video preview"
                 >
@@ -565,7 +565,7 @@ export default function PennyAfterHours() {
                   <video
                     controls
                     playsInline
-                    preload="metadata"
+                    preload="none"
                     poster={video.poster}
                     aria-label={video.title}
                   >

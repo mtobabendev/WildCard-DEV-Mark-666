@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ashley-time-capsule.css';
 import AskPenny from './components/AskPenny.jsx';
+import { ViewportMetadataVideo } from './components/ViewportVideo.jsx';
 
 const MEMORIES = [
   {
@@ -124,12 +125,11 @@ export default function AshleyTimeCapsule() {
             {MEMORIES.map((memory) => (
               <article className="capsule-memory" key={memory.src}>
                 <div className="capsule-memory-frame">
-                  <video
+                  <ViewportMetadataVideo
                     src={memory.src}
                     controls
                     loop
                     playsInline
-                    preload="metadata"
                     aria-label={memory.title}
                   />
                 </div>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './MarkThreeCarousel.css';
+import ViewportVideo from './ViewportVideo.jsx';
 
 const archive = 'https://github.com/mtobabendev/WildCard-Mark-III/blob/main/';
 const panels = [
@@ -47,22 +48,10 @@ export default function MarkThreeCarousel() {
       setRadius(current => Math.max(90, Math.min(260, current - event.deltaY * .12)));
     };
     element.addEventListener('wheel', wheel, { passive: false });
-    const media = [...element.querySelectorAll('video')];
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => media.forEach(video => {
-      if (document.hidden || motion.matches) video.pause();
-      else video.play()?.catch(() => {});
-    });
-    sync();
-    document.addEventListener('visibilitychange', sync);
-    motion.addEventListener?.('change', sync);
     return () => {
       observer?.disconnect();
       if (!observer) window.removeEventListener('resize', resize);
       element.removeEventListener('wheel', wheel);
-      document.removeEventListener('visibilitychange', sync);
-      motion.removeEventListener?.('change', sync);
-      media.forEach(video => video.pause());
       cancelAnimationFrame(frame.current);
     };
   }, []);
@@ -132,8 +121,8 @@ export default function MarkThreeCarousel() {
                 onClick={event => {
                   if (performance.now() < ignoreClickUntil.current) event.preventDefault();
                 }}>
-                <video src={'/static/mark3-carousel/' + file}
-                  muted loop playsInline preload="none" aria-hidden="true" />
+                <ViewportVideo src={'/static/mark3-carousel/' + file}
+                  viewportRef={area} respectReducedMotion loop aria-hidden="true" />
                 <span>{title}</span>
               </a>
             ))}

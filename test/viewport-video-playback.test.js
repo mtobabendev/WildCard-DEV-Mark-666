@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { bindViewportPlayback } from '../src/components/viewport-video-playback.js';
+import { bindViewportPlayback, bindViewportMetadata } from '../src/components/viewport-video-playback.js';
 
 function fixture({ hidden = false, fallback = false } = {}) {
   const page = Object.assign(new EventTarget(), { hidden });
@@ -93,5 +93,76 @@ test('legacy fallback plays only in foreground and preserves source on resume', 
   hide(false);
   assert.equal(video.plays, 2);
   assert.equal(video.assignments, 1);
+  dispose();
+});
+
+test('optional reduced motion prevents decorative source loading and pauses on change', () => {
+  const page = Object.assign(new EventTarget(), { hidden: false });
+  const motion = Object.assign(new EventTarget(), { matches: true });
+  const video = {
+    source: null, plays: 0, pauses: 0,
+    getAttribute() { return this.source; },
+    setAttribute(name, value) { this.source = value; },
+    play() { this.plays++; return Promise.resolve(); },
+    pause() { this.pauses++; },
+  };
+  const dispose = bindViewportPlayback(video, '/archive.webm', { page, motion, Observer: null });
+  assert.equal(video.source, null);
+  motion.matches = false;
+  motion.dispatchEvent(new Event('change'));
+  assert.equal(video.source, '/archive.webm');
+  assert.equal(video.plays, 1);
+  motion.matches = true;
+  motion.dispatchEvent(new Event('change'));
+  assert.equal(video.pauses, 1);
+  dispose();
+  motion.matches = false;
+  motion.dispatchEvent(new Event('change'));
+  assert.equal(video.plays, 1);
+});
+
+test('native metadata hint stays deferred until first visible intersection', () => {
+  const video = { preload: 'none', src: '/memory.webm', controls: true, loop: true };
+  let observer;
+  class Observer {
+    constructor(callback) { this.callback = callback; observer = this; }
+    observe(node) { assert.equal(node, video); }
+    disconnect() { this.disconnected = true; }
+  }
+  const dispose = bindViewportMetadata(video, Observer);
+  observer.callback([{ target: video, isIntersecting: false }]);
+  assert.equal(video.preload, 'none');
+  observer.callback([{ target: {}, isIntersecting: true }]);
+  assert.equal(video.preload, 'none');
+  observer.callback([{ target: video, isIntersecting: true }]);
+  assert.equal(video.preload, 'metadata');
+  assert.equal(observer.disconnected, true);
+  observer.callback([{ target: video, isIntersecting: false }]);
+  assert.equal(video.preload, 'metadata');
+  assert.equal(video.src, '/memory.webm');
+  assert.equal(video.controls, true);
+  assert.equal(video.loop, true);
+  dispose();
+});
+
+test('metadata observer cleanup blocks stale callbacks', () => {
+  const video = { preload: 'none' };
+  let observer;
+  class Observer {
+    constructor(callback) { this.callback = callback; observer = this; }
+    observe() {}
+    disconnect() { this.disconnected = true; }
+  }
+  const dispose = bindViewportMetadata(video, Observer);
+  dispose();
+  observer.callback([{ target: video, isIntersecting: true }]);
+  assert.equal(video.preload, 'none');
+  assert.equal(observer.disconnected, true);
+});
+
+test('metadata hint falls back to native metadata loading without observer support', () => {
+  const video = { preload: 'none' };
+  const dispose = bindViewportMetadata(video, null);
+  assert.equal(video.preload, 'metadata');
   dispose();
 });
