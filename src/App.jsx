@@ -4,6 +4,7 @@ import './styles.css';
 import './penny-fan-link.css';
 import Spinner from './components/Spinner.jsx';
 import JennPanel from './components/JennPanel.jsx';
+import ViewportVideo from './components/ViewportVideo.jsx';
 import AshleyPanel from './components/AshleyPanel.jsx';
 const MarkThreeCarousel = lazy(() => import('./components/MarkThreeCarousel.jsx'));
 import DiceTray from './components/DiceTray.jsx';
@@ -283,88 +284,33 @@ function AppleIcon() {
 
 function PennyLoopVideo({ active }) {
   const [videoIndex, setVideoIndex] = useState(0);
-  const videoRef = useRef(null);
-
   const videos = [
     pennyClubFinalVideo,
     pennyLapDanceVideo,
     pennyKnowledgeVideo,
   ];
 
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (!video) return;
-
-    if (active) {
-      const playAttempt = video.play();
-
-      if (playAttempt?.catch) {
-        playAttempt.catch(() => {});
-      }
-    } else {
-      video.pause();
-    }
-  }, [active, videoIndex]);
-
   if (!active) return null;
-
   return (
-    <video
-      ref={videoRef}
+    <ViewportVideo
       key={videoIndex}
       className="penny-loop-video"
       src={videos[videoIndex]}
-      autoPlay
-      muted
-      playsInline
-      preload="metadata"
-      onEnded={() => {
-        setVideoIndex(
-          (current) => (
-            (current + 1) % videos.length
-          ),
-        );
-      }}
+      onEnded={() => setVideoIndex(current => (current + 1) % videos.length)}
       aria-label="Penny"
     />
   );
 }
 
 function KandyVideo({ active }) {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (!video) return;
-
-    if (active) {
-      const playAttempt = video.play();
-
-      if (playAttempt?.catch) {
-        playAttempt.catch(() => {});
-      }
-    } else {
-      video.pause();
-    }
-  }, [active]);
-
   if (!active) return null;
-
   return (
-    <video
-      ref={videoRef}
+    <ViewportVideo
       className="kandy-video"
-      autoPlay
-      muted
+      src={kandyKandleWebm}
       loop
-      playsInline
-      preload="metadata"
       aria-label="Kandy"
-    >
-      <source src={kandyKandleWebm} type="video/webm" />
-    </video>
+    />
   );
 }
 
@@ -641,35 +587,10 @@ function ContactPanels({
   pageVisible,
   onContactAssist,
 }) {
-  const ownerFeatureVideoRef = useRef(null);
   const ownerFeatureVideoSupported = useMediaQuery(
     '(min-width: 241px)',
   );
 
-  useEffect(() => {
-    const video = ownerFeatureVideoRef.current;
-
-    if (!video) return;
-
-    if (
-      !open
-      || !pageVisible
-      || !ownerFeatureVideoSupported
-    ) {
-      video.pause();
-      return;
-    }
-
-    const playAttempt = video.play();
-
-    if (playAttempt?.catch) {
-      playAttempt.catch(() => {});
-    }
-  }, [
-    open,
-    pageVisible,
-    ownerFeatureVideoSupported,
-  ]);
 
   return (
     <section
@@ -690,19 +611,12 @@ function ContactPanels({
                 className="owner-feature-video-shell"
                 aria-hidden="true"
               >
-                <video
-                  ref={ownerFeatureVideoRef}
+                <ViewportVideo
                   className="owner-feature-video"
+                  src={ownerPennyKandyVideo}
+                  active={open && pageVisible}
                   loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                >
-                  <source
-                    src={ownerPennyKandyVideo}
-                    type="video/webm"
-                  />
-                </video>
+                />
               </div>
             )}
           </div>

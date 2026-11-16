@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import ViewportVideo from './ViewportVideo.jsx';
 
 const MEMORY_PHOTO = '/static/AshleyPenthouseMemory.webp';
 const FLIP_INTERVAL_MS = 30000;
@@ -6,7 +7,6 @@ const FLIP_INTERVAL_MS = 30000;
 export default function AshleyPanel({ active, links }) {
   const [flipped, setFlipped] = useState(false);
   const [photoReady, setPhotoReady] = useState(false);
-  const videoRef = useRef(null);
   const showPhoto = flipped && photoReady;
 
   // A manual flip starts a fresh 30-second interval.
@@ -15,16 +15,6 @@ export default function AshleyPanel({ active, links }) {
     const timer = window.setTimeout(() => setFlipped(value => !value), FLIP_INTERVAL_MS);
     return () => window.clearTimeout(timer);
   }, [active, photoReady, flipped]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (!active || showPhoto) {
-      video.pause();
-    } else {
-      video.play().catch(() => {});
-    }
-  }, [active, showPhoto]);
 
   return (
     <article className="identity-card identity-card--ashley" aria-labelledby="ashley-panel-title">
@@ -104,15 +94,11 @@ export default function AshleyPanel({ active, links }) {
           <span className="ashley-memory-flip__inner">
             <span className="ashley-memory-flip__face" aria-hidden={showPhoto}>
               {active && (
-                <video
-                  ref={videoRef}
+                <ViewportVideo
                   className="ashley-video"
                   src="/static/AshleyIntroLoopmp4.webm"
-                  autoPlay={!showPhoto}
-                  muted
+                  active={!showPhoto}
                   loop
-                  playsInline
-                  preload="metadata"
                   aria-label="Ashley’s introduction"
                 />
               )}
@@ -136,14 +122,10 @@ export default function AshleyPanel({ active, links }) {
           aria-label="Open Ashley's What If Time Capsule. Combination required."
         >
           {active && (
-            <video
+            <ViewportVideo
               className="ashley-video"
               src="/static/AshleyHotLoop.webm"
-              autoPlay
-              muted
               loop
-              playsInline
-              preload="metadata"
               aria-hidden="true"
             />
           )}

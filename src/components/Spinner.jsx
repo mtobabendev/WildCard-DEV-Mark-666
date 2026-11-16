@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import ViewportVideo from './ViewportVideo.jsx';
 import wildCardLogo from '../../assets/209000-pinkgothicbatheart.png';
 import pennySpadeLogo from '../../assets/wildcard-logo-penny.png';
 
@@ -25,7 +26,6 @@ function Spinner({
   const startFrameRef = useRef(null);
   const lastTimeRef = useRef(0);
   const resumeAtRef = useRef(0);
-  const videoRefs = useRef([]);
 
   const dragRef = useRef({
     active: false,
@@ -144,28 +144,6 @@ function Spinner({
     resumeAtRef.current = Number.POSITIVE_INFINITY;
     changeRotation(-activeIndex * STEP);
   }, [activeIndex, changeRotation, isWatch, open]);
-
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (!video) return;
-
-      const shouldPlay = (
-        open
-        && pageVisible
-        && ((!isWatch && !compact) || index === activeIndex)
-      );
-
-      if (shouldPlay) {
-        const playAttempt = video.play();
-
-        if (playAttempt?.catch) {
-          playAttempt.catch(() => {});
-        }
-      } else {
-        video.pause();
-      }
-    });
-  }, [activeIndex, compact, isWatch, open, pageVisible]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -459,17 +437,12 @@ function Spinner({
               onClick={() => selectCard(index)}
             >
               {shouldMountVideo && (
-                <video
-                  ref={(video) => {
-                    videoRefs.current[index] = video;
-                  }}
+                <ViewportVideo
                   className="spinner-card-video"
                   src={channel.video}
-                  autoPlay={!compact || index === activeIndex}
-                  muted
+                  active={open && pageVisible && ((!isWatch && !compact) || index === activeIndex)}
+                  viewportRef={stageRef}
                   loop
-                  playsInline
-                  preload={compact && index !== activeIndex ? 'none' : 'metadata'}
                   aria-hidden="true"
                 />
               )}

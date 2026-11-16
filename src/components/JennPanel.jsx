@@ -1,15 +1,13 @@
+import ViewportVideo from './ViewportVideo.jsx';
+
 export default function JennPanel({ videoActive, links }) {
   return (
     <article className="identity-card identity-card--jenn" aria-labelledby="jenn-panel-title">
       <div className="jenn-video-shell">
         {videoActive && (
-          <video
+          <ViewportVideo
             src="/static/JennIntro.webm"
-            autoPlay
-            muted
             loop
-            playsInline
-            preload="metadata"
             aria-label="Jenn’s introduction"
           />
         )}
