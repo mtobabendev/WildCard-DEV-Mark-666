@@ -760,3 +760,16 @@ body { margin: 0; background: #0a0614; }
   height: 100%;
   object-fit: contain;
 }
+
+/* Keep the Note from Penny clip alongside its text. */
+.penny-fans__post--letter {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(100px, 36%) minmax(0, 1fr);
+  align-items: center;
+}
+.penny-fans__post--letter .penny-fans__post-art {
+  position: relative;
+  height: auto;
+  aspect-ratio: 672 / 448;
+}

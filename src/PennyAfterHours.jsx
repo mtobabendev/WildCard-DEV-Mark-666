@@ -24,6 +24,8 @@ const POSTS = [
     symbol: '♛',
     theme: 'throne',
     video: '/static/PennySeatAtTheTable.webm',
+    videoWidth: 400,
+    videoHeight: 880,
   },
   {
     id: 'vault',
@@ -41,6 +43,9 @@ const POSTS = [
     copy: 'Come for the digital glamour. Stay for the stories, the creative experiments, and a front-row seat to the next WildCard build.',
     symbol: '✦',
     theme: 'letter',
+    video: '/static/AnimePenny.webm',
+    videoWidth: 672,
+    videoHeight: 448,
   },
 ];
 
@@ -114,7 +119,7 @@ export default function PennyAfterHours() {
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
   const [bannerPaused, setBannerPaused] = useState(false);
-  const [seatPaused, setSeatPaused] = useState(false);
+  const [postPaused, setPostPaused] = useState({});
   const [profilePaused, setProfilePaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -507,9 +512,9 @@ export default function PennyAfterHours() {
                     <ViewportVideo
                       className="penny-fans__post-video"
                       src={post.video}
-                      width={400}
-                      height={880}
-                      active={!seatPaused}
+                      width={post.videoWidth}
+                      height={post.videoHeight}
+                      active={!postPaused[post.id]}
                       respectReducedMotion
                       loop
                     />
@@ -523,10 +528,11 @@ export default function PennyAfterHours() {
                     <button
                       type="button"
                       className="penny-fans__post-video-control"
-                      aria-label={seatPaused ? 'Resume A seat at the table animation' : 'Pause A seat at the table animation'}
-                      onClick={() => setSeatPaused(value => !value)}
+                      aria-label={(postPaused[post.id] ? "Resume " : "Pause ") + post.title + " animation"}
+                      aria-pressed={Boolean(postPaused[post.id])}
+                      onClick={() => setPostPaused(value => ({ ...value, [post.id]: !value[post.id] }))}
                     >
-                      {seatPaused ? 'Play' : 'Pause'}
+                      {postPaused[post.id] ? 'Play' : 'Pause'}
                     </button>
                   )}
                 </div>
