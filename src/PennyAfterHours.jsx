@@ -4,6 +4,7 @@ import './PennyAfterHours.css';
 import { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import AskPenny from './components/AskPenny.jsx';
+import ViewportVideo from './components/ViewportVideo.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -110,6 +111,7 @@ export default function PennyAfterHours() {
   const photoDialogRef = useRef(null);
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
+  const [bannerPaused, setBannerPaused] = useState(false);
   const [profilePaused, setProfilePaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -240,14 +242,26 @@ export default function PennyAfterHours() {
       ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
-          <img
+          <ViewportVideo
             className="penny-fans__cover-image"
-            src="/static/penny-after-hours-cover.webp"
-            alt="Penny in a pink bikini with blonde hair and a flame-red streak, against a neon pink and violet backdrop"
-            width={1896}
-            height={830}
-            fetchPriority="high"
+            src="/static/PennyNewFansBanner.webm"
+            poster="/static/penny-after-hours-cover.webp"
+            width={736}
+            height={400}
+            active={!bannerPaused}
+            respectReducedMotion
+            loop
+            aria-hidden="true"
           />
+          <button
+            type="button"
+            className="penny-fans__cover-control"
+            aria-label={bannerPaused ? 'Resume banner animation' : 'Pause banner animation'}
+            aria-pressed={bannerPaused}
+            onClick={() => setBannerPaused((value) => !value)}
+          >
+            {bannerPaused ? 'Play' : 'Pause'}
+          </button>
           <span className="penny-fans__cover-label">WILDCARD DEV ORIGINAL / FAN-PAGE CONCEPT</span>
         </div>
 

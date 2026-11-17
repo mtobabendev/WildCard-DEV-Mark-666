@@ -67,6 +67,22 @@ body { margin: 0; background: #0a0614; }
   object-fit: cover;
   object-position: center top;
 }
+.penny-fans__cover-control {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 44px;
+  padding: .35rem .85rem;
+  border: 1px solid rgba(247, 163, 232, .55);
+  border-radius: .65rem;
+  color: var(--pf-text);
+  background: rgba(20, 12, 34, .85);
+  font-size: .75rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-fans__cover-control { display: none; }
+}
 .penny-fans__cover::after {
   content: ''; position: absolute; inset: 35% 0 0;
   background: linear-gradient(transparent, rgba(9, 5, 18, .82));
