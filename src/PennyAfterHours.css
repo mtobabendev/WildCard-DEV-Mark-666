@@ -742,3 +742,21 @@ body { margin: 0; background: #0a0614; }
 @media (prefers-reduced-motion: reduce) {
   .penny-fans__post-video, .penny-fans__post-video-control { display: none; }
 }
+
+/* Keep the Velvet Vault portrait beside its entry without cropping. */
+.penny-fans__post--vault {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(100px, 36%) minmax(0, 1fr);
+  align-items: center;
+}
+.penny-fans__post--vault .penny-fans__post-art {
+  height: auto;
+  aspect-ratio: 1216 / 832;
+}
+.penny-fans__post-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

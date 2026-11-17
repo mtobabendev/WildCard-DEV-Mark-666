@@ -32,6 +32,7 @@ const POSTS = [
     copy: 'A design-only teaser for a future creator archive. No locked content or subscription system is active.',
     symbol: '♠',
     theme: 'vault',
+    image: '/static/KandyOnlyFans2.jpg',
   },
   {
     id: 'letter',
@@ -498,8 +499,10 @@ export default function PennyAfterHours() {
             )}
             {tab === 'posts' && POSTS.map((post) => (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
-                <div className="penny-fans__post-art" aria-hidden="true">
-                  <span>{post.symbol}</span>
+                <div className="penny-fans__post-art" aria-hidden={post.image ? undefined : true}>
+                  {post.image ? (
+                    <img className="penny-fans__post-photo" src={post.image} alt="Kandy in a pink and black striped top in a candlelit room" width={1216} height={832} loading="lazy" decoding="async" />
+                  ) : <span>{post.symbol}</span>}
                   {post.video && (
                     <ViewportVideo
                       className="penny-fans__post-video"
