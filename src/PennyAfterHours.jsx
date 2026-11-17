@@ -675,7 +675,7 @@ export default function PennyAfterHours() {
 
         <nav className="penny-fans__bottom-nav" aria-label="After Hours main navigation">
           {BOTTOM_NAV.map((item) => item.id === 'messages' ? (
-            <a key={item.id} href="https://party.wildcarddev.com/?app=messenger" target="_blank" rel="noopener noreferrer" aria-label="Messages: open WildCard Messenger in a new tab">
+            <a key={item.id} href="https://party.wildcarddev.com/?app=messenger" target="_blank" rel="noopener noreferrer" aria-label="Messages: open WildCard Messenger">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d={item.path} />
               </svg>

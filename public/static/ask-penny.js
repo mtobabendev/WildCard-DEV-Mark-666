@@ -3,6 +3,13 @@
   'use strict'
   if (document.querySelector('wildcard-ask-penny')) return
   const HUB = 'https://www.wildcarddev.com'
+  if (window.top === window && !document.querySelector('script[data-wildcard-messenger]')) {
+    const messenger = document.createElement('script')
+    messenger.src = HUB + '/static/messenger-launcher.js'
+    messenger.dataset.wildcardMessenger = 'true'
+    messenger.async = true
+    document.body.append(messenger)
+  }
   const origin = location.origin
   const aliases = new Set([
     'https://wildcard-office.vercel.app',
