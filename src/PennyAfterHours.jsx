@@ -112,6 +112,7 @@ export default function PennyAfterHours() {
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
   const [bannerPaused, setBannerPaused] = useState(false);
+  const [seatPaused, setSeatPaused] = useState(false);
   const [profilePaused, setProfilePaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -496,9 +497,34 @@ export default function PennyAfterHours() {
             )}
             {tab === 'posts' && POSTS.map((post) => (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
-                <div className="penny-fans__post-art" aria-hidden="true">
-                  <span>{post.symbol}</span>
-                </div>
+                {post.id === 'throne' ? (
+                  <div className="penny-fans__post-art penny-fans__seat-art">
+                    <span aria-hidden="true">{post.symbol}</span>
+                    <ViewportVideo
+                      className="penny-fans__seat-video"
+                      src="/static/penny-seat-at-the-table.webm"
+                      width={360}
+                      height={792}
+                      active={!seatPaused}
+                      respectReducedMotion
+                      loop
+                      aria-hidden="true"
+                    />
+                    <button
+                      type="button"
+                      className="penny-fans__seat-control"
+                      aria-label={seatPaused ? 'Resume A seat at the table animation' : 'Pause A seat at the table animation'}
+                      aria-pressed={seatPaused}
+                      onClick={() => setSeatPaused((value) => !value)}
+                    >
+                      {seatPaused ? 'Play' : 'Pause'}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="penny-fans__post-art" aria-hidden="true">
+                    <span>{post.symbol}</span>
+                  </div>
+                )}
                 <div className="penny-fans__post-copy">
                   <span className="penny-fans__post-label">{post.label}</span>
                   <h2>{post.title}</h2>

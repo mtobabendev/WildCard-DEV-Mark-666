@@ -707,3 +707,47 @@ body { margin: 0; background: #0a0614; }
 @media (max-height: 480px) {
   .penny-fans .after-ask__panel { top: 6px; bottom: calc(154px + env(safe-area-inset-bottom, 0px)); height: auto; max-height: none; }
 }
+
+
+/* Seat at the table: portrait animation beside the existing post copy. */
+.penny-fans__post--throne {
+  display: grid;
+  grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+  align-items: center;
+}
+.penny-fans__post--throne .penny-fans__seat-art {
+  position: relative;
+  align-self: stretch;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 5 / 11;
+}
+.penny-fans__seat-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.penny-fans__seat-control {
+  position: absolute;
+  z-index: 1;
+  bottom: .4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: .25rem .65rem;
+  border: 1px solid rgba(247, 163, 232, .55);
+  border-radius: .6rem;
+  color: var(--pf-text);
+  background: rgba(20, 12, 34, .85);
+  font-size: .7rem;
+}
+.penny-fans__post--throne .penny-fans__post-copy {
+  min-width: 0;
+  padding: .8rem;
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-fans__seat-video, .penny-fans__seat-control { display: none; }
+}
