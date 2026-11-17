@@ -383,7 +383,7 @@ body { margin: 0; background: #0a0614; }
   .penny-fans__photo-tile span { font-size: .73rem; }
 }
 
-.penny-fans__feed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.penny-fans__feed { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 
 /* Premiered, full-width creator video; the three existing teaser cards remain below it. */
 .penny-fans__featured-post {
@@ -706,4 +706,39 @@ body { margin: 0; background: #0a0614; }
 .penny-fans .after-ask__panel { bottom: calc(154px + env(safe-area-inset-bottom, 0px)); max-height: min(630px, calc(100dvh - 174px - env(safe-area-inset-bottom, 0px))); }
 @media (max-height: 480px) {
   .penny-fans .after-ask__panel { top: 6px; bottom: calc(154px + env(safe-area-inset-bottom, 0px)); height: auto; max-height: none; }
+}
+
+
+/* The portrait clip and its creator note share a single, full-width card. */
+.penny-fans__post--throne {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: clamp(100px, 28%, 150px) minmax(0, 1fr);
+  align-items: center;
+}
+.penny-fans__post--throne .penny-fans__post-art {
+  position: relative;
+  height: auto;
+  aspect-ratio: 400 / 880;
+}
+.penny-fans__post-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.penny-fans__post-video:not([src]) { visibility: hidden; }
+.penny-fans__post-video-control {
+  margin-top: .8rem;
+  padding: .45rem .8rem;
+  border: 1px solid rgba(250, 180, 237, .4);
+  border-radius: .5rem;
+  background: #281132;
+  color: #ffdef8;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-fans__post-video, .penny-fans__post-video-control { display: none; }
 }

@@ -23,6 +23,7 @@ const POSTS = [
     copy: 'Behind the scenes of the WildCard DEV universe. A little violet light, a little velvet, and a lot of personality.',
     symbol: '♛',
     theme: 'throne',
+    video: '/static/PennySeatAtTheTable.webm',
   },
   {
     id: 'vault',
@@ -112,6 +113,7 @@ export default function PennyAfterHours() {
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
   const [bannerPaused, setBannerPaused] = useState(false);
+  const [seatPaused, setSeatPaused] = useState(false);
   const [profilePaused, setProfilePaused] = useState(() => (
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -498,11 +500,32 @@ export default function PennyAfterHours() {
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
                 <div className="penny-fans__post-art" aria-hidden="true">
                   <span>{post.symbol}</span>
+                  {post.video && (
+                    <ViewportVideo
+                      className="penny-fans__post-video"
+                      src={post.video}
+                      width={400}
+                      height={880}
+                      active={!seatPaused}
+                      respectReducedMotion
+                      loop
+                    />
+                  )}
                 </div>
                 <div className="penny-fans__post-copy">
                   <span className="penny-fans__post-label">{post.label}</span>
                   <h2>{post.title}</h2>
                   <p>{post.copy}</p>
+                  {post.video && (
+                    <button
+                      type="button"
+                      className="penny-fans__post-video-control"
+                      aria-label={seatPaused ? 'Resume A seat at the table animation' : 'Pause A seat at the table animation'}
+                      onClick={() => setSeatPaused(value => !value)}
+                    >
+                      {seatPaused ? 'Play' : 'Pause'}
+                    </button>
+                  )}
                 </div>
               </article>
             ))}
