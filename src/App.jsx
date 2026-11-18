@@ -1,3 +1,10 @@
+import ownerBalanced from '../assets/WitchPennyAndKandy2-balanced.mp4';
+import ownerLightweight from '../assets/WitchPennyAndKandy2-lightweight.mp4';
+import ownerPoster from '../assets/WitchPennyAndKandy2-balanced.webp';
+import kandyBalanced from '../assets/KandyKandle-balanced.mp4';
+import kandyLightweight from '../assets/KandyKandle-lightweight.mp4';
+import kandyPoster from '../assets/KandyKandle-balanced.webp';
+import PerformanceControl from './components/PerformanceControl.jsx';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './styles.css';
@@ -308,6 +315,7 @@ function KandyVideo({ active }) {
     <ViewportVideo
       className="kandy-video"
       src={kandyKandleWebm}
+      compatibilitySrc={kandyBalanced} lightweightSrc={kandyLightweight} compatibilityPoster={kandyPoster}
       loop
       aria-label="Kandy"
     />
@@ -614,6 +622,7 @@ function ContactPanels({
                 <ViewportVideo
                   className="owner-feature-video"
                   src={ownerPennyKandyVideo}
+                  compatibilitySrc={ownerBalanced} lightweightSrc={ownerLightweight} compatibilityPoster={ownerPoster}
                   active={open && pageVisible}
                   loop
                 />
@@ -1439,6 +1448,7 @@ export default function App() {
           <span>WildCard DEV</span>
         </div>
 
+        <PerformanceControl />
         <a
           className="donate"
           href="https://square.link/u/sb0tYH9C"
