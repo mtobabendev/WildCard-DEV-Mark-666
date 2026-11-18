@@ -1,0 +1,48 @@
+.performance-control {
+  display: inline-flex;
+  gap: .4rem;
+  align-items: center;
+  color: #e9daef;
+  font-size: .7rem;
+  letter-spacing: normal;
+}
+.performance-control select {
+  background: #20152f;
+  color: #fff;
+  border: 1px solid #9b6dba;
+  border-radius: .5rem;
+  padding: .35rem;
+  font: inherit;
+  max-width: 9rem;
+}
+.performance-control select:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+@media (max-width: 520px) {
+  .performance-control { font-size: .65rem; gap: .2rem; }
+  .performance-control > span { display: none; }
+  .performance-control select { max-width: 6.4rem; }
+}
+@media (max-width: 240px) { .performance-control { display: none; } }
+
+html[data-performance="balanced"] .identity-card,
+html[data-performance="lightweight"] .identity-card,
+html[data-performance="lightweight"] .context-window,
+html[data-performance="lightweight"] .site-header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html[data-performance="balanced"] .mini-spinner .mini-spinner-track > a::after,
+html[data-performance="lightweight"] .mini-spinner .mini-spinner-track > a::after,
+html[data-performance="balanced"] .spinner-center-panel img,
+html[data-performance="lightweight"] .spinner-center-panel img,
+html[data-performance="balanced"] .spinner-center-panel strong,
+html[data-performance="lightweight"] .spinner-center-panel strong,
+html[data-performance="balanced"] .penny-destination-pill,
+html[data-performance="lightweight"] .penny-destination-pill,
+html[data-performance="balanced"] .penny-destination-pill::after,
+html[data-performance="lightweight"] .penny-destination-pill::after,
+html[data-performance="lightweight"] .owner-possibilities-pill {
+  animation: none !important;
+}
+html[data-performance="lightweight"] .identity-card {
+  box-shadow: none;
+}

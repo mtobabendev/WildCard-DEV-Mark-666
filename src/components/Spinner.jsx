@@ -1,3 +1,4 @@
+import { getPerformance } from './performance-profile.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ViewportVideo from './ViewportVideo.jsx';
 import wildCardLogo from '../../assets/209000-pinkgothicbatheart.png';
@@ -18,6 +19,7 @@ function Spinner({
   pageVisible,
   reducedMotion,
 }) {
+  const constrained = getPerformance().selectedSpinnerOnly;
   const STEP = 360 / channels.length;
   const stageRef = useRef(null);
   const deckRef = useRef(null);
@@ -101,13 +103,13 @@ function Spinner({
           inertiaRef.current = 0;
           resumeAtRef.current = time + 1200;
         }
-      } else if (!compact && time > resumeAtRef.current) {
+      } else if (!compact && !constrained && time > resumeAtRef.current) {
         changeRotation(
           (current) => current + elapsed * 0.006,
         );
       }
 
-      if (!compact || Math.abs(inertiaRef.current) > 0.002) {
+      if ((!compact && !constrained) || Math.abs(inertiaRef.current) > 0.002) {
         frameRef.current = requestAnimationFrame(tick);
       }
     };
@@ -118,7 +120,7 @@ function Spinner({
       frameRef.current = requestAnimationFrame(tick);
     };
 
-    if (!compact || Math.abs(inertiaRef.current) > 0.002) {
+    if ((!compact && !constrained) || Math.abs(inertiaRef.current) > 0.002) {
       startFrameRef.current();
     }
 
@@ -335,7 +337,7 @@ function Spinner({
     if (Math.abs(inertiaRef.current) <= 0.002) {
       inertiaRef.current = 0;
       resumeAtRef.current = performance.now() + 1200;
-    } else if (compact) {
+    } else if (compact || constrained) {
       startFrameRef.current?.();
     }
   };
@@ -408,7 +410,7 @@ function Spinner({
           const shouldMountVideo = (
             channel.video
             && open
-            && (!isWatch || index === activeIndex)
+            && (!isWatch && !constrained || index === activeIndex)
           );
 
           return (
@@ -440,7 +442,7 @@ function Spinner({
                 <ViewportVideo
                   className="spinner-card-video"
                   src={channel.video}
-                  active={open && pageVisible && ((!isWatch && !compact) || index === activeIndex)}
+                  active={open && pageVisible && ((!isWatch && !compact && !constrained) || index === activeIndex)}
                   viewportRef={stageRef}
                   loop
                   aria-hidden="true"
@@ -463,7 +465,7 @@ function Spinner({
                 draggable="false"
               />
 
-              {!channel.penny && (
+              {(!channel.penny || (constrained && index !== activeIndex)) && (
                 <>
                   <span>{channel.number}</span>
                   <strong>{channel.title}</strong>

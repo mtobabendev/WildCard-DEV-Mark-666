@@ -1,9 +1,13 @@
+import { initializePerformance } from './components/performance-profile.js';
+import './performance.css';
 import PennyContactRouter from './components/PennyContactRouter.jsx';
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import MessengerLauncher from './components/MessengerLauncher.jsx';
 import AskPenny from './components/AskPenny.jsx';
 import pennySaysHelloWebm from '../assets/PennyWildCardIntro-new-mobile-optimized.webm';
+
+const performanceProfile = initializePerformance();
 
 const GOOGLE_ANALYTICS_SRC =
   'https://www.googletagmanager.com/gtag/js?id=G-SQ55HQVQXX';
@@ -28,7 +32,7 @@ function loadGoogleAnalytics() {
 
 function SiteEntry() {
   const [introFinished, setIntroFinished] = useState(
-    () => window.location.pathname.replace(/\/+$/, '') === '/grimoire',
+    () => performanceProfile.skipIntro || window.location.pathname.replace(/\/+$/, '') === '/grimoire',
   );
   const [AppComponent, setAppComponent] = useState(null);
   const [LittleBlackBookComponent, setLittleBlackBookComponent] = useState(null);

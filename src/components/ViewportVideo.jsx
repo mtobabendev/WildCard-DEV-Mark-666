@@ -1,23 +1,36 @@
 import { useEffect, useRef } from 'react';
 import { bindViewportPlayback, bindViewportMetadata } from './viewport-video-playback.js';
+import { getPerformance } from './performance-profile.js';
 
-// No declarative src or autoplay: the observer owns initial media loading.
+const MAIN_H264 = 'video/mp4; codecs="avc1.4D401F"';
+
+// Decorative video only. Deliberate user-controlled playback remains independent.
 export default function ViewportVideo({
-  src, active = true, viewportRef, respectReducedMotion = false, ...props
+  src, compatibilitySrc, lightweightSrc, compatibilityPoster, active = true,
+  viewportRef, respectReducedMotion = false, ...props
 }) {
   const ref = useRef(null);
+  const profile = getPerformance();
   useEffect(() => {
-    if (!active || !ref.current) return undefined;
-    return bindViewportPlayback(ref.current, src, {
-      target: viewportRef?.current || ref.current,
+    const video = ref.current;
+    if (!active || !video) return undefined;
+    const candidate = profile.name === 'lightweight'
+      ? lightweightSrc || compatibilitySrc : compatibilitySrc;
+    const source = profile.releaseOffscreen && candidate && video.canPlayType(MAIN_H264)
+      ? candidate : src;
+    return bindViewportPlayback(video, source, {
+      target: viewportRef?.current || video,
       motion: respectReducedMotion ? window.matchMedia('(prefers-reduced-motion: reduce)') : undefined,
+      releaseOffscreen: profile.releaseOffscreen,
+      fallbackSrc: source === src ? undefined : src,
     });
-  }, [active, src, viewportRef, respectReducedMotion]);
+  }, [active, src, compatibilitySrc, lightweightSrc, viewportRef, respectReducedMotion, profile]);
 
-  return <video {...props} ref={ref} muted playsInline preload="none" />;
+  return <video {...props} poster={props.poster || (profile.releaseOffscreen ? compatibilityPoster : undefined)}
+    ref={ref} muted playsInline preload="none" />;
 }
 
-// For manually played clips without posters; keep native controls and audio.
+// Native controls and audio remain available; defer metadata only.
 export function ViewportMetadataVideo(props) {
   const ref = useRef(null);
   useEffect(() => {
