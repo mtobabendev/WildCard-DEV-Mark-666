@@ -1,14 +1,29 @@
-// Decorative autoplay only: retain an attached source and playback position
-// when a video leaves the viewport, but never attach it before first visibility.
+// Decorative autoplay only; constrained profiles release the source and decoder
+// whenever a video is no longer visible. Cinematic preserves its playback position.
 export function bindViewportPlayback(
   video, src, {
     target = video, page = globalThis.document,
-    Observer = globalThis.IntersectionObserver, motion,
+    Observer = globalThis.IntersectionObserver, motion, releaseOffscreen = false, fallbackSrc,
   } = {},
 ) {
   let visible = !Observer;
   let requested = false;
   let disposed = false;
+  let currentSource = src;
+
+  function release() {
+    if (video.getAttribute('src') !== currentSource) return;
+    video.removeAttribute('src');
+    video.load();
+  }
+
+  function play() {
+    try {
+      video.play()?.catch(() => {});
+    } catch {
+      // An autoplay restriction must not break the surrounding interface.
+    }
+  }
 
   function sync() {
     if (disposed) return;
@@ -16,17 +31,22 @@ export function bindViewportPlayback(
     if (!shouldPlay) {
       if (requested) video.pause();
       requested = false;
+      if (releaseOffscreen) release();
       return;
     }
     if (requested) return;
     requested = true;
     video.muted = true;
-    if (video.getAttribute('src') !== src) video.setAttribute('src', src);
-    try {
-      video.play()?.catch(() => {});
-    } catch {
-      // An autoplay restriction must not break the surrounding interface.
-    }
+    if (video.getAttribute('src') !== currentSource) video.setAttribute('src', currentSource);
+    play();
+  }
+
+  function onError() {
+    if (disposed || !requested || !fallbackSrc || currentSource === fallbackSrc
+        || video.getAttribute('src') !== currentSource) return;
+    currentSource = fallbackSrc;
+    video.setAttribute('src', currentSource);
+    play();
   }
 
   const observer = Observer ? new Observer(entries => {
@@ -37,6 +57,7 @@ export function bindViewportPlayback(
   }, { threshold: 0 }) : null;
 
   page.addEventListener('visibilitychange', sync);
+  if (fallbackSrc) video.addEventListener('error', onError);
   if (motion?.addEventListener) motion.addEventListener('change', sync);
   else motion?.addListener?.(sync);
   observer?.observe(target);
@@ -46,9 +67,11 @@ export function bindViewportPlayback(
     disposed = true;
     observer?.disconnect();
     page.removeEventListener('visibilitychange', sync);
+    if (fallbackSrc) video.removeEventListener('error', onError);
     if (motion?.removeEventListener) motion.removeEventListener('change', sync);
     else motion?.removeListener?.(sync);
     video.pause();
+    if (releaseOffscreen) release();
   };
 }
 
