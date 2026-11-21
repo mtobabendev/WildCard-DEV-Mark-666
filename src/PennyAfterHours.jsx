@@ -93,6 +93,7 @@ const FRIENDS = [
   { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
   { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
+  { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
