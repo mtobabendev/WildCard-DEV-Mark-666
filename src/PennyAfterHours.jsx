@@ -344,6 +344,12 @@ export default function PennyAfterHours() {
                aria-label="Mia's OnlyFans page, opens in a new tab">
               <span className="penny-fans__social-symbol" aria-hidden="true">♡</span><span>Mia · OnlyFans</span>
             </a>
+            <a className="penny-fans__social-link"
+               href="https://onlyfans.com/angel.jessyy?rec=603551670"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Angel's OnlyFans page, opens in a new tab">
+              <span className="penny-fans__social-symbol" aria-hidden="true">♡</span><span>Angel · OnlyFans</span>
+            </a>
           </section>
           <PennyClassicCards />
 
