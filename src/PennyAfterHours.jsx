@@ -92,6 +92,7 @@ const FRIENDS = [
   { name: 'Mia Brookes', initial: 'M', url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
+  { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
 ];
 
 const BOTTOM_NAV = [
@@ -338,8 +339,8 @@ export default function PennyAfterHours() {
             </a>
           </nav>
           <section className="penny-fans__friends" aria-labelledby="penny-friends-title">
-            <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span></h2>
-            <div className="penny-fans__friend-list">
+            <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span><small>SWIPE ↔</small></h2>
+            <div className="penny-fans__friend-list" role="region" aria-label="Penny friends, scroll left or right" tabIndex={0}>
               {FRIENDS.map((friend) => (
                 <a
                   key={friend.url}
