@@ -787,17 +787,69 @@ body { margin: 0; background: #0a0614; }
 
 
 /* Compact creator profile and linked friends. */
+
 .penny-fans__friends { grid-column: 1 / -1; min-width: 0; }
-.penny-fans__friends h2 { display: flex; align-items: baseline; gap: .6rem; margin: .3rem 0 .75rem; font-size: .83rem; letter-spacing: .1em; color: #f8c5ec; }
+.penny-fans__friends h2 { display: flex; align-items: baseline; gap: .6rem; margin: .3rem 0 .85rem; font-size: .83rem; letter-spacing: .1em; color: #f8c5ec; }
 .penny-fans__friends h2 span { color: #bd93c5; font-size: .75rem; letter-spacing: 0; }
 .penny-fans__friends h2 small { margin-left: auto; font-size: .68rem; letter-spacing: .08em; color: #dab0df; }
-.penny-fans__friend-list { display: flex; flex-wrap: nowrap; gap: .65rem; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #cc83bd #281335; padding: .15rem .1rem .65rem; }
-.penny-fans__friend-card { flex: 0 0 clamp(172px, 38vw, 225px); scroll-snap-align: start; display: flex; align-items: center; gap: .7rem; min-width: 0; min-height: 66px; padding: .6rem .8rem; border: 1px solid rgba(248,153,215,.35); border-radius: 1rem; background: rgba(69,31,81,.55); text-decoration: none; }
-.penny-fans__friend-card:hover, .penny-fans__friend-card:focus-visible { border-color: #ffd0f0; background: rgba(94,42,113,.72); }
-.penny-fans__friend-avatar { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ffc6ed; background: linear-gradient(145deg, #b05ab2, #51317e); color: white; font-size: 1.1rem; font-weight: 900; }
-.penny-fans__friend-name { display: grid; gap: .22rem; min-width: 0; }
-.penny-fans__friend-name strong { overflow-wrap: anywhere; font-size: .86rem; }
-.penny-fans__friend-name small { color: #e9b5df; font-size: .69rem; }
+.penny-fans__friend-list {
+  display: flex; flex-wrap: nowrap; gap: .75rem; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+  scrollbar-width: thin; scrollbar-color: #cc83bd #281335;
+  padding: .2rem .1rem .8rem;
+}
+.penny-fans__friend-card {
+  position: relative; flex: 0 0 clamp(165px, 34vw, 210px);
+  display: flex; flex-direction: column; align-items: center;
+  scroll-snap-align: start; min-height: 215px; min-width: 0; overflow: hidden;
+  border: 1px solid rgba(248,153,215,.4); border-radius: .9rem;
+  background: rgba(42,21,56,.9); text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.penny-fans__friend-card:hover, .penny-fans__friend-card:focus-visible {
+  border-color: #ffd0f0; transform: translateY(-2px);
+}
+.penny-fans__friend-cover {
+  position: relative; display: block; width: 100%; height: 84px; flex: 0 0 84px;
+  background: linear-gradient(125deg, #804e96, #b85895 58%, #362051);
+}
+.penny-fans__friend-cover > img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; opacity: .78; }
+.penny-fans__friend-cover::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(14,5,25,.12), rgba(14,5,25,.42));
+  pointer-events: none;
+}
+.penny-fans__friend-platform {
+  position: absolute; z-index: 1; top: .5rem; left: .5rem;
+  padding: .2rem .46rem; border: 1px solid rgba(255,225,245,.4);
+  border-radius: .4rem; background: rgba(19,8,29,.65);
+  color: #ffe2f5; font-size: .67rem; font-weight: 800;
+}
+.penny-fans__friend-avatar {
+  z-index: 1; position: relative; display: grid; place-items: center;
+  flex: 0 0 92px; width: 92px; height: 92px; margin: -36px auto 0;
+  overflow: hidden; border: 4px solid #291239; border-radius: 50%;
+  background: radial-gradient(circle at 32% 25%, #deabd2, #73306d);
+  color: #fff7fb; font-size: 2rem; font-weight: 900;
+  box-shadow: 0 3px 12px rgba(8,2,15,.48);
+}
+.penny-fans__friend-avatar > img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 17%;
+}
+.penny-fans__friend-name {
+  display: grid; gap: .25rem; min-width: 0;
+  width: 100%; padding: .7rem .6rem 1rem;
+  text-align: center;
+}
+.penny-fans__friend-name strong {
+  display: block; font-size: .95rem; color: #fff3fc;
+  line-height: 1.25; overflow-wrap: anywhere;
+}
+.penny-fans__friend-name small {
+  display: block; color: #dcb7db;
+  font-size: .76rem; line-height: 1.3; overflow-wrap: anywhere;
+}
 .penny-fans__membership { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: .9rem 0 .4rem; padding: .9rem clamp(.9rem, 3vw, 1.4rem); border: 1px solid rgba(248,153,215,.35); border-radius: 1rem; background: #1d102c; }
 .penny-fans__membership .penny-fans__eyebrow { margin: 0 0 .45rem; }
 .penny-fans__membership-status { display: flex; flex-wrap: wrap; gap: .55rem 1.6rem; align-items: center; margin: 0; font-size: clamp(.9rem, 2.4vw, 1.1rem); }
@@ -835,9 +887,11 @@ body { margin: 0; background: #0a0614; }
 .penny-fans__classic-archive summary { cursor: pointer; color: #f6c5e8; font-weight: 800; }
 .penny-fans__classic-archive > .penny-after-orbit { width: 100%; margin: 1rem 0 0; }
 @media (max-width: 540px) {
-  .penny-fans__friend-list { gap: .45rem; }
-  .penny-fans__friend-card { padding: .5rem; gap: .5rem; }
-  .penny-fans__friend-avatar { flex-basis: 36px; width: 36px; height: 36px; }
+  .penny-fans__friend-list { gap: .6rem; }
+  .penny-fans__friend-card { flex-basis: 160px; min-height: 204px; }
+  .penny-fans__friend-cover { height: 75px; flex-basis: 75px; }
+  .penny-fans__friend-avatar { flex-basis: 82px; width: 82px; height: 82px; margin-top: -32px; }
+  .penny-fans__friend-name strong { font-size: .88rem; }
   .penny-fans__photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; }
   .penny-fans__photo-tile span { font-size: .59rem; left: .3rem; right: .3rem; bottom: .3rem; }
   .penny-fans__video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
