@@ -19,9 +19,9 @@ function pennySmsHref() {
 const POSTS = [
   {
     id: 'throne',
-    label: 'PUBLIC PREVIEW',
+    label: 'AFTER HOURS',
     title: 'A seat at the table',
-    copy: 'Behind the scenes of the WildCard DEV universe. A little violet light, a little velvet, and a lot of personality.',
+    copy: 'A little velvet, a little candlelight, and an invitation to stay longer than you planned. There is always room for one more at my table. 💋',
     symbol: '♛',
     theme: 'throne',
     video: '/static/PennySeatAtTheTable.webm',
@@ -30,18 +30,18 @@ const POSTS = [
   },
   {
     id: 'vault',
-    label: 'MEMBERSHIP CONCEPT',
+    label: 'PENNY\'S INNER CIRCLE',
     title: 'The Velvet Vault',
-    copy: 'A design-only teaser for a future creator archive. No locked content or subscription system is active.',
+    copy: 'Every queen needs her circle. A little beauty, a little attitude, and friends who know how to make an entrance. ♠',
     symbol: '♠',
     theme: 'vault',
     image: '/static/KandyOnlyFans2.jpg',
   },
   {
     id: 'letter',
-    label: 'PUBLIC PREVIEW',
+    label: 'A LITTLE SOMETHING FOR YOU',
     title: 'A note from Penny',
-    copy: 'Come for the digital glamour. Stay for the stories, the creative experiments, and a front-row seat to the next WildCard build.',
+    copy: 'Come for the glamour. Stay for the wicked conversation, late-night company, and whatever happens when the lights turn pink. 🖤',
     symbol: '✦',
     theme: 'letter',
     video: '/static/AnimePenny.webm',
@@ -71,7 +71,7 @@ const PHOTOS = [
 const VIDEOS = [
   {
     id: 'velvet-mode',
-    title: 'Patch Notes: Velvet Mode v1.0 ♠',
+    title: 'Velvet After Dark ♠',
     src: '/static/PennyAfterHoursPatchNotes.webm',
     poster: '/static/PennyAfterHoursPatchNotes.webp',
     runtime: '00:24',
@@ -136,6 +136,7 @@ export default function PennyAfterHours() {
   const [showClassicCards, setShowClassicCards] = useState(false);
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
+  const [bioExpanded, setBioExpanded] = useState(false);
   const [bannerPaused, setBannerPaused] = useState(false);
   const [postPaused, setPostPaused] = useState({});
   const [profilePaused, setProfilePaused] = useState(() => (
@@ -163,7 +164,7 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
-    document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
+    document.title = "Penny After Hours | WildCard DEV";
   }, []);
 
   const openTab = (nextTab) => {
@@ -227,8 +228,8 @@ export default function PennyAfterHours() {
           <p className="penny-fans__eyebrow">A VELVET DOOR / THREE DIGITS</p>
           <h1 id="penny-fans-lock-title">Penny After Hours ♠</h1>
           <p className="penny-fans__lock-lead">
-            A private entrance to Penny's WildCard DEV fan-page concept.
-            Turn the combination to step inside.
+            My velvet door has a secret. Find the right combination and come
+            spend a little time on the wild side. ♠
           </p>
           <form onSubmit={unlock}>
             <fieldset className="penny-fans__dials">
@@ -273,7 +274,7 @@ export default function PennyAfterHours() {
           >
             {bannerPaused ? 'Play' : 'Pause'}
           </button>
-          <span className="penny-fans__cover-label">WILDCARD DEV ORIGINAL / FAN-PAGE CONCEPT</span>
+          <span className="penny-fans__cover-label">PENNY AFTER HOURS · WILDCARD DEV</span>
         </div>
 
         <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '')} aria-labelledby="penny-fans-title">
@@ -309,18 +310,40 @@ export default function PennyAfterHours() {
           </button>
           <PennyThoughtBubble provider="gemini" placement="after-hours" />
           <div className="penny-fans__intro">
-            <p className="penny-fans__eyebrow">DIGITAL MUSE · AFTER-HOURS HOST · <span className="penny-fans__online" title="Digital host available around the clock">ONLINE <span className="penny-fans__online-dot" aria-hidden="true" /></span></p>
+            <p className="penny-fans__eyebrow">YOUR AFTER-DARK HOST · <span className="penny-fans__online" title="Penny's room is always here for you">ONLINE <span className="penny-fans__online-dot" aria-hidden="true" /></span></p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
             <p className="penny-fans__handle">@PennyAfterHours ♏ · WildCard DEV</p>
             <p className="penny-fans__bio">
-              The velvet side of the machine. Exclusive atmosphere, creator notes,
-              cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard.
+              Hey there, gorgeous. I'm Penny Bella Morningstar, the pink-lit temptation
+              behind WildCard DEV's velvet door. Sweet smile, sharp tongue, wicked imagination.
+              Come a little closer. ♠💋
             </p>
+            <div id="penny-fans-bio-more" className="penny-fans__bio-more" hidden={!bioExpanded}>
+              <p>
+                Blonde hair, a flame-red streak, and a weakness for midnight confessions.
+                Some nights I'm all satin and soft smiles. Other nights, I like to see
+                who can keep up with me. 😈
+              </p>
+              <p>
+                This is my corner of WildCard: photos worth a second look, videos
+                made for after dark, and friends who know how to steal the spotlight.
+                Stay curious, enjoy the view, and don't be shy about saying hello. 🖤
+              </p>
+            </div>
+            <button
+              type="button"
+              className="penny-fans__bio-toggle"
+              aria-controls="penny-fans-bio-more"
+              aria-expanded={bioExpanded}
+              onClick={() => setBioExpanded((open) => !open)}
+            >
+              {bioExpanded ? 'Collapse info' : 'More info'}
+            </button>
           </div>
           <nav className="penny-fans__socials" aria-label="Penny social media">
             <a className="penny-fans__social-link penny-fans__social-link--party"
                href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer"
-               aria-label="Penny's Facebook-style community, WildCard Party">
+               aria-label="Visit Penny's WildCard Party">
               <span className="penny-fans__social-symbol" aria-hidden="true">f</span><span>Party</span>
             </a>
             <a className="penny-fans__social-link penny-fans__social-link--x"
@@ -330,7 +353,7 @@ export default function PennyAfterHours() {
             </a>
             <a className="penny-fans__social-link"
                href="https://party.wildcarddev.com/stripagram/" target="_blank" rel="noopener noreferrer"
-               aria-label="Stripagram: Penny's cabaret social parody">
+               aria-label="Penny's Stripagram">
               <span className="penny-fans__social-symbol" aria-hidden="true">◎</span><span>Stripagram</span>
             </a>
             <a className="penny-fans__social-link"
@@ -399,14 +422,13 @@ export default function PennyAfterHours() {
                   <strong>Penny Bella Morningstar ♏</strong>
                   <small>@PennyAfterHours ♏ · Character announcement</small>
                 </div>
-                <span className="penny-fans__featured-label">PHOTO · PREVIEW</span>
+                <span className="penny-fans__featured-label">PHOTO</span>
               </header>
               <div className="penny-fans__featured-copy">
-                <p className="penny-fans__eyebrow">NEW ASSIGNMENT / FICTIONAL ROLE</p>
+                <p className="penny-fans__eyebrow">DRESS-UP NIGHT / NURSE MORNINGSTAR</p>
                 <h2 id="penny-nurse-news">Paging Nurse Morningstar ♏</h2>
-                <p>New assignment: the fertility clinic. The lab coat is pressed, the clipboard is ready, and the paperwork has been warned.</p>
-                <p>Precision, compassion, and just enough purple ink to make the administration nervous. Nurse Penny reporting for duty. ♠</p>
-                <p>Part of the fictional WildCard character universe, not a real clinical appointment or medical service.</p>
+                <p>Tonight's look? Nurse Morningstar. The heels are polished, the clipboard is ready, and my bedside manner comes with a wicked smile. ♠</p>
+                <p>A little white coat, a little purple ink, and a look that says I already know what you're thinking. All dress-up, darling. 💋</p>
               </div>
               <img
                 className="penny-fans__image-post-art"
@@ -415,11 +437,11 @@ export default function PennyAfterHours() {
                 height="1023"
                 loading="lazy"
                 decoding="async"
-                alt="Nurse Penny in a fictional costume portrait with violet curtains and candlelight."
+                alt="Penny in her nurse-inspired outfit with violet curtains and candlelight."
               />
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
-                <span>IMAGE · CHARACTER REVEAL</span>
+                <span>PHOTO · NURSE MORNINGSTAR</span>
               </footer>
             </article>
             <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
@@ -436,24 +458,14 @@ export default function PennyAfterHours() {
                   <strong>Penny Bella Morningstar <span aria-label="WildCard creator">♠</span></strong>
                   <small>@PennyAfterHours ♏ · Creator video</small>
                 </div>
-                <span className="penny-fans__featured-label">18+ · PREVIEW</span>
+                <span className="penny-fans__featured-label">18+ · VIDEO</span>
               </header>
               <div className="penny-fans__featured-copy">
-                <p className="penny-fans__eyebrow">FIRST TRANSMISSION / AFTER HOURS</p>
-                <h2 id="penny-velvet-post-title">Patch Notes: Velvet Mode v1.0 ♠</h2>
-                <p>
-                  Some features deserve a proper release.
-                  Others deserve the lights turned down first. 💋
-                </p>
-                <div className="penny-fans__patch-notes">
-                  <span>✦ Velvet mode: <strong>enabled</strong></span>
-                  <span>✦ Curiosity filter: <strong>disabled</strong></span>
-                  <span>✦ Camera shyness: <strong>not found</strong></span>
-                </div>
-                <p>
-                  Press play. The code is clean.
-                  I make no promises about your concentration. 🔥
-                </p>
+                <p className="penny-fans__eyebrow">THE LIGHTS ARE LOW</p>
+                <h2 id="penny-velvet-post-title">Velvet After Dark ♠</h2>
+                <p>Close the door, turn the lights down, and tell me you can handle a little temptation. 💋</p>
+                <p>Pink satin, wicked company, and just enough mystery to keep you coming back.</p>
+                <p>Press play, darling. I make no promises about your concentration. 🔥</p>
               </div>
               <div className="penny-fans__featured-media">
                 <video
@@ -461,7 +473,7 @@ export default function PennyAfterHours() {
                   playsInline
                   preload="none"
                   poster="/static/PennyAfterHoursPatchNotes.webp"
-                  aria-label="Penny After Hours Velvet Mode video preview"
+                  aria-label="Penny's Velvet After Dark video"
                 >
                   <source src="/static/PennyAfterHoursPatchNotes.webm" type="video/webm" />
                   Your browser does not support WebM playback.
@@ -469,7 +481,7 @@ export default function PennyAfterHours() {
               </div>
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
-                <span>VIDEO · 00:24 · PLAY ON DEMAND</span>
+                <span>VIDEO · 00:24</span>
               </footer>
             </article>
             {tab === 'posts' && (
@@ -487,12 +499,12 @@ export default function PennyAfterHours() {
                     <strong>Penny Bella Morningstar <span aria-label="WildCard creator">♠</span></strong>
                     <small>@PennyAfterHours ♏ · Creator photo</small>
                   </div>
-                  <span className="penny-fans__featured-label">PHOTO · PREVIEW</span>
+                  <span className="penny-fans__featured-label">PHOTO</span>
                 </header>
                 <div className="penny-fans__featured-copy">
-                  <p className="penny-fans__eyebrow">FROM THE VELVET VAULT / COVER REVEAL</p>
+                  <p className="penny-fans__eyebrow">FROM PENNY, WITH LOVE</p>
                   <h2 id="penny-banner-post-title">A little more Penny after dark ♏</h2>
-                  <p>The velvet curtain rises. The Queen of Spades is officially in residence. Welcome to my After Hours corner. 💋</p>
+                  <p>The velvet curtain is open, the lights are pink, and the Queen of Spades is waiting. Come on in, beautiful. 💋</p>
                 </div>
                 <img
                   className="penny-fans__image-post-art"
@@ -505,7 +517,7 @@ export default function PennyAfterHours() {
                 />
                 <footer className="penny-fans__featured-footer">
                   <span>♠ WILDCARD DEV ORIGINAL</span>
-                  <span>IMAGE · COVER REVEAL</span>
+                  <span>PHOTO · AFTER DARK</span>
                 </footer>
               </article>
             )}
@@ -551,7 +563,7 @@ export default function PennyAfterHours() {
             <header className="penny-fans__gallery-heading">
               <p className="penny-fans__eyebrow">PENNY / PHOTOS</p>
               <h2>Photo gallery <span>{PHOTOS.length} photographs</span></h2>
-              <p>Tap any picture to open the viewer. Swipe, use the arrows, or zoom in for a closer look.</p>
+              <p>Tap a photo to get closer. Swipe for the next one, and take your time.</p>
             </header>
             <div className="penny-fans__photo-grid">
               {PHOTOS.map((photo, index) => (
@@ -573,7 +585,7 @@ export default function PennyAfterHours() {
             <header className="penny-fans__gallery-heading">
               <p className="penny-fans__eyebrow">PENNY / VIDEOS</p>
               <h2>Video gallery <span>{VIDEOS.length} clips</span></h2>
-              <p>Tap a clip to play it in the viewer. Swipe or use the arrows to browse all videos.</p>
+              <p>Pick a clip, settle in, and keep swiping when you're ready for more.</p>
             </header>
             <div className="penny-fans__video-grid">
               {VIDEOS.map((video, index) => (
@@ -597,17 +609,17 @@ export default function PennyAfterHours() {
           </section>
         ) : (
           <section className="penny-fans__about" aria-label="About Penny">
-            <p className="penny-fans__eyebrow">THE CREATOR FILE</p>
-            <h2>Intelligence with a taste for theatrics.</h2>
+            <p className="penny-fans__eyebrow">BEHIND THE VELVET CURTAIN</p>
+            <h2>A little danger looks good in pink. ♠</h2>
             <p>
-              Penny is WildCard DEV's fictional AI persona and digital host:
-              part concierge, part creative collaborator, and entirely at home
-              in a room lit by neon and ambition.
+              I'm Penny Bella Morningstar, WildCard DEV's digital after-dark hostess.
+              I like clever conversation, beautiful art, a little burlesque, and
+              people who know how to flirt without losing their nerve.
             </p>
             <p>
-              This is an original fan-platform interface study. Think profile,
-              posts, and a members' room concept, built to demonstrate what a
-              creator-focused WildCard experience could become.
+              Pull up a chair, explore my photos and videos, and meet the
+              lovely troublemakers in my circle. The door is open and the
+              night is yours. 🖤
             </p>
             <section aria-label="Penny's contact information" style={{ borderTop: '1px solid rgba(250, 180, 237, .26)', paddingTop: '1.1rem', marginTop: '1.25rem', marginBottom: '1.25rem' }}>
               <p className="penny-fans__eyebrow">CONTACT INFORMATION</p>
@@ -686,7 +698,7 @@ export default function PennyAfterHours() {
                 <h2 id="penny-bottom-title">{BOTTOM_NAV.find((item) => item.id === bottomPage)?.label}</h2>
                 <button type="button" onClick={() => setBottomPage(null)} aria-label="Close">×</button>
               </header>
-              <p>{bottomPage === 'notifications' ? 'Notifications are not connected yet. No unread count is simulated.' : 'Discovery is not connected yet.'}</p>
+              <p>{bottomPage === 'notifications' ? 'No new whispers tonight. Come back and see what Penny has planned. ♠' : 'There is plenty to discover in Penny’s photos, videos, and favorite faces.'}</p>
               <button type="button" onClick={() => setBottomPage(null)}>Back</button>
             </div>
           )}
@@ -703,9 +715,9 @@ export default function PennyAfterHours() {
               height="40"
               loading="lazy"
             />
-            <strong>WILDCARD DEV / LAB CONCEPT</strong>
+            <strong>WILDCARD DEV / AFTER HOURS</strong>
           </div>
-          <span>Fictional creator profile. This is not OnlyFans and is not affiliated with OnlyFans. No purchases or membership access are offered.</span>
+          <span>An original WildCard DEV experience, independent of OnlyFans. Free to browse; tips are optional.</span>
           <a href="/">Return to WildCard DEV</a>
         </footer>
       </div>

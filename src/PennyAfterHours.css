@@ -170,6 +170,17 @@ body { margin: 0; background: #0a0614; }
   overflow-wrap: anywhere;
 }
 .penny-fans__bio { max-width: 650px; margin: 0; line-height: 1.65; color: var(--pf-muted); }
+.penny-fans__bio-more { max-width: 650px; color: var(--pf-muted); line-height: 1.65; }
+.penny-fans__bio-more[hidden] { display: none; }
+.penny-fans__bio-more p { margin: .7rem 0 0; }
+.penny-fans__bio-toggle {
+  display: inline-flex; align-items: center;
+  min-height: 44px; margin: .3rem 0 0; padding: .3rem .1rem;
+  border: 0; background: transparent; color: #ffb6e5;
+  font-weight: 800; font-size: .86rem; text-decoration: underline;
+  text-underline-offset: .3rem;
+}
+
 .penny-fans__profile > .penny-after-orbit {
   grid-column: 1 / -1;
   width: 100%;
