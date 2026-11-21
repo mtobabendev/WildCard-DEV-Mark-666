@@ -91,7 +91,8 @@ const VIDEOS = [
 const FRIENDS = [
   { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
   { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
-  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: true, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
@@ -101,20 +102,22 @@ const FRIENDS = [
   { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
 ];
 
-const MIA_SLIDES = 6;
-const MIA_SLIDE_INTERVAL_MS = 6000;
+const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
 
-// Each frame occupies one ninth of a single locally hosted WebP image sheet.
-// The cover advances in order; Mia's circular portrait independently shuffles.
+// A featured friend's cover advances in order and the avatar shuffles independently.
 function PennyFriendCard({ friend }) {
-  const isMia = friend.slideshow === true;
+  const slideshow = friend.slideshow || null;
+  const frames = slideshow?.frames ?? 0;
+  const isFeatured = frames > 1;
   const cardRef = useRef(null);
   const visibleRef = useRef(true);
   const [coverIndex, setCoverIndex] = useState(0);
-  const [avatarIndex, setAvatarIndex] = useState(() => 1 + Math.floor(Math.random() * (MIA_SLIDES - 1)));
+  const [avatarIndex, setAvatarIndex] = useState(() =>
+    isFeatured ? 1 + Math.floor(Math.random() * (frames - 1)) : 0
+  );
 
   useEffect(() => {
-    if (!isMia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (!isFeatured || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     let observer;
     if ('IntersectionObserver' in window && cardRef.current) {
@@ -123,46 +126,46 @@ function PennyFriendCard({ friend }) {
       }, { threshold: 0.05 });
       observer.observe(cardRef.current);
     }
-    const canAdvance = () => visibleRef.current && !document.hidden;
-    const coverTimer = window.setInterval(() => {
-      if (canAdvance()) setCoverIndex((current) => (current + 1) % MIA_SLIDES);
-    }, MIA_SLIDE_INTERVAL_MS);
-    const avatarTimer = window.setInterval(() => {
-      if (!canAdvance()) return;
+
+    const timer = window.setInterval(() => {
+      if (!visibleRef.current || document.hidden) return;
+      setCoverIndex((current) => (current + 1) % frames);
       setAvatarIndex((current) => {
-        const candidate = Math.floor(Math.random() * (MIA_SLIDES - 1));
-        return candidate >= current ? candidate + 1 : candidate;
+        const next = Math.floor(Math.random() * (frames - 1));
+        return next >= current ? next + 1 : next;
       });
-    }, MIA_SLIDE_INTERVAL_MS);
+    }, FRIEND_SLIDESHOW_INTERVAL_MS);
+
     return () => {
-      window.clearInterval(coverTimer);
-      window.clearInterval(avatarTimer);
+      window.clearInterval(timer);
       observer?.disconnect();
     };
-  }, [isMia]);
+  }, [isFeatured, frames]);
 
   const sheetPosition = (index) => ({
-    '--penny-friend-slide-x': `${(index * 100) / (MIA_SLIDES - 1)}%`,
+    '--penny-friend-slide-x': ((index * 100) / (frames - 1)) + '%',
+    '--penny-friend-slide-src': 'url("' + slideshow.src + '")',
+    '--penny-friend-slide-scale': (frames * 100) + '%',
   });
 
   return (
     <a
       ref={cardRef}
-      className={'penny-fans__friend-card' + (isMia ? ' penny-fans__friend-card--mia' : '')}
+      className={'penny-fans__friend-card' + (isFeatured ? ' penny-fans__friend-card--featured' : '')}
       href={friend.url}
       target={friend.platform ? undefined : '_blank'}
       rel={friend.platform ? undefined : 'noopener noreferrer'}
       aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + (friend.platform ? '' : ', opens in a new tab')}
     >
       <span className="penny-fans__friend-cover" aria-hidden="true">
-        {isMia ? (
-          <span className="penny-fans__mia-cover-slide" style={sheetPosition(coverIndex)} />
+        {isFeatured ? (
+          <span className="penny-fans__featured-cover-slide" style={sheetPosition(coverIndex)} />
         ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" />}
         <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
       </span>
       <span className="penny-fans__friend-avatar" aria-hidden="true">
-        {isMia ? (
-          <span className="penny-fans__mia-avatar-slide" style={sheetPosition(avatarIndex)} />
+        {isFeatured ? (
+          <span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex)} />
         ) : friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
       </span>
       <span className="penny-fans__friend-name">

@@ -902,20 +902,20 @@ body { margin: 0; background: #0a0614; }
   .penny-fans__media-viewer-nav span { font-size: .62rem; }
 }
 
-/* Mia's featured cover and avatar use different frames from one light WebP sheet. */
-.penny-fans__friend-card--mia {
+/* Featured friend covers rotate in sequence; the circular avatars shuffle separately. */
+.penny-fans__friend-card--featured {
   border-color: #ffb1e1;
   box-shadow: 0 0 0 1px rgba(255, 171, 225, .25), 0 0 18px rgba(243, 115, 209, .22);
 }
-.penny-fans__mia-cover-slide,
-.penny-fans__mia-avatar-slide {
+.penny-fans__featured-cover-slide,
+.penny-fans__featured-avatar-slide {
   position: absolute;
   display: block;
   inset: 0;
-  background-image: url('/static/friends/mia-slides.webp');
+  background-image: var(--penny-friend-slide-src);
   background-repeat: no-repeat;
-  background-size: 600% auto;
+  background-size: var(--penny-friend-slide-scale, 600%) auto;
   background-position-x: var(--penny-friend-slide-x, 0%);
 }
-.penny-fans__mia-cover-slide { background-position-y: 30%; }
-.penny-fans__mia-avatar-slide { background-position-y: center; }
+.penny-fans__featured-cover-slide { background-position-y: 30%; }
+.penny-fans__featured-avatar-slide { background-position-y: center; }
