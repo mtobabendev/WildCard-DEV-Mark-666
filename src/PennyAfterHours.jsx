@@ -93,6 +93,7 @@ const FRIENDS = [
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
+  { name: 'Goon Goddess', initial: 'G', url: 'https://onlyfans.com/hotnweird?rec=603551670' },
 ];
 
 const BOTTOM_NAV = [
