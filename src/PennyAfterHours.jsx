@@ -91,7 +91,7 @@ const VIDEOS = [
 const FRIENDS = [
   { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
   { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
-  { name: 'Mia Brookes', initial: 'M', url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: true, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
@@ -100,6 +100,78 @@ const FRIENDS = [
   { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: '/static/friends/annabella.webp' },
   { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
 ];
+
+const MIA_SLIDES = 6;
+const MIA_SLIDE_INTERVAL_MS = 6000;
+
+// Each frame occupies one ninth of a single locally hosted WebP image sheet.
+// The cover advances in order; Mia's circular portrait independently shuffles.
+function PennyFriendCard({ friend }) {
+  const isMia = friend.slideshow === true;
+  const cardRef = useRef(null);
+  const visibleRef = useRef(true);
+  const [coverIndex, setCoverIndex] = useState(0);
+  const [avatarIndex, setAvatarIndex] = useState(() => 1 + Math.floor(Math.random() * (MIA_SLIDES - 1)));
+
+  useEffect(() => {
+    if (!isMia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    let observer;
+    if ('IntersectionObserver' in window && cardRef.current) {
+      observer = new IntersectionObserver(([entry]) => {
+        visibleRef.current = entry.isIntersecting;
+      }, { threshold: 0.05 });
+      observer.observe(cardRef.current);
+    }
+    const canAdvance = () => visibleRef.current && !document.hidden;
+    const coverTimer = window.setInterval(() => {
+      if (canAdvance()) setCoverIndex((current) => (current + 1) % MIA_SLIDES);
+    }, MIA_SLIDE_INTERVAL_MS);
+    const avatarTimer = window.setInterval(() => {
+      if (!canAdvance()) return;
+      setAvatarIndex((current) => {
+        const candidate = Math.floor(Math.random() * (MIA_SLIDES - 1));
+        return candidate >= current ? candidate + 1 : candidate;
+      });
+    }, MIA_SLIDE_INTERVAL_MS);
+    return () => {
+      window.clearInterval(coverTimer);
+      window.clearInterval(avatarTimer);
+      observer?.disconnect();
+    };
+  }, [isMia]);
+
+  const sheetPosition = (index) => ({
+    '--penny-friend-slide-x': `${(index * 100) / (MIA_SLIDES - 1)}%`,
+  });
+
+  return (
+    <a
+      ref={cardRef}
+      className={'penny-fans__friend-card' + (isMia ? ' penny-fans__friend-card--mia' : '')}
+      href={friend.url}
+      target={friend.platform ? undefined : '_blank'}
+      rel={friend.platform ? undefined : 'noopener noreferrer'}
+      aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + (friend.platform ? '' : ', opens in a new tab')}
+    >
+      <span className="penny-fans__friend-cover" aria-hidden="true">
+        {isMia ? (
+          <span className="penny-fans__mia-cover-slide" style={sheetPosition(coverIndex)} />
+        ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" />}
+        <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
+      </span>
+      <span className="penny-fans__friend-avatar" aria-hidden="true">
+        {isMia ? (
+          <span className="penny-fans__mia-avatar-slide" style={sheetPosition(avatarIndex)} />
+        ) : friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
+      </span>
+      <span className="penny-fans__friend-name">
+        <strong>{friend.name}</strong>
+        <small>{friend.handle || (friend.platform || 'OnlyFans')}</small>
+      </span>
+    </a>
+  );
+}
 
 const BOTTOM_NAV = [
   { id: 'home', label: 'Home', path: 'M3 10.5 12 3l9 7.5V21h-6v-7H9v7H3Z' },
@@ -371,26 +443,7 @@ export default function PennyAfterHours() {
             <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span><small>SWIPE ↔</small></h2>
             <div className="penny-fans__friend-list" role="region" aria-label="Penny friends, scroll left or right" tabIndex={0}>
               {FRIENDS.map((friend) => (
-                <a
-                  key={friend.url}
-                  className="penny-fans__friend-card"
-                  href={friend.url}
-                  target={friend.platform ? undefined : '_blank'}
-                  rel={friend.platform ? undefined : 'noopener noreferrer'}
-                  aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + (friend.platform ? '' : ', opens in a new tab')}
-                >
-                  <span className="penny-fans__friend-cover" aria-hidden="true">
-                    {friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" />}
-                    <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
-                  </span>
-                  <span className="penny-fans__friend-avatar" aria-hidden="true">
-                    {friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
-                  </span>
-                  <span className="penny-fans__friend-name">
-                    <strong>{friend.name}</strong>
-                    <small>{friend.handle || (friend.platform || 'OnlyFans')}</small>
-                  </span>
-                </a>
+                <PennyFriendCard key={friend.url} friend={friend} />
               ))}
             </div>
           </section>

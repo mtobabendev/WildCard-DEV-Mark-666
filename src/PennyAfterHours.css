@@ -901,3 +901,21 @@ body { margin: 0; background: #0a0614; }
   .penny-fans__media-zoom-controls button { padding: .4rem .55rem; }
   .penny-fans__media-viewer-nav span { font-size: .62rem; }
 }
+
+/* Mia's featured cover and avatar use different frames from one light WebP sheet. */
+.penny-fans__friend-card--mia {
+  border-color: #ffb1e1;
+  box-shadow: 0 0 0 1px rgba(255, 171, 225, .25), 0 0 18px rgba(243, 115, 209, .22);
+}
+.penny-fans__mia-cover-slide,
+.penny-fans__mia-avatar-slide {
+  position: absolute;
+  display: block;
+  inset: 0;
+  background-image: url('/static/friends/mia-slides.webp');
+  background-repeat: no-repeat;
+  background-size: 600% auto;
+  background-position-x: var(--penny-friend-slide-x, 0%);
+}
+.penny-fans__mia-cover-slide { background-position-y: 30%; }
+.penny-fans__mia-avatar-slide { background-position-y: center; }
