@@ -99,6 +99,7 @@ const FRIENDS = [
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
   { name: 'Goon Goddess', initial: 'G', url: 'https://onlyfans.com/hotnweird?rec=603551670' },
   { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: '/static/friends/evemarie-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
+  { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: '/static/friends/karley-stokes-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
   { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: '/static/friends/annabella.webp' },
   { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
 ];
