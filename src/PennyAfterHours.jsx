@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
 import { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
+import PennyMediaViewer from './components/PennyMediaViewer.jsx';
 import AskPenny from './components/AskPenny.jsx';
 import ViewportVideo from './components/ViewportVideo.jsx';
 
@@ -60,12 +61,11 @@ const PHOTOS = [
     src: '/static/PennyOnlyFansBanner.jpg',
     title: 'After Hours cover reveal',
   },
-];
-
-const PHOTO_GALLERIES = [
-  { id: 'portraits-01-06', title: 'Portraits 01–06', photos: PHOTOS.slice(0, 6) },
-  { id: 'portraits-07-08', title: 'Portraits 07–08', photos: PHOTOS.slice(6, 8) },
-  { id: 'cover-reveal', title: 'After Hours cover reveal', photos: PHOTOS.slice(8, 9) },
+  {
+    id: 'nurse-character',
+    src: '/static/NursePennyPortrait.jpg',
+    title: 'Nurse Penny character reveal',
+  },
 ];
 
 const VIDEOS = [
@@ -76,6 +76,21 @@ const VIDEOS = [
     poster: '/static/PennyAfterHoursPatchNotes.webp',
     runtime: '00:24',
   },
+  {
+    id: 'seat-at-the-table',
+    title: 'A seat at the table',
+    src: '/static/PennySeatAtTheTable.webm',
+  },
+  {
+    id: 'anime-penny',
+    title: 'A note from Penny',
+    src: '/static/AnimePenny.webm',
+  },
+];
+
+const FRIENDS = [
+  { name: 'Mia Brookes', initial: 'M', url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
 ];
 
 const BOTTOM_NAV = [
@@ -114,8 +129,8 @@ export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
   const [bottomPage, setBottomPage] = useState(null);
   const bottomDialogRef = useRef(null);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const photoDialogRef = useRef(null);
+  const [activeMedia, setActiveMedia] = useState(null);
+  const [showClassicCards, setShowClassicCards] = useState(false);
   const profileVideoRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
   const [bannerPaused, setBannerPaused] = useState(false);
@@ -148,15 +163,8 @@ export default function PennyAfterHours() {
     document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
   }, []);
 
-  useEffect(() => {
-    const dialog = photoDialogRef.current;
-    if (!dialog) return;
-    if (selectedPhoto !== null && !dialog.open) dialog.showModal();
-    if (selectedPhoto === null && dialog.open) dialog.close();
-  }, [selectedPhoto]);
-
   const openTab = (nextTab) => {
-    setSelectedPhoto(null);
+    setActiveMedia(null);
     setTab(nextTab);
   };
 
@@ -176,14 +184,6 @@ export default function PennyAfterHours() {
       return;
     }
     setBottomPage(id);
-  };
-
-  const changePhoto = (offset) => {
-    setSelectedPhoto((current) => {
-      if (current === null) return null;
-      const length = PHOTO_GALLERIES[current.galleryIndex].photos.length;
-      return { ...current, photoIndex: (current.photoIndex + offset + length) % length };
-    });
   };
 
   useEffect(() => {
@@ -336,52 +336,41 @@ export default function PennyAfterHours() {
               <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
             </a>
           </nav>
-          <section className="penny-fans__socials" aria-labelledby="penny-friends-title">
-            <h2 id="penny-friends-title" className="penny-fans__eyebrow" style={{ gridColumn: '1 / -1', margin: 0 }}>PENNY'S FRIENDS</h2>
-            <a className="penny-fans__social-link"
-               href="https://onlyfans.com/itsmiabrookes?rec=603551670"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Mia's OnlyFans page, opens in a new tab">
-              <span className="penny-fans__social-symbol" aria-hidden="true">♡</span><span>Mia · OnlyFans</span>
-            </a>
-            <a className="penny-fans__social-link"
-               href="https://onlyfans.com/angel.jessyy?rec=603551670"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Angel's OnlyFans page, opens in a new tab">
-              <span className="penny-fans__social-symbol" aria-hidden="true">♡</span><span>Angel · OnlyFans</span>
-            </a>
+          <section className="penny-fans__friends" aria-labelledby="penny-friends-title">
+            <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span></h2>
+            <div className="penny-fans__friend-list">
+              {FRIENDS.map((friend) => (
+                <a
+                  key={friend.url}
+                  className="penny-fans__friend-card"
+                  href={friend.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={'Visit ' + friend.name + ' on OnlyFans, opens in a new tab'}
+                >
+                  <span className="penny-fans__friend-avatar" aria-hidden="true">{friend.initial}</span>
+                  <span className="penny-fans__friend-name"><strong>{friend.name}</strong><small>OnlyFans ↗</small></span>
+                </a>
+              ))}
+            </div>
           </section>
-          <PennyClassicCards />
-
         </section>
 
-        <section className="penny-fans__support" aria-label="Subscription and tips for Penny After Hours">
-          <article className="penny-fans__support-card">
+        <section className="penny-fans__membership" aria-label="Free subscription and tipping">
+          <div>
             <p className="penny-fans__eyebrow">SUBSCRIPTION</p>
-            <h2>Free to explore <span aria-hidden="true">♠</span></h2>
-            <p>Take a look around Penny After Hours. There is no paid membership or automatic renewal on this concept page.</p>
-            <a className="penny-fans__support-action" href="#penny-after-sections" onClick={() => openTab('posts')}>
-              Explore free posts
-            </a>
-            <p className="penny-fans__support-note">
-              Enjoying the show? <a href="https://square.link/u/sb0tYH9C" target="_blank" rel="noopener noreferrer">Support WildCard DEV with a donation <span aria-hidden="true">↗</span></a>
+            <p className="penny-fans__membership-status" aria-label="Subscribed for free; no account or payment required">
+              <strong><span aria-hidden="true">✓</span> SUBSCRIBED</strong><span>FREE</span>
             </p>
-          </article>
-          <article className="penny-fans__support-card penny-fans__support-card--tips">
-            <p className="penny-fans__eyebrow">TIPS / SUPPORT</p>
-            <h2>Penny's tip jar <span aria-hidden="true">💋</span></h2>
-            <p>Like what we're building? A voluntary donation supports the WildCard DEV projects behind Penny's world.</p>
-            <a
-              className="penny-fans__support-action penny-fans__support-action--tip"
-              href="https://square.link/u/sb0tYH9C"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Send a tip through WildCard DEV's Square donation page, opens in new tab"
-            >
-              ♡ Send a tip <span aria-hidden="true">↗</span>
-            </a>
-            <p className="penny-fans__support-note">Both donation links open the existing Square payment page. Donations do not create subscriptions or unlock content.</p>
-          </article>
+          </div>
+          <a
+            className="penny-fans__tip-coin"
+            href="https://square.link/u/sb0tYH9C"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Tip Penny through WildCard DEV"
+            aria-label="Tip Penny through Square, opens in a new tab"
+          ><span aria-hidden="true">$</span></a>
         </section>
 
         <nav id="penny-after-sections" className="penny-fans__tabs" aria-label="Penny fan page sections">
@@ -557,85 +546,47 @@ export default function PennyAfterHours() {
         ) : tab === 'photos' ? (
           <section className="penny-fans__media-gallery" aria-label="Penny's photo gallery">
             <header className="penny-fans__gallery-heading">
-              <p className="penny-fans__eyebrow">THE VELVET VAULT / PHOTOS</p>
-              <h2>Photo gallery <span>{PHOTOS.length} photographs · {PHOTO_GALLERIES.length} collections</span></h2>
-              <p>Choose a collection to browse its photos. The original eight-photo 3D spinner remains above.</p>
+              <p className="penny-fans__eyebrow">PENNY / PHOTOS</p>
+              <h2>Photo gallery <span>{PHOTOS.length} photographs</span></h2>
+              <p>Tap any picture to open the viewer. Swipe, use the arrows, or zoom in for a closer look.</p>
             </header>
             <div className="penny-fans__photo-grid">
-              {PHOTO_GALLERIES.map((gallery, galleryIndex) => (
+              {PHOTOS.map((photo, index) => (
                 <button
+                  key={photo.id}
                   className="penny-fans__photo-tile"
                   type="button"
-                  key={gallery.id}
-                  onClick={() => setSelectedPhoto({ galleryIndex, photoIndex: 0 })}
-                  aria-label={'Open ' + gallery.title + ', ' + gallery.photos.length + ' photographs'}
+                  onClick={() => setActiveMedia({ kind: 'photo', index })}
+                  aria-label={'Open photo ' + (index + 1) + ': ' + photo.title}
                 >
-                  <img src={gallery.photos[0].src} alt="" loading="lazy" decoding="async" />
-                  <span>{gallery.title}<small>{gallery.photos.length} {gallery.photos.length === 1 ? 'PHOTO' : 'PHOTOS'}</small></span>
+                  <img src={photo.src} alt="" loading="lazy" decoding="async" />
+                  <span>{photo.title}</span>
                 </button>
               ))}
             </div>
-            <dialog
-              ref={photoDialogRef}
-              className="penny-fans__photo-dialog"
-              aria-label="Penny gallery photo viewer"
-              onClose={() => setSelectedPhoto(null)}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                  event.preventDefault();
-                  changePhoto(event.key === 'ArrowRight' ? 1 : -1);
-                }
-              }}
-              onClick={(event) => {
-                if (event.target === event.currentTarget) setSelectedPhoto(null);
-              }}
-            >
-              {selectedPhoto !== null && (
-                <div className="penny-fans__photo-dialog-body">
-                  <header>
-                    <strong>
-                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].title}
-                      {' · '}
-                      {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
-                    </strong>
-                    <button type="button" onClick={() => setSelectedPhoto(null)} aria-label="Close photo viewer">Close ✕</button>
-                  </header>
-                  <img
-                    src={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].src}
-                    alt={'Penny After Hours: ' + PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos[selectedPhoto.photoIndex].title}
-                  />
-                  <nav aria-label="Photo navigation">
-                    <button type="button" onClick={() => changePhoto(-1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>← Previous</button>
-                    <span>{selectedPhoto.photoIndex + 1} / {PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length}</span>
-                    <button type="button" onClick={() => changePhoto(1)} disabled={PHOTO_GALLERIES[selectedPhoto.galleryIndex].photos.length === 1}>Next →</button>
-                  </nav>
-                </div>
-              )}
-            </dialog>
           </section>
         ) : tab === 'videos' ? (
           <section className="penny-fans__media-gallery" aria-label="Penny's video gallery">
             <header className="penny-fans__gallery-heading">
-              <p className="penny-fans__eyebrow">AFTER HOURS / MOVING PICTURES</p>
-              <h2>Video gallery <span>{VIDEOS.length} video</span></h2>
-              <p>Penny's published creator clips, ready to play. The animated cover and profile stay in the header.</p>
+              <p className="penny-fans__eyebrow">PENNY / VIDEOS</p>
+              <h2>Video gallery <span>{VIDEOS.length} clips</span></h2>
+              <p>Tap a clip to play it in the viewer. Swipe or use the arrows to browse all videos.</p>
             </header>
             <div className="penny-fans__video-grid">
-              {VIDEOS.map((video) => (
+              {VIDEOS.map((video, index) => (
                 <article className="penny-fans__gallery-video" key={video.id}>
-                  <video
-                    controls
-                    playsInline
-                    preload="none"
-                    poster={video.poster}
-                    aria-label={video.title}
+                  <button
+                    type="button"
+                    className="penny-fans__video-tile"
+                    aria-label={'Open video: ' + video.title}
+                    onClick={() => setActiveMedia({ kind: 'video', index })}
                   >
-                    <source src={video.src} type="video/webm" />
-                    Your browser does not support WebM playback.
-                  </video>
+                    <video src={video.src} poster={video.poster} muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
+                    <span aria-hidden="true">▶</span>
+                  </button>
                   <div className="penny-fans__gallery-video-info">
                     <h3>{video.title}</h3>
-                    <span>VIDEO · {video.runtime} · PLAY ON DEMAND</span>
+                    <span>VIDEO {video.runtime ? '· ' + video.runtime : ''}</span>
                   </div>
                 </article>
               ))}
@@ -687,6 +638,21 @@ export default function PennyAfterHours() {
             <a href="https://party.wildcarddev.com/">Explore WildCard Party →</a>
           </section>
         )}
+
+        {activeMedia !== null && (
+          <PennyMediaViewer
+            key={activeMedia.kind}
+            kind={activeMedia.kind}
+            items={activeMedia.kind === 'photo' ? PHOTOS : VIDEOS}
+            initialIndex={activeMedia.index}
+            onClose={() => setActiveMedia(null)}
+          />
+        )}
+
+        <details className="penny-fans__classic-archive" onToggle={(event) => setShowClassicCards(event.currentTarget.open)}>
+          <summary>♠ Explore Penny's Classic Cards</summary>
+          {showClassicCards && <PennyClassicCards />}
+        </details>
 
         <nav className="penny-fans__bottom-nav" aria-label="After Hours main navigation">
           {BOTTOM_NAV.map((item) => item.id === 'messages' ? (
