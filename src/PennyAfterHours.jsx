@@ -89,6 +89,8 @@ const VIDEOS = [
 ];
 
 const FRIENDS = [
+  { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV' },
+  { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV' },
   { name: 'Mia Brookes', initial: 'M', url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Angel', initial: 'A', url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
@@ -373,10 +375,10 @@ export default function PennyAfterHours() {
                   href={friend.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={'Visit ' + friend.name + ' on OnlyFans, opens in a new tab'}
+                  aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + ', opens in a new tab'}
                 >
                   <span className="penny-fans__friend-avatar" aria-hidden="true">{friend.initial}</span>
-                  <span className="penny-fans__friend-name"><strong>{friend.name}</strong><small>OnlyFans ↗</small></span>
+                  <span className="penny-fans__friend-name"><strong>{friend.name}</strong><small>{friend.platform || 'OnlyFans'} ↗</small></span>
                 </a>
               ))}
             </div>
