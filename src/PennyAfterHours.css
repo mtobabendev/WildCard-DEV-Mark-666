@@ -170,6 +170,17 @@ body { margin: 0; background: #0a0614; }
   overflow-wrap: anywhere;
 }
 .penny-fans__bio { max-width: 650px; margin: 0; line-height: 1.65; color: var(--pf-muted); }
+.penny-fans__bio-more { max-width: 650px; color: var(--pf-muted); line-height: 1.65; }
+.penny-fans__bio-more[hidden] { display: none; }
+.penny-fans__bio-more p { margin: .7rem 0 0; }
+.penny-fans__bio-toggle {
+  display: inline-flex; align-items: center;
+  min-height: 44px; margin: .3rem 0 0; padding: .3rem .1rem;
+  border: 0; background: transparent; color: #ffb6e5;
+  font-weight: 800; font-size: .86rem; text-decoration: underline;
+  text-underline-offset: .3rem;
+}
+
 .penny-fans__profile > .penny-after-orbit {
   grid-column: 1 / -1;
   width: 100%;
@@ -773,3 +784,138 @@ body { margin: 0; background: #0a0614; }
   height: auto;
   aspect-ratio: 672 / 448;
 }
+
+
+/* Compact creator profile and linked friends. */
+
+.penny-fans__friends { grid-column: 1 / -1; min-width: 0; }
+.penny-fans__friends h2 { display: flex; align-items: baseline; gap: .6rem; margin: .3rem 0 .85rem; font-size: .83rem; letter-spacing: .1em; color: #f8c5ec; }
+.penny-fans__friends h2 span { color: #bd93c5; font-size: .75rem; letter-spacing: 0; }
+.penny-fans__friends h2 small { margin-left: auto; font-size: .68rem; letter-spacing: .08em; color: #dab0df; }
+.penny-fans__friend-list {
+  display: flex; flex-wrap: nowrap; gap: .75rem; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+  scrollbar-width: thin; scrollbar-color: #cc83bd #281335;
+  padding: .2rem .1rem .8rem;
+}
+.penny-fans__friend-card {
+  position: relative; flex: 0 0 clamp(165px, 34vw, 210px);
+  display: flex; flex-direction: column; align-items: center;
+  scroll-snap-align: start; min-height: 215px; min-width: 0; overflow: hidden;
+  border: 1px solid rgba(248,153,215,.4); border-radius: .9rem;
+  background: rgba(42,21,56,.9); text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.penny-fans__friend-card:hover, .penny-fans__friend-card:focus-visible {
+  border-color: #ffd0f0; transform: translateY(-2px);
+}
+.penny-fans__friend-cover {
+  position: relative; display: block; width: 100%; height: 84px; flex: 0 0 84px;
+  background: linear-gradient(125deg, #804e96, #b85895 58%, #362051);
+}
+.penny-fans__friend-cover > img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; opacity: .78; }
+.penny-fans__friend-cover::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(14,5,25,.12), rgba(14,5,25,.42));
+  pointer-events: none;
+}
+.penny-fans__friend-platform {
+  position: absolute; z-index: 1; top: .5rem; left: .5rem;
+  padding: .2rem .46rem; border: 1px solid rgba(255,225,245,.4);
+  border-radius: .4rem; background: rgba(19,8,29,.65);
+  color: #ffe2f5; font-size: .67rem; font-weight: 800;
+}
+.penny-fans__friend-avatar {
+  z-index: 1; position: relative; display: grid; place-items: center;
+  flex: 0 0 92px; width: 92px; height: 92px; margin: -36px auto 0;
+  overflow: hidden; border: 4px solid #291239; border-radius: 50%;
+  background: radial-gradient(circle at 32% 25%, #deabd2, #73306d);
+  color: #fff7fb; font-size: 2rem; font-weight: 900;
+  box-shadow: 0 3px 12px rgba(8,2,15,.48);
+}
+.penny-fans__friend-avatar > img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 17%;
+}
+.penny-fans__friend-name {
+  display: grid; gap: .25rem; min-width: 0;
+  width: 100%; padding: .7rem .6rem 1rem;
+  text-align: center;
+}
+.penny-fans__friend-name strong {
+  display: block; font-size: .95rem; color: #fff3fc;
+  line-height: 1.25; overflow-wrap: anywhere;
+}
+.penny-fans__friend-name small {
+  display: block; color: #dcb7db;
+  font-size: .76rem; line-height: 1.3; overflow-wrap: anywhere;
+}
+.penny-fans__membership { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: .9rem 0 .4rem; padding: .9rem clamp(.9rem, 3vw, 1.4rem); border: 1px solid rgba(248,153,215,.35); border-radius: 1rem; background: #1d102c; }
+.penny-fans__membership .penny-fans__eyebrow { margin: 0 0 .45rem; }
+.penny-fans__membership-status { display: flex; flex-wrap: wrap; gap: .55rem 1.6rem; align-items: center; margin: 0; font-size: clamp(.9rem, 2.4vw, 1.1rem); }
+.penny-fans__membership-status strong { color: #ffb6e5; }
+.penny-fans__membership-status > span { color: #f6e5ff; font-size: .79rem; letter-spacing: .1em; font-weight: 800; }
+.penny-fans__tip-coin { display: grid; place-items: center; flex: 0 0 50px; width: 50px; height: 50px; border: 1px solid #f4addb; border-radius: 50%; color: #ffc5e9; text-decoration: none; background: rgba(82,34,104,.6); font-size: 1.5rem; font-weight: 900; }
+.penny-fans__tip-coin span { display: grid; place-items: center; width: 30px; height: 30px; border: 2px solid currentColor; border-radius: 50%; font-size: 1.12rem; }
+.penny-fans__tip-coin:hover, .penny-fans__tip-coin:focus-visible { background: #733e81; }
+
+/* Complete media grids and shared modal: click, arrow keys, touch swipe and zoom. */
+.penny-fans__photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.penny-fans__photo-tile { aspect-ratio: 1; border-radius: .45rem; }
+.penny-fans__photo-tile span { bottom: .45rem; left: .5rem; right: .5rem; font-size: .7rem; }
+.penny-fans__video-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
+.penny-fans__video-tile { position: relative; display: block; width: 100%; aspect-ratio: 1; padding: 0; border: 0; background: #0f0919; overflow: hidden; cursor: pointer; }
+.penny-fans__video-tile video { width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; pointer-events: none; }
+.penny-fans__video-tile > span { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(11,5,23,.83); color: #ffe1f5; border: 1px solid #f0a7d5; font-size: 1.2rem; }
+.penny-fans__gallery-video-info { padding: .6rem .7rem .75rem; }
+.penny-fans__gallery-video-info h3 { font-size: .88rem; line-height: 1.3; }
+.penny-fans__media-viewer { width: min(1020px, 96vw); max-width: 96vw; height: min(92dvh, 950px); max-height: 92dvh; padding: 0; overflow: hidden; border: 1px solid rgba(255,183,234,.65); border-radius: .95rem; background: #11071b; color: #fff3fc; }
+.penny-fans__media-viewer::backdrop { background: rgba(4,1,11,.95); }
+.penny-fans__media-viewer-body { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.penny-fans__media-viewer-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .55rem; padding: .7rem; background: #291332; border-bottom: 1px solid rgba(255,183,234,.3); }
+.penny-fans__media-viewer-header strong { flex: 1; min-width: 0; font-size: .85rem; overflow-wrap: anywhere; }
+.penny-fans__media-zoom-controls { display: flex; align-items: center; gap: .35rem; }
+.penny-fans__media-zoom-controls button, .penny-fans__media-viewer-nav button { min-width: 40px; min-height: 44px; padding: .5rem .65rem; border: 1px solid rgba(255,192,242,.45); border-radius: .5rem; background: #492358; color: #fff2fc; font-size: .82rem; }
+.penny-fans__media-zoom-controls button:disabled, .penny-fans__media-viewer-nav button:disabled { opacity: .42; cursor: default; }
+.penny-fans__media-zoom-controls output { min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; font-size: .77rem; }
+.penny-fans__media-zoom-controls .penny-fans__media-close { background: #6d285c; }
+.penny-fans__media-viewport { flex: 1 1 0; min-height: 0; width: 100%; overflow: auto; display: flex; align-items: safe center; justify-content: safe center; background: #090410; overscroll-behavior: contain; touch-action: pan-y; }
+.penny-fans__media-viewport img, .penny-fans__media-viewport video { display: block; flex: 0 0 auto; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; background: #090410; }
+.penny-fans__media-viewer-nav { display: flex; align-items: center; justify-content: space-between; gap: .4rem; padding: .6rem .7rem; background: #291332; border-top: 1px solid rgba(255,183,234,.3); }
+.penny-fans__media-viewer-nav span { font-size: .74rem; color: #ffc5e7; text-align: center; font-variant-numeric: tabular-nums; }
+.penny-fans__classic-archive { margin: 1rem 0; padding: .8rem 1rem; border: 1px solid rgba(248,153,215,.22); border-radius: .9rem; background: #1a0c27; }
+.penny-fans__classic-archive summary { cursor: pointer; color: #f6c5e8; font-weight: 800; }
+.penny-fans__classic-archive > .penny-after-orbit { width: 100%; margin: 1rem 0 0; }
+@media (max-width: 540px) {
+  .penny-fans__friend-list { gap: .6rem; }
+  .penny-fans__friend-card { flex-basis: 160px; min-height: 204px; }
+  .penny-fans__friend-cover { height: 75px; flex-basis: 75px; }
+  .penny-fans__friend-avatar { flex-basis: 82px; width: 82px; height: 82px; margin-top: -32px; }
+  .penny-fans__friend-name strong { font-size: .88rem; }
+  .penny-fans__photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; }
+  .penny-fans__photo-tile span { font-size: .59rem; left: .3rem; right: .3rem; bottom: .3rem; }
+  .penny-fans__video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .penny-fans__media-viewer-header { align-items: stretch; }
+  .penny-fans__media-viewer-header strong { width: 100%; flex: 1 1 100%; }
+  .penny-fans__media-zoom-controls { width: 100%; justify-content: flex-end; }
+  .penny-fans__media-zoom-controls button { padding: .4rem .55rem; }
+  .penny-fans__media-viewer-nav span { font-size: .62rem; }
+}
+
+/* Mia's featured cover and avatar use different frames from one light WebP sheet. */
+.penny-fans__friend-card--mia {
+  border-color: #ffb1e1;
+  box-shadow: 0 0 0 1px rgba(255, 171, 225, .25), 0 0 18px rgba(243, 115, 209, .22);
+}
+.penny-fans__mia-cover-slide,
+.penny-fans__mia-avatar-slide {
+  position: absolute;
+  display: block;
+  inset: 0;
+  background-image: url('/static/friends/mia-slides.webp');
+  background-repeat: no-repeat;
+  background-size: 600% auto;
+  background-position-x: var(--penny-friend-slide-x, 0%);
+}
+.penny-fans__mia-cover-slide { background-position-y: 30%; }
+.penny-fans__mia-avatar-slide { background-position-y: center; }
