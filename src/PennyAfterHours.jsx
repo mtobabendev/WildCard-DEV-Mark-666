@@ -98,7 +98,7 @@ const FRIENDS = [
   { name: 'Lacie Heart', initial: 'L', handle: '@lacieheartvip', slideshow: { src: '/static/friends/lacie-heart-slides.webp', frames: 10 }, url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
   { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
   { name: 'Goon Goddess', initial: 'G', url: 'https://onlyfans.com/hotnweird?rec=603551670' },
-  { name: 'Evemarie', initial: 'E', url: 'https://onlyfans.com/evamarieee?rec=603551670' },
+  { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: '/static/friends/evemarie-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
   { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: '/static/friends/annabella.webp' },
   { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
 ];
@@ -109,6 +109,7 @@ const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
 function PennyFriendCard({ friend }) {
   const slideshow = friend.slideshow || null;
   const frames = slideshow?.frames ?? 0;
+  const sheetFrames = slideshow?.avatarFrames ? frames * 2 : frames;
   const isFeatured = frames > 1;
   const cardRef = useRef(null);
   const visibleRef = useRef(true);
@@ -143,10 +144,10 @@ function PennyFriendCard({ friend }) {
     };
   }, [isFeatured, frames]);
 
-  const sheetPosition = (index) => ({
-    '--penny-friend-slide-x': ((index * 100) / (frames - 1)) + '%',
+  const sheetPosition = (index, avatar = false) => ({
+    '--penny-friend-slide-x': (((index + (avatar && slideshow.avatarFrames ? frames : 0)) * 100) / (sheetFrames - 1)) + '%',
     '--penny-friend-slide-src': 'url("' + slideshow.src + '")',
-    '--penny-friend-slide-scale': (frames * 100) + '%',
+    '--penny-friend-slide-scale': (sheetFrames * 100) + '%',
   });
 
   return (
@@ -166,7 +167,7 @@ function PennyFriendCard({ friend }) {
       </span>
       <span className="penny-fans__friend-avatar" aria-hidden="true">
         {isFeatured ? (
-          <span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex)} />
+          <span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} />
         ) : friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
       </span>
       <span className="penny-fans__friend-name">
