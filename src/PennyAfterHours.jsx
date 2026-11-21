@@ -336,6 +336,15 @@ export default function PennyAfterHours() {
               <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
             </a>
           </nav>
+          <section className="penny-fans__socials" aria-labelledby="penny-friends-title">
+            <h2 id="penny-friends-title" className="penny-fans__eyebrow" style={{ gridColumn: '1 / -1', margin: 0 }}>PENNY'S FRIENDS</h2>
+            <a className="penny-fans__social-link"
+               href="https://onlyfans.com/itsmiabrookes?rec=603551670"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Mia's OnlyFans page, opens in a new tab">
+              <span className="penny-fans__social-symbol" aria-hidden="true">♡</span><span>Mia · OnlyFans</span>
+            </a>
+          </section>
           <PennyClassicCards />
 
         </section>
