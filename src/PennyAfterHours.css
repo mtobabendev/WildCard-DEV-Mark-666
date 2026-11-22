@@ -919,3 +919,15 @@ body { margin: 0; background: #0a0614; }
 }
 .penny-fans__featured-cover-slide { background-position-y: 30%; }
 .penny-fans__featured-avatar-slide { background-position-y: center; }
+
+/* Snow Bird keeps Mia's featured slideshow with a pink/silver neon edge. */
+.penny-fans__friend-card--snow-bird {
+  animation: snow-bird-friend-glow 3s ease-in-out infinite;
+}
+@keyframes snow-bird-friend-glow {
+  0%, 100% { border-color: #ff9adb; box-shadow: 0 0 14px rgba(255, 115, 205, .34); }
+  50% { border-color: #e2e2ee; box-shadow: 0 0 15px rgba(223, 231, 246, .38); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-fans__friend-card--snow-bird { animation: none; }
+}
