@@ -181,8 +181,9 @@ export default function AfterHoursDesktop() {
         <ViewportVideo className="ah-desktop__cover-video" src="/static/PennyNewFansBanner.webm"
           poster="/static/penny-after-hours-cover.webp" width={736} height={400}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
-        <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}>
-          {coverPaused ? 'Play cover' : 'Pause cover'}</button>
+        <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}
+          aria-label={coverPaused ? 'Play cover animation' : 'Pause cover animation'} aria-pressed={coverPaused}>
+          <span aria-hidden="true">😈</span></button>
       </section>
 
       <section className="ah-desktop__identity">

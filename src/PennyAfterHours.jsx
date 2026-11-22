@@ -285,7 +285,7 @@ export default function PennyAfterHours() {
             aria-pressed={bannerPaused}
             onClick={() => setBannerPaused((value) => !value)}
           >
-            {bannerPaused ? 'Play' : 'Pause'}
+            <span aria-hidden="true">😈</span>
           </button>
           <span className="penny-fans__cover-label">PENNY AFTER HOURS · WILDCARD DEV</span>
         </div>
@@ -318,7 +318,7 @@ export default function PennyAfterHours() {
             aria-pressed={profilePaused}
             onClick={() => setProfilePaused((value) => !value)}
           >
-            {profilePaused ? '👀 Play' : '👀 Pause'}
+            <span aria-hidden="true">👀</span>
           </button>
           <PennyThoughtBubble provider="gemini" placement="after-hours" />
           <div className="penny-fans__intro">
