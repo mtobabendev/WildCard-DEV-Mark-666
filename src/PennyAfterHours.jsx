@@ -6,6 +6,9 @@ import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
 import AskPenny from './components/AskPenny.jsx';
 import ViewportVideo from './components/ViewportVideo.jsx';
+import UserLoopVideo from './components/UserLoopVideo.jsx';
+import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
+import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -88,97 +91,6 @@ const VIDEOS = [
   },
 ];
 
-const FRIENDS = [
-  { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
-  { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
-  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
-  { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
-  { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
-  { name: 'Angel Jessy', initial: 'A', handle: '@angel.jessyy', slideshow: { src: '/static/friends/angel-jessy-slides.webp', frames: 9 }, url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
-  { name: 'Lacie Heart', initial: 'L', handle: '@lacieheartvip', slideshow: { src: '/static/friends/lacie-heart-slides.webp', frames: 10 }, url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
-  { name: 'snugglbuggx', initial: 'S', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
-  { name: 'Goon Goddess', initial: 'G', url: 'https://onlyfans.com/hotnweird?rec=603551670' },
-  { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: '/static/friends/evemarie-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
-  { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: '/static/friends/karley-stokes-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
-  { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: '/static/friends/annabella.webp' },
-  { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
-];
-
-const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
-
-// A featured friend's cover advances in order and the avatar shuffles independently.
-function PennyFriendCard({ friend }) {
-  const slideshow = friend.slideshow || null;
-  const frames = slideshow?.frames ?? 0;
-  const sheetFrames = slideshow?.avatarFrames ? frames * 2 : frames;
-  const isFeatured = frames > 1;
-  const cardRef = useRef(null);
-  const visibleRef = useRef(true);
-  const [coverIndex, setCoverIndex] = useState(0);
-  const [avatarIndex, setAvatarIndex] = useState(() =>
-    isFeatured ? 1 + Math.floor(Math.random() * (frames - 1)) : 0
-  );
-
-  useEffect(() => {
-    if (!isFeatured || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-
-    let observer;
-    if ('IntersectionObserver' in window && cardRef.current) {
-      observer = new IntersectionObserver(([entry]) => {
-        visibleRef.current = entry.isIntersecting;
-      }, { threshold: 0.05 });
-      observer.observe(cardRef.current);
-    }
-
-    const timer = window.setInterval(() => {
-      if (!visibleRef.current || document.hidden) return;
-      setCoverIndex((current) => (current + 1) % frames);
-      setAvatarIndex((current) => {
-        const next = Math.floor(Math.random() * (frames - 1));
-        return next >= current ? next + 1 : next;
-      });
-    }, FRIEND_SLIDESHOW_INTERVAL_MS);
-
-    return () => {
-      window.clearInterval(timer);
-      observer?.disconnect();
-    };
-  }, [isFeatured, frames]);
-
-  const sheetPosition = (index, avatar = false) => ({
-    '--penny-friend-slide-x': (((index + (avatar && slideshow.avatarFrames ? frames : 0)) * 100) / (sheetFrames - 1)) + '%',
-    '--penny-friend-slide-src': 'url("' + slideshow.src + '")',
-    '--penny-friend-slide-scale': (sheetFrames * 100) + '%',
-  });
-
-  return (
-    <a
-      ref={cardRef}
-      className={'penny-fans__friend-card' + (isFeatured ? ' penny-fans__friend-card--featured' : '')}
-      href={friend.url}
-      target={friend.platform ? undefined : '_blank'}
-      rel={friend.platform ? undefined : 'noopener noreferrer'}
-      aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + (friend.platform ? '' : ', opens in a new tab')}
-    >
-      <span className="penny-fans__friend-cover" aria-hidden="true">
-        {isFeatured ? (
-          <span className="penny-fans__featured-cover-slide" style={sheetPosition(coverIndex)} />
-        ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" />}
-        <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
-      </span>
-      <span className="penny-fans__friend-avatar" aria-hidden="true">
-        {isFeatured ? (
-          <span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} />
-        ) : friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
-      </span>
-      <span className="penny-fans__friend-name">
-        <strong>{friend.name}</strong>
-        <small>{friend.handle || (friend.platform || 'OnlyFans')}</small>
-      </span>
-    </a>
-  );
-}
-
 const BOTTOM_NAV = [
   { id: 'home', label: 'Home', path: 'M3 10.5 12 3l9 7.5V21h-6v-7H9v7H3Z' },
   { id: 'notifications', label: 'Alerts', path: 'M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4' },
@@ -213,6 +125,13 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 1100px)').matches);
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1100px)');
+    const update = () => setIsDesktop(query.matches);
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
   const [bottomPage, setBottomPage] = useState(null);
   const bottomDialogRef = useRef(null);
   const [activeMedia, setActiveMedia] = useState(null);
@@ -274,26 +193,37 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
-    if (!unlocked) return undefined;
+    if (!unlocked || isDesktop) return undefined;
     const video = profileVideoRef.current;
     if (!video) return undefined;
+    let inView = typeof IntersectionObserver === 'undefined';
 
     const syncProfile = () => {
-      if (profilePaused || document.hidden) {
+      if (profilePaused || document.hidden || !inView) {
         video.pause();
         return;
       }
-      const attempt = video.play();
-      attempt?.catch?.(() => setProfilePaused(true));
+      video.play()?.catch?.(() => setProfilePaused(true));
     };
 
-    syncProfile();
+    const observer = typeof IntersectionObserver === 'undefined' ? null :
+      new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.target === video)) {
+          inView = entries.find(entry => entry.target === video).isIntersecting;
+          syncProfile();
+        }
+      }, { threshold: 0 });
+    observer?.observe(video);
     document.addEventListener('visibilitychange', syncProfile);
+    syncProfile();
     return () => {
+      observer?.disconnect();
       document.removeEventListener('visibilitychange', syncProfile);
       video.pause();
     };
-  }, [unlocked, profilePaused]);
+  }, [unlocked, isDesktop, profilePaused]);
+
+  if (unlocked && isDesktop) return <AfterHoursDesktop />;
 
   return (
     <main className="penny-fans">
@@ -375,7 +305,6 @@ export default function PennyAfterHours() {
               muted
               loop
               playsInline
-              autoPlay={!profilePaused}
               preload="auto"
               aria-hidden="true"
               width="128"
@@ -541,7 +470,7 @@ export default function PennyAfterHours() {
                 <p>Press play, darling. I make no promises about your concentration. 🔥</p>
               </div>
               <div className="penny-fans__featured-media">
-                <video
+                <UserLoopVideo
                   controls
                   playsInline
                   preload="none"
@@ -550,7 +479,7 @@ export default function PennyAfterHours() {
                 >
                   <source src="/static/PennyAfterHoursPatchNotes.webm" type="video/webm" />
                   Your browser does not support WebM playback.
-                </video>
+                </UserLoopVideo>
               </div>
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
@@ -671,8 +600,7 @@ export default function PennyAfterHours() {
                   >
                     <video src={video.src} poster={video.poster} muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
                     <span aria-hidden="true">▶</span>
-                  </button>
-                  <div className="penny-fans__gallery-video-info">
+                  </button>                  <div className="penny-fans__gallery-video-info">
                     <h3>{video.title}</h3>
                     <span>VIDEO {video.runtime ? '· ' + video.runtime : ''}</span>
                   </div>

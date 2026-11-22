@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import UserLoopVideo from './UserLoopVideo.jsx';
 
 export default function PennyMediaViewer({ kind, items, initialIndex, onClose }) {
   const dialogRef = useRef(null);
@@ -85,7 +86,7 @@ export default function PennyMediaViewer({ kind, items, initialIndex, onClose })
               style={mediaZoomStyle}
             />
           ) : (
-            <video
+            <UserLoopVideo
               key={current.src}
               controls
               playsInline
@@ -96,7 +97,7 @@ export default function PennyMediaViewer({ kind, items, initialIndex, onClose })
             >
               <source src={current.src} type="video/webm" />
               Your browser does not support this video.
-            </video>
+            </UserLoopVideo>
           )}
         </div>
         <nav className="penny-fans__media-viewer-nav" aria-label="Media navigation">

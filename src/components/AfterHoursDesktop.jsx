@@ -1,0 +1,365 @@
+import { useEffect, useRef, useState } from 'react'
+import { PANEL_IMAGES } from './PennyAfterHoursSpinner.jsx'
+import ViewportVideo from './ViewportVideo.jsx'
+import UserLoopVideo from './UserLoopVideo.jsx'
+import PennyClassicCards from './PennyClassicCards.jsx'
+import PennyThoughtBubble from './PennyThoughtBubble.jsx'
+import AskPenny from './AskPenny.jsx'
+import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
+import './AfterHoursDesktop.css'
+
+const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
+const SQUARE = 'https://square.link/u/sb0tYH9C'
+const PROFILE_URL = 'https://www.wildcarddev.com/penny/after-hours'
+const PROFILE_KEY = 'wildcard:afterhours:desktop-saves:v1'
+
+const PHOTOS = [
+  ...PANEL_IMAGES.map(({ number, src }) => ({
+    id: 'portrait-' + number, title: 'Penny portrait ' + String(number).padStart(2, '0'),
+    src, type: 'photo', alt: 'Penny After Hours portrait ' + number,
+  })),
+  { id: 'cover', title: 'After Hours cover reveal', type: 'photo',
+    src: '/static/PennyOnlyFansBanner.jpg', alt: 'Penny After Hours cover artwork' },
+  { id: 'nurse', title: 'Nurse Morningstar character reveal', type: 'photo',
+    src: '/static/NursePennyPortrait.jpg', alt: 'Penny as fictional Nurse Morningstar' },
+]
+
+const VIDEOS = [
+  { id: 'velvet', title: 'Patch Notes: Velvet Mode', type: 'video',
+    src: '/static/PennyAfterHoursPatchNotes.webm', poster: '/static/PennyAfterHoursPatchNotes.webp' },
+  { id: 'seat', title: 'A seat at the table', type: 'video',
+    src: '/static/PennySeatAtTheTable.webm', poster: '/static/penny-after-hours-cover.webp' },
+  { id: 'letter', title: 'A note from Penny', type: 'video',
+    src: '/static/AnimePenny.webm', poster: '/static/PennyOnlyFansBanner.jpg' },
+]
+const MEDIA = [...PHOTOS, ...VIDEOS]
+const POSTS = [
+  { id: 'nurse-post', title: 'Paging Nurse Morningstar ♠', date: 'Character reveal',
+    copy: 'The lab coat is pressed, the clipboard is ready, and the paperwork has been warned. A fictional WildCard DEV character portrait, not a medical service.',
+    media: PHOTOS.find(item => item.id === 'nurse') },
+  { id: 'velvet-post', title: 'Patch Notes: Velvet Mode v1.0 ♠', date: 'Creator video',
+    copy: 'Some features deserve a proper release. Others deserve the lights turned down first. Press play. The code is clean. 💋',
+    media: VIDEOS[0] },
+  { id: 'cover-post', title: 'A little more Penny after dark', date: 'Cover reveal',
+    copy: 'The velvet curtain rises. The Queen of Spades is officially in residence. Welcome to my After Hours corner.',
+    media: PHOTOS.find(item => item.id === 'cover') },
+  { id: 'seat-post', title: 'A seat at the table', date: 'Creator video',
+    copy: 'Behind the scenes of WildCard DEV: violet light, velvet, and a front-row seat to the next build.',
+    media: VIDEOS[1] },
+  { id: 'letter-post', title: 'A note from Penny', date: 'Creator video',
+    copy: 'Come for the digital glamour. Stay for the stories and creative experiments.',
+    media: VIDEOS[2] },
+]
+
+function safeReadSaves() {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(PROFILE_KEY) || '[]')
+    return Array.isArray(saved) ? saved.filter(item => typeof item === 'string').slice(0, 100) : []
+  } catch { return [] }
+}
+
+function useSavedItems() {
+  const [saved, setSaved] = useState(safeReadSaves)
+  const toggle = (id) => setSaved(previous => {
+    const next = previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]
+    try { window.localStorage.setItem(PROFILE_KEY, JSON.stringify(next)) } catch { /* browsing still works */ }
+    return next
+  })
+  return [saved, toggle]
+}
+
+function MediaPreview({ item, onOpen }) {
+  return <button className="ah-desktop__media-tile" type="button"
+    onClick={() => onOpen(item)} aria-label={'Open ' + item.title}>
+    <img src={item.poster || item.src} alt="" loading="lazy" decoding="async" />
+    <span className="ah-desktop__media-label">{item.type === 'video' ? '▶ VIDEO' : '▣ PHOTO'}</span>
+    <strong>{item.title}</strong>
+  </button>
+}
+
+export default function AfterHoursDesktop() {
+  const [tab, setTab] = useState('posts')
+  const [mediaType, setMediaType] = useState('all')
+  const [query, setQuery] = useState('')
+  const [layout, setLayout] = useState('grid')
+  const [showInfo, setShowInfo] = useState(false)
+  const [coverPaused, setCoverPaused] = useState(false)
+  const [avatarExpanded, setAvatarExpanded] = useState(false)
+  const [selected, setSelected] = useState(null)
+  const [status, setStatus] = useState('')
+  const [saved, toggleSaved] = useSavedItems()
+  const modalRef = useRef(null)
+  const avatarRef = useRef(null)
+
+  useEffect(() => {
+    document.title = 'Penny After Hours | WildCard DEV'
+  }, [])
+
+  useEffect(() => {
+    const modal = modalRef.current
+    if (!modal) return
+    if (selected && !modal.open) modal.showModal()
+    if (!selected && modal.open) modal.close()
+  }, [selected])
+
+  useEffect(() => {
+    const avatar = avatarRef.current
+    if (!avatar) return undefined
+    let inView = typeof IntersectionObserver === 'undefined'
+    const sync = () => {
+      if (document.hidden || !inView) avatar.pause()
+      else avatar.play()?.catch?.(() => {})
+    }
+    const observer = typeof IntersectionObserver === 'undefined' ? null :
+      new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.target === avatar)) {
+          inView = entries.find(entry => entry.target === avatar).isIntersecting
+          sync()
+        }
+      }, { threshold: 0 })
+    observer?.observe(avatar)
+    document.addEventListener('visibilitychange', sync)
+    sync()
+    return () => {
+      observer?.disconnect()
+      document.removeEventListener('visibilitychange', sync)
+      avatar.pause()
+    }
+  }, [])
+
+  const term = query.trim().toLowerCase()
+  const matches = (value) => !term || value.toLowerCase().includes(term)
+  const posts = POSTS.filter(post => matches(post.title + ' ' + post.copy + ' ' + post.date))
+    .filter(post => tab !== 'saved' || saved.includes('post:' + post.id))
+  const media = MEDIA.filter(item => (mediaType === 'all' || item.type === mediaType))
+    .filter(item => matches(item.title))
+    .filter(item => tab !== 'saved' || saved.includes('media:' + item.id))
+  const selectedIndex = selected ? MEDIA.findIndex(item => item.id === selected.id) : -1
+  const goMedia = (direction) => {
+    if (selectedIndex === -1) return
+    setSelected(MEDIA[(selectedIndex + direction + MEDIA.length) % MEDIA.length])
+  }
+
+  async function share() {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Penny After Hours | WildCard DEV', url: PROFILE_URL })
+        setStatus('Profile shared.')
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(PROFILE_URL)
+        setStatus('Profile link copied.')
+      } else setStatus('Profile link: ' + PROFILE_URL)
+    } catch (error) {
+      if (error?.name !== 'AbortError') setStatus('Profile link: ' + PROFILE_URL)
+    }
+  }
+  const chooseTab = (next) => { setTab(next); setQuery(''); setStatus('') }
+
+  return <div className="ah-desktop">
+    <aside className="ah-desktop__left" aria-label="WildCard navigation">
+      <a className="ah-desktop__logo" href="/">♠ <span>WILDCARD DEV</span></a>
+      <nav className="ah-desktop__main-nav">
+        <a href="/">⌂ <span>Home</span></a>
+        <a href="/creators">◉ <span>Discover</span></a>
+        <a href={MESSENGER}>✉ <span>Messages & alerts</span></a>
+        <button type="button" className={tab === 'saved' ? 'is-current' : ''}
+          onClick={() => chooseTab('saved')}>☆ <span>Collections <small>{saved.length || ''}</small></span></button>
+        <button type="button" className={tab === 'subscription' ? 'is-current' : ''}
+          onClick={() => chooseTab('subscription')}>♧ <span>Subscriptions</span></button>
+        <button type="button" className={tab === 'about' ? 'is-current' : ''}
+          onClick={() => chooseTab('about')}>ⓘ <span>About this creator</span></button>
+      </nav>
+      <a className="ah-desktop__left-cta" href={MESSENGER}>✚ Open Messenger</a>
+      <p className="ah-desktop__smallprint">Original WildCard DEV creator experience.</p>
+    </aside>
+
+    <main className="ah-desktop__center">
+      <div className="ah-desktop__sticky"><a href="/" aria-label="Back to WildCard home">←</a>
+        <div><strong>Penny Bella Morningstar ♠</strong><small>{POSTS.length} published previews · {MEDIA.length} media</small></div>
+      </div>
+      <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
+        <ViewportVideo className="ah-desktop__cover-video" src="/static/PennyNewFansBanner.webm"
+          poster="/static/penny-after-hours-cover.webp" width={736} height={400}
+          active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
+        <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}>
+          {coverPaused ? 'Play cover' : 'Pause cover'}</button>
+      </section>
+
+      <section className="ah-desktop__identity">
+        <div className={'ah-desktop__identity-top' + (avatarExpanded ? ' is-avatar-expanded' : '')}>
+          <button className={'ah-desktop__avatar' + (avatarExpanded ? ' ah-desktop__avatar--expanded' : '')}
+            type="button" onClick={() => setAvatarExpanded(value => !value)}
+            aria-pressed={avatarExpanded}
+            aria-label={avatarExpanded ? 'Reduce Penny profile video to normal size' : 'Enlarge Penny profile video'}
+            title={avatarExpanded ? 'Click to shrink' : 'Click to enlarge'}>
+            <video ref={avatarRef} muted loop playsInline preload="metadata"
+              src="/static/PennyOnlyFanzProfile-web.webm" aria-hidden="true" />
+            <span aria-hidden="true">{avatarExpanded ? '↙' : '⤢'}</span>
+          </button>
+          <div className="ah-desktop__actions" aria-label="Profile actions">
+            <a title="Support WildCard DEV" href={SQUARE} target="_blank" rel="noopener noreferrer">♧ <span>Tip</span></a>
+            <a title="Message Penny through WildCard Messenger" href={MESSENGER}>✉ <span>Message</span></a>
+            <button type="button" title="Save this profile in this browser"
+              aria-pressed={saved.includes('profile:penny')} onClick={() => toggleSaved('profile:penny')}>
+              {saved.includes('profile:penny') ? '★' : '☆'} <span>Save</span></button>
+            <button type="button" onClick={share}>↗ <span>Share</span></button>
+          </div>
+        </div>
+        <h1>Penny Bella Morningstar <span title="WildCard DEV creator">♠</span></h1>
+        <p className="ah-desktop__handle">@PennyAfterHours · DIGITAL MUSE · AFTER-HOURS HOST</p>
+        <p className="ah-desktop__online">● Digital host online</p>
+        <p>The velvet side of the machine. Creative experiments, backstage stories, cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard. 💋</p>
+        <button className="ah-desktop__text-button" type="button" aria-expanded={showInfo}
+          onClick={() => setShowInfo(v => !v)}>{showInfo ? 'Less info ↑' : 'More info ↓'}</button>
+        {showInfo && <div className="ah-desktop__more-info">
+          <p>Penny is WildCard DEV's fictional AI host and digital collaborator.</p>
+          <p>Contact: <a href="mailto:Penny@WildCardDEV.com">Penny@WildCardDEV.com</a></p>
+          <p><a href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer">WildCard Party</a> · <a href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer">PennyTV</a></p>
+        </div>}
+      </section>
+
+      <section id="ah-desktop-friends" className="ah-desktop__friends-section" aria-label="Penny friends">
+        <div className="ah-desktop__friends-heading">
+          <h2>FRIENDS <span>{FRIENDS.length}</span></h2>
+          <small>SWIPE ↔</small>
+        </div>
+        <div className="penny-fans__friend-list" role="region" aria-label="Penny friends, scroll left or right" tabIndex={0}>
+          {FRIENDS.map(friend => <PennyFriendCard key={friend.url} friend={friend} />)}
+        </div>
+      </section>
+      <section className="ah-desktop__subscription" aria-label="Subscription details">
+        <div><small>SUBSCRIPTION</small><strong>Free to explore</strong><span>No paid subscription or automatic renewal is enabled.</span></div>
+        <button type="button" onClick={() => chooseTab('posts')}>Explore free posts</button>
+      </section>
+
+      <details className="ah-desktop__classic"><summary>♠ Explore Penny’s classic orbit cards</summary><PennyClassicCards /></details>
+
+      <nav className="ah-desktop__tabs" aria-label="Content sections">
+        <button type="button" aria-current={tab === 'posts' ? 'page' : undefined}
+          onClick={() => chooseTab('posts')}>{POSTS.length} POSTS</button>
+        <button type="button" aria-current={tab === 'media' ? 'page' : undefined}
+          onClick={() => chooseTab('media')}>{MEDIA.length} MEDIA</button>
+        <button type="button" aria-current={tab === 'saved' ? 'page' : undefined}
+          onClick={() => chooseTab('saved')}>SAVED</button>
+      </nav>
+      {(tab === 'posts' || tab === 'media' || tab === 'saved') && <div className="ah-desktop__content-tools">
+        <label><span className="sr-only">Search creator content</span>
+          <input value={query} onChange={event => setQuery(event.target.value)}
+            type="search" placeholder="Search Penny's posts and media" /></label>
+        {(tab === 'media' || tab === 'saved') && <select aria-label="Filter media type" value={mediaType}
+          onChange={event => setMediaType(event.target.value)}>
+          <option value="all">All media</option><option value="photo">Photos</option><option value="video">Videos</option>
+        </select>}
+      </div>}
+
+      {(tab === 'posts' || tab === 'saved') && <section className="ah-desktop__posts" aria-label="Penny posts">
+        {posts.map(post => <article className="ah-desktop__post" key={post.id}>
+          <header><img src="/static/Penny.gif" alt="" loading="lazy" />
+            <div><strong>Penny Bella Morningstar ♠</strong><small>{post.date}</small></div>
+            <button type="button" title="Save this post in this browser"
+              aria-pressed={saved.includes('post:' + post.id)}
+              onClick={() => toggleSaved('post:' + post.id)}>
+              {saved.includes('post:' + post.id) ? '★ Saved' : '☆ Save'}</button>
+          </header>
+          <h2>{post.title}</h2><p>{post.copy}</p>
+          {post.media.type === 'video' ? <UserLoopVideo controls playsInline preload="none"
+            poster={post.media.poster} src={post.media.src}
+            aria-label={post.media.title} /> : <button type="button" className="ah-desktop__post-image"
+            onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
+            <img src={post.media.src} alt={post.media.alt} loading="lazy" /></button>}
+          <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>
+        </article>)}
+        {!posts.length && tab === 'posts' && <p className="ah-desktop__empty">No posts match that search.</p>}
+      </section>}
+
+      {(tab === 'media' || tab === 'saved') && <section className="ah-desktop__gallery" aria-label="Photo and video gallery">
+        <div className="ah-desktop__gallery-heading">
+          <strong>{media.length} {media.length === 1 ? 'item' : 'items'}</strong>
+          <div role="group" aria-label="Gallery layout">
+            <button type="button" onClick={() => setLayout('grid')}
+              aria-pressed={layout === 'grid'}>▦ Grid</button>
+            <button type="button" onClick={() => setLayout('list')}
+              aria-pressed={layout === 'list'}>☰ List</button>
+          </div>
+        </div>
+        <div className={'ah-desktop__media-grid ah-desktop__media-grid--' + layout}>
+          {media.map(item => <div key={item.id} className="ah-desktop__media-card">
+            <MediaPreview item={item} onOpen={setSelected} />
+            <button type="button" onClick={() => toggleSaved('media:' + item.id)}
+              aria-pressed={saved.includes('media:' + item.id)}
+              aria-label={(saved.includes('media:' + item.id) ? 'Remove saved ' : 'Save ') + item.title}>
+              {saved.includes('media:' + item.id) ? '★' : '☆'}</button>
+          </div>)}
+        </div>
+        {!media.length && <p className="ah-desktop__empty">No matching media. Try another search or filter.</p>}
+      </section>}
+
+      {tab === 'subscription' && <section className="ah-desktop__info-panel">
+        <h2>Free creator previews</h2>
+        <p>Public posts and media are available to explore. Payment via the WildCard DEV Square link is an optional donation. It does not purchase a membership or unlock private content.</p>
+        <a href={SQUARE} target="_blank" rel="noopener noreferrer">Support WildCard DEV ♡</a>
+      </section>}
+      {tab === 'about' && <section className="ah-desktop__info-panel">
+        <h2>About Penny</h2><p>A fictional AI persona, creative collaborator, and the host of WildCard DEV After Hours.</p>
+        <a href="mailto:Penny@WildCardDEV.com">Contact Penny</a>
+      </section>}
+      {tab === 'saved' && !posts.length && !media.length && <p className="ah-desktop__empty">
+        Nothing saved here yet. Use ☆ on a post or media tile to keep it in this browser.
+      </p>}
+      <footer className="ah-desktop__footer">
+        WildCard DEV original fan-page experience. Not affiliated with OnlyFans. Browser saves are local to this device.
+        <a href="/">Back to WildCard DEV</a>
+      </footer>
+    </main>
+
+    <aside className="ah-desktop__right" aria-label="Creator sidebar">
+      <div className="ah-desktop__thought"><PennyThoughtBubble provider="gemini" placement="after-hours" /></div>
+      <label className="ah-desktop__sidebar-search">Search posts
+        <input type="search" value={query} onChange={event => setQuery(event.target.value)}
+          placeholder="Search creator's posts" /></label>
+      <section className="ah-desktop__sidecard">
+        <h2>RECENT MEDIA</h2>
+        <div className="ah-desktop__recent">
+          {MEDIA.slice(0, 3).map(item => <button type="button" key={item.id}
+            onClick={() => { setTab('media'); setQuery(''); setMediaType('all'); setSelected(item) }}
+            aria-label={'Open ' + item.title}>
+            <img src={item.poster || item.src} alt="" loading="lazy" /></button>)}
+        </div>
+      </section>
+      <section className="ah-desktop__sidecard">
+        <h2>CREATOR FRIENDS</h2>
+        <p>{FRIENDS.length} featured creators and WildCard friends.</p>
+        <a href="#ah-desktop-friends">Browse the Friends carousel</a>
+      </section>
+      <section className="ah-desktop__sidecard ah-desktop__sidecard--sub">
+        <h2>SUBSCRIPTION</h2><p>Free creator previews</p>
+        <button type="button" onClick={() => chooseTab('subscription')}>VIEW DETAILS</button>
+      </section>
+      <p className="ah-desktop__side-note">Privacy · Original WildCard DEV design</p>
+    </aside>
+
+    <AskPenny />
+    <dialog ref={modalRef} className="ah-desktop__dialog" aria-label="Media viewer"
+      onClose={() => setSelected(null)}
+      onKeyDown={event => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault()
+          goMedia(event.key === 'ArrowRight' ? 1 : -1)
+        }
+      }}>
+      {selected && <div className="ah-desktop__dialog-content">
+        <header><strong>{selected.title}</strong><button type="button" onClick={() => setSelected(null)}>Close ✕</button></header>
+        {selected.type === 'video' ? <UserLoopVideo key={selected.id} controls playsInline preload="metadata"
+          src={selected.src} poster={selected.poster} aria-label={selected.title} />
+          : <img src={selected.src} alt={selected.alt} />}
+        <nav aria-label="Media viewer navigation">
+          <button type="button" onClick={() => goMedia(-1)}>← Previous</button>
+          <span>{selectedIndex + 1} / {MEDIA.length}</span>
+          <button type="button" onClick={() => goMedia(1)}>Next →</button>
+        </nav>
+      </div>}
+    </dialog>
+    {status && <div role="status" className="ah-desktop__toast">{status}
+      <button type="button" onClick={() => setStatus('')} aria-label="Dismiss notification">×</button></div>}
+  </div>
+}
