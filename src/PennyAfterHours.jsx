@@ -5,6 +5,8 @@ import { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import AskPenny from './components/AskPenny.jsx';
 import ViewportVideo from './components/ViewportVideo.jsx';
+import UserLoopVideo from './components/UserLoopVideo.jsx';
+import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -112,6 +114,13 @@ function PennyCombinationDial({ digit, position, onChange }) {
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 1100px)').matches);
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1100px)');
+    const update = () => setIsDesktop(query.matches);
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
   const [bottomPage, setBottomPage] = useState(null);
   const bottomDialogRef = useRef(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -145,7 +154,7 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
-    document.title = "Penny After Hours | WildCard DEV Fan Page Concept";
+    document.title = "Penny After Hours | WildCard DEV";
   }, []);
 
   useEffect(() => {
@@ -187,26 +196,37 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
-    if (!unlocked) return undefined;
+    if (!unlocked || isDesktop) return undefined;
     const video = profileVideoRef.current;
     if (!video) return undefined;
+    let inView = typeof IntersectionObserver === 'undefined';
 
     const syncProfile = () => {
-      if (profilePaused || document.hidden) {
+      if (profilePaused || document.hidden || !inView) {
         video.pause();
         return;
       }
-      const attempt = video.play();
-      attempt?.catch?.(() => setProfilePaused(true));
+      video.play()?.catch?.(() => setProfilePaused(true));
     };
 
-    syncProfile();
+    const observer = typeof IntersectionObserver === 'undefined' ? null :
+      new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.target === video)) {
+          inView = entries.find(entry => entry.target === video).isIntersecting;
+          syncProfile();
+        }
+      }, { threshold: 0 });
+    observer?.observe(video);
     document.addEventListener('visibilitychange', syncProfile);
+    syncProfile();
     return () => {
+      observer?.disconnect();
       document.removeEventListener('visibilitychange', syncProfile);
       video.pause();
     };
-  }, [unlocked, profilePaused]);
+  }, [unlocked, isDesktop, profilePaused]);
+
+  if (unlocked && isDesktop) return <AfterHoursDesktop />;
 
   return (
     <main className="penny-fans">
@@ -288,7 +308,6 @@ export default function PennyAfterHours() {
               muted
               loop
               playsInline
-              autoPlay={!profilePaused}
               preload="auto"
               aria-hidden="true"
               width="128"
@@ -449,7 +468,7 @@ export default function PennyAfterHours() {
                 </p>
               </div>
               <div className="penny-fans__featured-media">
-                <video
+                <UserLoopVideo
                   controls
                   playsInline
                   preload="none"
@@ -458,7 +477,7 @@ export default function PennyAfterHours() {
                 >
                   <source src="/static/PennyAfterHoursPatchNotes.webm" type="video/webm" />
                   Your browser does not support WebM playback.
-                </video>
+                </UserLoopVideo>
               </div>
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
@@ -608,7 +627,7 @@ export default function PennyAfterHours() {
             <div className="penny-fans__video-grid">
               {VIDEOS.map((video) => (
                 <article className="penny-fans__gallery-video" key={video.id}>
-                  <video
+                  <UserLoopVideo
                     controls
                     playsInline
                     preload="none"
@@ -617,7 +636,7 @@ export default function PennyAfterHours() {
                   >
                     <source src={video.src} type="video/webm" />
                     Your browser does not support WebM playback.
-                  </video>
+                  </UserLoopVideo>
                   <div className="penny-fans__gallery-video-info">
                     <h3>{video.title}</h3>
                     <span>VIDEO · {video.runtime} · PLAY ON DEMAND</span>

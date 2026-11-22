@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import GallerySlideshow from './GallerySlideshow.jsx';
 import ExhibitVideoPreview from './ExhibitVideoPreview.jsx';
+import UserLoopVideo from './UserLoopVideo.jsx';
 import { galleryStep } from './gallery-slideshow.js';
 import './PennyAfterHoursSpinner.css';
 import './CreatorDisplayOrbit.css';
@@ -88,7 +89,7 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
         onClick={event => { if (event.target === event.currentTarget) setSelected(null); }}>
         {active && <div className="penny-after-orbit__viewer-inner">
           <header><strong>{active.title}</strong><button type="button" onClick={() => setSelected(null)}>Close ✕</button></header>
-          {active.video && <video key={active.video} src={active.video} poster={active.poster} controls playsInline preload="metadata" aria-label={active.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onEnded={() => setVideoPlaying(false)} />}
+          {active.video && <UserLoopVideo key={active.video} src={active.video} poster={active.poster} controls playsInline preload="metadata" aria-label={active.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onEnded={() => setVideoPlaying(false)} />}
           {!active.video && <div className="creator-display__emblem" aria-hidden="true">{active.icon || symbol}</div>}
           <p>{active.description}</p>
           {active.href && <a href={active.href}>Explore {active.title} →</a>}
