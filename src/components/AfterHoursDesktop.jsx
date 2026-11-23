@@ -11,11 +11,12 @@ import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIn
 import PennyPrivateCollections from './PennyPrivateCollections.jsx'
 import PennyCoverCount from './PennyCoverCount.jsx'
 import PennySpotlightRow from './PennySpotlightRow.jsx'
+import PennyProfileActions from './PennyProfileActions.jsx'
+import PennySocialPills from './PennySocialPills.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
 const SQUARE = 'https://square.link/u/YnAVr8ht'
-const PROFILE_URL = 'https://www.wildcarddev.com/penny/after-hours'
 const PROFILE_KEY = 'wildcard:afterhours:desktop-saves:v1'
 
 const PHOTOS = [
@@ -101,7 +102,7 @@ function DesktopPostVideo({ item, onOpen }) {
 function MediaPreview({ item, onOpen }) {
   return <button className="ah-desktop__media-tile" type="button"
     onClick={() => onOpen(item)} aria-label={'Open ' + item.title}>
-    <img src={item.poster || item.src} alt="" loading="lazy" decoding="async" />
+    <img src={item.poster || item.src} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-roleplay-poster.webp" }} />
     <span className="ah-desktop__media-label">{item.type === 'video' ? '▶ VIDEO' : '▣ PHOTO'}</span>
     <strong>{item.title}</strong>
   </button>
@@ -193,19 +194,6 @@ export default function AfterHoursDesktop() {
     setSelected(MEDIA[(selectedIndex + direction + MEDIA.length) % MEDIA.length])
   }
 
-  async function share() {
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: 'Penny After Hours | WildCard DEV', url: PROFILE_URL })
-        setStatus('Profile shared.')
-      } else if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(PROFILE_URL)
-        setStatus('Profile link copied.')
-      } else setStatus('Profile link: ' + PROFILE_URL)
-    } catch (error) {
-      if (error?.name !== 'AbortError') setStatus('Profile link: ' + PROFILE_URL)
-    }
-  }
   const chooseTab = (next) => { setTab(next); setQuery(''); setStatus('') }
 
   return <div className="ah-desktop">
@@ -233,7 +221,7 @@ export default function AfterHoursDesktop() {
       <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
         <PennyCoverCount />
         <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('PennyNewFansBanner.webm')}
-          poster={pennyPrivateMedia('penny-after-hours-cover.webp')} width={736} height={400}
+          poster="/static/penny-kandy-reel-hero.webp" width={736} height={400}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
         <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}
           aria-label={coverPaused ? 'Play cover animation' : 'Pause cover animation'} aria-pressed={coverPaused}>
@@ -248,7 +236,7 @@ export default function AfterHoursDesktop() {
             aria-label={avatarExpanded ? 'Reduce Penny profile video to normal size' : 'Enlarge Penny profile video'}
             title={avatarExpanded ? 'Click to shrink' : 'Click to enlarge'}>
             <video ref={avatarRef} muted loop playsInline preload="metadata"
-              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')} aria-hidden="true" />
+              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')} poster="/static/NursePennyPortrait.jpg" aria-hidden="true" />
           </button>
           <button className="ah-desktop__avatar-pause" type="button"
             onClick={() => setAvatarPaused(value => !value)}
@@ -257,14 +245,7 @@ export default function AfterHoursDesktop() {
             title={avatarPaused ? 'Play avatar video' : 'Pause avatar video'}>
             <span aria-hidden="true">👀</span>
           </button>
-          <div className="ah-desktop__actions" aria-label="Profile actions">
-            <a title="Support WildCard DEV" href={SQUARE} target="_blank" rel="noopener noreferrer">♧ <span>Tip</span></a>
-            <a title="Message Penny through WildCard Messenger" href={MESSENGER}>✉ <span>Message</span></a>
-            <button type="button" title="Save this profile in this browser"
-              aria-pressed={saved.includes('profile:penny')} onClick={() => toggleSaved('profile:penny')}>
-              {saved.includes('profile:penny') ? '★' : '☆'} <span>Save</span></button>
-            <button type="button" onClick={share}>↗ <span>Share</span></button>
-          </div>
+          <PennyProfileActions />
         </div>
         <h1>Penny Bella Morningstar <span title="WildCard DEV creator">♠</span></h1>
         <p className="ah-desktop__handle">@PennyAfterHours · DIGITAL MUSE · AFTER-HOURS HOST</p>
@@ -277,6 +258,7 @@ export default function AfterHoursDesktop() {
           <p>Contact: <a href="mailto:Penny@WildCardDEV.com">Penny@WildCardDEV.com</a></p>
           <p><a href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer">WildCard Party</a> · <a href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer">PennyTV</a></p>
         </div>}
+        <PennySocialPills />
       </section>
 
       <section className="ah-desktop__subscription" aria-label="Subscription details">
@@ -318,7 +300,7 @@ export default function AfterHoursDesktop() {
           <h2>{post.title}</h2><p>{post.copy}</p>
           {post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
             onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
-            <img src={post.media.src} alt={post.media.alt} loading="lazy" /></button>}
+            <img src={post.media.src} alt={post.media.alt} loading="lazy" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-kandy-reel-hero.webp" }} /></button>}
           <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>
         </article>)}
         {!posts.length && tab === 'posts' && <p className="ah-desktop__empty">No posts match that search.</p>}
@@ -377,7 +359,7 @@ export default function AfterHoursDesktop() {
           {MEDIA.slice(0, 3).map(item => <button type="button" key={item.id}
             onClick={() => { setTab('media'); setQuery(''); setMediaType('all'); setSelected(item) }}
             aria-label={'Open ' + item.title}>
-            <img src={item.poster || item.src} alt="" loading="lazy" /></button>)}
+            <img src={item.poster || item.src} alt="" loading="lazy" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-roleplay-poster.webp" }} /></button>)}
         </div>
       </section>
       <section className="ah-desktop__sidecard ah-desktop__spotlight-panel"><PennySpotlightRow /></section>

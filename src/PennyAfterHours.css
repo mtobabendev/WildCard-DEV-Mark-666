@@ -972,3 +972,10 @@ body { margin: 0; background: #0a0614; }
 @media (prefers-reduced-motion: reduce) {
   .penny-fans__friend-card--snow-bird { animation: none; }
 }
+/* Show a friendly initial if an authenticated-only friend sprite is unavailable. */
+.penny-fans__friend-avatar > .penny-fans__friend-initial-fallback,
+.penny-fans__friend-avatar > .penny-fans__featured-avatar-slide { grid-area: 1 / 1; }
+.penny-fans__friend-initial-fallback { font-weight: 900; font-size: 1.85rem; color: #fff5fc; }
+.penny-fans__featured-avatar-slide { z-index: 1; }
+
+.penny-fans__friend-avatar > img { grid-area: 1 / 1; z-index: 1; }

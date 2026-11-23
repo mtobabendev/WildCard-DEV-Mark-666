@@ -14,7 +14,7 @@ export const FRIENDS = [
   { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: pennyPrivateMedia('evemarie-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
   { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: pennyPrivateMedia('karley-stokes-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
   { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: pennyPrivateMedia('annabella.webp') },
-  { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: pennyPrivateMedia('lala.webp') },
+  { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', slideshow: { src: '/static/lala-slides.webp', frames: 8, avatarFrames: true } },
 ];
 
 const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
@@ -76,13 +76,13 @@ export function PennyFriendCard({ friend }) {
       <span className="penny-fans__friend-cover" aria-hidden="true">
         {isFeatured ? (
           <span className="penny-fans__featured-cover-slide" style={sheetPosition(coverIndex)} />
-        ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" />}
+        ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.style.display = "none" }} />}
         <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
       </span>
       <span className="penny-fans__friend-avatar" aria-hidden="true">
         {isFeatured ? (
-          <span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} />
-        ) : friend.image ? <img src={friend.image} alt="" loading="lazy" decoding="async" /> : friend.initial}
+          <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} /></>
+        ) : friend.image ? <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><img src={friend.image} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.style.display = "none" }} /></> : friend.initial}
       </span>
       <span className="penny-fans__friend-name">
         <strong>{friend.name}</strong>

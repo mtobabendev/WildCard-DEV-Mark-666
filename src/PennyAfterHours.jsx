@@ -14,6 +14,8 @@ import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './components/PennyA
 import PennyPrivateCollections from './components/PennyPrivateCollections.jsx';
 import PennyCoverCount from './components/PennyCoverCount.jsx';
 import PennySpotlightRow from './components/PennySpotlightRow.jsx';
+import PennyProfileActions from './components/PennyProfileActions.jsx';
+import PennySocialPills from './components/PennySocialPills.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -210,7 +212,7 @@ export default function PennyAfterHours() {
           <ViewportVideo
             className="penny-fans__cover-image"
             src={pennyPrivateMedia('PennyNewFansBanner.webm')}
-            poster={pennyPrivateMedia('penny-after-hours-cover.webp')}
+            poster="/static/penny-kandy-reel-hero.webp"
             width={736}
             height={400}
             active={!bannerPaused}
@@ -243,6 +245,7 @@ export default function PennyAfterHours() {
               ref={profileVideoRef}
               className="penny-fans__avatar"
               src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')}
+              poster="/static/NursePennyPortrait.jpg"
               muted
               loop
               playsInline
@@ -262,6 +265,7 @@ export default function PennyAfterHours() {
             <span aria-hidden="true">👀</span>
           </button>
           <PennyThoughtBubble provider="gemini" placement="after-hours" />
+          <PennyProfileActions />
           <div className="penny-fans__intro">
             <p className="penny-fans__eyebrow">YOUR AFTER-DARK HOST · <span className="penny-fans__online" title="Penny's room is always here for you">ONLINE <span className="penny-fans__online-dot" aria-hidden="true" /></span></p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
@@ -280,28 +284,7 @@ export default function PennyAfterHours() {
               {bioExpanded ? 'Collapse info' : 'More info'}
             </button>
           </div>
-          <nav className="penny-fans__socials" aria-label="Penny social media">
-            <a className="penny-fans__social-link penny-fans__social-link--party"
-               href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer"
-               aria-label="Visit Penny's WildCard Party">
-              <span className="penny-fans__social-symbol" aria-hidden="true">f</span><span>Party</span>
-            </a>
-            <a className="penny-fans__social-link penny-fans__social-link--x"
-               href="https://x.com/Dev_WildCard" target="_blank" rel="noopener noreferrer"
-               aria-label="WildCard DEV on X">
-              <span className="penny-fans__social-symbol" aria-hidden="true">𝕏</span><span>X</span>
-            </a>
-            <a className="penny-fans__social-link"
-               href="https://party.wildcarddev.com/stripagram/" target="_blank" rel="noopener noreferrer"
-               aria-label="Penny's Stripagram">
-              <span className="penny-fans__social-symbol" aria-hidden="true">◎</span><span>Stripagram</span>
-            </a>
-            <a className="penny-fans__social-link"
-               href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer"
-               aria-label="PennyTV: The Silver Screen">
-              <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
-            </a>
-          </nav>
+          <PennySocialPills />
           <PennySpotlightRow />
           <section className="penny-fans__friends" aria-labelledby="penny-friends-title">
             <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span><small>SWIPE ↔</small></h2>
@@ -404,7 +387,7 @@ export default function PennyAfterHours() {
                   controls
                   playsInline
                   preload="none"
-                  poster={pennyPrivateMedia('PennyAfterHoursPatchNotes.webp')}
+                  poster="/static/penny-roleplay-poster.webp"
                   aria-label="Penny's Velvet After Dark video"
                 >
                   <source src={pennyPrivateMedia('PennyAfterHoursPatchNotes.webm')} type="video/webm" />
@@ -441,6 +424,7 @@ export default function PennyAfterHours() {
                 <img
                   className="penny-fans__image-post-art"
                   src={pennyPrivateMedia('PennyOnlyFansBanner.jpg')}
+                  onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = '/static/penny-kandy-reel-hero.webp' }}
                   width="1216"
                   height="832"
                   loading="lazy"
@@ -457,11 +441,12 @@ export default function PennyAfterHours() {
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
                 <div className="penny-fans__post-art" aria-hidden={post.image || post.video ? undefined : true}>
                   {post.image ? (
-                    <img className="penny-fans__post-photo" src={post.image} alt="Kandy in a pink and black striped top in a candlelit room" width={1216} height={832} loading="lazy" decoding="async" />
+                    <img className="penny-fans__post-photo" src={post.image} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-roleplay-poster.webp" }} alt="Kandy in a pink and black striped top in a candlelit room" width={1216} height={832} loading="lazy" decoding="async" />
                   ) : <span>{post.symbol}</span>}
                   {post.video && (
                     <ViewportVideo
                       className="penny-fans__post-video"
+                      poster="/static/penny-roleplay-poster.webp"
                       src={post.video}
                       width={post.videoWidth}
                       height={post.videoHeight}
@@ -510,7 +495,7 @@ export default function PennyAfterHours() {
                   onClick={() => setActiveMedia({ kind: 'photo', index })}
                   aria-label={'Open photo ' + (index + 1) + ': ' + photo.title}
                 >
-                  <img src={photo.src} alt="" loading="lazy" decoding="async" />
+                  <img src={photo.src} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-kandy-reel-hero.webp" }} />
                   <span>{photo.title}</span>
                 </button>
               ))}

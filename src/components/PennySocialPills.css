@@ -1,0 +1,28 @@
+/* One horizontal row, same swipe and keyboard affordances as Friends. */
+.penny-social-pills {
+  display: flex; flex-wrap: nowrap; gap: .6rem;
+  width: 100%; min-width: 0; padding: .1rem .15rem .65rem;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scrollbar-width: thin;
+  scrollbar-color: #cc83bd #281335;
+}
+.penny-fans__profile > .penny-social-pills { grid-column: 1 / -1; }
+.penny-social-pills__link {
+  flex: 0 0 148px; display: inline-flex; align-items: center; justify-content: center;
+  min-height: 53px; gap: .6rem; padding: .5rem .7rem; white-space: nowrap;
+  border: 1px solid rgba(255,175,229,.42); border-radius: 100px;
+  background: rgba(75,34,90,.55); color: #ffeafd; text-decoration: none;
+  font-size: .84rem; font-weight: 800; scroll-snap-align: start;
+}
+.penny-social-pills__link:hover, .penny-social-pills__link:focus-visible {
+  border-color: #ffc5eb; background: rgba(116,53,140,.73);
+}
+.penny-social-pills__symbol {
+  display: grid; place-items: center; flex: 0 0 31px;
+  width: 31px; height: 31px; border-radius: 50%;
+  color: #230a2e; background: linear-gradient(140deg,#ffaddf,#c58aff);
+  font-size: 1.12rem; font-weight: 900;
+}
+.penny-social-pills__link--party .penny-social-pills__symbol { background: #4975bc; color: white; }
+.penny-social-pills__link--x .penny-social-pills__symbol { background: #111; color: white; }
+.ah-desktop__identity > .penny-social-pills { margin-top: 12px; }

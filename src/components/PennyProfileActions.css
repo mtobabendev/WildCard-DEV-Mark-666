@@ -1,0 +1,58 @@
+/* Shared OnlyFans-style actions on Penny's public profile (mobile and desktop). */
+.penny-profile-actions {
+  display: flex; align-items: flex-start; justify-content: flex-end;
+  gap: clamp(6px, 1.5vw, 13px); min-width: 0;
+}
+.penny-profile-actions a, .penny-profile-actions button,
+.penny-profile-actions__sticky a, .penny-profile-actions__sticky button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex: 0 0 auto; width: 49px; min-height: 49px; gap: 3px;
+  padding: 4px; border: 1px solid #cb90bc; border-radius: 50%;
+  background: rgba(44, 18, 56, .94); color: #ffd2ef; text-decoration: none;
+  font: inherit; cursor: pointer;
+  box-shadow: inset 0 0 7px rgba(244, 150, 222, .18);
+}
+.penny-profile-actions a > span, .penny-profile-actions button > span,
+.penny-profile-actions__sticky a > span, .penny-profile-actions__sticky button > span {
+  font-weight: 900; line-height: 1; font-size: 23px;
+}
+.penny-profile-actions a:hover, .penny-profile-actions button:hover,
+.penny-profile-actions__sticky a:hover, .penny-profile-actions__sticky button:hover,
+.penny-profile-actions button[aria-pressed="true"] {
+  border-color: #ffb6e5; color: #fff; background: #753572;
+}
+.penny-profile-actions a:focus-visible, .penny-profile-actions button:focus-visible,
+.penny-profile-actions__sticky a:focus-visible, .penny-profile-actions__sticky button:focus-visible {
+  outline: 2px solid #ffdaf3; outline-offset: 2px;
+}
+.penny-profile-actions a small, .penny-profile-actions button small { display: none; }
+.penny-fans__profile > .penny-profile-actions { grid-column: 1 / -1; justify-content: flex-end; position: relative; z-index: 4; min-height: 51px; }
+.ah-desktop__identity-top > .penny-profile-actions { margin: 10px 0 0 auto; align-self: flex-start; flex-wrap: nowrap; }
+.penny-profile-actions__feedback {
+  margin: .2rem 0; color: #ffe0f5; font-size: .81rem;
+  overflow-wrap: anywhere; grid-column: 1 / -1;
+}
+.penny-profile-actions__sticky {
+  position: fixed; z-index: 90; top: 0; left: 0; right: 0;
+  min-height: 60px; display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; padding: 6px max(12px, env(safe-area-inset-left)) 6px max(12px, env(safe-area-inset-right));
+  color: #ffdaf4; background: rgba(18, 7, 30, .96);
+  border-bottom: 1px solid #ac638f; box-shadow: 0 5px 22px #0b0217b0;
+  backdrop-filter: blur(12px);
+}
+.penny-profile-actions__sticky strong { font-size: clamp(10px, 2.5vw, 13px); letter-spacing: .035em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.penny-profile-actions__sticky > div { display: flex; gap: 7px; flex-shrink: 0; }
+.penny-profile-actions__sticky a, .penny-profile-actions__sticky button {
+  width: 43px; min-height: 43px; padding: 3px;
+}
+@media (min-width: 1100px) {
+  .penny-profile-actions__sticky { top: 58px; left: max(0px, calc((100vw - 1380px) / 2)); }
+}
+@media (max-width: 420px) {
+  .penny-profile-actions__sticky strong { max-width: 124px; }
+  .penny-profile-actions__sticky > div { gap: 5px; }
+  .penny-profile-actions__sticky a, .penny-profile-actions__sticky button { width: 41px; min-height: 41px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-profile-actions a, .penny-profile-actions button { transition: none; }
+}
