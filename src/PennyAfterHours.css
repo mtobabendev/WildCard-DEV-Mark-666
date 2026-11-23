@@ -72,13 +72,17 @@ body { margin: 0; background: #0a0614; }
   z-index: 2;
   right: 1rem;
   bottom: 1rem;
-  min-height: 44px;
-  padding: .35rem .85rem;
-  border: 1px solid rgba(247, 163, 232, .55);
-  border-radius: .65rem;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(247, 163, 232, .75);
+  border-radius: 50%;
   color: var(--pf-text);
   background: rgba(20, 12, 34, .85);
-  font-size: .75rem;
+  font-size: 32px;
+  line-height: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   .penny-fans__cover-control { display: none; }
