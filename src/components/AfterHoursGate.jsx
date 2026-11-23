@@ -37,6 +37,16 @@ export default function AfterHoursGate({ area, children }) {
     }
   }, [area, attempt])
 
+  // The universal spade loader follows the real membership-verification state.
+  // It closes on success, denial, timeout, retry cancellation, or unmount.
+  useEffect(() => {
+    if (status !== 'checking' || !Object.hasOwn(AREA_LABELS, area)) return undefined
+    const token = window.WildCardLoader?.show({
+      label: 'Checking ' + AREA_LABELS[area] + "'s After Hours access…",
+    })
+    return () => { if (token != null) window.WildCardLoader?.hide(token) }
+  }, [status, area])
+
   const label = AREA_LABELS[area]
   const retry = () => { setStatus('checking'); setAttempt(n => n + 1) }
   return <>
