@@ -1,3 +1,4 @@
+import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
@@ -28,7 +29,7 @@ const POSTS = [
     copy: 'A little velvet, a little candlelight, and an invitation to stay longer than you planned. There is always room for one more at my table. 💋',
     symbol: '♛',
     theme: 'throne',
-    video: '/static/PennySeatAtTheTable.webm',
+    video: pennyPrivateMedia('PennySeatAtTheTable.webm'),
     videoWidth: 400,
     videoHeight: 880,
   },
@@ -39,7 +40,7 @@ const POSTS = [
     copy: 'Every queen needs her circle. A little beauty, a little attitude, and friends who know how to make an entrance. ♠',
     symbol: '♠',
     theme: 'vault',
-    image: '/static/KandyOnlyFans2.jpg',
+    image: pennyPrivateMedia('KandyOnlyFans2.jpg'),
   },
   {
     id: 'letter',
@@ -48,7 +49,7 @@ const POSTS = [
     copy: 'Come for the glamour. Stay for the wicked conversation, late-night company, and whatever happens when the lights turn pink. 🖤',
     symbol: '✦',
     theme: 'letter',
-    video: '/static/AnimePenny.webm',
+    video: pennyPrivateMedia('AnimePenny.webm'),
     videoWidth: 672,
     videoHeight: 448,
   },
@@ -62,7 +63,7 @@ const PHOTOS = [
   })),
   {
     id: 'cover-reveal',
-    src: '/static/PennyOnlyFansBanner.jpg',
+    src: pennyPrivateMedia('PennyOnlyFansBanner.jpg'),
     title: 'After Hours cover reveal',
   },
   {
@@ -76,19 +77,19 @@ const VIDEOS = [
   {
     id: 'velvet-mode',
     title: 'Velvet After Dark ♠',
-    src: '/static/PennyAfterHoursPatchNotes.webm',
-    poster: '/static/PennyAfterHoursPatchNotes.webp',
+    src: pennyPrivateMedia('PennyAfterHoursPatchNotes.webm'),
+    poster: pennyPrivateMedia('PennyAfterHoursPatchNotes.webp'),
     runtime: '00:24',
   },
   {
     id: 'seat-at-the-table',
     title: 'A seat at the table',
-    src: '/static/PennySeatAtTheTable.webm',
+    src: pennyPrivateMedia('PennySeatAtTheTable.webm'),
   },
   {
     id: 'anime-penny',
     title: 'A note from Penny',
-    src: '/static/AnimePenny.webm',
+    src: pennyPrivateMedia('AnimePenny.webm'),
   },
 ];
 
@@ -99,30 +100,6 @@ const BOTTOM_NAV = [
   { id: 'messages', label: 'Messages', path: 'M4 3h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm3 6h10m-10 4h7' },
   { id: 'profile', label: 'Profile', path: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21v-2a8 8 0 0 1 16 0v2Z' },
 ];
-
-function PennyCombinationDial({ digit, position, onChange }) {
-  const change = (step) => onChange((digit + step + 10) % 10);
-
-  return (
-    <div className="penny-fans__dial">
-      <button
-        type="button"
-        aria-label={`Increase combination digit ${position}`}
-        onClick={() => change(1)}
-      >
-        ▲
-      </button>
-      <output aria-label={`Combination digit ${position}`}>{digit}</output>
-      <button
-        type="button"
-        aria-label={`Decrease combination digit ${position}`}
-        onClick={() => change(-1)}
-      >
-        ▼
-      </button>
-    </div>
-  );
-}
 
 export default function PennyAfterHours() {
   const [tab, setTab] = useState('posts');
@@ -146,26 +123,6 @@ export default function PennyAfterHours() {
     typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ));
-  const [digits, setDigits] = useState([0, 0, 0]);
-  const [unlocked, setUnlocked] = useState(false);
-  const [message, setMessage] = useState('Turn the three dials to enter Penny After Hours.');
-
-  const changeDigit = (position, value) => {
-    setDigits((current) => current.map((digit, index) => (
-      index === position ? value : digit
-    )));
-    setMessage('Turn the three dials to enter Penny After Hours.');
-  };
-
-  const unlock = (event) => {
-    event.preventDefault();
-    if (digits.join('') === '216') {
-      setUnlocked(true);
-      return;
-    }
-    setMessage('That combination did not open Penny After Hours. Try again.');
-  };
-
   useEffect(() => {
     document.title = "Penny After Hours | WildCard DEV";
   }, []);
@@ -194,7 +151,7 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
-    if (!unlocked || isDesktop) return undefined;
+    if (isDesktop) return undefined;
     const video = profileVideoRef.current;
     if (!video) return undefined;
     let inView = typeof IntersectionObserver === 'undefined';
@@ -222,9 +179,9 @@ export default function PennyAfterHours() {
       document.removeEventListener('visibilitychange', syncProfile);
       video.pause();
     };
-  }, [unlocked, isDesktop, profilePaused]);
+  }, [isDesktop, profilePaused]);
 
-  if (unlocked && isDesktop) return <AfterHoursDesktop />;
+  if (isDesktop) return <AfterHoursDesktop />;
 
   return (
     <main className="penny-fans">
@@ -237,41 +194,12 @@ export default function PennyAfterHours() {
         <a className="penny-fans__back" href="/">← Back to Penny</a>
       </header>
 
-      {!unlocked ? (
-        <section className="penny-fans__lock" aria-labelledby="penny-fans-lock-title">
-          <p className="penny-fans__eyebrow">A VELVET DOOR / THREE DIGITS</p>
-          <h1 id="penny-fans-lock-title">Penny After Hours ♠</h1>
-          <p className="penny-fans__lock-lead">
-            My velvet door has a secret. Find the right combination and come
-            spend a little time on the wild side. ♠
-          </p>
-          <form onSubmit={unlock}>
-            <fieldset className="penny-fans__dials">
-              <legend>Three-digit combination</legend>
-              {digits.map((digit, position) => (
-                <PennyCombinationDial
-                  key={position}
-                  digit={digit}
-                  position={position + 1}
-                  onChange={(value) => changeDigit(position, value)}
-                />
-              ))}
-            </fieldset>
-            <button className="penny-fans__unlock" type="submit">
-              Unlock Penny After Hours
-            </button>
-          </form>
-          <p className="penny-fans__lock-message" role="status" aria-live="polite">
-            {message}
-          </p>
-        </section>
-      ) : (
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
           <ViewportVideo
             className="penny-fans__cover-image"
-            src="/static/PennyNewFansBanner.webm"
-            poster="/static/penny-after-hours-cover.webp"
+            src={pennyPrivateMedia('PennyNewFansBanner.webm')}
+            poster={pennyPrivateMedia('penny-after-hours-cover.webp')}
             width={736}
             height={400}
             active={!bannerPaused}
@@ -302,7 +230,7 @@ export default function PennyAfterHours() {
             <video
               ref={profileVideoRef}
               className="penny-fans__avatar"
-              src="/static/PennyOnlyFanzProfile-web.webm"
+              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')}
               muted
               loop
               playsInline
@@ -476,10 +404,10 @@ export default function PennyAfterHours() {
                   controls
                   playsInline
                   preload="none"
-                  poster="/static/PennyAfterHoursPatchNotes.webp"
+                  poster={pennyPrivateMedia('PennyAfterHoursPatchNotes.webp')}
                   aria-label="Penny's Velvet After Dark video"
                 >
-                  <source src="/static/PennyAfterHoursPatchNotes.webm" type="video/webm" />
+                  <source src={pennyPrivateMedia('PennyAfterHoursPatchNotes.webm')} type="video/webm" />
                   Your browser does not support WebM playback.
                 </UserLoopVideo>
               </div>
@@ -512,7 +440,7 @@ export default function PennyAfterHours() {
                 </div>
                 <img
                   className="penny-fans__image-post-art"
-                  src="/static/PennyOnlyFansBanner.jpg"
+                  src={pennyPrivateMedia('PennyOnlyFansBanner.jpg')}
                   width="1216"
                   height="832"
                   loading="lazy"
@@ -724,7 +652,6 @@ export default function PennyAfterHours() {
           <a href="/">Return to WildCard DEV</a>
         </footer>
       </div>
-      )}
     </main>
   );
 }
