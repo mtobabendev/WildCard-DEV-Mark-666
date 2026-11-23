@@ -526,7 +526,7 @@ body { margin: 0; background: #0a0614; }
   background: #1d102c;
 }
 .penny-fans__post-art { display: grid; place-items: center; height: 200px; overflow: hidden; }
-.penny-fans__post-art span { font-size: 5rem; line-height: 1; filter: drop-shadow(0 0 25px rgba(255, 222, 248, .27)); }
+.penny-fans__post-art > span { font-size: 5rem; line-height: 1; filter: drop-shadow(0 0 25px rgba(255, 222, 248, .27)); }
 .penny-fans__post--throne .penny-fans__post-art { background: radial-gradient(circle, #ab5eac, #371452 65%, #1b0c30); }
 .penny-fans__post--vault .penny-fans__post-art { background: radial-gradient(circle at 45% 45%, #804782, #281132 68%, #100921); }
 .penny-fans__post--letter .penny-fans__post-art { background: radial-gradient(circle at 40% 50%, #ad5390, #411642 68%, #210d36); }
@@ -753,15 +753,49 @@ body { margin: 0; background: #0a0614; }
   object-fit: contain;
 }
 .penny-fans__post-video:not([src]) { visibility: hidden; }
-.penny-fans__post-video-control {
-  margin-top: .8rem;
-  padding: .45rem .8rem;
-  border: 1px solid rgba(250, 180, 237, .4);
+.penny-fans__post-video-expand {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  padding: .55rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: zoom-in;
+}
+.penny-fans__post-video-expand > span {
+  padding: .35rem .45rem;
+  border: 1px solid rgba(255, 185, 230, .58);
   border-radius: .5rem;
-  background: #281132;
+  background: rgba(21, 8, 29, .85);
+  color: #ffe8f7;
+  font-size: .67rem;
+  font-weight: 800;
+  line-height: 1.25;
+  filter: none;
+}
+.penny-fans__post-video-control {
+  position: absolute;
+  right: .5rem;
+  bottom: .4rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 195, 236, .7);
+  border-radius: 50%;
+  background: rgba(21, 8, 29, .9);
   color: #ffdef8;
   cursor: pointer;
 }
+.penny-fans__post-video-control span { font-size: 1.6rem; line-height: 1; filter: none; }
+.penny-fans__post-video-control[aria-pressed="true"] { border-color: #f9c7ed; background: #62235b; }
+.penny-fans__post-video-expand:focus-visible,
+.penny-fans__post-video-control:focus-visible { outline: 2px solid #ffd3ed; outline-offset: -3px; }
 @media (prefers-reduced-motion: reduce) {
   .penny-fans__post-video, .penny-fans__post-video-control { display: none; }
 }

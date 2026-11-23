@@ -303,7 +303,11 @@
 .ah-desktop__post header button { padding: 7px; border: 1px solid var(--ah-line); border-radius: 99px; background: #34183f; color: #ffd6ee; font-size: 11px; }
 .ah-desktop__post h2 { margin: 3px 15px 7px; font-size: clamp(19px, 2vw, 24px); }
 .ah-desktop__post p { margin: 0 15px 14px; color: #ead6e6; line-height: 1.6; }
-.ah-desktop__post > video { display: block; width: 100%; max-height: 600px; background: #0a0412; object-fit: contain; }
+.ah-desktop__post-video-wrap > video { display: block; width: 100%; max-height: 600px; background: #0a0412; object-fit: contain; }
+.ah-desktop__post-video-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 8px 13px; }
+.ah-desktop__post-video-actions button { min-height: 40px; padding: 7px 12px; border: 1px solid var(--ah-line); border-radius: 12px; background: #34183f; color: #ffe0f3; }
+.ah-desktop__post-video-actions button:last-child { min-width: 44px; font-size: 24px; line-height: 1; }
+.ah-desktop__post-video-actions button[aria-pressed="true"] { border-color: #ffa4dc; background: #522052; }
 .ah-desktop__post-image { display: block; width: 100%; padding: 0; border: 0; background: #110a1b; }
 .ah-desktop__post-image img { display: block; width: 100%; height: auto; max-height: 640px; object-fit: contain; }
 .ah-desktop__post footer { display: flex; justify-content: space-between; gap: 12px; padding: 12px 15px; color: #d9a8d2; font-size: 11px; }

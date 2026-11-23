@@ -70,6 +70,31 @@ function useSavedItems() {
   return [saved, toggle]
 }
 
+function DesktopPostVideo({ item, onOpen }) {
+  const videoRef = useRef(null)
+  const [paused, setPaused] = useState(true)
+
+  const togglePlayback = () => {
+    const video = videoRef.current
+    if (!video) return
+    if (video.paused) video.play()?.catch?.(() => setPaused(true))
+    else video.pause()
+  }
+
+  return <div className="ah-desktop__post-video-wrap">
+    <UserLoopVideo controlRef={videoRef} controls playsInline preload="none"
+      poster={item.poster} src={item.src} aria-label={item.title}
+      onPause={() => setPaused(true)} onPlay={() => setPaused(false)} />
+    <div className="ah-desktop__post-video-actions">
+      <button type="button" onClick={() => { videoRef.current?.pause(); onOpen(item) }}
+        aria-label={'Enlarge ' + item.title + ' video'}>↗ Tap to enlarge</button>
+      <button type="button" onClick={togglePlayback} aria-pressed={paused}
+        aria-label={(paused ? 'Play ' : 'Pause ') + item.title + ' video'}
+        title={paused ? 'Play' : 'Pause'}>👀</button>
+    </div>
+  </div>
+}
+
 function MediaPreview({ item, onOpen }) {
   return <button className="ah-desktop__media-tile" type="button"
     onClick={() => onOpen(item)} aria-label={'Open ' + item.title}>
@@ -285,9 +310,7 @@ export default function AfterHoursDesktop() {
               {saved.includes('post:' + post.id) ? '★ Saved' : '☆ Save'}</button>
           </header>
           <h2>{post.title}</h2><p>{post.copy}</p>
-          {post.media.type === 'video' ? <UserLoopVideo controls playsInline preload="none"
-            poster={post.media.poster} src={post.media.src}
-            aria-label={post.media.title} /> : <button type="button" className="ah-desktop__post-image"
+          {post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
             onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
             <img src={post.media.src} alt={post.media.alt} loading="lazy" /></button>}
           <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>

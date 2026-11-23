@@ -127,6 +127,14 @@ export default function PennyAfterHours() {
     document.title = "Penny After Hours | WildCard DEV";
   }, []);
 
+  const openPostVideo = (post) => {
+    const index = VIDEOS.findIndex((video) => video.src === post.video);
+    if (index === -1) return;
+    // Pause the inline preview while the existing full-size viewer is open.
+    setPostPaused((previous) => ({ ...previous, [post.id]: true }));
+    setActiveMedia({ kind: 'video', index });
+  };
+
   const openTab = (nextTab) => {
     setActiveMedia(null);
     setTab(nextTab);
@@ -441,7 +449,7 @@ export default function PennyAfterHours() {
             )}
             {tab === 'posts' && POSTS.map((post) => (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
-                <div className="penny-fans__post-art" aria-hidden={post.image ? undefined : true}>
+                <div className="penny-fans__post-art" aria-hidden={post.image || post.video ? undefined : true}>
                   {post.image ? (
                     <img className="penny-fans__post-photo" src={post.image} alt="Kandy in a pink and black striped top in a candlelit room" width={1216} height={832} loading="lazy" decoding="async" />
                   ) : <span>{post.symbol}</span>}
@@ -456,22 +464,24 @@ export default function PennyAfterHours() {
                       loop
                     />
                   )}
+                  {post.video && (
+                    <>
+                      <button type="button" className="penny-fans__post-video-expand"
+                        aria-label={'Enlarge ' + post.title + ' video'}
+                        onClick={() => openPostVideo(post)}
+                      ><span>↗ Tap to enlarge</span></button>
+                      <button type="button" className="penny-fans__post-video-control"
+                        aria-label={(postPaused[post.id] ? 'Resume ' : 'Pause ') + post.title + ' preview'}
+                        aria-pressed={Boolean(postPaused[post.id])}
+                        onClick={() => setPostPaused(previous => ({ ...previous, [post.id]: !previous[post.id] }))}
+                      ><span aria-hidden="true">👀</span></button>
+                    </>
+                  )}
                 </div>
                 <div className="penny-fans__post-copy">
                   <span className="penny-fans__post-label">{post.label}</span>
                   <h2>{post.title}</h2>
                   <p>{post.copy}</p>
-                  {post.video && (
-                    <button
-                      type="button"
-                      className="penny-fans__post-video-control"
-                      aria-label={(postPaused[post.id] ? "Resume " : "Pause ") + post.title + " animation"}
-                      aria-pressed={Boolean(postPaused[post.id])}
-                      onClick={() => setPostPaused(value => ({ ...value, [post.id]: !value[post.id] }))}
-                    >
-                      {postPaused[post.id] ? 'Play' : 'Pause'}
-                    </button>
-                  )}
                 </div>
               </article>
             ))}
