@@ -2,6 +2,22 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/ashley/after-hours/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ashley/after-hours",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kandy/after-hours/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kandy/after-hours",
+      "destination": "/index.html"
+    },
+    {
       "source": "/ask-penny/",
       "destination": "/ask-penny/index.html"
     },
@@ -185,6 +201,42 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=300"
+        }
+      ]
+    },
+    {
+      "source": "/kandy/after-hours",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/kandy/after-hours/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/ashley/after-hours",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/ashley/after-hours/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
         }
       ]
     }
