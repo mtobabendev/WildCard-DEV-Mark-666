@@ -13,7 +13,7 @@ export const FRIENDS = [
   { name: 'Goon Goddess', initial: 'G', handle: '@hotnweird', slideshow: { src: '/static/goon-goddess-slides.avif', frames: 9, avatarFrames: true }, url: 'https://onlyfans.com/hotnweird?rec=603551670' },
   { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: pennyPrivateMedia('evemarie-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
   { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: pennyPrivateMedia('karley-stokes-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
-  { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: pennyPrivateMedia('annabella.webp') },
+  { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', slideshow: { src: '/static/annabella-ivy-slides.webp', frames: 9, avatarFrames: true } },
   { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', slideshow: { src: '/static/lala-slides.webp', frames: 8, avatarFrames: true } },
 ];
 
