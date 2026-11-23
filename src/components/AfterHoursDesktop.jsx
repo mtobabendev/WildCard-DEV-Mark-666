@@ -85,6 +85,7 @@ export default function AfterHoursDesktop() {
   const [showInfo, setShowInfo] = useState(false)
   const [coverPaused, setCoverPaused] = useState(false)
   const [avatarExpanded, setAvatarExpanded] = useState(false)
+  const [avatarPaused, setAvatarPaused] = useState(false)
   const [selected, setSelected] = useState(null)
   const [status, setStatus] = useState('')
   const [saved, toggleSaved] = useSavedItems()
@@ -107,8 +108,8 @@ export default function AfterHoursDesktop() {
     if (!avatar) return undefined
     let inView = typeof IntersectionObserver === 'undefined'
     const sync = () => {
-      if (document.hidden || !inView) avatar.pause()
-      else avatar.play()?.catch?.(() => {})
+      if (avatarPaused || document.hidden || !inView) avatar.pause()
+      else avatar.play()?.catch?.(() => setAvatarPaused(true))
     }
     const observer = typeof IntersectionObserver === 'undefined' ? null :
       new IntersectionObserver(entries => {
@@ -125,7 +126,7 @@ export default function AfterHoursDesktop() {
       document.removeEventListener('visibilitychange', sync)
       avatar.pause()
     }
-  }, [])
+  }, [avatarPaused])
 
   const term = query.trim().toLowerCase()
   const matches = (value) => !term || value.toLowerCase().includes(term)
@@ -195,7 +196,13 @@ export default function AfterHoursDesktop() {
             title={avatarExpanded ? 'Click to shrink' : 'Click to enlarge'}>
             <video ref={avatarRef} muted loop playsInline preload="metadata"
               src="/static/PennyOnlyFanzProfile-web.webm" aria-hidden="true" />
-            <span aria-hidden="true">{avatarExpanded ? '↙' : '⤢'}</span>
+          </button>
+          <button className="ah-desktop__avatar-pause" type="button"
+            onClick={() => setAvatarPaused(value => !value)}
+            aria-label={avatarPaused ? 'Play Penny profile video' : 'Pause Penny profile video'}
+            aria-pressed={avatarPaused}
+            title={avatarPaused ? 'Play avatar video' : 'Pause avatar video'}>
+            <span aria-hidden="true">👀</span>
           </button>
           <div className="ah-desktop__actions" aria-label="Profile actions">
             <a title="Support WildCard DEV" href={SQUARE} target="_blank" rel="noopener noreferrer">♧ <span>Tip</span></a>

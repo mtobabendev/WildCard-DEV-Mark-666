@@ -140,6 +140,7 @@
 
 .ah-desktop__identity { padding: 0 20px 20px; border-bottom: 1px solid var(--ah-line); }
 .ah-desktop__identity-top {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -180,20 +181,33 @@
   object-position: center top;
   pointer-events: none;
 }
-.ah-desktop__avatar span {
+.ah-desktop__avatar-pause {
   position: absolute;
-  right: 9px;
-  bottom: 9px;
+  left: 156px;
+  top: -18px;
+  z-index: 3;
   display: grid;
   place-items: center;
-  width: 27px;
-  height: 27px;
-  border: 1px solid #fff9;
-  border-radius: 50%;
-  background: #1c092cd9;
-  color: #fff;
-  font-size: 15px;
-  pointer-events: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ah-desktop__identity-top.is-avatar-expanded .ah-desktop__avatar-pause {
+  left: 246px;
+  top: 0;
+}
+.ah-desktop__avatar-pause:focus-visible {
+  outline: 2px solid #f9c8e6;
+  outline-offset: -2px;
+  border-radius: 12px;
 }
 @media (prefers-reduced-motion: reduce) {
   .ah-desktop__avatar { transition: none; }
