@@ -11,7 +11,7 @@ import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIn
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
-const SQUARE = 'https://square.link/u/sb0tYH9C'
+const SQUARE = 'https://square.link/u/YnAVr8ht'
 const PROFILE_URL = 'https://www.wildcarddev.com/penny/after-hours'
 const PROFILE_KEY = 'wildcard:afterhours:desktop-saves:v1'
 

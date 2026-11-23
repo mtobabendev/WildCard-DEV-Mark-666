@@ -1451,7 +1451,7 @@ export default function App() {
         <PerformanceControl />
         <a
           className="donate"
-          href="https://square.link/u/sb0tYH9C"
+          href="https://square.link/u/YnAVr8ht"
           target="_blank"
           rel="noreferrer"
         >

@@ -317,7 +317,7 @@ export default function PennyAfterHours() {
           </div>
           <a
             className="penny-fans__tip-coin"
-            href="https://square.link/u/sb0tYH9C"
+            href="https://square.link/u/YnAVr8ht"
             target="_blank"
             rel="noopener noreferrer"
             title="Tip Penny through WildCard DEV"
