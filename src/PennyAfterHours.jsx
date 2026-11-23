@@ -9,6 +9,7 @@ import ViewportVideo from './components/ViewportVideo.jsx';
 import UserLoopVideo from './components/UserLoopVideo.jsx';
 import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
 import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
+import PennyKandyReel from './components/PennyKandyReel.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -341,6 +342,7 @@ export default function PennyAfterHours() {
                 made for after dark, and friends who know how to steal the spotlight.
                 Stay curious, enjoy the view, and don't be shy about saying hello. 🖤
               </p>
+              <PennyKandyReel />
             </div>
             <button
               type="button"

@@ -6,6 +6,7 @@ import PennyClassicCards from './PennyClassicCards.jsx'
 import PennyThoughtBubble from './PennyThoughtBubble.jsx'
 import AskPenny from './AskPenny.jsx'
 import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
+import PennyKandyReel from './PennyKandyReel.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -91,6 +92,7 @@ export default function AfterHoursDesktop() {
   const [saved, toggleSaved] = useSavedItems()
   const modalRef = useRef(null)
   const avatarRef = useRef(null)
+  const friendsRef = useRef(null)
 
   useEffect(() => {
     document.title = 'Penny After Hours | WildCard DEV'
@@ -127,6 +129,27 @@ export default function AfterHoursDesktop() {
       avatar.pause()
     }
   }, [avatarPaused])
+
+  useEffect(() => {
+    const row = friendsRef.current;
+    if (!row) return undefined;
+    // React's delegated wheel listener may be passive. A native non-passive
+    // listener prevents page scrolling only while this horizontal row can move.
+    const wheel = event => {
+      if (event.ctrlKey || event.metaKey) return;
+      const limit = Math.max(0, row.scrollWidth - row.clientWidth);
+      if (!limit) return;
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? row.clientWidth : 1;
+      const delta = (Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX) * unit;
+      if (!delta) return;
+      const next = Math.max(0, Math.min(limit, row.scrollLeft + delta));
+      if (Math.abs(next - row.scrollLeft) < 0.5) return; // Let the page scroll at the ends.
+      event.preventDefault();
+      row.scrollLeft = next;
+    };
+    row.addEventListener('wheel', wheel, { passive: false });
+    return () => row.removeEventListener('wheel', wheel);
+  }, []);
 
   const term = query.trim().toLowerCase()
   const matches = (value) => !term || value.toLowerCase().includes(term)
@@ -223,18 +246,10 @@ export default function AfterHoursDesktop() {
           <p>Penny is WildCard DEV's fictional AI host and digital collaborator.</p>
           <p>Contact: <a href="mailto:Penny@WildCardDEV.com">Penny@WildCardDEV.com</a></p>
           <p><a href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer">WildCard Party</a> · <a href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer">PennyTV</a></p>
+          <PennyKandyReel />
         </div>}
       </section>
 
-      <section id="ah-desktop-friends" className="ah-desktop__friends-section" aria-label="Penny friends">
-        <div className="ah-desktop__friends-heading">
-          <h2>FRIENDS <span>{FRIENDS.length}</span></h2>
-          <small>SWIPE ↔</small>
-        </div>
-        <div className="penny-fans__friend-list" role="region" aria-label="Penny friends, scroll left or right" tabIndex={0}>
-          {FRIENDS.map(friend => <PennyFriendCard key={friend.url} friend={friend} />)}
-        </div>
-      </section>
       <section className="ah-desktop__subscription" aria-label="Subscription details">
         <div><small>SUBSCRIPTION</small><strong>Free to explore</strong><span>No paid subscription or automatic renewal is enabled.</span></div>
         <button type="button" onClick={() => chooseTab('posts')}>Explore free posts</button>
@@ -334,10 +349,22 @@ export default function AfterHoursDesktop() {
             <img src={item.poster || item.src} alt="" loading="lazy" /></button>)}
         </div>
       </section>
-      <section className="ah-desktop__sidecard">
-        <h2>CREATOR FRIENDS</h2>
-        <p>{FRIENDS.length} featured creators and WildCard friends.</p>
-        <a href="#ah-desktop-friends">Browse the Friends carousel</a>
+      <section id="ah-desktop-friends" className="ah-desktop__sidecard ah-desktop__friend-panel" aria-label="Penny's friends">
+        <header className="ah-desktop__friend-panel-head">
+          <h2>FRIENDS <span>{FRIENDS.length}</span></h2>
+          <small>SCROLL ↔</small>
+        </header>
+        <div ref={friendsRef} className="penny-fans__friend-list ah-desktop__friend-list"
+          role="region" aria-label="Penny friends, use mouse wheel or arrow keys to scroll horizontally"
+          tabIndex={0}
+          onKeyDown={event => {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault();
+              friendsRef.current?.scrollBy({ left: event.key === 'ArrowRight' ? 120 : -120, behavior: 'smooth' });
+            }
+          }}>
+          {FRIENDS.map(friend => <PennyFriendCard key={friend.url} friend={friend} />)}
+        </div>
       </section>
       <section className="ah-desktop__sidecard ah-desktop__sidecard--sub">
         <h2>SUBSCRIPTION</h2><p>Free creator previews</p>

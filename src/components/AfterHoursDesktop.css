@@ -338,11 +338,6 @@
 .ah-desktop__recent { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 4px; }
 .ah-desktop__recent button { overflow: hidden; padding: 0; border: 0; border-radius: 7px; background: #40264f; }
 .ah-desktop__recent img { display: block; width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-.ah-desktop__friends { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
-.ah-desktop__friends a { display: grid; align-content: start; min-width: 0; overflow: hidden; border: 1px solid #75476c; border-radius: 9px; background: #331b43; text-align: center; }
-.ah-desktop__friends img { display: block; width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-.ah-desktop__friends strong { padding: 5px 2px 0; font-size: 12px; }
-.ah-desktop__friends small { display: block; padding: 2px 2px 7px; color: #cbb1d1; font-size: 9px; line-height: 1.3; overflow-wrap: anywhere; }
 .ah-desktop__sidecard--sub p { color: #ffbee9; font-size: 13px; }
 .ah-desktop__sidecard--sub button { width: 100%; }
 .ah-desktop__side-note { color: #aa93b3; font-size: 11px; text-align: center; }
@@ -357,7 +352,6 @@
 @media (max-width: 1260px) {
   .ah-desktop { grid-template-columns: minmax(170px, 195px) minmax(0, 690px) minmax(210px, 250px); }
   .ah-desktop__left { padding-right: 8px; }
-  .ah-desktop__friends { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .ah-desktop *, .ah-desktop *::before, .ah-desktop *::after { animation: none !important; transition: none !important; }
@@ -370,19 +364,34 @@
 .ah-desktop__thought { margin-bottom: 16px; }
 .ah-desktop__thought .penny-thought { --thought-tail-x: 20%; }
 
-/* Shared Mia-style slideshow Friends row, preserving the mobile component. */
-.ah-desktop__friends-section {
-  min-width: 0; padding: 17px 20px 18px; border-bottom: 1px solid var(--ah-line);
+/* Desktop-only: compact, OnlyFans-style right-sidebar Friends strip.
+   Mia-style cover/avatar image timers remain owned by PennyFriendCard. */
+.ah-desktop__friend-panel { min-width: 0; overflow: hidden; }
+.ah-desktop__friend-panel-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 8px; margin-bottom: 12px;
 }
-.ah-desktop__friends-heading {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 12px; margin-bottom: 10px;
+.ah-desktop__friend-panel-head h2 { margin: 0; }
+.ah-desktop__friend-panel-head h2 span { color: #c5a2ca; margin-left: 5px; }
+.ah-desktop__friend-panel-head small { color: #dfb0db; font-size: 10px; white-space: nowrap; }
+.ah-desktop__friend-list { width: 100%; gap: 6px; padding: 0 0 10px; }
+.ah-desktop__friend-panel .penny-fans__friend-card {
+  flex: 0 0 92px; min-height: 151px; border-radius: 8px;
 }
-.ah-desktop__friends-heading h2 {
-  margin: 0; color: #f6d1ed; font-size: 15px; letter-spacing: .07em;
+.ah-desktop__friend-panel .penny-fans__friend-cover { height: 76px; flex-basis: 76px; }
+.ah-desktop__friend-panel .penny-fans__friend-avatar {
+  width: 62px; height: 62px; flex-basis: 62px;
+  margin-top: -32px; border-width: 2px;
 }
-.ah-desktop__friends-heading h2 span { color: #cb9ccf; font-size: 12px; }
-.ah-desktop__friends-heading small { color: #d4a1ce; font-size: 11px; letter-spacing: .09em; }
-.ah-desktop__friends-section .penny-fans__friend-card { flex-basis: 190px; }
+.ah-desktop__friend-panel .penny-fans__friend-platform { display: none; }
+.ah-desktop__friend-panel .penny-fans__friend-name {
+  padding: 6px 3px 7px; gap: 3px;
+}
+.ah-desktop__friend-panel .penny-fans__friend-name strong {
+  font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ah-desktop__friend-panel .penny-fans__friend-name small {
+  font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .ah-desktop__sidecard > p { color: #d6bcd9; line-height: 1.5; font-size: 12px; }
 .ah-desktop__sidecard > a { color: #ffb9e4; text-decoration: underline; font-size: 12px; }

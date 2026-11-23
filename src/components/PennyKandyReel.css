@@ -1,0 +1,42 @@
+/* The owner-provided artwork is a static invitation; the viewer is a timed two-frame reel. */
+.penny-kandy-reel { width: min(100%, 300px); margin: 16px 0 8px; }
+.penny-kandy-reel__teaser {
+  display: block; width: 100%; padding: 0; overflow: hidden;
+  border: 1px solid #ff9de5; border-radius: 16px;
+  background: #17081c; box-shadow: 0 0 18px #e94bb547; cursor: pointer;
+}
+.penny-kandy-reel__teaser img { display: block; width: 100%; height: auto; }
+.penny-kandy-reel__teaser:hover { border-color: #ffe0f3; box-shadow: 0 0 24px #f75cbb80; }
+.penny-kandy-reel__teaser:focus-visible,
+.penny-kandy-reel__dialog button:focus-visible { outline: 3px solid #ffd6f0; outline-offset: 3px; }
+.penny-kandy-reel__dialog {
+  position: fixed; inset: 0; margin: auto; padding: 0;
+  width: min(94vw, 570px); max-width: 94vw; max-height: 94dvh;
+  overflow: auto; border: 1px solid #ff87e2; border-radius: 15px;
+  background: #16091e; color: #ffebf6; box-shadow: 0 0 55px #e641b351;
+}
+.penny-kandy-reel__dialog::backdrop { background: #090310ea; }
+.penny-kandy-reel__viewer { display: grid; gap: 8px; padding: 10px; }
+.penny-kandy-reel__viewer header, .penny-kandy-reel__viewer nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.penny-kandy-reel__viewer header strong { font-size: 15px; }
+.penny-kandy-reel__viewer button {
+  display: grid; place-items: center; min-width: 42px; min-height: 42px;
+  padding: 5px 11px; border: 1px solid #ca80b9; border-radius: 9px;
+  background: #49224f; color: #fff0fa; cursor: pointer;
+}
+.penny-kandy-reel__viewer button:disabled { opacity: .7; cursor: default; }
+.penny-kandy-reel__viewer nav button:first-child,
+.penny-kandy-reel__viewer nav button:last-child { font-size: 26px; }
+.penny-kandy-reel__viewer nav span { font-size: 13px; font-variant-numeric: tabular-nums; }
+.penny-kandy-reel__progress { display: flex; gap: 5px; height: 4px; }
+.penny-kandy-reel__progress span { flex: 1; border-radius: 8px; background: #8a6187; }
+.penny-kandy-reel__progress span.is-active { background: #ff72d6; }
+.penny-kandy-reel__frame {
+  display: block; width: 100%; height: min(67dvh, 690px);
+  object-fit: contain; border-radius: 9px; background: #070308;
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-kandy-reel__teaser { box-shadow: none; }
+}
