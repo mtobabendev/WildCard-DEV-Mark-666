@@ -1,0 +1,119 @@
+.afterhours-public {
+  min-height: 100dvh;
+  color: #fff0fc;
+  font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 65% 0%, #48204d 0, #16091e 42%, #110719 100%);
+}
+.afterhours-public * { box-sizing: border-box; }
+.afterhours-public a { color: inherit; }
+.afterhours-public__top {
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  padding: 15px max(15px, calc((100vw - 1120px)/2));
+  border-bottom: 1px solid #704063; background: #17091edb;
+  font-size: .78rem; letter-spacing: .06em;
+}
+.afterhours-public__top a { color: #ffbde8; font-weight: 800; text-decoration: none; }
+.afterhours-public__top span { text-align: center; color: #dcc5db; }
+.afterhours-public__shell {
+  width: min(100% - 30px, 1080px); margin: 20px auto 0;
+  overflow: visible; border: 1px solid #7b4775; border-radius: 22px;
+  background: #1e1028e8; box-shadow: 0 20px 80px #090314ab;
+}
+.afterhours-public__cover {
+  position: relative; width: 100%; max-height: 360px; aspect-ratio: 736/320;
+  overflow: hidden; border-radius: 22px 22px 0 0;
+  background: linear-gradient(140deg,#4e2557,#1b1130 65%,#9d3867);
+}
+.afterhours-public__cover video, .afterhours-public__cover img {
+  display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+.afterhours-public__cover-overlay {
+  position: absolute; left: 18px; top: 18px; z-index: 1; pointer-events: none;
+  font-size: .76rem; font-weight: 900; letter-spacing: .1em;
+  text-shadow: 0 2px 8px #0a0219;
+}
+.afterhours-public__identity {
+  display: grid; grid-template-columns: 106px minmax(0, 1fr) auto;
+  align-items: start; gap: 18px; padding: 22px 24px 32px;
+}
+.afterhours-public__avatar {
+  width: 104px; height: 104px; margin-top: -65px; z-index: 2;
+  display: grid; place-items: center; flex: none; overflow: hidden;
+  border: 4px solid #e48bbf; border-radius: 50%;
+  box-shadow: 0 5px 18px #06000d96, 0 0 20px #ad5c9699;
+  background: #642d70;
+}
+.afterhours-public__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.afterhours-public__avatar span { font-size: 58px; font-weight: 900; }
+.afterhours-public__eyebrow {
+  margin: 0 0 5px; color: #eeb0de; font-size: .73rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.afterhours-public__identity h1 {
+  font-size: clamp(1.6rem, 3.4vw, 2.25rem); margin: 0; line-height: 1.25;
+}
+.afterhours-public__identity h2 {
+  font-size: 1rem; color: #f0a8df; margin: 5px 0 10px; font-weight: 600;
+}
+.afterhours-public__identity-text > p:last-child { margin: 0; max-width: 600px; color: #e1c9e4; }
+.afterhours-public__share { display: grid; justify-items: end; gap: 5px; }
+.afterhours-public__share button, .afterhours-public__buttons button,
+.afterhours-public__buttons a, .afterhours-public__links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid #c781b5; background: #4a2259; color: #ffe9f7;
+  border-radius: 99px; font: inherit; font-size: .87rem; font-weight: 700;
+  text-decoration: none; padding: 9px 15px; cursor: pointer;
+}
+.afterhours-public__share small { color: #f9b5e1; max-width: 210px; overflow-wrap: anywhere; }
+.afterhours-public__feature, .afterhours-public__access {
+  margin: 0 24px 24px; padding: 20px; border: 1px solid #764368;
+  border-radius: 17px; background: #260f30;
+}
+.afterhours-public__feature h2, .afterhours-public__access h2 {
+  margin: 0 0 12px; font-size: clamp(1.14rem, 3vw, 1.5rem);
+}
+.afterhours-public__cards {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px;
+}
+.afterhours-public__cards article {
+  overflow: hidden; border: 1px solid #8c5481; border-radius: 13px;
+  background: #170e22; padding-bottom: 14px;
+}
+.afterhours-public__cards video, .afterhours-public__cards img {
+  display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #10081b;
+}
+.afterhours-public__cards h3 { margin: 12px 14px 0; font-size: 1.04rem; }
+.afterhours-public__cards p { margin: 4px 14px 0; font-size: .84rem; color: #d5b9d6; }
+.afterhours-public__access { border-color: #a16c95; background: #351737; }
+.afterhours-public__access > p { margin: 7px 0 12px; color: #eed5ea; }
+.afterhours-public__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.afterhours-public__buttons a { background: #f1b6da; color: #250d2a; }
+.afterhours-public__fine { font-size: .79rem; }
+.afterhours-public__links {
+  padding: 0 24px 25px; display: flex; gap: 9px; overflow-x: auto;
+  white-space: nowrap; scrollbar-width: thin;
+}
+.afterhours-public__links a { flex: 0 0 auto; }
+.afterhours-public__footer { padding: 25px; font-size: .76rem; text-align: center; color: #c9acc7; }
+@media (max-width: 700px) {
+  .afterhours-public__shell { width: calc(100% - 16px); margin-top: 9px; }
+  .afterhours-public__top { padding: 12px; }
+  .afterhours-public__identity {
+    grid-template-columns: 76px minmax(0,1fr); gap: 11px; padding: 18px 12px 22px;
+  }
+  .afterhours-public__avatar { width: 76px; height: 76px; margin-top: -41px; }
+  .afterhours-public__identity > .penny-profile-actions,
+  .afterhours-public__identity > .afterhours-public__share { grid-column: 1/-1; justify-self: end; }
+  .afterhours-public__feature,.afterhours-public__access { margin: 0 11px 13px; padding: 14px; }
+  .afterhours-public__links { padding: 0 12px 15px; }
+  .afterhours-public__cover { aspect-ratio: 736/400; }
+}
+@media (max-width: 420px) {
+  .afterhours-public__top { font-size: .66rem; }
+  .afterhours-public__cards { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .afterhours-public__cards h3 { font-size: .9rem; margin: 7px 8px 0; }
+  .afterhours-public__cards p { font-size: .74rem; margin: 4px 8px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .afterhours-public * { scroll-behavior: auto; }
+}
