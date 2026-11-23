@@ -87,7 +87,7 @@ function DesktopPostVideo({ item, onOpen }) {
       onPause={() => setPaused(true)} onPlay={() => setPaused(false)} />
     <div className="ah-desktop__post-video-actions">
       <button type="button" onClick={() => { videoRef.current?.pause(); onOpen(item) }}
-        aria-label={'Enlarge ' + item.title + ' video'}>↗ Tap to enlarge</button>
+        aria-label={'Enlarge ' + item.title + ' video'} title="Enlarge video">↗</button>
       <button type="button" onClick={togglePlayback} aria-pressed={paused}
         aria-label={(paused ? 'Play ' : 'Pause ') + item.title + ' video'}
         title={paused ? 'Play' : 'Pause'}>👀</button>

@@ -465,21 +465,23 @@ export default function PennyAfterHours() {
                     />
                   )}
                   {post.video && (
-                    <>
-                      <button type="button" className="penny-fans__post-video-expand"
-                        aria-label={'Enlarge ' + post.title + ' video'}
-                        onClick={() => openPostVideo(post)}
-                      ><span>↗ Tap to enlarge</span></button>
+                    <button type="button" className="penny-fans__post-video-expand"
+                      aria-label={'Enlarge ' + post.title + ' video'}
+                      onClick={() => openPostVideo(post)}
+                    />
+                  )}
+                </div>
+                <div className="penny-fans__post-copy">
+                  <div className="penny-fans__post-meta">
+                    <span className="penny-fans__post-label">{post.label}</span>
+                    {post.video && (
                       <button type="button" className="penny-fans__post-video-control"
                         aria-label={(postPaused[post.id] ? 'Resume ' : 'Pause ') + post.title + ' preview'}
                         aria-pressed={Boolean(postPaused[post.id])}
                         onClick={() => setPostPaused(previous => ({ ...previous, [post.id]: !previous[post.id] }))}
                       ><span aria-hidden="true">👀</span></button>
-                    </>
-                  )}
-                </div>
-                <div className="penny-fans__post-copy">
-                  <span className="penny-fans__post-label">{post.label}</span>
+                    )}
+                  </div>
                   <h2>{post.title}</h2>
                   <p>{post.copy}</p>
                 </div>
