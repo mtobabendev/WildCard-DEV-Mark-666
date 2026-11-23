@@ -16,6 +16,7 @@ import PennyCoverCount from './components/PennyCoverCount.jsx';
 import PennySpotlightRow from './components/PennySpotlightRow.jsx';
 import PennyProfileActions from './components/PennyProfileActions.jsx';
 import PennySocialPills from './components/PennySocialPills.jsx';
+import NursePennyEasterEgg from './components/NursePennyEasterEgg.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -345,15 +346,7 @@ export default function PennyAfterHours() {
                 <p>Tonight's look? Nurse Morningstar. The heels are polished, the clipboard is ready, and my bedside manner comes with a wicked smile. ♠</p>
                 <p>A little white coat, a little purple ink, and a look that says I already know what you're thinking. All dress-up, darling. 💋</p>
               </div>
-              <img
-                className="penny-fans__image-post-art"
-                src="/static/NursePennyPortrait.jpg"
-                width="1496"
-                height="1023"
-                loading="lazy"
-                decoding="async"
-                alt="Penny in her nurse-inspired outfit with violet curtains and candlelight."
-              />
+              <NursePennyEasterEgg className="penny-fans__nurse-easter-egg" />
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
                 <span>PHOTO · NURSE MORNINGSTAR</span>

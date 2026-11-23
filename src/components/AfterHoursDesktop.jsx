@@ -13,6 +13,7 @@ import PennyCoverCount from './PennyCoverCount.jsx'
 import PennySpotlightRow from './PennySpotlightRow.jsx'
 import PennyProfileActions from './PennyProfileActions.jsx'
 import PennySocialPills from './PennySocialPills.jsx'
+import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -298,7 +299,8 @@ export default function AfterHoursDesktop() {
               {saved.includes('post:' + post.id) ? '★ Saved' : '☆ Save'}</button>
           </header>
           <h2>{post.title}</h2><p>{post.copy}</p>
-          {post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
+          {post.id === 'nurse-post' ? <NursePennyEasterEgg className="ah-desktop__post-image" />
+            : post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
             onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
             <img src={post.media.src} alt={post.media.alt} loading="lazy" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-kandy-reel-hero.webp" }} /></button>}
           <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>

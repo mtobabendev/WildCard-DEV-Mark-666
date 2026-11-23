@@ -1,0 +1,26 @@
+/* Reuses the existing Nurse post image footprint on mobile and desktop. */
+.nurse-penny-easter-egg {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: #080410;
+  cursor: pointer;
+  overflow: hidden;
+}
+.nurse-penny-easter-egg:focus-visible {
+  outline: 3px solid #ffb8e4;
+  outline-offset: -3px;
+}
+.nurse-penny-easter-egg__photo,
+.nurse-penny-easter-egg__video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.nurse-penny-easter-egg__video {
+  aspect-ratio: 1496 / 1023;
+  object-fit: contain;
+  pointer-events: none;
+  background: #080410;
+}
