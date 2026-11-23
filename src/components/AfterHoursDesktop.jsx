@@ -9,6 +9,7 @@ import AskPenny from './AskPenny.jsx'
 import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIntro.jsx'
 import PennyPrivateCollections from './PennyPrivateCollections.jsx'
+import PennyCoverCount from './PennyCoverCount.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -229,6 +230,7 @@ export default function AfterHoursDesktop() {
         <div><strong>Penny Bella Morningstar ♠</strong><small>{POSTS.length} published previews · {MEDIA.length} media</small></div>
       </div>
       <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
+        <PennyCoverCount />
         <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('PennyNewFansBanner.webm')}
           poster={pennyPrivateMedia('penny-after-hours-cover.webp')} width={736} height={400}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />

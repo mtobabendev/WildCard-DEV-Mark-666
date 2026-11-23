@@ -12,6 +12,7 @@ import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
 import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './components/PennyAfterHoursIntro.jsx';
 import PennyPrivateCollections from './components/PennyPrivateCollections.jsx';
+import PennyCoverCount from './components/PennyCoverCount.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -226,6 +227,7 @@ export default function PennyAfterHours() {
             <span aria-hidden="true">😈</span>
           </button>
           <span className="penny-fans__cover-label">PENNY AFTER HOURS · WILDCARD DEV</span>
+          <PennyCoverCount />
         </div>
 
         <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '')} aria-labelledby="penny-fans-title">
