@@ -13,6 +13,11 @@ export default function AfterHoursGate({ area, children }) {
   useEffect(() => {
     if (!Object.hasOwn(AREA_LABELS, area)) return undefined
     setStatus('checking')
+    // Untrusted preview origins receive no bridge response. Fail closed instead
+    // of displaying a permanent loading state if verification cannot respond.
+    const timeout = window.setTimeout(() => {
+      setStatus(current => current === 'checking' ? 'unavailable' : current)
+    }, 10000)
     const receive = event => {
       if (event.origin !== PARTY || event.source !== frameRef.current?.contentWindow) return
       const data = event.data
@@ -28,6 +33,7 @@ export default function AfterHoursGate({ area, children }) {
     return () => {
       window.removeEventListener('message', receive)
       window.clearInterval(timer)
+      window.clearTimeout(timeout)
     }
   }, [area, attempt])
 
