@@ -1,5 +1,3 @@
-import PennyKandyReel from './PennyKandyReel.jsx'
-
 // Shared copy keeps Penny's After Hours introduction identical on mobile and desktop.
 export function PennyAfterHoursBio({ className }) {
   return (
@@ -24,7 +22,6 @@ export function PennyAfterHoursMoreInfo() {
         made for after dark, and friends who know how to steal the spotlight.
         Stay curious, enjoy the view, and don't be shy about saying hello. 🖤
       </p>
-      <PennyKandyReel />
     </>
   )
 }

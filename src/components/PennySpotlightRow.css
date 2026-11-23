@@ -1,0 +1,79 @@
+/* Featured row inherits the existing Friends carousel dimensions. */
+.penny-spotlight { grid-column: 1 / -1; width: 100%; min-width: 0; }
+.penny-spotlight__heading {
+  display: flex; align-items: baseline; justify-content: space-between; gap: .6rem;
+  margin: .3rem 0 .85rem; color: #f8c5ec;
+}
+.penny-spotlight__heading h2 { margin: 0; font-size: .83rem; letter-spacing: .1em; }
+.penny-spotlight__heading small { font-size: .68rem; color: #dab0df; letter-spacing: .08em; }
+.penny-spotlight__list { gap: .75rem; padding: .2rem .1rem .8rem; }
+.penny-spotlight__list > .penny-kandy-reel,
+.penny-spotlight__list > .penny-spotlight__item {
+  position: relative; box-sizing: border-box;
+  flex: 0 0 clamp(165px, 34vw, 210px);
+  height: 215px; min-width: 0; min-height: 0; margin: 0;
+  scroll-snap-align: start;
+  overflow: hidden; border: 1px solid rgba(248,153,215,.4);
+  border-radius: .9rem; background: rgba(42,21,56,.9);
+}
+.penny-spotlight__list > .penny-kandy-reel { overflow: visible; border: 0; }
+.penny-spotlight__list .penny-kandy-reel__teaser {
+  width: 100%; height: 100%; border-radius: .9rem; overflow: hidden;
+  border: 1px solid rgba(248,153,215,.5); background: #2a1538;
+  box-shadow: none;
+}
+.penny-spotlight__list .penny-kandy-reel__teaser img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+}
+.penny-spotlight__list .penny-kandy-reel__teaser:hover,
+.penny-spotlight__list .penny-kandy-reel__teaser:focus-visible,
+.penny-spotlight__open:hover,
+.penny-spotlight__open:focus-visible { border-color: #ffd0f0; }
+.penny-spotlight__video {
+  position: absolute; width: 100%; height: 100%; object-fit: cover;
+  inset: 0; pointer-events: none;
+}
+.penny-spotlight__open {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: space-between; align-items: flex-start; width: 100%;
+  padding: 8px; border: 1px solid transparent; border-radius: .9rem;
+  color: #fff6fc; background: linear-gradient(180deg,#0a061224,transparent 45%,#16071acc);
+  cursor: pointer;
+}
+.penny-spotlight__badge {
+  display: inline-block; padding: .24rem .4rem; font-size: .62rem;
+  border: 1px solid #ffbded8f; border-radius: .38rem;
+  background: #1a0b2fb8; color: #ffe6f7; font-weight: 850;
+}
+.penny-spotlight__title { font-size: .87rem; font-weight: 900; text-shadow: 0 2px 6px #11051b; }
+.penny-spotlight__dialog {
+  position: fixed; inset: 0; margin: auto; padding: 0;
+  width: min(94vw, 600px); max-width: 94vw; max-height: 92dvh;
+  background: #140921; color: #ffeef9; border: 1px solid #ff9de5; border-radius: .9rem;
+  box-shadow: 0 0 48px #fc6bb54a;
+}
+.penny-spotlight__dialog::backdrop { background: #07020bd9; }
+.penny-spotlight__dialog-header {
+  padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;
+}
+.penny-spotlight__dialog-header button {
+  min-width: 44px; min-height: 44px; border: 1px solid #c587b5;
+  border-radius: 8px; background: #542955; color: white; cursor: pointer;
+}
+.penny-spotlight__dialog-video { display: block; width: 100%; max-height: 75dvh; object-fit: contain; }
+@media (max-width: 540px) {
+  .penny-spotlight__list { gap: .6rem; }
+  .penny-spotlight__list > .penny-kandy-reel,
+  .penny-spotlight__list > .penny-spotlight__item { flex-basis: 160px; height: 204px; }
+}
+.ah-desktop__spotlight-panel .penny-spotlight__heading { margin: 0 0 12px; }
+.ah-desktop__spotlight-panel .penny-spotlight__heading h2 { font-size: 13px; }
+.ah-desktop__spotlight-panel .penny-spotlight__heading small { font-size: 10px; }
+.ah-desktop__spotlight-panel .penny-spotlight__list { width: 100%; gap: 6px; padding: 0 0 10px; }
+.ah-desktop__spotlight-panel .penny-spotlight__list > .penny-kandy-reel,
+.ah-desktop__spotlight-panel .penny-spotlight__list > .penny-spotlight__item {
+  flex: 0 0 92px; height: 151px; border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-spotlight__open, .penny-spotlight__video { animation: none !important; }
+}

@@ -10,6 +10,7 @@ import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIntro.jsx'
 import PennyPrivateCollections from './PennyPrivateCollections.jsx'
 import PennyCoverCount from './PennyCoverCount.jsx'
+import PennySpotlightRow from './PennySpotlightRow.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -379,6 +380,7 @@ export default function AfterHoursDesktop() {
             <img src={item.poster || item.src} alt="" loading="lazy" /></button>)}
         </div>
       </section>
+      <section className="ah-desktop__sidecard ah-desktop__spotlight-panel"><PennySpotlightRow /></section>
       <section id="ah-desktop-friends" className="ah-desktop__sidecard ah-desktop__friend-panel" aria-label="Penny's friends">
         <header className="ah-desktop__friend-panel-head">
           <h2>FRIENDS <span>{FRIENDS.length}</span></h2>

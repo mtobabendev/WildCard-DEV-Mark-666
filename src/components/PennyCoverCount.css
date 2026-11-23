@@ -62,3 +62,24 @@
   .penny-cover-count__digits, .penny-cover-count__digits::before,
   .penny-cover-count__digits::after { animation: none !important; }
 }
+
+/* Posts and Likes share the cover line, without representing live engagement data. */
+.penny-cover-count__post-stat, .penny-cover-count__like-stat {
+  display: inline-flex; align-items: baseline; gap: .34rem;
+}
+.penny-cover-count__separator { margin: 0 .05rem; color: #f8afdf; }
+.penny-cover-count__likes {
+  display: inline-block; min-width: 4.1ch;
+  font-variant-numeric: tabular-nums;
+  color: #ff8cda;
+  text-shadow: 0 0 6px #e847cc, 0 0 16px #7723c4, 0 2px 5px #190a22;
+  animation: penny-cover-like-flash 720ms ease-out 1;
+}
+@keyframes penny-cover-like-flash {
+  0% { transform: scale(.94); color: #c489ff; text-shadow: 0 0 4px #a54dec; }
+  38% { transform: scale(1.13); color: #ffb8ed; text-shadow: 0 0 10px #ff56da, 0 0 26px #8c3de6; }
+  100% { transform: scale(1); color: #ff8cda; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .penny-cover-count__likes { animation: none !important; }
+}

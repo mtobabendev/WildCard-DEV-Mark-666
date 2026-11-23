@@ -4,15 +4,17 @@ import { readFileSync } from 'node:fs'
 
 const source = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8')
 
-test('desktop and mobile show the same Penny bio, More Info and reel', () => {
+test('desktop and mobile show the same Penny bio and More Info, with reel moved into featured row', () => {
   const desktop = source('src/components/AfterHoursDesktop.jsx')
   const mobile = source('src/PennyAfterHours.jsx')
   const shared = source('src/components/PennyAfterHoursIntro.jsx')
+  const spotlight = source('src/components/PennySpotlightRow.jsx')
 
   for (const layout of [desktop, mobile]) {
     assert.match(layout, /import \{ PennyAfterHoursBio, PennyAfterHoursMoreInfo \}/)
     assert.match(layout, /<PennyAfterHoursBio\b/)
     assert.match(layout, /<PennyAfterHoursMoreInfo\s*\/>/)
+    assert.match(layout, /<PennySpotlightRow\s*\/>/)
   }
   assert.match(desktop, /showInfo && <div className="ah-desktop__more-info"/)
   assert.match(mobile, /hidden=\{!bioExpanded\}/)
@@ -21,7 +23,8 @@ test('desktop and mobile show the same Penny bio, More Info and reel', () => {
   assert.match(shared, /♠💋/)
   assert.match(shared, /😈/)
   assert.match(shared, /🖤/)
-  assert.match(shared, /<PennyKandyReel\s*\/>/)
+  assert.doesNotMatch(shared, /PennyKandyReel/)
+  assert.match(spotlight, /<PennyKandyReel\s*\/>/)
 })
 
 test('reel teaser and both images remain linked to one accessible modal', () => {

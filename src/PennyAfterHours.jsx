@@ -13,6 +13,7 @@ import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './components/PennyAfterHoursIntro.jsx';
 import PennyPrivateCollections from './components/PennyPrivateCollections.jsx';
 import PennyCoverCount from './components/PennyCoverCount.jsx';
+import PennySpotlightRow from './components/PennySpotlightRow.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -301,6 +302,7 @@ export default function PennyAfterHours() {
               <span className="penny-fans__social-symbol" aria-hidden="true">▶</span><span>PennyTV</span>
             </a>
           </nav>
+          <PennySpotlightRow />
           <section className="penny-fans__friends" aria-labelledby="penny-friends-title">
             <h2 id="penny-friends-title">FRIENDS <span>{FRIENDS.length}</span><small>SWIPE ↔</small></h2>
             <div className="penny-fans__friend-list" role="region" aria-label="Penny friends, scroll left or right" tabIndex={0}>
