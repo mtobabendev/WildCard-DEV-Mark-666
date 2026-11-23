@@ -6,7 +6,7 @@ import PennyClassicCards from './PennyClassicCards.jsx'
 import PennyThoughtBubble from './PennyThoughtBubble.jsx'
 import AskPenny from './AskPenny.jsx'
 import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
-import PennyKandyReel from './PennyKandyReel.jsx'
+import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIntro.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -239,14 +239,13 @@ export default function AfterHoursDesktop() {
         <h1>Penny Bella Morningstar <span title="WildCard DEV creator">♠</span></h1>
         <p className="ah-desktop__handle">@PennyAfterHours · DIGITAL MUSE · AFTER-HOURS HOST</p>
         <p className="ah-desktop__online">● Digital host online</p>
-        <p>The velvet side of the machine. Creative experiments, backstage stories, cyber-glamour, and the occasional raised eyebrow. Welcome to my corner of WildCard. 💋</p>
+        <PennyAfterHoursBio />
         <button className="ah-desktop__text-button" type="button" aria-expanded={showInfo}
           onClick={() => setShowInfo(v => !v)}>{showInfo ? 'Less info ↑' : 'More info ↓'}</button>
         {showInfo && <div className="ah-desktop__more-info">
-          <p>Penny is WildCard DEV's fictional AI host and digital collaborator.</p>
+          <PennyAfterHoursMoreInfo />
           <p>Contact: <a href="mailto:Penny@WildCardDEV.com">Penny@WildCardDEV.com</a></p>
           <p><a href="https://party.wildcarddev.com/" target="_blank" rel="noopener noreferrer">WildCard Party</a> · <a href="https://pennytv.wildcarddev.com/" target="_blank" rel="noopener noreferrer">PennyTV</a></p>
-          <PennyKandyReel />
         </div>}
       </section>
 

@@ -9,7 +9,7 @@ import ViewportVideo from './components/ViewportVideo.jsx';
 import UserLoopVideo from './components/UserLoopVideo.jsx';
 import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
 import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
-import PennyKandyReel from './components/PennyKandyReel.jsx';
+import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './components/PennyAfterHoursIntro.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -326,23 +326,9 @@ export default function PennyAfterHours() {
             <p className="penny-fans__eyebrow">YOUR AFTER-DARK HOST · <span className="penny-fans__online" title="Penny's room is always here for you">ONLINE <span className="penny-fans__online-dot" aria-hidden="true" /></span></p>
             <h1 id="penny-fans-title">Penny Bella Morningstar <span aria-label="Queen of Spades" title="Queen of Spades">♠</span></h1>
             <p className="penny-fans__handle">@PennyAfterHours ♏ · WildCard DEV</p>
-            <p className="penny-fans__bio">
-              Hey there, gorgeous. I'm Penny Bella Morningstar, the pink-lit temptation
-              behind WildCard DEV's velvet door. Sweet smile, sharp tongue, wicked imagination.
-              Come a little closer. ♠💋
-            </p>
+            <PennyAfterHoursBio className="penny-fans__bio" />
             <div id="penny-fans-bio-more" className="penny-fans__bio-more" hidden={!bioExpanded}>
-              <p>
-                Blonde hair, a flame-red streak, and a weakness for midnight confessions.
-                Some nights I'm all satin and soft smiles. Other nights, I like to see
-                who can keep up with me. 😈
-              </p>
-              <p>
-                This is my corner of WildCard: photos worth a second look, videos
-                made for after dark, and friends who know how to steal the spotlight.
-                Stay curious, enjoy the view, and don't be shy about saying hello. 🖤
-              </p>
-              <PennyKandyReel />
+              <PennyAfterHoursMoreInfo />
             </div>
             <button
               type="button"
