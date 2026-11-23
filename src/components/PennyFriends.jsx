@@ -1,19 +1,20 @@
+import { pennyPrivateMedia } from './privateMediaUrl.js';
 import { useEffect, useRef, useState } from 'react';
 
 export const FRIENDS = [
-  { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
+  { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: pennyPrivateMedia('KandyOnlyFans2.jpg') },
   { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
-  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
-  { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
-  { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
-  { name: 'Angel Jessy', initial: 'A', handle: '@angel.jessyy', slideshow: { src: '/static/friends/angel-jessy-slides.webp', frames: 9 }, url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
-  { name: 'Lacie Heart', initial: 'L', handle: '@lacieheartvip', slideshow: { src: '/static/friends/lacie-heart-slides.webp', frames: 10 }, url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
-  { name: 'Snow Bird', initial: 'S', handle: '@snugglbuggx', slideshow: { src: '/static/friends/snow-bird-slides.webp', frames: 7 }, accent: 'snow-bird', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
+  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: pennyPrivateMedia('mia-slides.webp'), frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: pennyPrivateMedia('brooke-slides.webp'), frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
+  { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: pennyPrivateMedia('aisha-moon-slides.webp'), frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
+  { name: 'Angel Jessy', initial: 'A', handle: '@angel.jessyy', slideshow: { src: pennyPrivateMedia('angel-jessy-slides.webp'), frames: 9 }, url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
+  { name: 'Lacie Heart', initial: 'L', handle: '@lacieheartvip', slideshow: { src: pennyPrivateMedia('lacie-heart-slides.webp'), frames: 10 }, url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
+  { name: 'Snow Bird', initial: 'S', handle: '@snugglbuggx', slideshow: { src: pennyPrivateMedia('snow-bird-slides.webp'), frames: 7 }, accent: 'snow-bird', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
   { name: 'Goon Goddess', initial: 'G', url: 'https://onlyfans.com/hotnweird?rec=603551670' },
-  { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: '/static/friends/evemarie-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
-  { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: '/static/friends/karley-stokes-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
-  { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: '/static/friends/annabella.webp' },
-  { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: '/static/friends/lala.webp' },
+  { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: pennyPrivateMedia('evemarie-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
+  { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: pennyPrivateMedia('karley-stokes-slides.webp'), frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
+  { name: 'Annabella Ivy', initial: 'A', handle: '@annabellaivy', url: 'https://onlyfans.com/annabellaivy?rec=603551670', image: pennyPrivateMedia('annabella.webp') },
+  { name: 'LALA', initial: 'L', handle: '@laurencorazza', url: 'https://onlyfans.com/laurencorazza?rec=603551670', image: pennyPrivateMedia('lala.webp') },
 ];
 
 const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
