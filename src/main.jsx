@@ -4,6 +4,7 @@ import PennyContactRouter from './components/PennyContactRouter.jsx';
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import MessengerLauncher from './components/MessengerLauncher.jsx';
+import AfterHoursGate from './components/AfterHoursGate.jsx';
 import AskPenny from './components/AskPenny.jsx';
 import pennySaysHelloWebm from '../assets/PennyWildCardIntro-new-mobile-optimized.webm';
 
@@ -223,7 +224,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
     .then(({ default: PennyAfterHours }) => {
       root.render(
         <StrictMode>
-          <PennyAfterHours />
+          <AfterHoursGate area="penny"><PennyAfterHours /></AfterHoursGate>
           <MessengerLauncher />
         <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
@@ -231,6 +232,18 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
     .catch(() => {
       window.location.replace('/');
     });
+} else if (normalizedPath === '/kandy/after-hours' || normalizedPath === '/ashley/after-hours') {
+  const area = normalizedPath.startsWith('/kandy/') ? 'kandy' : 'ashley';
+  import('./AfterHoursPrivateArea.jsx')
+    .then(({ default: AfterHoursPrivateArea }) => {
+      root.render(
+        <StrictMode>
+          <AfterHoursGate area={area}><AfterHoursPrivateArea area={area} /></AfterHoursGate>
+          <MessengerLauncher />
+        </StrictMode>,
+      );
+    })
+    .catch(() => { window.location.replace('/'); });
 } else if (normalizedPath === '/bunker') {
   import('./Bunker.jsx')
     .then(({ default: Bunker }) => {
