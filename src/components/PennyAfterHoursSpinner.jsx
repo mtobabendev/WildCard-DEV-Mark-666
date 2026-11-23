@@ -1,9 +1,10 @@
+import { pennyPrivateMedia } from './privateMediaUrl.js';
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHoursSpinner.css';
 
 export const PANEL_IMAGES = [2, 1, 3, 4, 5, 6, 7, 8].map((imageNumber, index) => ({
   number: index + 1,
-  src: `/static/${imageNumber}.jpg`,
+  src: pennyPrivateMedia(imageNumber + '.jpg'),
 }));
 
 export default function PennyAfterHoursSpinner() {

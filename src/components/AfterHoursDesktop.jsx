@@ -1,3 +1,4 @@
+import { pennyPrivateMedia } from './privateMediaUrl.js';
 import { useEffect, useRef, useState } from 'react'
 import { PANEL_IMAGES } from './PennyAfterHoursSpinner.jsx'
 import ViewportVideo from './ViewportVideo.jsx'
@@ -19,18 +20,18 @@ const PHOTOS = [
     src, type: 'photo', alt: 'Penny After Hours portrait ' + number,
   })),
   { id: 'cover', title: 'After Hours cover reveal', type: 'photo',
-    src: '/static/PennyOnlyFansBanner.jpg', alt: 'Penny After Hours cover artwork' },
+    src: pennyPrivateMedia('PennyOnlyFansBanner.jpg'), alt: 'Penny After Hours cover artwork' },
   { id: 'nurse', title: 'Nurse Morningstar character reveal', type: 'photo',
     src: '/static/NursePennyPortrait.jpg', alt: 'Penny as fictional Nurse Morningstar' },
 ]
 
 const VIDEOS = [
   { id: 'velvet', title: 'Patch Notes: Velvet Mode', type: 'video',
-    src: '/static/PennyAfterHoursPatchNotes.webm', poster: '/static/PennyAfterHoursPatchNotes.webp' },
+    src: pennyPrivateMedia('PennyAfterHoursPatchNotes.webm'), poster: pennyPrivateMedia('PennyAfterHoursPatchNotes.webp') },
   { id: 'seat', title: 'A seat at the table', type: 'video',
-    src: '/static/PennySeatAtTheTable.webm', poster: '/static/penny-after-hours-cover.webp' },
+    src: pennyPrivateMedia('PennySeatAtTheTable.webm'), poster: pennyPrivateMedia('penny-after-hours-cover.webp') },
   { id: 'letter', title: 'A note from Penny', type: 'video',
-    src: '/static/AnimePenny.webm', poster: '/static/PennyOnlyFansBanner.jpg' },
+    src: pennyPrivateMedia('AnimePenny.webm'), poster: pennyPrivateMedia('PennyOnlyFansBanner.jpg') },
 ]
 const MEDIA = [...PHOTOS, ...VIDEOS]
 const POSTS = [
@@ -178,8 +179,8 @@ export default function AfterHoursDesktop() {
         <div><strong>Penny Bella Morningstar ♠</strong><small>{POSTS.length} published previews · {MEDIA.length} media</small></div>
       </div>
       <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
-        <ViewportVideo className="ah-desktop__cover-video" src="/static/PennyNewFansBanner.webm"
-          poster="/static/penny-after-hours-cover.webp" width={736} height={400}
+        <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('PennyNewFansBanner.webm')}
+          poster={pennyPrivateMedia('penny-after-hours-cover.webp')} width={736} height={400}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
         <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}
           aria-label={coverPaused ? 'Play cover animation' : 'Pause cover animation'} aria-pressed={coverPaused}>
@@ -194,7 +195,7 @@ export default function AfterHoursDesktop() {
             aria-label={avatarExpanded ? 'Reduce Penny profile video to normal size' : 'Enlarge Penny profile video'}
             title={avatarExpanded ? 'Click to shrink' : 'Click to enlarge'}>
             <video ref={avatarRef} muted loop playsInline preload="metadata"
-              src="/static/PennyOnlyFanzProfile-web.webm" aria-hidden="true" />
+              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')} aria-hidden="true" />
             <span aria-hidden="true">{avatarExpanded ? '↙' : '⤢'}</span>
           </button>
           <div className="ah-desktop__actions" aria-label="Profile actions">
