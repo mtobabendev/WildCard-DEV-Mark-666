@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { pennyPrivateMedia } from './privateMediaUrl.js'
 import './NursePennyEasterEgg.css'
 
-// One tapped image in the existing member-only post; no new gallery or public video.
+// One tap swaps the media in Penny's existing post. No vault or workstation dependency.
 const PHOTO = '/static/NursePennyPortrait.jpg'
-const VIDEO = pennyPrivateMedia('SpermBankPennyLoop.webm')
+const VIDEO = '/static/SpermBankPennyLoop.webm'
 
 export default function NursePennyEasterEgg({ className = '' }) {
   const [showVideo, setShowVideo] = useState(false)
