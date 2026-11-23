@@ -72,18 +72,26 @@ body { margin: 0; background: #0a0614; }
   z-index: 2;
   right: 1rem;
   bottom: 1rem;
-  width: 56px;
-  height: 56px;
+  width: 70px;
+  height: 70px;
   padding: 0;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(247, 163, 232, .75);
-  border-radius: 50%;
-  color: var(--pf-text);
-  background: rgba(20, 12, 34, .85);
-  font-size: 32px;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  font-size: 52px;
   line-height: 1;
+  cursor: pointer;
 }
+.penny-fans__cover-control:focus-visible {
+  outline: 2px solid #f9c8e6;
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .penny-fans__cover-control { display: none; }
 }
