@@ -1,0 +1,24 @@
+/* Penny's embedded private collections: presentation only, authorization stays on Party. */
+.penny-private-collections {
+  min-width: 0;
+  margin: 14px 0 30px;
+  padding: clamp(12px, 2.5vw, 24px);
+  border: 1px solid rgba(255, 182, 229, .35);
+  border-radius: 18px;
+  color: #fff0fb;
+  background: linear-gradient(150deg, rgba(52, 22, 65, .92), rgba(20, 10, 31, .95));
+}
+.penny-private-collections__heading { margin-bottom: 14px; }
+.penny-private-collections__heading p { margin: 0 0 8px; color: #ff9ad4; letter-spacing: .13em; font-size: .72rem; font-weight: 900; }
+.penny-private-collections__heading h2 { margin: 0 0 5px; color: #ffe8f5; font-size: clamp(1.35rem, 3vw, 1.95rem); }
+.penny-private-collections__heading span { color: #dfbddc; font-size: .94rem; line-height: 1.5; }
+.penny-private-collections__frame {
+  display: block;
+  width: 100%;
+  min-height: 600px;
+  border: 1px solid rgba(247, 173, 225, .32);
+  border-radius: 14px;
+  background: #13091e;
+}
+.penny-private-collections__fallback { margin: 12px 2px 0; color: #d9b8db; font-size: .8rem; }
+.penny-private-collections__fallback a { color: #ffc1e9; text-underline-offset: .15em; }

@@ -8,6 +8,7 @@ import PennyThoughtBubble from './PennyThoughtBubble.jsx'
 import AskPenny from './AskPenny.jsx'
 import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './PennyAfterHoursIntro.jsx'
+import PennyPrivateCollections from './PennyPrivateCollections.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -287,6 +288,8 @@ export default function AfterHoursDesktop() {
           onClick={() => chooseTab('posts')}>{POSTS.length} POSTS</button>
         <button type="button" aria-current={tab === 'media' ? 'page' : undefined}
           onClick={() => chooseTab('media')}>{MEDIA.length} MEDIA</button>
+        <button type="button" aria-current={tab === 'private' ? 'page' : undefined}
+          onClick={() => chooseTab('private')}>🔐 PRIVATE VAULT</button>
         <button type="button" aria-current={tab === 'saved' ? 'page' : undefined}
           onClick={() => chooseTab('saved')}>SAVED</button>
       </nav>
@@ -339,6 +342,8 @@ export default function AfterHoursDesktop() {
         </div>
         {!media.length && <p className="ah-desktop__empty">No matching media. Try another search or filter.</p>}
       </section>}
+
+      {tab === 'private' && <PennyPrivateCollections />}
 
       {tab === 'subscription' && <section className="ah-desktop__info-panel">
         <h2>Free creator previews</h2>

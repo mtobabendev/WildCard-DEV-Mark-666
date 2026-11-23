@@ -50,13 +50,7 @@ export default function AfterHoursGate({ area, children }) {
       tabIndex={-1}
       referrerPolicy="no-referrer"
     />
-    {status === 'allowed' ? <>
-      {children}
-      {area === 'penny' && <footer style={{ padding: '14px 24px', textAlign: 'center', background: '#21112c' }}>
-        <a href={PARTY + '/afterhours-members.html?area=penny'} target="_blank" rel="noopener noreferrer"
-          style={{ color: '#ffcaeb' }}>Open Penny's approved-members media vault</a>
-      </footer>}
-    </> : <main style={{ minHeight: '100dvh', padding: 'clamp(24px, 6vw, 80px)', background: '#11091e', color: '#fff0fb', font: '16px/1.7 system-ui,sans-serif', display: 'grid', placeItems: 'center' }}>
+    {status === 'allowed' ? <>{children}</> : <main style={{ minHeight: '100dvh', padding: 'clamp(24px, 6vw, 80px)', background: '#11091e', color: '#fff0fb', font: '16px/1.7 system-ui,sans-serif', display: 'grid', placeItems: 'center' }}>
       <section style={{ width: 'min(560px, 100%)', border: '1px solid #d78ebd', borderRadius: 18, padding: 28, background: '#26132f', boxShadow: '0 16px 60px #0008' }}>
         <a href="/" style={{ color: '#f9bde7' }}>♠ WildCard DEV</a>
         <h1>{label}'s After Hours</h1>

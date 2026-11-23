@@ -11,6 +11,7 @@ import UserLoopVideo from './components/UserLoopVideo.jsx';
 import AfterHoursDesktop from './components/AfterHoursDesktop.jsx';
 import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx';
 import { PennyAfterHoursBio, PennyAfterHoursMoreInfo } from './components/PennyAfterHoursIntro.jsx';
+import PennyPrivateCollections from './components/PennyPrivateCollections.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -329,6 +330,7 @@ export default function PennyAfterHours() {
           <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
           <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{PHOTOS.length}</span></button>
           <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => openTab('videos')}>Videos <span>{VIDEOS.length}</span></button>
+          <button type="button" aria-current={tab === 'private' ? 'page' : undefined} onClick={() => openTab('private')}>🔐 Private Vault</button>
           <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => openTab('about')}>About</button>
         </nav>
 
@@ -536,6 +538,8 @@ export default function PennyAfterHours() {
               ))}
             </div>
           </section>
+        ) : tab === 'private' ? (
+          <PennyPrivateCollections />
         ) : (
           <section className="penny-fans__about" aria-label="About Penny">
             <p className="penny-fans__eyebrow">BEHIND THE VELVET CURTAIN</p>
