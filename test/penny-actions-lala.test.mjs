@@ -45,8 +45,8 @@ test('LALA reuses the independent 8-cover 8-avatar slideshow engine', () => {
 })
 
 test('public profile has usable teaser posters while private vault stays protected', () => {
-  assert.match(mobile, /poster="\/static\/penny-kandy-reel-hero\.webp"/)
-  assert.match(desktop, /poster="\/static\/penny-kandy-reel-hero\.webp"/)
+  assert.match(mobile, /poster="\/static\/penny-wallpaper-poster\.webp"/)
+  assert.match(desktop, /poster="\/static\/penny-wallpaper-poster\.webp"/)
   assert.match(mobile, /poster="\/static\/NursePennyPortrait\.jpg"/)
   assert.match(desktop, /poster="\/static\/NursePennyPortrait\.jpg"/)
   assert.match(mobile, /event\.currentTarget\.onerror = null/)

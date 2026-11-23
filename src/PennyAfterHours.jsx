@@ -211,8 +211,8 @@ export default function PennyAfterHours() {
         <div className="penny-fans__cover">
           <ViewportVideo
             className="penny-fans__cover-image"
-            src={pennyPrivateMedia('PennyNewFansBanner.webm')}
-            poster="/static/penny-kandy-reel-hero.webp"
+            src={pennyPrivateMedia('PennyNewFansBanner1-silent.webm')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
+            poster="/static/penny-wallpaper-poster.webp"
             width={736}
             height={400}
             active={!bannerPaused}

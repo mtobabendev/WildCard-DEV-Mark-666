@@ -1,0 +1,34 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync, statSync, existsSync } from 'node:fs'
+
+const source = (name) => readFileSync(new URL(name, import.meta.url), 'utf8')
+
+test('Penny cover uses the new protected wallpaper on both layouts with safe guest fallback', () => {
+  for (const file of ['../src/PennyAfterHours.jsx', '../src/components/AfterHoursDesktop.jsx']) {
+    const contents = source(file)
+    assert.match(contents, /pennyPrivateMedia\('PennyNewFansBanner1-silent\.webm'\)/)
+    assert.match(contents, /fallbackSrc=['"]\/static\/penny-wallpaper-teaser\.mp4['"]/)
+    assert.match(contents, /poster="\/static\/penny-wallpaper-poster\.webp"/)
+    assert.doesNotMatch(contents, /PennyNewFansBanner\.webm/)
+  }
+})
+
+test('existing viewport playback is used for video error fallback without changing privacy checks', () => {
+  const c = source('../src/components/ViewportVideo.jsx')
+  const binder = source('../src/components/viewport-video-playback.js')
+  assert.match(c, /fallbackSrc: source === src \? fallbackSrc : src/)
+  assert.match(c, /fallbackSrc, viewportRef/)
+  assert.match(binder, /video\.addEventListener\('error', onError\)/)
+  assert.match(binder, /currentSource = fallbackSrc/)
+})
+
+test('public route includes only the five-second safe teaser and still poster', () => {
+  const video = new URL('../public/static/penny-wallpaper-teaser.mp4', import.meta.url)
+  const poster = new URL('../public/static/penny-wallpaper-poster.webp', import.meta.url)
+  assert.ok(existsSync(video))
+  assert.ok(existsSync(poster))
+  assert.ok(statSync(video).size > 20000 && statSync(video).size < 1000000)
+  assert.ok(statSync(poster).size > 4000 && statSync(poster).size < 100000)
+  assert.equal(existsSync(new URL('../public/static/PennyNewFansBanner1-silent.webm', import.meta.url)), false)
+})

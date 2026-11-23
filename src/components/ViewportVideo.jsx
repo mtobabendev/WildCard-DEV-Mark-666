@@ -6,7 +6,7 @@ const MAIN_H264 = 'video/mp4; codecs="avc1.4D401F"';
 
 // Decorative video only. Deliberate user-controlled playback remains independent.
 export default function ViewportVideo({
-  src, compatibilitySrc, lightweightSrc, compatibilityPoster, active = true,
+  src, compatibilitySrc, lightweightSrc, compatibilityPoster, fallbackSrc, active = true,
   viewportRef, respectReducedMotion = false, ...props
 }) {
   const ref = useRef(null);
@@ -22,9 +22,9 @@ export default function ViewportVideo({
       target: viewportRef?.current || video,
       motion: respectReducedMotion ? window.matchMedia('(prefers-reduced-motion: reduce)') : undefined,
       releaseOffscreen: profile.releaseOffscreen,
-      fallbackSrc: source === src ? undefined : src,
+      fallbackSrc: source === src ? fallbackSrc : src,
     });
-  }, [active, src, compatibilitySrc, lightweightSrc, viewportRef, respectReducedMotion, profile]);
+  }, [active, src, compatibilitySrc, lightweightSrc, fallbackSrc, viewportRef, respectReducedMotion, profile]);
 
   return <video {...props} poster={props.poster || (profile.releaseOffscreen ? compatibilityPoster : undefined)}
     ref={ref} muted playsInline preload="none" />;
