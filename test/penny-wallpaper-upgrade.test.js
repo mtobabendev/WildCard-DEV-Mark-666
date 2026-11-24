@@ -34,3 +34,16 @@ test('public route includes only the five-second safe teaser and still poster', 
   assert.equal(existsSync(new URL('../public/static/PennyNewFansBanner1-silent.webm', import.meta.url)), false)
   assert.equal(existsSync(new URL('../public/static/wc-vault__Penny Cover Art__5066.mp4', import.meta.url)), false)
 })
+
+test('portrait wallpaper is centered and scaled without cropping on both layouts', () => {
+  for (const [file, selector] of [
+    ['../src/PennyAfterHours.css', '.penny-fans__cover-image'],
+    ['../src/components/AfterHoursDesktop.css', '.ah-desktop__cover-video'],
+  ]) {
+    const rule = source(file).split(selector + ' {')[1]?.split('}')[0] || ''
+    assert.match(rule, /width:\s*100%/)
+    assert.match(rule, /height:\s*100%/)
+    assert.match(rule, /object-fit:\s*contain/)
+    assert.match(rule, /object-position:\s*center;/)
+  }
+})
