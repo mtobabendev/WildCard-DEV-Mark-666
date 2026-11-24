@@ -27,13 +27,14 @@ test('desktop and mobile show the same Penny bio and More Info, with reel moved 
   assert.match(spotlight, /<PennyKandyReel\s*\/>/)
 })
 
-test('reel teaser and both images remain linked to one accessible modal', () => {
+test('featured teaser opens the authorized photoshoot collection directly', () => {
   const reel = source('src/components/PennyKandyReel.jsx')
   assert.match(reel, /penny-kandy-reel-teaser\.webp/)
-  assert.match(reel, /penny-kandy-reel-hero\.webp/)
-  assert.match(reel, /penny-kandy-reel-inset\.webp/)
-  assert.match(reel, /onClick=\{openReel\}/)
-  assert.match(reel, /showModal\(\)/)
-  assert.match(reel, /dialog/)
-  assert.match(reel, /FRAME_MS = 4500/)
+  assert.match(reel, /href=\{GALLERY\}/)
+  assert.match(reel, /aria-label="Open Penny and Kandy photoshoot gallery"/)
+  const url = new URL(reel.match(/const GALLERY = '([^']+)'/)[1])
+  assert.equal(url.origin, 'https://party.wildcarddev.com')
+  assert.equal(url.searchParams.get('area'), 'penny')
+  assert.equal(url.searchParams.get('collection'), 'Penny and Kandy')
+  assert.doesNotMatch(reel, /showModal\(\)/)
 })
