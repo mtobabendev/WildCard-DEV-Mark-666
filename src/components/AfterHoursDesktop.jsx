@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PANEL_IMAGES } from './PennyAfterHoursSpinner.jsx'
 import ViewportVideo from './ViewportVideo.jsx'
 import UserLoopVideo from './UserLoopVideo.jsx'
-import PennyClassicCards from './PennyClassicCards.jsx'
+import PennyAfterHoursSpinner from './PennyAfterHoursSpinner.jsx'
 import PennyThoughtBubble from './PennyThoughtBubble.jsx'
 import AskPenny from './AskPenny.jsx'
 import { FRIENDS, PennyFriendCard } from './PennyFriends.jsx'
@@ -186,7 +186,7 @@ export default function AfterHoursDesktop() {
   const matches = (value) => !term || value.toLowerCase().includes(term)
   const posts = POSTS.filter(post => matches(post.title + ' ' + post.copy + ' ' + post.date))
     .filter(post => tab !== 'saved' || saved.includes('post:' + post.id))
-  const media = MEDIA.filter(item => (mediaType === 'all' || item.type === mediaType))
+  const media = MEDIA.filter(item => (tab === 'photos' ? item.type === 'photo' : tab === 'videos' ? item.type === 'video' : (mediaType === 'all' || item.type === mediaType)))
     .filter(item => matches(item.title))
     .filter(item => tab !== 'saved' || saved.includes('media:' + item.id))
   const selectedIndex = selected ? MEDIA.findIndex(item => item.id === selected.id) : -1
@@ -266,24 +266,19 @@ export default function AfterHoursDesktop() {
         <div><small>SUBSCRIPTION</small><strong>Free to explore</strong><span>No paid subscription or automatic renewal is enabled.</span></div>
         <button type="button" onClick={() => chooseTab('posts')}>Explore free posts</button>
       </section>
-
-      <details className="ah-desktop__classic"><summary>♠ Explore Penny’s classic orbit cards</summary><PennyClassicCards /></details>
+      <PennyAfterHoursSpinner />
 
       <nav className="ah-desktop__tabs" aria-label="Content sections">
         <button type="button" aria-current={tab === 'posts' ? 'page' : undefined}
           onClick={() => chooseTab('posts')}>{POSTS.length} POSTS</button>
-        <button type="button" aria-current={tab === 'media' ? 'page' : undefined}
-          onClick={() => chooseTab('media')}>{MEDIA.length} MEDIA</button>
-        <button type="button" aria-current={tab === 'private' ? 'page' : undefined}
-          onClick={() => chooseTab('private')}>🔐 PRIVATE VAULT</button>
-        <button type="button" aria-current={tab === 'saved' ? 'page' : undefined}
-          onClick={() => chooseTab('saved')}>SAVED</button>
+        <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => chooseTab('photos')}>PHOTOS</button>
+        <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => chooseTab('videos')}>VIDEOS</button>
       </nav>
-      {(tab === 'posts' || tab === 'media' || tab === 'saved') && <div className="ah-desktop__content-tools">
+      {(tab === 'posts' || tab === 'photos' || tab === 'videos' || tab === 'saved') && <div className="ah-desktop__content-tools">
         <label><span className="sr-only">Search creator content</span>
           <input value={query} onChange={event => setQuery(event.target.value)}
             type="search" placeholder="Search Penny's posts and media" /></label>
-        {(tab === 'media' || tab === 'saved') && <select aria-label="Filter media type" value={mediaType}
+        {tab === 'saved' && <select aria-label="Filter media type" value={mediaType}
           onChange={event => setMediaType(event.target.value)}>
           <option value="all">All media</option><option value="photo">Photos</option><option value="video">Videos</option>
         </select>}
@@ -308,7 +303,7 @@ export default function AfterHoursDesktop() {
         {!posts.length && tab === 'posts' && <p className="ah-desktop__empty">No posts match that search.</p>}
       </section>}
 
-      {(tab === 'media' || tab === 'saved') && <section className="ah-desktop__gallery" aria-label="Photo and video gallery">
+      {(tab === 'photos' || tab === 'videos' || tab === 'saved') && <section className="ah-desktop__gallery" aria-label="Photo and video gallery">
         <div className="ah-desktop__gallery-heading">
           <strong>{media.length} {media.length === 1 ? 'item' : 'items'}</strong>
           <div role="group" aria-label="Gallery layout">
@@ -330,7 +325,8 @@ export default function AfterHoursDesktop() {
         {!media.length && <p className="ah-desktop__empty">No matching media. Try another search or filter.</p>}
       </section>}
 
-      {tab === 'private' && <PennyPrivateCollections />}
+      {tab === 'photos' && <PennyPrivateCollections view='galleries' />}
+      {tab === 'videos' && <PennyPrivateCollections view='reels' />}
 
       {tab === 'subscription' && <section className="ah-desktop__info-panel">
         <h2>Free creator previews</h2>

@@ -6,7 +6,7 @@ const FRAME_SRC = PARTY + '/afterhours-members.html?area=penny&embed=1'
 
 // The Party iframe is the only surface that requests and streams private media.
 // The parent receives only layout measurements, never sessions, account data, or media URLs.
-export default function PennyPrivateCollections() {
+export default function PennyPrivateCollections({ view = 'galleries' }) {
   const frameRef = useRef(null)
   const [frameHeight, setFrameHeight] = useState(850)
 
@@ -24,7 +24,7 @@ export default function PennyPrivateCollections() {
   }, [])
 
   return <section className="penny-private-collections" aria-label="Penny's private galleries and reels">
-    <header className="penny-private-collections__heading">
+    <header className="penny-private-collections__heading" hidden>
       <p>♠ ONLY FOR THE INNER CIRCLE</p>
       <h2>Inside Penny's Velvet Vault 🖤</h2>
       <span>Private galleries, reels, and all the little midnight extras.</span>
@@ -33,7 +33,8 @@ export default function PennyPrivateCollections() {
       ref={frameRef}
       className="penny-private-collections__frame"
       title="Penny's private galleries and reels"
-      src={FRAME_SRC}
+      key={view}
+      src={FRAME_SRC + '&view=' + (view === 'reels' ? 'reels' : 'galleries')}
       loading="lazy"
       referrerPolicy="origin"
       allow="fullscreen"
