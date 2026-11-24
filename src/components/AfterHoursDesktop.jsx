@@ -270,7 +270,7 @@ export default function AfterHoursDesktop() {
         <div><small>SUBSCRIPTION</small><strong>Free to explore</strong><span>No paid subscription or automatic renewal is enabled.</span></div>
         <button type="button" onClick={() => chooseTab('posts')}>Explore free posts</button>
       </section>
-      <PennyAfterHoursSpinner />
+      <PennyAfterHoursSpinner managed={managed} />
 
       <nav className="ah-desktop__tabs" aria-label="Content sections">
         <button type="button" aria-current={tab === 'posts' ? 'page' : undefined}

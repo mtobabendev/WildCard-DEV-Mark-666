@@ -7,7 +7,20 @@ export const PANEL_IMAGES = [2, 1, 3, 4, 5, 6, 7, 8].map((imageNumber, index) =>
   src: pennyPrivateMedia(imageNumber + '.jpg'),
 }));
 
-export default function PennyAfterHoursSpinner() {
+export function resolveOrbitCards(data) {
+  const slots=data?.content?.orbitCards
+  const media=Array.isArray(data?.media)?data.media:[]
+  return PANEL_IMAGES.map((original,index)=>{
+    const id=Array.isArray(slots)?slots[index]:null
+    if(id==null)return original
+    if(id==='blank')return {...original,src:'/static/orbit-card-placeholder.svg'}
+    const item=media.find(m=>m.id===id&&m.type?.startsWith('image/'))
+    return {...original,src:item?'https://party.wildcarddev.com/api/afterhours/media?id='+encodeURIComponent(item.id):'/static/orbit-card-placeholder.svg'}
+  })
+}
+
+export default function PennyAfterHoursSpinner({ managed }) {
+  const panels=resolveOrbitCards(managed);
   const pointer = useRef(null);
   const dialogRef = useRef(null);
   const [rotation, setRotation] = useState(0);
@@ -17,7 +30,7 @@ export default function PennyAfterHoursSpinner() {
   const [viewerIndex, setViewerIndex] = useState(null);
 
   const viewerOpen = viewerIndex !== null;
-  const activePhoto = viewerOpen ? PANEL_IMAGES[viewerIndex] : null;
+  const activePhoto = viewerOpen ? panels[viewerIndex] : null;
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -62,7 +75,7 @@ export default function PennyAfterHoursSpinner() {
 
   const selectRelative = (step) => {
     setViewerIndex((current) => (
-      current === null ? null : (current + step + PANEL_IMAGES.length) % PANEL_IMAGES.length
+      current === null ? null : (current + step + panels.length) % panels.length
     ));
   };
 
@@ -92,7 +105,7 @@ export default function PennyAfterHoursSpinner() {
       </div>
 
       <div className="penny-after-orbit__tiles" aria-label="Choose a gallery photograph">
-        {PANEL_IMAGES.map(({ number, src }, index) => (
+        {panels.map(({ number, src }, index) => (
           <button
             className="penny-after-orbit__tile"
             type="button"
@@ -126,7 +139,7 @@ export default function PennyAfterHoursSpinner() {
               style={{ transform: 'rotateX(-8deg) rotateY(' + rotation + 'deg)' }}
             >
               <div className={'penny-after-orbit__ring' + (paused || dragging || viewerOpen ? ' is-paused' : '')}>
-                {PANEL_IMAGES.map(({ number, src }, index) => (
+                {panels.map(({ number, src }, index) => (
                   <div
                     className="penny-after-orbit__panel"
                     key={number}
@@ -186,7 +199,7 @@ export default function PennyAfterHoursSpinner() {
               <button type="button" onClick={() => selectRelative(-1)} aria-label="Previous photograph">
                 ← Previous
               </button>
-              <span>{activePhoto.number} / {PANEL_IMAGES.length}</span>
+              <span>{activePhoto.number} / {panels.length}</span>
               <button type="button" onClick={() => selectRelative(1)} aria-label="Next photograph">
                 Next →
               </button>

@@ -318,7 +318,7 @@ export default function PennyAfterHours() {
           ><span aria-hidden="true">$</span></a>
         </section>
 
-        <PennyAfterHoursSpinner />
+        <PennyAfterHoursSpinner managed={managed} />
 
         <nav id="penny-after-sections" className="penny-fans__tabs" aria-label="Penny fan page sections">
           <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
