@@ -4,8 +4,8 @@ import { readFileSync, existsSync } from 'node:fs'
 
 test('seat companion stays private and both previews share one playback state', () => {
   const component = readFileSync(new URL('../src/components/SeatAnimationPair.jsx', import.meta.url), 'utf8')
-  assert.match(component, /pennyPrivateMedia\('PennySeatAtTheTableCompanion\.webm'\)/)
-  assert.equal(existsSync(new URL('../public/static/PennySeatAtTheTableCompanion.webm', import.meta.url)), false)
+  assert.match(component, /pennyPrivateMedia\('5041\.webm'\)/)
+  assert.equal(existsSync(new URL('../public/static/5041.webm', import.meta.url)), false)
   assert.match(component, /active=\{!paused\}/)
   assert.match(component, /clip\(original, 'left'/)
   assert.match(component, /clip\(SEAT_COMPANION, 'right'/)

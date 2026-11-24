@@ -3,7 +3,7 @@ import ViewportVideo from './ViewportVideo.jsx'
 import { pennyPrivateMedia } from './privateMediaUrl.js'
 import './SeatAnimationPair.css'
 
-export const SEAT_COMPANION = pennyPrivateMedia('PennySeatAtTheTableCompanion.webm')
+export const SEAT_COMPANION = pennyPrivateMedia('5041.webm')
 
 export default function SeatAnimationPair({ title, copy, label, original, onOpen }) {
   const [paused, setPaused] = useState(false)
