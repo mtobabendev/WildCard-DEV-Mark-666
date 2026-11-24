@@ -5,6 +5,7 @@ import PennyPrivateCollections from './components/PennyPrivateCollections.jsx'
 import './PennyAfterHours.css'
 import './components/AfterHoursDesktop.css'
 import './CreatorMemberProfile.css'
+import {useManagedContent,ManagedCover,ManagedPosts} from './components/ManagedCreatorContent.jsx'
 
 const PARTY = 'https://party.wildcarddev.com'
 const TABS = ['posts', 'photos', 'videos']
@@ -24,6 +25,7 @@ function CreatorFriends({ area }) {
 
 export default function AfterHoursPrivateArea({ area }) {
   const profile = LABEL[area]
+  const managed = useManagedContent(area)
   const [tab, setTab] = useState('posts')
   const [expanded, setExpanded] = useState(false)
   const [more, setMore] = useState(false)
@@ -76,6 +78,7 @@ export default function AfterHoursPrivateArea({ area }) {
       {TABS.map(id => <button key={id} type="button" aria-current={tab === id ? 'page' : undefined} onClick={() => choose(id)}>{id.toUpperCase()}</button>)}
     </nav>
     {tab === 'posts' ? <section className={desktop ? 'ah-desktop__posts' : 'penny-fans__feed'} aria-label={name + ' posts'}>
+      <ManagedPosts data={managed} name={name} desktop={desktop} />
       <article className={desktop ? 'ah-desktop__post' : 'penny-fans__featured-post'}>
         <header className="creator-member__post-header"><img src={profile.image} alt="" /><div><strong>{name} ♠</strong><small>Creator spotlight</small></div></header>
         <div className="penny-fans__featured-copy"><h2>Meet {name}</h2><p>{profile.description}</p></div>
@@ -96,7 +99,7 @@ export default function AfterHoursPrivateArea({ area }) {
     </aside>
     <main className="ah-desktop__center">
       <div className="ah-desktop__sticky"><a href="/creators" aria-label="Back to creators">←</a><div><strong>{name} ♠</strong><small>WildCard DEV · After Hours</small></div></div>
-      <section className="ah-desktop__cover"><img className="ah-desktop__cover-video" src={profile.image} alt={name + ' cover artwork'} /></section>
+      <section className="ah-desktop__cover"><ManagedCover data={managed} className="ah-desktop__cover-video"><img className="ah-desktop__cover-video" src={profile.image} alt={name + ' cover artwork'} /></ManagedCover></section>
       {identity}{content}
       <footer className="ah-desktop__footer">♠ WildCard DEV · Member collections remain protected</footer>
     </main>
@@ -106,7 +109,7 @@ export default function AfterHoursPrivateArea({ area }) {
     <div className="penny-fans__wash" aria-hidden="true" />
     <header className="penny-fans__topbar"><a className="penny-fans__brand" href="/">♠ WildCard DEV</a><span className="penny-fans__edition">{name.toUpperCase()} / AFTER HOURS</span><a href="/creators">← Creators</a></header>
     <div className="penny-fans__shell">
-      <section className="penny-fans__cover"><img className="penny-fans__cover-image" src={profile.image} alt={name + ' cover artwork'} /><span className="penny-fans__cover-label">{name.toUpperCase()} AFTER HOURS</span></section>
+      <section className="penny-fans__cover"><ManagedCover data={managed} className="penny-fans__cover-image"><img className="penny-fans__cover-image" src={profile.image} alt={name + ' cover artwork'} /></ManagedCover><span className="penny-fans__cover-label">{name.toUpperCase()} AFTER HOURS</span></section>
       {identity}{content}
       <footer className="penny-fans__footer">♠ WildCard DEV · Member collections remain protected</footer>
     </div>

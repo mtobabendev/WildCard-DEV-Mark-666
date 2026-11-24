@@ -2,6 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
+import {useManagedContent,ManagedCover,ManagedPosts} from './components/ManagedCreatorContent.jsx';
 import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
@@ -110,6 +111,7 @@ const BOTTOM_NAV = [
 ];
 
 export default function PennyAfterHours() {
+  const managed = useManagedContent('penny');
   const [tab, setTab] = useState('posts');
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 1100px)').matches);
   useEffect(() => {
@@ -212,7 +214,7 @@ export default function PennyAfterHours() {
 
       <div className="penny-fans__shell">
         <div className="penny-fans__cover">
-          <ViewportVideo
+          <ManagedCover data={managed} className="penny-fans__cover-image"><><ViewportVideo
             className="penny-fans__cover-image"
             src={pennyPrivateMedia('wc-vault__Penny Cover Art__5066.mp4')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
             poster="/static/penny-wallpaper-poster.webp"
@@ -231,6 +233,7 @@ export default function PennyAfterHours() {
           >
             <span aria-hidden="true">😈</span>
           </button>
+          </></ManagedCover>
           <span className="penny-fans__cover-label">PENNY AFTER HOURS · WILDCARD DEV</span>
           <PennyCoverCount />
         </div>
@@ -325,6 +328,7 @@ export default function PennyAfterHours() {
 
         {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
+            <ManagedPosts data={managed} name="Penny" />
             <article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-nurse-news">
               <header className="penny-fans__featured-header">
                 <img

@@ -16,6 +16,7 @@ import PennySocialPills from './PennySocialPills.jsx'
 import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
 import SeatAnimationPair, { SEAT_COMPANION } from './SeatAnimationPair.jsx'
 import './AfterHoursDesktop.css'
+import {useManagedContent,ManagedCover,ManagedPosts} from './ManagedCreatorContent.jsx'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
 const SQUARE = 'https://square.link/u/YnAVr8ht'
@@ -112,6 +113,7 @@ function MediaPreview({ item, onOpen }) {
 }
 
 export default function AfterHoursDesktop() {
+  const managed = useManagedContent('penny')
   const [tab, setTab] = useState('posts')
   const [mediaType, setMediaType] = useState('all')
   const [query, setQuery] = useState('')
@@ -223,12 +225,12 @@ export default function AfterHoursDesktop() {
       </div>
       <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
         <PennyCoverCount />
-        <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('wc-vault__Penny Cover Art__5066.mp4')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
+        <ManagedCover data={managed} className="ah-desktop__cover-video"><><ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('wc-vault__Penny Cover Art__5066.mp4')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
           poster="/static/penny-wallpaper-poster.webp" width={720} height={1080}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
         <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}
           aria-label={coverPaused ? 'Play cover animation' : 'Pause cover animation'} aria-pressed={coverPaused}>
-          <span aria-hidden="true">😈</span></button>
+          <span aria-hidden="true">😈</span></button></></ManagedCover>
       </section>
 
       <section className="ah-desktop__identity">
@@ -287,6 +289,7 @@ export default function AfterHoursDesktop() {
       </div>}
 
       {(tab === 'posts' || tab === 'saved') && <section className="ah-desktop__posts" aria-label="Penny posts">
+        {tab === 'posts' && <ManagedPosts data={managed} name="Penny" desktop query={query} />}
         {posts.map(post => <article className="ah-desktop__post" key={post.id}>
           <header><img src="/static/Penny.gif" alt="" loading="lazy" />
             <div><strong>Penny Bella Morningstar ♠</strong><small>{post.date}</small></div>
