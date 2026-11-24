@@ -2,7 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
+import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
 import AskPenny from './components/AskPenny.jsx';
@@ -314,12 +314,12 @@ export default function PennyAfterHours() {
           ><span aria-hidden="true">$</span></a>
         </section>
 
+        <PennyAfterHoursSpinner />
+
         <nav id="penny-after-sections" className="penny-fans__tabs" aria-label="Penny fan page sections">
           <button type="button" aria-current={tab === 'posts' ? 'page' : undefined} onClick={() => openTab('posts')}>Posts</button>
           <button type="button" aria-current={tab === 'photos' ? 'page' : undefined} onClick={() => openTab('photos')}>Photos <span>{PHOTOS.length}</span></button>
           <button type="button" aria-current={tab === 'videos' ? 'page' : undefined} onClick={() => openTab('videos')}>Videos <span>{VIDEOS.length}</span></button>
-          <button type="button" aria-current={tab === 'private' ? 'page' : undefined} onClick={() => openTab('private')}>🔐 Private Vault</button>
-          <button type="button" aria-current={tab === 'about' ? 'page' : undefined} onClick={() => openTab('about')}>About</button>
         </nav>
 
         {tab === 'posts' ? (
@@ -473,6 +473,7 @@ export default function PennyAfterHours() {
             ))}
           </section>
         ) : tab === 'photos' ? (
+          <>
           <section className="penny-fans__media-gallery" aria-label="Penny's photo gallery">
             <header className="penny-fans__gallery-heading">
               <p className="penny-fans__eyebrow">PENNY / PHOTOS</p>
@@ -494,7 +495,10 @@ export default function PennyAfterHours() {
               ))}
             </div>
           </section>
+          <PennyPrivateCollections view="galleries" />
+          </>
         ) : tab === 'videos' ? (
+          <>
           <section className="penny-fans__media-gallery" aria-label="Penny's video gallery">
             <header className="penny-fans__gallery-heading">
               <p className="penny-fans__eyebrow">PENNY / VIDEOS</p>
@@ -520,8 +524,8 @@ export default function PennyAfterHours() {
               ))}
             </div>
           </section>
-        ) : tab === 'private' ? (
-          <PennyPrivateCollections />
+        <PennyPrivateCollections view="reels" />
+        </>
         ) : (
           <section className="penny-fans__about" aria-label="About Penny">
             <p className="penny-fans__eyebrow">BEHIND THE VELVET CURTAIN</p>
