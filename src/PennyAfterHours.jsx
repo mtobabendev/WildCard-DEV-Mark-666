@@ -214,10 +214,9 @@ export default function PennyAfterHours() {
         <div className="penny-fans__cover">
           <ViewportVideo
             className="penny-fans__cover-image"
-            src={pennyPrivateMedia('PennyNewFansBanner1-silent.webm')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
+            src={pennyPrivateMedia('wc-vault__Penny Cover Art__5066.mp4')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
             poster="/static/penny-wallpaper-poster.webp"
-            width={736}
-            height={400}
+            width={720} height={1080}
             active={!bannerPaused}
             respectReducedMotion
             loop
