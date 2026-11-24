@@ -16,7 +16,6 @@ import PennySocialPills from './PennySocialPills.jsx'
 import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
 import SeatAnimationPair, { SEAT_COMPANION } from './SeatAnimationPair.jsx'
 import './AfterHoursDesktop.css'
-import CreatorLinkPost from './CreatorLinkPost.jsx'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
 const SQUARE = 'https://square.link/u/YnAVr8ht'
@@ -288,7 +287,6 @@ export default function AfterHoursDesktop() {
       </div>}
 
       {(tab === 'posts' || tab === 'saved') && <section className="ah-desktop__posts" aria-label="Penny posts">
-        {tab === 'posts' && !query.trim() && <CreatorLinkPost desktop />}
         {posts.map(post => <article className="ah-desktop__post" key={post.id}>
           <header><img src="/static/Penny.gif" alt="" loading="lazy" />
             <div><strong>Penny Bella Morningstar ♠</strong><small>{post.date}</small></div>
