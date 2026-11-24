@@ -26,7 +26,7 @@ test('private frame reuses Party grant checks and trusts only the exact Party or
   assert.match(component, /afterhours-members\.html\?area=penny&embed=1/)
   assert.match(component, /event\.origin !== PARTY/)
   assert.match(component, /event\.source !== frameRef\.current\?\.contentWindow/)
-  assert.match(component, /data\.area !== 'penny'/)
+  assert.match(component, /data\.area !== selectedArea/)
   assert.match(component, /referrerPolicy="origin"/)
   assert.match(gate, /status === 'allowed' \? <>\{children\}<\/>/)
   assert.doesNotMatch(gate, /approved-members media vault/)

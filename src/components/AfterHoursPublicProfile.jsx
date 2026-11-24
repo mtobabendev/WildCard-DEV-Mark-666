@@ -5,7 +5,7 @@ import kandyCover from '../../assets/KandyKandle-balanced.webp'
 import './AfterHoursPublicProfile.css'
 
 const PARTY = 'https://party.wildcarddev.com'
-const LABEL = {
+export const LABEL = {
   penny: {
     name: 'Penny Bella Morningstar', short: 'Penny',
     headline: 'Digital muse · After-Hours host',
@@ -48,7 +48,7 @@ function accessMessage(status, name) {
   return 'Sign in to WildCard Messenger to request access to the member-only collections.'
 }
 
-export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, children }) {
+export default function AfterHoursPublicProfile({ area, accessStatus, onRetry }) {
   const profile = LABEL[area] || LABEL.penny
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, c
           <img src={area === 'penny' ? '/static/NursePennyPortrait.jpg' : profile.image} alt="" />
         </span>
         <div className="afterhours-public__identity-text">
-          <p className="afterhours-public__eyebrow">{children ? 'CREATOR PROFILE' : 'PUBLIC CREATOR PROFILE'}</p>
+          <p className="afterhours-public__eyebrow">PUBLIC CREATOR PROFILE</p>
           <h1>{profile.name}</h1>
           <h2>{profile.headline}</h2>
           <p>{profile.description}</p>
@@ -106,11 +106,7 @@ export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, c
         </div>
       </section>}
 
-      {children ? <section className="afterhours-public__feature" aria-label={profile.short + " member collection"}>
-        <p className="afterhours-public__eyebrow">MEMBER COLLECTION</p>
-        <h2>{profile.short} After Hours</h2>
-        {children}
-      </section> : <section className="afterhours-public__access" aria-label={profile.short + ' member-only collections'}>
+      <section className="afterhours-public__access" aria-label={profile.short + ' member-only collections'}>
         <p className="afterhours-public__eyebrow">PRIVATE COLLECTIONS · OWNER-APPROVED ACCESS</p>
         <h2>Inside {profile.short}'s private vault 🔐</h2>
         <p role="status">{accessMessage(accessStatus, profile.short)}</p>
@@ -119,7 +115,7 @@ export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, c
           <button type="button" onClick={onRetry}>Check membership</button>
         </div>
         <p className="afterhours-public__fine">Private galleries and reels are not part of this shareable preview. Access remains protected by Party.</p>
-      </section>}
+      </section>
 
       <nav className="afterhours-public__links" aria-label={profile.short + ' public links'}>
         {profile.links.map(link => <a key={link.href} href={link.href}
@@ -127,6 +123,6 @@ export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, c
           rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}>{link.name} ↗</a>)}
       </nav>
     </div>
-    <footer className="afterhours-public__footer">♠ WildCard DEV · {children ? 'Member profile' : 'Public preview'} · Member collections remain private</footer>
+    <footer className="afterhours-public__footer">♠ WildCard DEV · Public preview · Member collections remain private</footer>
   </main>
 }
