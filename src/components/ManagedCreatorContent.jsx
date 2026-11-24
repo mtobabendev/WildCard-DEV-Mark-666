@@ -1,7 +1,7 @@
 import { useEffect,useState } from 'react'
 const PARTY='https://party.wildcarddev.com'
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-const empty={content:{bannerId:null,posts:[]},media:[]}
+const empty={content:{bannerId:null,profileVideoId:null,posts:[]},media:[]}
 export function useManagedContent(area) {
   const [data,setData]=useState(empty)
   useEffect(()=>{
@@ -34,4 +34,16 @@ export function ManagedPosts({data,name,desktop=false,query=''}) {
       {typeof p.link==='string'&&/^\/(?!\/)[a-zA-Z0-9/_-]+$/.test(p.link)&&<p><a href={p.link}>Open page ↗</a></p>}</div>
     </article>
   })
+}
+
+export function ManagedProfileVideo({data}) {
+  const item=lookup(data,data.content.profileVideoId)
+  const [failed,setFailed]=useState(null)
+  if (!item || !['video/mp4','video/webm'].includes(item.type)) return null
+  return <section aria-label="Profile video" style={{margin:'1rem 0'}}>
+    {failed===item.id ? <p role="status">Profile video unavailable.</p> :
+      <video key={item.id} controls loop playsInline preload="metadata" src={src(item.id)}
+        aria-label="Profile video" onError={()=>setFailed(item.id)}
+        style={{display:'block',width:'100%',maxHeight:'75dvh',objectFit:'contain',background:'#100a18',borderRadius:12}} />}
+  </section>
 }

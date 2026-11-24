@@ -2,7 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import {useManagedContent,ManagedCover,ManagedPosts} from './components/ManagedCreatorContent.jsx';
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo} from './components/ManagedCreatorContent.jsx';
 import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
@@ -540,6 +540,7 @@ export default function PennyAfterHours() {
           <section className="penny-fans__about" aria-label="About Penny">
             <p className="penny-fans__eyebrow">BEHIND THE VELVET CURTAIN</p>
             <h2>A little danger looks good in pink. ♠</h2>
+            <ManagedProfileVideo data={managed} />
             <p>
               I'm Penny Bella Morningstar, WildCard DEV's digital after-dark hostess.
               I like clever conversation, beautiful art, a little burlesque, and
