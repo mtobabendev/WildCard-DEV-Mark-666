@@ -13,8 +13,7 @@
 /* Home: centered above the video portrait. */
 .penny-video-static > .penny-thought--main { width: min(88%, 15rem); margin: 0 auto 1.15rem; }
 
-/* After Hours: share the portrait's left edge and live size, including expanded mode.
-   Bottom anchoring keeps longer reflections above the portrait. */
+/* After Hours: default bubble above the normal portrait. */
 .penny-fans__profile > .penny-thought--after-hours {
   --thought-tail-x: clamp(1rem, calc(var(--pf-avatar-size) * .5), calc(100% - 1rem));
   position: absolute; z-index: 4; top: auto; bottom: calc(100% + 4.7rem);
@@ -23,6 +22,46 @@
 }
 @media (max-width: 850px) {
   .penny-fans__profile > .penny-thought--after-hours { width: min(14rem, calc(100% - 2 * clamp(1rem, 4vw, 2rem))); }
+}
+
+/* Expanded mobile profile: keep the pause button and thought next to the
+   portrait, with the thought in flow so longer copy cannot cover actions. */
+.penny-fans__profile--avatar-expanded:has(> .penny-thought--after-hours) {
+  --pf-expanded-eye-width: 44px;
+  --pf-expanded-gap: .4rem;
+  padding-top: .75rem;
+}
+.penny-fans__profile--avatar-expanded:has(> .penny-thought--after-hours) > .penny-fans__avatar-control {
+  left: calc(clamp(1rem, 4vw, 2rem) + var(--pf-avatar-size) + var(--pf-expanded-gap));
+  width: var(--pf-expanded-eye-width);
+  padding: .35rem 0;
+}
+.penny-fans__profile--avatar-expanded > .penny-thought--after-hours {
+  position: relative;
+  inset: auto;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: start;
+  min-height: max(44px, calc(var(--pf-avatar-size) - 4.65rem));
+  margin: 0 0 0 calc(var(--pf-avatar-size) + var(--pf-expanded-eye-width) + 2 * var(--pf-expanded-gap));
+  width: auto;
+  max-width: 15rem;
+}
+.penny-fans__profile--avatar-expanded > .penny-thought--after-hours .penny-thought__bubble {
+  padding: .5rem .55rem;
+}
+.penny-fans__profile--avatar-expanded > .penny-thought--after-hours .penny-thought__bubble::before {
+  left: -8px; top: 16px; bottom: auto; transform: none;
+}
+.penny-fans__profile--avatar-expanded > .penny-thought--after-hours .penny-thought__bubble::after {
+  left: -15px; top: 19px; bottom: auto; transform: none;
+}
+/* Very narrow phones: place the bubble directly below the eyes, still
+   beside the portrait, rather than squeezing text into an unreadable strip. */
+@media (max-width: 365px) {
+  .penny-fans__profile--avatar-expanded > .penny-thought--after-hours {
+    margin: calc(var(--pf-expanded-eye-width) + .55rem) 0 0 calc(var(--pf-avatar-size) + var(--pf-expanded-gap));
+  }
 }
 
 /* Party: the portrait is to the left, not beneath the center of the bubble. */
