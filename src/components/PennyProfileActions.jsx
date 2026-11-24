@@ -15,8 +15,10 @@ function storedSaves() {
   } catch { return [] }
 }
 
-export default function PennyProfileActions() {
-  const [saved, setSaved] = useState(() => storedSaves().includes(PROFILE_ID))
+export default function PennyProfileActions({ area = 'penny', name = 'Penny' } = {}) {
+  const profileId = area === 'penny' ? PROFILE_ID : 'profile:' + area
+  const shareUrl = area === 'penny' ? PENNY_SHARE_URL : 'https://www.wildcarddev.com/' + area + '/after-hours'
+  const [saved, setSaved] = useState(() => storedSaves().includes(profileId))
   const [stuck, setStuck] = useState(false)
   const [feedback, setFeedback] = useState('')
 
@@ -37,11 +39,11 @@ export default function PennyProfileActions() {
   const toggleSave = () => {
     try {
       const old = storedSaves()
-      const nextSaved = !old.includes(PROFILE_ID)
-      const next = nextSaved ? [...old, PROFILE_ID] : old.filter(id => id !== PROFILE_ID)
+      const nextSaved = !old.includes(profileId)
+      const next = nextSaved ? [...old, profileId] : old.filter(id => id !== profileId)
       window.localStorage.setItem(SAVE_KEY, JSON.stringify(next))
       setSaved(nextSaved)
-      setFeedback(nextSaved ? 'Penny saved in this browser.' : 'Penny removed from browser saves.')
+      setFeedback(nextSaved ? name + ' saved in this browser.' : name + ' removed from browser saves.')
     } catch {
       setFeedback('Browser saving is unavailable here.')
     }
@@ -51,9 +53,9 @@ export default function PennyProfileActions() {
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({
-          title: 'Penny Bella Morningstar · After Hours',
+          title: (area === 'penny' ? 'Penny Bella Morningstar' : name) + ' · After Hours',
           text: 'Take a peek behind WildCard DEV’s velvet door. ♠',
-          url: PENNY_SHARE_URL
+          url: shareUrl
         })
         setFeedback('Public profile link shared.')
         return
@@ -64,10 +66,10 @@ export default function PennyProfileActions() {
     }
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable')
-      await navigator.clipboard.writeText(PENNY_SHARE_URL)
+      await navigator.clipboard.writeText(shareUrl)
       setFeedback('Public profile link copied.')
     } catch {
-      setFeedback('Public profile link: ' + PENNY_SHARE_URL)
+      setFeedback('Public profile link: ' + shareUrl)
     }
   }
 
@@ -78,25 +80,25 @@ export default function PennyProfileActions() {
         <span aria-hidden="true">$</span>{!compact && <small>Donate</small>}
       </a>
       <a href={PENNY_MESSAGE_URL} target="_blank" rel="noopener noreferrer"
-        title="Message Penny through WildCard Messenger" aria-label="Message Penny">
+        title={'Message through WildCard Messenger'} aria-label={'Message ' + name}>
         <span aria-hidden="true">✉</span>{!compact && <small>Message</small>}
       </a>
       <button type="button" onClick={toggleSave} aria-pressed={saved}
-        title={saved ? 'Remove Penny from browser saves' : 'Save Penny in this browser'}
-        aria-label={saved ? 'Remove saved Penny profile' : 'Save Penny profile'}>
+        title={saved ? 'Remove ' + name + ' from browser saves' : 'Save ' + name + ' in this browser'}
+        aria-label={saved ? 'Remove saved ' + name + ' profile' : 'Save ' + name + ' profile'}>
         <span aria-hidden="true">{saved ? '★' : '☆'}</span>{!compact && <small>{saved ? 'Saved' : 'Save'}</small>}
       </button>
-      <button type="button" onClick={share} title="Share Penny's public After Hours link"
-        aria-label="Share Penny After Hours public profile">
+      <button type="button" onClick={share} title={'Share ' + name + "'s public After Hours link"}
+        aria-label={'Share ' + name + ' After Hours public profile'}>
         <span aria-hidden="true">↗</span>{!compact && <small>Share</small>}
       </button>
     </>
   }
 
   return <>
-    <div className="penny-profile-actions" role="group" aria-label="Penny profile actions">{buttons()}</div>
-    {stuck && <nav className="penny-profile-actions__sticky" aria-label="Penny sticky profile actions">
-      <strong>♠ PENNY AFTER HOURS</strong>
+    <div className="penny-profile-actions" role="group" aria-label={name + ' profile actions'}>{buttons()}</div>
+    {stuck && <nav className="penny-profile-actions__sticky" aria-label={name + ' sticky profile actions'}>
+      <strong>♠ {name.toUpperCase()} AFTER HOURS</strong>
       <div role="group" aria-label="Donate, message, save or share">{buttons(true)}</div>
     </nav>}
     {feedback && <p className="penny-profile-actions__feedback" role="status">{feedback}</p>}

@@ -2,6 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
+import CreatorLinkPost from './components/CreatorLinkPost.jsx';
 import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
@@ -325,6 +326,7 @@ export default function PennyAfterHours() {
 
         {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
+            <CreatorLinkPost />
             <article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-nurse-news">
               <header className="penny-fans__featured-header">
                 <img
