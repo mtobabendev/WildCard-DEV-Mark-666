@@ -5,8 +5,12 @@ const code = (path) => readFileSync(new URL('../' + path, import.meta.url), 'utf
 
 test('mobile post video keeps the full-image tap target and pauses preview before opening viewer', () => {
   const src = code('src/PennyAfterHours.jsx')
-  assert.match(src, /const openPostVideo = \(post\) =>/)
-  assert.match(src, /VIDEOS\.findIndex\(\(video\) => video\.src === post\.video\)/)
+  assert.match(src, /const openPostVideo = \(post, src = post\.video\) =>/)
+  assert.match(src, /VIDEOS\.findIndex\(\(video\) => video\.src === src\)/)
+  assert.match(src, /onOpen=\{src => openPostVideo\(post, src\)\}/)
+  const pair = code('src/components/SeatAnimationPair.jsx')
+  assert.match(pair, /onClick=\{\(\) => \{ setPaused\(true\); onOpen\(src\) \}\}/)
+  assert.match(pair, /active=\{!paused\}/)
   assert.match(src, /\[post\.id\]: true/)
   assert.match(src, /setActiveMedia\(\{ kind: 'video', index \}\)/)
   assert.match(src, /className="penny-fans__post-video-expand"[\s\S]*?onClick=\{\(\) => openPostVideo\(post\)\}/)
