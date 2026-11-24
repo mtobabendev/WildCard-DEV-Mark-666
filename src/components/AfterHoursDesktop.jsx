@@ -223,8 +223,8 @@ export default function AfterHoursDesktop() {
       </div>
       <section className="ah-desktop__cover" aria-label="Penny After Hours profile header">
         <PennyCoverCount />
-        <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('PennyNewFansBanner1-silent.webm')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
-          poster="/static/penny-wallpaper-poster.webp" width={736} height={400}
+        <ViewportVideo className="ah-desktop__cover-video" src={pennyPrivateMedia('wc-vault__Penny Cover Art__5066.mp4')} fallbackSrc='/static/penny-wallpaper-teaser.mp4'
+          poster="/static/penny-wallpaper-poster.webp" width={720} height={1080}
           active={!coverPaused} respectReducedMotion loop aria-hidden="true" />
         <button className="ah-desktop__cover-pause" type="button" onClick={() => setCoverPaused(v => !v)}
           aria-label={coverPaused ? 'Play cover animation' : 'Pause cover animation'} aria-pressed={coverPaused}>
