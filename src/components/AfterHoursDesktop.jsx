@@ -14,6 +14,7 @@ import PennySpotlightRow from './PennySpotlightRow.jsx'
 import PennyProfileActions from './PennyProfileActions.jsx'
 import PennySocialPills from './PennySocialPills.jsx'
 import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
+import SeatAnimationPair, { SEAT_COMPANION } from './SeatAnimationPair.jsx'
 import './AfterHoursDesktop.css'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
@@ -38,6 +39,7 @@ const VIDEOS = [
     src: pennyPrivateMedia('PennySeatAtTheTable.webm'), poster: pennyPrivateMedia('penny-after-hours-cover.webp') },
   { id: 'letter', title: 'A note from Penny', type: 'video',
     src: pennyPrivateMedia('AnimePenny.webm'), poster: pennyPrivateMedia('PennyOnlyFansBanner.jpg') },
+  { id: 'seat-companion', title: 'A seat at the table — companion', type: 'video', src: SEAT_COMPANION },
 ]
 const MEDIA = [...PHOTOS, ...VIDEOS]
 const POSTS = [
@@ -293,11 +295,14 @@ export default function AfterHoursDesktop() {
               onClick={() => toggleSaved('post:' + post.id)}>
               {saved.includes('post:' + post.id) ? '★ Saved' : '☆ Save'}</button>
           </header>
+          {post.id === 'seat-post' ? <SeatAnimationPair title={post.title} copy={post.copy} label="AFTER HOURS" original={post.media.src}
+            onOpen={src => setSelected(VIDEOS.find(item => item.src === src))} /> : <>
           <h2>{post.title}</h2><p>{post.copy}</p>
           {post.id === 'nurse-post' ? <NursePennyEasterEgg className="ah-desktop__post-image" />
             : post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
             onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
             <img src={post.media.src} alt={post.media.alt} loading="lazy" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-kandy-reel-hero.webp" }} /></button>}
+          </>}
           <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>
         </article>)}
         {!posts.length && tab === 'posts' && <p className="ah-desktop__empty">No posts match that search.</p>}
