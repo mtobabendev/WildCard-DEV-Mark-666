@@ -17,6 +17,7 @@ import PennySpotlightRow from './components/PennySpotlightRow.jsx';
 import PennyProfileActions from './components/PennyProfileActions.jsx';
 import PennySocialPills from './components/PennySocialPills.jsx';
 import NursePennyEasterEgg from './components/NursePennyEasterEgg.jsx';
+import SeatAnimationPair, { SEAT_COMPANION } from './components/SeatAnimationPair.jsx';
 
 function pennySmsHref() {
   const appleMobile = typeof navigator !== 'undefined' && (
@@ -97,6 +98,7 @@ const VIDEOS = [
     title: 'A note from Penny',
     src: pennyPrivateMedia('AnimePenny.webm'),
   },
+  { id: 'seat-companion', title: 'A seat at the table — companion', src: SEAT_COMPANION },
 ];
 
 const BOTTOM_NAV = [
@@ -133,8 +135,8 @@ export default function PennyAfterHours() {
     document.title = "Penny After Hours | WildCard DEV";
   }, []);
 
-  const openPostVideo = (post) => {
-    const index = VIDEOS.findIndex((video) => video.src === post.video);
+  const openPostVideo = (post, src = post.video) => {
+    const index = VIDEOS.findIndex((video) => video.src === src);
     if (index === -1) return;
     // Pause the inline preview while the existing full-size viewer is open.
     setPostPaused((previous) => ({ ...previous, [post.id]: true }));
@@ -430,7 +432,12 @@ export default function PennyAfterHours() {
                 </footer>
               </article>
             )}
-            {tab === 'posts' && POSTS.map((post) => (
+            {tab === 'posts' && POSTS.map((post) => post.id === 'throne' ? (
+              <article key={post.id} className="penny-fans__post" style={{ gridColumn: '1 / -1' }}>
+                <SeatAnimationPair title={post.title} copy={post.copy} label={post.label} original={post.video}
+                  onOpen={src => openPostVideo(post, src)} />
+              </article>
+            ) : (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
                 <div className="penny-fans__post-art" aria-hidden={post.image || post.video ? undefined : true}>
                   {post.image ? (
