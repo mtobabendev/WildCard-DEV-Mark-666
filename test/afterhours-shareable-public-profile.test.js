@@ -38,9 +38,12 @@ test('shareable Kandy and Ashley landing sections link to their existing WildCar
   assert.match(guest, /href: '\/kandy\/showcase'/)
   assert.match(guest, /href: '\/ashley\/what-if'/)
   assert.match(guest, /href: '\/ashley\/memorial'/)
-  assert.match(guest, /https:\/\/www\.wildcarddev\.com\/'/)
-  assert.match(guest, /navigator\.share/)
-  assert.match(guest, /navigator\.clipboard\.writeText/)
+  const actions = file('../src/components/PennyProfileActions.jsx')
+  assert.match(guest, /<PennyProfileActions area=\{area\} name=\{profile.short\} \/>/)
+  assert.match(actions, /https:\/\/www\.wildcarddev\.com\/' \+ area \+ '\/after-hours'/)
+  assert.match(actions, /navigator\.share/)
+  assert.match(actions, /navigator\.clipboard\.writeText\(shareUrl\)/)
+  assert.match(actions, /area === 'penny' \? PENNY_SHARE_URL :/)
 })
 
 test('Penny retains Donate Message Save Share actions and guest CTA to private login', () => {

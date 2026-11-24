@@ -83,7 +83,7 @@ export default function AfterHoursPublicProfile({ area, accessStatus, onRetry, c
           <h2>{profile.headline}</h2>
           <p>{profile.description}</p>
         </div>
-        <PennyProfileActions area={area} name={profile.short} />
+        {area === 'penny' ? <PennyProfileActions /> : <PennyProfileActions area={area} name={profile.short} />}
       </section>
 
       {area === 'penny' && <section className="afterhours-public__feature" aria-label="Penny public highlights">
