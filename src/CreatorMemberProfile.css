@@ -16,7 +16,6 @@
 .creator-member.ah-desktop .penny-fans__friend-list { display:flex; flex-wrap:wrap; }
 @media(max-width:540px) { .creator-member__mobile-actions { grid-column:1/-1; justify-self:end; } }
 
-.creator-member .penny-fans__profile--avatar-expanded.creator-member__static-avatar > .penny-thought--after-hours { margin-left:calc(var(--pf-avatar-size) + .75rem); margin-top:0; }
 .creator-member .penny-fans__friends { grid-column:1/-1; }
 .creator-member__search { display:grid; gap:5px; padding:12px; grid-column:1/-1; }
 .creator-member__search input { min-width:0; width:100%; box-sizing:border-box; padding:9px; color:inherit; background:#241332; border:1px solid #99688f; border-radius:8px; }

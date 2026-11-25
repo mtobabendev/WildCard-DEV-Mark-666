@@ -239,7 +239,7 @@ export default function PennyAfterHours() {
           <PennyCoverCount />
         </div>
 
-        <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '')} aria-labelledby="penny-fans-title">
+        <section className={'penny-fans__profile' + (profileExpanded ? ' penny-fans__profile--avatar-expanded' : '') + (avatarAsset?.type?.startsWith('image/')?' creator-member__static-avatar':'')} aria-labelledby="penny-fans-title">
           <button
             type="button"
             className="penny-fans__avatar-slot"

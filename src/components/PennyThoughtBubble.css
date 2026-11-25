@@ -136,3 +136,6 @@
 .penny-thought__preferences label { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin: .5rem 0; }
 .penny-thought__preferences select { color: #f9effc; background: #2b193d; border: 1px solid #a67ac7; border-radius: .35rem; padding: .4rem; max-width: 65%; font: inherit; }
 .penny-thought__preferences small { display: block; line-height: 1.45; }
+
+/* Static avatars have no pause control, so the thought may sit closer. */
+.penny-fans__profile--avatar-expanded.creator-member__static-avatar > .penny-thought--after-hours { margin-left:calc(var(--pf-avatar-size) + .75rem); margin-top:0; }

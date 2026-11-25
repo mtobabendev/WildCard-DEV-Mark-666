@@ -4,17 +4,17 @@ const PARTY='https://party.wildcarddev.com'
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 const empty={content:{bannerId:null,coverVideoId:null,avatarId:null,profileVideoId:null,posts:[]},media:[]}
 export function useManagedContent(area) {
-  const [data,setData]=useState(empty)
+  const [record,setRecord]=useState(null)
   useEffect(()=>{
     let active=true
-    setData(empty)
+    setRecord(null)
     fetch(PARTY+'/api/afterhours/creator-content?area='+encodeURIComponent(area),{credentials:'include',cache:'no-store'})
       .then(async r=>{if(!r.ok)throw Error('Content unavailable');return r.json()})
-      .then(d=>{if(active&&d?.content&&Array.isArray(d.content.posts)&&Array.isArray(d.media))setData(d)})
+      .then(d=>{if(active&&d?.content&&Array.isArray(d.content.posts)&&Array.isArray(d.media))setRecord({area,data:d})})
       .catch(()=>{})
     return ()=>{active=false}
   },[area])
-  return data
+  return record?.area===area?record.data:empty
 }
 const src=id=>PARTY+'/api/afterhours/media?id='+encodeURIComponent(id)
 function lookup(data,id){return typeof id==='string'&&UUID.test(id)?data.media.find(x=>x.id===id):null}
