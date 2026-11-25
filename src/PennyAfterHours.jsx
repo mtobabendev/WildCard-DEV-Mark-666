@@ -2,7 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset} from './components/ManagedCreatorContent.jsx';
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset,builtinOverride,builtinVisible,builtinCopy,BuiltinBody,BuiltinMedia,BuiltinLink} from './components/ManagedCreatorContent.jsx';
 import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
@@ -348,7 +348,7 @@ export default function PennyAfterHours() {
         {tab === 'posts' ? (
           <section className="penny-fans__feed" aria-label="Penny's creator posts">
             <ManagedPosts data={managed} name="Penny" />
-            <article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-nurse-news">
+            {builtinVisible(managed,'nurse')&&(<article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-nurse-news">
               <header className="penny-fans__featured-header">
                 <img
                   className="penny-fans__featured-avatar"
@@ -366,17 +366,20 @@ export default function PennyAfterHours() {
               </header>
               <div className="penny-fans__featured-copy">
                 <p className="penny-fans__eyebrow">DRESS-UP NIGHT / NURSE MORNINGSTAR</p>
-                <h2 id="penny-nurse-news">Paging Nurse Morningstar ♏</h2>
-                <p>Tonight's look? Nurse Morningstar. The heels are polished, the clipboard is ready, and my bedside manner comes with a wicked smile. ♠</p>
-                <p>A little white coat, a little purple ink, and a look that says I already know what you're thinking. All dress-up, darling. 💋</p>
+                <h2 id="penny-nurse-news">{builtinOverride(managed,'nurse').title??"Paging Nurse Morningstar ♏"}</h2>
+                <BuiltinBody data={managed} id="nurse"><p>Tonight's look? Nurse Morningstar. The heels are polished, the clipboard is ready, and my bedside manner comes with a wicked smile. ♠</p>
+                <p>A little white coat, a little purple ink, and a look that says I already know what you're thinking. All dress-up, darling. 💋</p></BuiltinBody>
               </div>
+              <BuiltinMedia data={managed} id="nurse" title={builtinOverride(managed,'nurse').title??"Paging Nurse Morningstar ♏"}>
               <NursePennyEasterEgg className="penny-fans__nurse-easter-egg" />
+              </BuiltinMedia>
+              <BuiltinLink data={managed} id="nurse" />
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
                 <span>PHOTO · NURSE MORNINGSTAR</span>
               </footer>
-            </article>
-            <article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
+            </article>)}
+            {builtinVisible(managed,'velvet')&&(<article className="penny-fans__featured-post" aria-labelledby="penny-velvet-post-title">
               <header className="penny-fans__featured-header">
                 <img
                   className="penny-fans__featured-avatar"
@@ -394,11 +397,12 @@ export default function PennyAfterHours() {
               </header>
               <div className="penny-fans__featured-copy">
                 <p className="penny-fans__eyebrow">THE LIGHTS ARE LOW</p>
-                <h2 id="penny-velvet-post-title">Velvet After Dark ♠</h2>
-                <p>Close the door, turn the lights down, and tell me you can handle a little temptation. 💋</p>
+                <h2 id="penny-velvet-post-title">{builtinOverride(managed,'velvet').title??"Velvet After Dark ♠"}</h2>
+                <BuiltinBody data={managed} id="velvet"><p>Close the door, turn the lights down, and tell me you can handle a little temptation. 💋</p>
                 <p>Pink satin, wicked company, and just enough mystery to keep you coming back.</p>
-                <p>Press play, darling. I make no promises about your concentration. 🔥</p>
+                <p>Press play, darling. I make no promises about your concentration. 🔥</p></BuiltinBody>
               </div>
+              <BuiltinMedia data={managed} id="velvet" title={builtinOverride(managed,'velvet').title??"Velvet After Dark ♠"}>
               <div className="penny-fans__featured-media">
                 <UserLoopVideo
                   controls
@@ -411,12 +415,14 @@ export default function PennyAfterHours() {
                   Your browser does not support WebM playback.
                 </UserLoopVideo>
               </div>
+              </BuiltinMedia>
+              <BuiltinLink data={managed} id="velvet" />
               <footer className="penny-fans__featured-footer">
                 <span>♠ WILDCARD DEV ORIGINAL</span>
                 <span>VIDEO · 00:24</span>
               </footer>
-            </article>
-            {tab === 'posts' && (
+            </article>)}
+            {tab === 'posts' && builtinVisible(managed,'cover') && (
               <article className="penny-fans__featured-post penny-fans__image-post" aria-labelledby="penny-banner-post-title">
                 <header className="penny-fans__featured-header">
                   <img
@@ -435,9 +441,10 @@ export default function PennyAfterHours() {
                 </header>
                 <div className="penny-fans__featured-copy">
                   <p className="penny-fans__eyebrow">FROM PENNY, WITH LOVE</p>
-                  <h2 id="penny-banner-post-title">A little more Penny after dark ♏</h2>
-                  <p>The velvet curtain is open, the lights are pink, and the Queen of Spades is waiting. Come on in, beautiful. 💋</p>
+                  <h2 id="penny-banner-post-title">{builtinOverride(managed,'cover').title??"A little more Penny after dark ♏"}</h2>
+                  <BuiltinBody data={managed} id="cover"><p>The velvet curtain is open, the lights are pink, and the Queen of Spades is waiting. Come on in, beautiful. 💋</p></BuiltinBody>
                 </div>
+              <BuiltinMedia data={managed} id="cover" title={builtinOverride(managed,'cover').title??"A little more Penny after dark ♏"}>
                 <img
                   className="penny-fans__image-post-art"
                   src={pennyPrivateMedia('PennyOnlyFansBanner.jpg')}
@@ -448,19 +455,23 @@ export default function PennyAfterHours() {
                   decoding="async"
                   alt="Penny After Hours cover artwork with violet atmosphere, circular portrait, and profile typography."
                 />
-                <footer className="penny-fans__featured-footer">
+                </BuiltinMedia>
+              <BuiltinLink data={managed} id="cover" />
+              <footer className="penny-fans__featured-footer">
                   <span>♠ WILDCARD DEV ORIGINAL</span>
                   <span>PHOTO · AFTER DARK</span>
                 </footer>
               </article>
             )}
-            {tab === 'posts' && POSTS.map((post) => post.id === 'throne' ? (
+            {tab === 'posts' && POSTS.filter(post=>builtinVisible(managed,post.id)).map(post=>builtinCopy(managed,post.id,post)).map((post) => post.id === 'throne' ? (
               <article key={post.id} className="penny-fans__post" style={{ gridColumn: '1 / -1' }}>
-                <SeatAnimationPair title={post.title} copy={post.copy} label={post.label} original={post.video}
-                  onOpen={src => openPostVideo(post, src)} />
+                {['replace','none'].includes(builtinOverride(managed,post.id).mediaMode)?<><div className="penny-fans__post-copy"><h2>{post.title}</h2><p style={{whiteSpace:'pre-wrap'}}>{post.copy}</p></div><BuiltinMedia data={managed} id={post.id} title={post.title}/></>:<SeatAnimationPair title={post.title} copy={post.copy} label={post.label} original={post.video}
+                  onOpen={src => openPostVideo(post, src)} />}
+                <BuiltinLink data={managed} id={post.id}/>
               </article>
             ) : (
               <article key={post.id} className={'penny-fans__post penny-fans__post--' + post.theme}>
+                <BuiltinMedia data={managed} id={post.id} title={post.title}>
                 <div className="penny-fans__post-art" aria-hidden={post.image || post.video ? undefined : true}>
                   {post.image ? (
                     <img className="penny-fans__post-photo" src={post.image} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-roleplay-poster.webp" }} alt="Kandy in a pink and black striped top in a candlelit room" width={1216} height={832} loading="lazy" decoding="async" />
@@ -484,10 +495,11 @@ export default function PennyAfterHours() {
                     />
                   )}
                 </div>
+                </BuiltinMedia>
                 <div className="penny-fans__post-copy">
                   <div className="penny-fans__post-meta">
                     <span className="penny-fans__post-label">{post.label}</span>
-                    {post.video && (
+                    {post.video && !['replace','none'].includes(builtinOverride(managed,post.id).mediaMode) && (
                       <button type="button" className="penny-fans__post-video-control"
                         aria-label={(postPaused[post.id] ? 'Resume ' : 'Pause ') + post.title + ' preview'}
                         aria-pressed={Boolean(postPaused[post.id])}
@@ -496,7 +508,8 @@ export default function PennyAfterHours() {
                     )}
                   </div>
                   <h2>{post.title}</h2>
-                  <p>{post.copy}</p>
+                  <p style={{whiteSpace:'pre-wrap'}}>{post.copy}</p>
+                  <BuiltinLink data={managed} id={post.id}/>
                 </div>
               </article>
             ))}
