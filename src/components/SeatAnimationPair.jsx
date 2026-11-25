@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react'
 import ViewportVideo from './ViewportVideo.jsx'
-import { pennyPrivateMedia } from './privateMediaUrl.js'
 import './SeatAnimationPair.css'
 
-export const SEAT_COMPANION = pennyPrivateMedia('5041.webm')
+export const SEAT_COMPANION = '/static/PennySeatAtTheTableCompanion.webm'
 
 export default function SeatAnimationPair({ title, copy, label, original, onOpen }) {
   const [paused, setPaused] = useState(false)

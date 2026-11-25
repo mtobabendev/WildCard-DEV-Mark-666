@@ -30,11 +30,13 @@ const formerlyPrivateFiles = [
     .map(name => 'friends/' + name),
 ]
 
-const privateFiles = formerlyPrivateFiles.filter(file => !publicFriendFiles.includes(file))
+const restoredCartoons = ['PennySeatAtTheTable.webm']
+const privateFiles = formerlyPrivateFiles.filter(file => !publicFriendFiles.includes(file) && !restoredCartoons.includes(file))
 
-test('only the nine Owner-designated public Friends assets are exempt; remaining private assets stay absent', () => {
+test('Owner-designated Friends assets and seat cartoon are public; remaining private assets stay absent', () => {
   assert.equal(formerlyPrivateFiles.length, 39)
-  assert.equal(privateFiles.length, 30)
+  assert.equal(privateFiles.length, 29)
+  for (const file of restoredCartoons) assert.equal(existsSync(new URL(file, base)), true, file)
   for (const file of publicFriendFiles) assert.equal(existsSync(new URL(file, base)), true, file)
   for (const file of privateFiles) {
     assert.equal(existsSync(new URL(file, base)), false, file + ' is still public')

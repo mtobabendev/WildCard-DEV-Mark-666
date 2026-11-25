@@ -37,7 +37,7 @@ const VIDEOS = [
   { id: 'velvet', title: 'Patch Notes: Velvet Mode', type: 'video',
     src: pennyPrivateMedia('PennyAfterHoursPatchNotes.webm'), poster: pennyPrivateMedia('PennyAfterHoursPatchNotes.webp') },
   { id: 'seat', title: 'A seat at the table', type: 'video',
-    src: pennyPrivateMedia('PennySeatAtTheTable.webm'), poster: pennyPrivateMedia('penny-after-hours-cover.webp') },
+    src: '/static/PennySeatAtTheTable.webm', poster: pennyPrivateMedia('penny-after-hours-cover.webp') },
   { id: 'letter', title: 'A note from Penny', type: 'video',
     src: pennyPrivateMedia('AnimePenny.webm'), poster: pennyPrivateMedia('PennyOnlyFansBanner.jpg') },
   { id: 'seat-companion', title: 'A seat at the table — companion', type: 'video', src: SEAT_COMPANION },
