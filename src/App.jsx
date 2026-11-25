@@ -562,9 +562,9 @@ function releaseMiniSpinnerLink(event) {
   track?.style.removeProperty('transform');
 }
 
-function TwoLinkSpinner({ person, facebook, destination, label, symbol }) {
+function TwoLinkSpinner({ person, facebook, destination, label, symbol, stripagram }) {
   return (
-    <div className="identity-link-deck mini-spinner mini-spinner--two-person" role="group"
+    <div className={'identity-link-deck mini-spinner mini-spinner--two-person' + (stripagram ? ' mini-spinner--three-person' : '')} role="group"
       aria-label={person + ' links'}
       onPointerDown={startMiniSpinnerDrag}
       onPointerMove={moveMiniSpinnerDrag}
@@ -583,6 +583,10 @@ function TwoLinkSpinner({ person, facebook, destination, label, symbol }) {
           <span className="identity-link-card-icon" aria-hidden="true">{symbol}</span>
           <span className="identity-link-card-label">{label}</span>
         </a>
+        {stripagram && <a className="identity-link-card ashley-link-card--stripagram" href={stripagram} target="_blank" rel="noopener noreferrer" aria-label={person + ' on Stripagram'} title={person + ' on Stripagram'}>
+          <span className="identity-link-card-icon" aria-hidden="true"><StripagramIcon /></span>
+          <span className="identity-link-card-label">STRIPA</span>
+        </a>}
       </div>
       <div className="identity-link-hub two-person-link-hub" aria-hidden="true"><img src={wildCardDevIcon} alt="" /></div>
     </div>
@@ -983,7 +987,7 @@ function ContactPanels({
             </div>
           </article>
         )}
-        <AshleyPanel active={open && pageVisible} links={<TwoLinkSpinner person="Ashley" facebook="https://www.facebook.com/profile.php?id=100083462238607" destination="/ashley/what-if" label="FANS" symbol="♠" />} />
+        <AshleyPanel active={open && pageVisible} links={<TwoLinkSpinner person="Ashley" facebook="https://www.facebook.com/profile.php?id=100083462238607" destination="/ashley/what-if" label="FANS" symbol="♠" stripagram="https://party.wildcarddev.com/stripagram/?profile=ashley" />} />
       </div>
     </section>
   );

@@ -5744,3 +5744,12 @@ body {
   .mini-spinner--kandy .mini-spinner-track > a:nth-child(6) { --mini-angle: 300deg; }
   .identity-card--kandy .kandy-link-deck.mini-spinner { --mini-radius: 3.2rem; }
 }
+
+/* Ashley's optional third link is evenly spaced; Jenn retains two opposing cards. */
+.identity-card .mini-spinner--two-person.mini-spinner--three-person { grid-template-columns: repeat(3,minmax(0,1fr)); width: min(100%,12rem); }
+.ashley-link-card--stripagram { color: #ffb4d5; }
+@media (prefers-reduced-motion: no-preference) {
+  .identity-card .mini-spinner--two-person.mini-spinner--three-person { --mini-radius: 2.5rem; }
+  .mini-spinner--two-person.mini-spinner--three-person .mini-spinner-track > a:nth-child(2) { --mini-angle: 120deg; }
+  .mini-spinner--two-person.mini-spinner--three-person .mini-spinner-track > a:nth-child(3) { --mini-angle: 240deg; }
+}
