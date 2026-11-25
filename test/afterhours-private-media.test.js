@@ -3,7 +3,17 @@ import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
 
 const base = new URL('../public/static/', import.meta.url)
-const privateFiles = [
+const publicFriendFiles = ['KandyOnlyFans2.jpg',
+  'friends/aisha-moon-slides.webp',
+  'friends/angel-jessy-slides.webp',
+  'friends/brooke-slides.webp',
+  'friends/evemarie-slides.webp',
+  'friends/karley-stokes-slides.webp',
+  'friends/lacie-heart-slides.webp',
+  'friends/mia-slides.webp',
+  'friends/snow-bird-slides.webp'
+]
+const formerlyPrivateFiles = [
   ...Array.from({ length: 8 }, (_, i) => (i + 1) + '.jpg'),
   'PennyOnlyFansBanner.jpg', 'KandyOnlyFans2.jpg',
   'PennySeatAtTheTable.webm', 'AnimePenny.webm',
@@ -20,14 +30,18 @@ const privateFiles = [
     .map(name => 'friends/' + name),
 ]
 
-test('all 39 private Penny assets, including new friends, are absent from site public tree', () => {
-  assert.equal(privateFiles.length, 39)
+const privateFiles = formerlyPrivateFiles.filter(file => !publicFriendFiles.includes(file))
+
+test('only the nine Owner-designated public Friends assets are exempt; remaining private assets stay absent', () => {
+  assert.equal(formerlyPrivateFiles.length, 39)
+  assert.equal(privateFiles.length, 30)
+  for (const file of publicFriendFiles) assert.equal(existsSync(new URL(file, base)), true, file)
   for (const file of privateFiles) {
     assert.equal(existsSync(new URL(file, base)), false, file + ' is still public')
   }
 })
 
-test('new desktop and friend designs use the authenticated Party media resolver', () => {
+test('private content uses authenticated Party media while Friends use public tile assets', () => {
   const files = [
     '../src/PennyAfterHours.jsx',
     '../src/components/AfterHoursDesktop.jsx',
@@ -36,7 +50,12 @@ test('new desktop and friend designs use the authenticated Party media resolver'
     '../src/components/PennyClassicCards.jsx',
   ]
   const sources = files.map(file => readFileSync(new URL(file, import.meta.url), 'utf8'))
-  for (const source of sources) assert.match(source, /pennyPrivateMedia/)
+  for (const [i,source] of sources.entries()) {
+    if (i === 2) {
+      assert.doesNotMatch(source, /pennyPrivateMedia/)
+      for (const file of publicFriendFiles) assert.ok(source.includes('/static/' + file), file)
+    } else assert.match(source, /pennyPrivateMedia/)
+  }
   for (const file of privateFiles) {
     const path = '/static/' + file
     for (const source of sources) assert.equal(source.includes(path), false, path)
