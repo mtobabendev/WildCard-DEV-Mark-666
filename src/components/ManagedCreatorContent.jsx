@@ -1,7 +1,8 @@
 import { useEffect,useState } from 'react'
+import ViewportVideo from './ViewportVideo.jsx'
 const PARTY='https://party.wildcarddev.com'
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-const empty={content:{bannerId:null,profileVideoId:null,posts:[]},media:[]}
+const empty={content:{bannerId:null,coverVideoId:null,avatarId:null,profileVideoId:null,posts:[]},media:[]}
 export function useManagedContent(area) {
   const [data,setData]=useState(empty)
   useEffect(()=>{
@@ -17,9 +18,19 @@ export function useManagedContent(area) {
 }
 const src=id=>PARTY+'/api/afterhours/media?id='+encodeURIComponent(id)
 function lookup(data,id){return typeof id==='string'&&UUID.test(id)?data.media.find(x=>x.id===id):null}
+export function managedAsset(data,field) {
+  const item=lookup(data,data.content[field])
+  return item ? {...item,src:src(item.id)} : null
+}
 export function ManagedCover({data,className,children}) {
   const item=lookup(data,data.content.bannerId)
   const [failed,setFailed]=useState(null)
+  const [paused,setPaused]=useState(false)
+  const video=managedAsset(data,'coverVideoId')
+  if (video && ['video/mp4','video/webm'].includes(video.type) && failed!==video.id) {
+    return <><ViewportVideo className={className} src={video.src} active={!paused} loop respectReducedMotion aria-label="Creator cover video" onError={()=>setFailed(video.id)}/>
+      <button type="button" className={className==='ah-desktop__cover-video'?'ah-desktop__cover-pause':'penny-fans__cover-control'} aria-pressed={paused} aria-label={paused?'Resume cover animation':'Pause cover animation'} onClick={()=>setPaused(v=>!v)}>😈</button></>
+  }
   if(!item?.type?.startsWith('image/')||failed===item.id)return children
   return <img className={className} src={src(item.id)} alt="Creator cover" onError={()=>setFailed(item.id)}/>
 }

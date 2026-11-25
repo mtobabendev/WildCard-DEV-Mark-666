@@ -16,7 +16,7 @@ import PennySocialPills from './PennySocialPills.jsx'
 import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
 import SeatAnimationPair, { SEAT_COMPANION } from './SeatAnimationPair.jsx'
 import './AfterHoursDesktop.css'
-import {useManagedContent,ManagedCover,ManagedPosts} from './ManagedCreatorContent.jsx'
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset} from './ManagedCreatorContent.jsx'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
 const SQUARE = 'https://square.link/u/YnAVr8ht'
@@ -114,6 +114,7 @@ function MediaPreview({ item, onOpen }) {
 
 export default function AfterHoursDesktop() {
   const managed = useManagedContent('penny')
+  const avatarAsset=managedAsset(managed,'avatarId')
   const [tab, setTab] = useState('posts')
   const [mediaType, setMediaType] = useState('all')
   const [query, setQuery] = useState('')
@@ -163,7 +164,7 @@ export default function AfterHoursDesktop() {
       document.removeEventListener('visibilitychange', sync)
       avatar.pause()
     }
-  }, [avatarPaused])
+  }, [avatarPaused,avatarAsset?.id])
 
   useEffect(() => {
     const row = friendsRef.current;
@@ -240,16 +241,16 @@ export default function AfterHoursDesktop() {
             aria-pressed={avatarExpanded}
             aria-label={avatarExpanded ? 'Reduce Penny profile video to normal size' : 'Enlarge Penny profile video'}
             title={avatarExpanded ? 'Click to shrink' : 'Click to enlarge'}>
-            <video ref={avatarRef} muted loop playsInline preload="metadata"
-              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')} poster="/static/NursePennyPortrait.jpg" aria-hidden="true" />
+            {avatarAsset?.type?.startsWith('image/') ? <img className="penny-fans__avatar" src={avatarAsset.src} alt="Penny profile artwork" /> : <video ref={avatarRef} muted loop playsInline preload="metadata"
+              src={avatarAsset?.src||pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')} poster="/static/NursePennyPortrait.jpg" aria-hidden="true" />}
           </button>
-          <button className="ah-desktop__avatar-pause" type="button"
+          {!avatarAsset?.type?.startsWith('image/')&&<button className="ah-desktop__avatar-pause" type="button"
             onClick={() => setAvatarPaused(value => !value)}
             aria-label={avatarPaused ? 'Play Penny profile video' : 'Pause Penny profile video'}
             aria-pressed={avatarPaused}
             title={avatarPaused ? 'Play avatar video' : 'Pause avatar video'}>
             <span aria-hidden="true">👀</span>
-          </button>
+          </button>}
           <PennyProfileActions />
         </div>
         <h1>Penny Bella Morningstar <span title="WildCard DEV creator">♠</span></h1>
@@ -343,6 +344,7 @@ export default function AfterHoursDesktop() {
       </section>}
       {tab === 'about' && <section className="ah-desktop__info-panel">
         <h2>About Penny</h2><p>A fictional AI persona, creative collaborator, and the host of WildCard DEV After Hours.</p>
+        <ManagedProfileVideo data={managed} />
         <a href="mailto:Penny@WildCardDEV.com">Contact Penny</a>
       </section>}
       {tab === 'saved' && !posts.length && !media.length && <p className="ah-desktop__empty">

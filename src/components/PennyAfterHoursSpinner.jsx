@@ -7,20 +7,20 @@ export const PANEL_IMAGES = [2, 1, 3, 4, 5, 6, 7, 8].map((imageNumber, index) =>
   src: pennyPrivateMedia(imageNumber + '.jpg'),
 }));
 
-export function resolveOrbitCards(data) {
+export function resolveOrbitCards(data, area='penny') {
   const slots=data?.content?.orbitCards
   const media=Array.isArray(data?.media)?data.media:[]
   return PANEL_IMAGES.map((original,index)=>{
     const id=Array.isArray(slots)?slots[index]:null
-    if(id==null)return original
+    if(id==null)return area==='penny'?original:{...original,src:'/static/orbit-card-placeholder.svg'}
     if(id==='blank')return {...original,src:'/static/orbit-card-placeholder.svg'}
     const item=media.find(m=>m.id===id&&m.type?.startsWith('image/'))
     return {...original,src:item?'https://party.wildcarddev.com/api/afterhours/media?id='+encodeURIComponent(item.id):'/static/orbit-card-placeholder.svg'}
   })
 }
 
-export default function PennyAfterHoursSpinner({ managed }) {
-  const panels=resolveOrbitCards(managed);
+export default function PennyAfterHoursSpinner({ managed, area='penny', name='Penny' }) {
+  const panels=resolveOrbitCards(managed,area);
   const pointer = useRef(null);
   const dialogRef = useRef(null);
   const [rotation, setRotation] = useState(0);
@@ -87,10 +87,10 @@ export default function PennyAfterHoursSpinner({ managed }) {
   };
 
   return (
-    <section className="penny-after-orbit" id="penny-after-gallery" aria-label="Penny's photo gallery and 3D spinner">
+    <section className="penny-after-orbit" id="penny-after-gallery" aria-label={name+"'s photo gallery and 3D spinner"}>
       <div className="penny-after-orbit__heading">
         <div className="penny-after-orbit__heading-copy">
-          <span className="penny-after-orbit__eyebrow">PENNY / AFTER HOURS GALLERY</span>
+          <span className="penny-after-orbit__eyebrow">{name.toUpperCase()} / AFTER HOURS GALLERY</span>
           <span className="penny-after-orbit__subline">Eight portraits. Choose a tile to explore.</span>
         </div>
         <button
@@ -111,10 +111,10 @@ export default function PennyAfterHoursSpinner({ managed }) {
             type="button"
             key={number}
             onClick={() => setViewerIndex(index)}
-            aria-label={`Open Penny gallery photo ${number} of 8`}
+            aria-label={`Open ${name} gallery photo ${number} of 8`}
           >
             <img src={src} alt="" loading="lazy" decoding="async" draggable="false" />
-            <span className="penny-after-orbit__tile-tag">PENNY ♠</span>
+            <span className="penny-after-orbit__tile-tag">{name.toUpperCase()} ♠</span>
             <span className="penny-after-orbit__tile-label">PHOTO {String(number).padStart(2, '0')}</span>
           </button>
         ))}
@@ -148,7 +148,7 @@ export default function PennyAfterHoursSpinner({ managed }) {
                     <div className="penny-after-orbit__face penny-after-orbit__face--front">
                       <img
                         src={src}
-                        alt={`Penny After Hours gallery photo ${number}`}
+                        alt={`${name} After Hours gallery photo ${number}`}
                         loading="lazy"
                         decoding="async"
                         draggable="false"
@@ -159,7 +159,7 @@ export default function PennyAfterHoursSpinner({ managed }) {
                     </div>
                   </div>
                 ))}
-                <strong className="penny-after-orbit__center" aria-hidden="true">Penny ♠ After Hours</strong>
+                <strong className="penny-after-orbit__center" aria-hidden="true">{name} ♠ After Hours</strong>
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function PennyAfterHoursSpinner({ managed }) {
       <dialog
         ref={dialogRef}
         className="penny-after-orbit__viewer"
-        aria-label="Penny After Hours photo viewer"
+        aria-label={name+" After Hours photo viewer"}
         onClose={() => setViewerIndex(null)}
         onKeyDown={handleDialogKeyDown}
         onClick={(event) => {
@@ -185,14 +185,14 @@ export default function PennyAfterHoursSpinner({ managed }) {
         {activePhoto && (
           <div className="penny-after-orbit__viewer-inner">
             <header>
-              <strong>PENNY / PHOTO {String(activePhoto.number).padStart(2, '0')} OF 08</strong>
+              <strong>{name.toUpperCase()} / PHOTO {String(activePhoto.number).padStart(2, '0')} OF 08</strong>
               <button type="button" onClick={() => setViewerIndex(null)} aria-label="Close photo viewer">
                 Close ✕
               </button>
             </header>
             <img
               src={activePhoto.src}
-              alt={`Penny After Hours gallery photograph ${activePhoto.number} of 8`}
+              alt={`${name} After Hours gallery photograph ${activePhoto.number} of 8`}
               draggable="false"
             />
             <nav aria-label="Gallery photo navigation">

@@ -2,7 +2,7 @@ import { pennyPrivateMedia } from './components/privateMediaUrl.js';
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import { useEffect, useRef, useState } from 'react';
 import './PennyAfterHours.css';
-import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo} from './components/ManagedCreatorContent.jsx';
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset} from './components/ManagedCreatorContent.jsx';
 import PennyAfterHoursSpinner, { PANEL_IMAGES } from './components/PennyAfterHoursSpinner.jsx';
 import PennyClassicCards from './components/PennyClassicCards.jsx';
 import PennyMediaViewer from './components/PennyMediaViewer.jsx';
@@ -112,6 +112,7 @@ const BOTTOM_NAV = [
 
 export default function PennyAfterHours() {
   const managed = useManagedContent('penny');
+  const avatarAsset=managedAsset(managed,'avatarId');
   const [tab, setTab] = useState('posts');
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 1100px)').matches);
   useEffect(() => {
@@ -197,7 +198,7 @@ export default function PennyAfterHours() {
       document.removeEventListener('visibilitychange', syncProfile);
       video.pause();
     };
-  }, [isDesktop, profilePaused]);
+  }, [isDesktop, profilePaused, avatarAsset?.id]);
 
   if (isDesktop) return <AfterHoursDesktop />;
 
@@ -246,10 +247,10 @@ export default function PennyAfterHours() {
             aria-pressed={profileExpanded}
             onClick={() => setProfileExpanded((value) => !value)}
           >
-            <video
+            {avatarAsset?.type?.startsWith('image/') ? <img className="penny-fans__avatar" src={avatarAsset.src} alt="Penny profile artwork" /> : <video
               ref={profileVideoRef}
               className="penny-fans__avatar"
-              src={pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')}
+              src={avatarAsset?.src||pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')}
               poster="/static/NursePennyPortrait.jpg"
               muted
               loop
@@ -258,9 +259,9 @@ export default function PennyAfterHours() {
               aria-hidden="true"
               width="128"
               height="128"
-            />
+            />}
           </button>
-          <button
+          {!avatarAsset?.type?.startsWith('image/')&&<button
             type="button"
             className="penny-fans__avatar-control"
             aria-label={profilePaused ? 'Play Penny profile animation' : 'Pause Penny profile animation'}
@@ -268,7 +269,7 @@ export default function PennyAfterHours() {
             onClick={() => setProfilePaused((value) => !value)}
           >
             <span aria-hidden="true">👀</span>
-          </button>
+          </button>}
           <PennyThoughtBubble provider="gemini" placement="after-hours" />
           <PennyProfileActions />
           <div className="penny-fans__intro">
