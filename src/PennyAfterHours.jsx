@@ -170,6 +170,10 @@ export default function PennyAfterHours() {
   };
 
   useEffect(() => {
+    setProfilePaused(false);
+  }, [avatarAsset?.id]);
+
+  useEffect(() => {
     if (isDesktop) return undefined;
     const video = profileVideoRef.current;
     if (!video) return undefined;
@@ -180,7 +184,8 @@ export default function PennyAfterHours() {
         video.pause();
         return;
       }
-      video.play()?.catch?.(() => setProfilePaused(true));
+      video.muted = true;
+      video.play()?.catch?.(() => {});
     };
 
     const observer = typeof IntersectionObserver === 'undefined' ? null :
@@ -248,6 +253,7 @@ export default function PennyAfterHours() {
             onClick={() => setProfileExpanded((value) => !value)}
           >
             {avatarAsset?.type?.startsWith('image/') ? <img className="penny-fans__avatar" src={avatarAsset.src} alt="Penny profile artwork" /> : <video
+              key={avatarAsset?.id || 'legacy'}
               ref={profileVideoRef}
               className="penny-fans__avatar"
               src={avatarAsset?.src||pennyPrivateMedia('PennyOnlyFanzProfile-web.webm')}
@@ -266,7 +272,19 @@ export default function PennyAfterHours() {
             className="penny-fans__avatar-control"
             aria-label={profilePaused ? 'Play Penny profile animation' : 'Pause Penny profile animation'}
             aria-pressed={profilePaused}
-            onClick={() => setProfilePaused((value) => !value)}
+            onClick={() => {
+              const video = profileVideoRef.current;
+              if (!video) return;
+              if (video.paused) {
+                if (video.error) video.load();
+                video.muted = true;
+                setProfilePaused(false);
+                video.play()?.catch?.(() => { if (profileVideoRef.current === video) setProfilePaused(true); });
+              } else {
+                video.pause();
+                setProfilePaused(true);
+              }
+            }}
           >
             <span aria-hidden="true">👀</span>
           </button>}

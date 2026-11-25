@@ -1,5 +1,4 @@
-import { useEffect,useState } from 'react'
-import ViewportVideo from './ViewportVideo.jsx'
+import { useEffect,useRef,useState } from 'react'
 const PARTY='https://party.wildcarddev.com'
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 const empty={content:{bannerId:null,coverVideoId:null,avatarId:null,profileVideoId:null,posts:[]},media:[]}
@@ -22,14 +21,43 @@ export function managedAsset(data,field) {
   const item=lookup(data,data.content[field])
   return item ? {...item,src:src(item.id)} : null
 }
+// A new asset gets a fresh element and playback state.
+function ManagedCoverVideo({video,className}) {
+  const ref=useRef(null)
+  const [paused,setPaused]=useState(false)
+  const [problem,setProblem]=useState('')
+  const start=()=>{
+    const element=ref.current
+    if(!element)return
+    element.muted=true
+    element.play()?.catch(error=>{
+      if(error?.name!=='AbortError' && ref.current===element){setPaused(true);setProblem('Tap to play cover video.')}
+    })
+  }
+  useEffect(()=>{
+    const element=ref.current
+    if(!element)return
+    const motion=window.matchMedia('(prefers-reduced-motion: reduce)')
+    if(motion.matches){setPaused(true);return}
+    start()
+    return ()=>element.pause()
+  },[])
+  return <>
+    <video ref={ref} className={className} src={video.src} muted loop playsInline preload="metadata"
+      aria-label="Creator cover video" onPlaying={()=>{setPaused(false);setProblem('')}}
+      onError={()=>{setPaused(true);setProblem('Cover video could not be played. Tap to retry.')}} />
+    <button type="button" className={className==='ah-desktop__cover-video'?'ah-desktop__cover-pause':'penny-fans__cover-control'}
+      aria-pressed={paused} aria-label={paused?'Resume cover animation':'Pause cover animation'} title={problem||undefined}
+      onClick={()=>{const element=ref.current;if(!element)return;if(element.paused){if(element.error)element.load();start()}else{element.pause();setPaused(true)}}}>&#128520;</button>
+    {problem&&<span role="status" style={{position:'absolute',bottom:8,left:8,zIndex:3,background:'#22152c',color:'white',padding:4,fontSize:12}}>{problem}</span>}
+  </>
+}
 export function ManagedCover({data,className,children}) {
   const item=lookup(data,data.content.bannerId)
   const [failed,setFailed]=useState(null)
-  const [paused,setPaused]=useState(false)
   const video=managedAsset(data,'coverVideoId')
-  if (video && ['video/mp4','video/webm'].includes(video.type) && failed!==video.id) {
-    return <><ViewportVideo className={className} src={video.src} active={!paused} loop respectReducedMotion aria-label="Creator cover video" onError={()=>setFailed(video.id)}/>
-      <button type="button" className={className==='ah-desktop__cover-video'?'ah-desktop__cover-pause':'penny-fans__cover-control'} aria-pressed={paused} aria-label={paused?'Resume cover animation':'Pause cover animation'} onClick={()=>setPaused(v=>!v)}>😈</button></>
+  if (video && ['video/mp4','video/webm'].includes(video.type)) {
+    return <ManagedCoverVideo key={video.id} video={video} className={className}/>
   }
   if(!item?.type?.startsWith('image/')||failed===item.id)return children
   return <img className={className} src={src(item.id)} alt="Creator cover" onError={()=>setFailed(item.id)}/>
