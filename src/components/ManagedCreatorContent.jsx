@@ -62,6 +62,27 @@ export function ManagedCover({data,className,children}) {
   if(!item?.type?.startsWith('image/')||failed===item.id)return children
   return <img className={className} src={src(item.id)} alt="Creator cover" onError={()=>setFailed(item.id)}/>
 }
+// Built-in posts remain in their original layout unless the Owner explicitly replaces their media.
+export function builtinOverride(data,id){return data?.content?.postOverrides?.[id]??{}}
+export function builtinVisible(data,id){return builtinOverride(data,id).hidden!==true}
+export function builtinCopy(data,id,defaults){const p=builtinOverride(data,id);return {...defaults,title:p.title??defaults.title,copy:p.body??defaults.copy}}
+export function BuiltinBody({data,id,children}){
+  const body=builtinOverride(data,id).body
+  return typeof body==='string'?<p style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{body}</p>:children
+}
+export function BuiltinMedia({data,id,title,children}){
+  const p=builtinOverride(data,id)
+  if(p.mediaMode==='none')return null
+  if(p.mediaMode!=='replace')return children
+  const item=lookup(data,p.mediaId)
+  if(!item)return <p role="status">Assigned media unavailable.</p>
+  return item.type.startsWith('image/')?<img src={src(item.id)} alt={title} loading="lazy" style={{display:'block',width:'100%',maxHeight:'75vh',objectFit:'contain'}}/>:
+    <video key={item.id} src={src(item.id)} controls loop playsInline preload="metadata" aria-label={title} style={{display:'block',width:'100%',maxHeight:'75vh',objectFit:'contain'}}/>
+}
+export function BuiltinLink({data,id}){
+  const link=builtinOverride(data,id).link
+  return typeof link==='string'&&/^\/(?!\/)[a-zA-Z0-9/_-]+$/.test(link)?<p><a href={link}>Open page</a></p>:null
+}
 export function ManagedPosts({data,name,desktop=false,query=''}) {
   const search=query.trim().toLowerCase()
   return data.content.posts.filter(p=>!search||[p.title,p.body].some(x=>typeof x==='string'&&x.toLowerCase().includes(search))).map(p=>{

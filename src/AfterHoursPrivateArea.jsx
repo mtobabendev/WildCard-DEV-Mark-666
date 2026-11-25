@@ -9,7 +9,7 @@ import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx'
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import AskPenny from './components/AskPenny.jsx'
 import ViewportVideo from './components/ViewportVideo.jsx'
-import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset} from './components/ManagedCreatorContent.jsx'
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset,builtinOverride,builtinVisible,builtinCopy,BuiltinBody,BuiltinMedia,BuiltinLink} from './components/ManagedCreatorContent.jsx'
 
 const PARTY = 'https://party.wildcarddev.com'
 const TABS = ['posts', 'photos', 'videos', 'profile']
@@ -50,6 +50,7 @@ export default function AfterHoursPrivateArea({ area }) {
   if (!profile || !['kandy', 'ashley'].includes(area)) return null
 
   const name = profile.short
+  const spotlight=builtinCopy(managed,'spotlight',{title:'Meet '+name,copy:profile.description})
   const choose = next => { setTab(next); setQuery('') }
   const pause=<button type="button" className={desktop?'ah-desktop__avatar-pause':'penny-fans__avatar-control'} aria-label={avatarPaused?'Resume avatar video':'Pause avatar video'} aria-pressed={avatarPaused} onClick={()=>setAvatarPaused(v=>!v)}>👀</button>
   const avatar = <button type="button"
@@ -90,10 +91,12 @@ export default function AfterHoursPrivateArea({ area }) {
     {tab === 'posts' ? <section className={desktop ? 'ah-desktop__posts' : 'penny-fans__feed'} aria-label={name + ' posts'}>
       <label className="creator-member__search">Search posts <input type="search" value={query} onChange={e=>setQuery(e.target.value)} /></label>
       <ManagedPosts data={managed} name={name} desktop={desktop} query={query} />
-      {(!query.trim()||('Meet '+name+' '+profile.description).toLowerCase().includes(query.trim().toLowerCase()))&&<article className={desktop ? 'ah-desktop__post' : 'penny-fans__featured-post'}>
+      {builtinVisible(managed,'spotlight')&&(!query.trim()||(spotlight.title+' '+spotlight.copy).toLowerCase().includes(query.trim().toLowerCase()))&&<article className={desktop ? 'ah-desktop__post' : 'penny-fans__featured-post'}>
         <header className="creator-member__post-header"><img src={profile.image} alt="" /><div><strong>{name} ♠</strong><small>Creator spotlight</small></div></header>
-        <div className="penny-fans__featured-copy"><h2>Meet {name}</h2><p>{profile.description}</p></div>
+        <div className="penny-fans__featured-copy"><h2>{spotlight.title}</h2><p style={{whiteSpace:'pre-wrap'}}>{spotlight.copy}</p></div>
+        <BuiltinMedia data={managed} id="spotlight" title={spotlight.title}>
         <a className="creator-member__post-art" href={profile.links[0].href}><img src={profile.image} alt={'Visit ' + name + '’s WildCard creator page'} /></a>
+        </BuiltinMedia><BuiltinLink data={managed} id="spotlight"/>
         <footer className="creator-member__post-footer">♠ WILDCARD DEV ORIGINAL <a href={profile.links[0].href}>Explore ↗</a></footer>
       </article>}
       <div className="creator-member__links"><button onClick={() => choose('photos')}>Explore photo collections</button><button onClick={() => choose('videos')}>Explore video collections</button></div>

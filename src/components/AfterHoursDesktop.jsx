@@ -16,7 +16,7 @@ import PennySocialPills from './PennySocialPills.jsx'
 import NursePennyEasterEgg from './NursePennyEasterEgg.jsx'
 import SeatAnimationPair, { SEAT_COMPANION } from './SeatAnimationPair.jsx'
 import './AfterHoursDesktop.css'
-import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset} from './ManagedCreatorContent.jsx'
+import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset,builtinOverride,builtinVisible,builtinCopy,BuiltinBody,BuiltinMedia,BuiltinLink} from './ManagedCreatorContent.jsx'
 
 const MESSENGER = 'https://party.wildcarddev.com/?app=messenger'
 const SQUARE = 'https://square.link/u/YnAVr8ht'
@@ -43,6 +43,7 @@ const VIDEOS = [
   { id: 'seat-companion', title: 'A seat at the table — companion', type: 'video', src: SEAT_COMPANION },
 ]
 const MEDIA = [...PHOTOS, ...VIDEOS]
+const BUILTIN_KEYS={'nurse-post':'nurse','velvet-post':'velvet','cover-post':'cover','seat-post':'throne','vault-post':'vault','letter-post':'letter'}
 const POSTS = [
   { id: 'nurse-post', title: 'Paging Nurse Morningstar ♠', date: 'Character reveal',
     copy: 'The lab coat is pressed, the clipboard is ready, and the paperwork has been warned. A fictional WildCard DEV character portrait, not a medical service.',
@@ -56,6 +57,7 @@ const POSTS = [
   { id: 'seat-post', title: 'A seat at the table', date: 'Creator video',
     copy: 'Behind the scenes of WildCard DEV: violet light, velvet, and a front-row seat to the next build.',
     media: VIDEOS[1] },
+  { id: 'vault-post', title: "The Velvet Vault", date: 'Creator spotlight', copy: "Every queen needs her circle. A little beauty, a little attitude, and friends who know how to make an entrance. ♠", media: {id:'vault',title:"The Velvet Vault",type:'photo',src:'/static/KandyOnlyFans2.jpg',alt:'Creator spotlight'} },
   { id: 'letter-post', title: 'A note from Penny', date: 'Creator video',
     copy: 'Come for the digital glamour. Stay for the stories and creative experiments.',
     media: VIDEOS[2] },
@@ -189,7 +191,7 @@ export default function AfterHoursDesktop() {
 
   const term = query.trim().toLowerCase()
   const matches = (value) => !term || value.toLowerCase().includes(term)
-  const posts = POSTS.filter(post => matches(post.title + ' ' + post.copy + ' ' + post.date))
+  const posts = POSTS.filter(post=>builtinVisible(managed,BUILTIN_KEYS[post.id])).map(post=>builtinCopy(managed,BUILTIN_KEYS[post.id],post)).filter(post => matches(post.title + ' ' + post.copy + ' ' + post.date))
     .filter(post => tab !== 'saved' || saved.includes('post:' + post.id))
   const media = MEDIA.filter(item => (tab === 'photos' ? item.type === 'photo' : tab === 'videos' ? item.type === 'video' : (mediaType === 'all' || item.type === mediaType)))
     .filter(item => matches(item.title))
@@ -299,14 +301,17 @@ export default function AfterHoursDesktop() {
               onClick={() => toggleSaved('post:' + post.id)}>
               {saved.includes('post:' + post.id) ? '★ Saved' : '☆ Save'}</button>
           </header>
-          {post.id === 'seat-post' ? <SeatAnimationPair title={post.title} copy={post.copy} label="AFTER HOURS" original={post.media.src}
+          {post.id === 'seat-post' && !['replace','none'].includes(builtinOverride(managed,BUILTIN_KEYS[post.id]).mediaMode) ? <SeatAnimationPair title={post.title} copy={post.copy} label="AFTER HOURS" original={post.media.src}
             onOpen={src => setSelected(VIDEOS.find(item => item.src === src))} /> : <>
-          <h2>{post.title}</h2><p>{post.copy}</p>
+          <h2>{post.title}</h2><p style={{whiteSpace:'pre-wrap'}}>{post.copy}</p>
+          <BuiltinMedia data={managed} id={BUILTIN_KEYS[post.id]} title={post.title}>
           {post.id === 'nurse-post' ? <NursePennyEasterEgg className="ah-desktop__post-image" />
             : post.media.type === 'video' ? <DesktopPostVideo item={post.media} onOpen={setSelected} /> : <button type="button" className="ah-desktop__post-image"
             onClick={() => setSelected(post.media)} aria-label={'Enlarge ' + post.media.title}>
             <img src={post.media.src} alt={post.media.alt} loading="lazy" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = "/static/penny-kandy-reel-hero.webp" }} /></button>}
+          </BuiltinMedia>
           </>}
+          <BuiltinLink data={managed} id={BUILTIN_KEYS[post.id]}/>
           <footer><span>♠ WILDCARD DEV ORIGINAL</span><a href={MESSENGER}>Message Penny ✉</a></footer>
         </article>)}
         {!posts.length && tab === 'posts' && <p className="ah-desktop__empty">No posts match that search.</p>}
@@ -409,11 +414,11 @@ export default function AfterHoursDesktop() {
         {selected.type === 'video' ? <UserLoopVideo key={selected.id} controls playsInline preload="metadata"
           src={selected.src} poster={selected.poster} aria-label={selected.title} />
           : <img src={selected.src} alt={selected.alt} />}
-        <nav aria-label="Media viewer navigation">
+        {selectedIndex>=0&&<nav aria-label="Media viewer navigation">
           <button type="button" onClick={() => goMedia(-1)}>← Previous</button>
           <span>{selectedIndex + 1} / {MEDIA.length}</span>
           <button type="button" onClick={() => goMedia(1)}>Next →</button>
-        </nav>
+        </nav>}
       </div>}
     </dialog>
     {status && <div role="status" className="ah-desktop__toast">{status}
