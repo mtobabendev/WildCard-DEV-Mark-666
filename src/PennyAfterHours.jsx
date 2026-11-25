@@ -37,7 +37,7 @@ const POSTS = [
     copy: 'A little velvet, a little candlelight, and an invitation to stay longer than you planned. There is always room for one more at my table. 💋',
     symbol: '♛',
     theme: 'throne',
-    video: pennyPrivateMedia('PennySeatAtTheTable.webm'),
+    video: '/static/PennySeatAtTheTable.webm',
     videoWidth: 400,
     videoHeight: 880,
   },
@@ -48,7 +48,7 @@ const POSTS = [
     copy: 'Every queen needs her circle. A little beauty, a little attitude, and friends who know how to make an entrance. ♠',
     symbol: '♠',
     theme: 'vault',
-    image: pennyPrivateMedia('KandyOnlyFans2.jpg'),
+    image: '/static/KandyOnlyFans2.jpg',
   },
   {
     id: 'letter',
@@ -92,7 +92,7 @@ const VIDEOS = [
   {
     id: 'seat-at-the-table',
     title: 'A seat at the table',
-    src: pennyPrivateMedia('PennySeatAtTheTable.webm'),
+    src: '/static/PennySeatAtTheTable.webm',
   },
   {
     id: 'anime-penny',
