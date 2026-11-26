@@ -12,7 +12,6 @@ import ViewportVideo from './components/ViewportVideo.jsx'
 import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset,builtinOverride,builtinVisible,builtinCopy,BuiltinBody,BuiltinMedia,BuiltinLink} from './components/ManagedCreatorContent.jsx'
 
 const PARTY = 'https://party.wildcarddev.com'
-const TABS = ['posts', 'photos', 'videos', 'profile']
 const CREATORS = ['penny', 'kandy', 'ashley']
 
 function CreatorFriends({ area }) {
@@ -29,6 +28,7 @@ function CreatorFriends({ area }) {
 
 export default function AfterHoursPrivateArea({ area }) {
   const profile = LABEL[area]
+  const TABS = area === 'kandy' ? ['posts', 'photos', 'videos', 'music', 'profile'] : ['posts', 'photos', 'videos', 'profile']
   const managed = useManagedContent(area)
   const [tab, setTab] = useState('posts')
   const [expanded, setExpanded] = useState(false)
@@ -106,7 +106,7 @@ export default function AfterHoursPrivateArea({ area }) {
       <ManagedProfileVideo data={managed} />
       <p>{profile.description}</p>
       <nav className="creator-member__links">{profile.links.map(link=><a key={link.href} href={link.href}>{link.name} ↗</a>)}</nav>
-    </section> : <PennyPrivateCollections key={tab} area={area} view={tab === 'videos' ? 'reels' : 'galleries'} />}
+    </section> : <PennyPrivateCollections key={tab} area={area} view={tab === 'videos' ? 'reels' : tab === 'music' ? 'music' : 'galleries'} />}
   </>
 
   if (desktop) return <div className="ah-desktop creator-member">

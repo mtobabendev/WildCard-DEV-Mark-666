@@ -36,9 +36,9 @@ export default function PennyPrivateCollections({ view = 'galleries', area = 'pe
     <iframe
       ref={frameRef}
       className="penny-private-collections__frame"
-      title={name + "'s private galleries and reels"}
+      title={name + "'s private galleries, reels, and music"}
       key={selectedArea + ":" + view}
-      src={frameSrc + '&view=' + (view === 'reels' ? 'reels' : 'galleries')}
+      src={frameSrc + '&view=' + (['reels', 'music'].includes(view) ? view : 'galleries')}
       loading="lazy"
       referrerPolicy="origin"
       allow="fullscreen"
