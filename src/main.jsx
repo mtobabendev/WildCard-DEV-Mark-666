@@ -1,5 +1,7 @@
 import { initializePerformance } from './components/performance-profile.js';
 import './performance.css';
+import './little-black-book.css';
+import { shouldSkipIntro, rememberIntro, deferAnalytics } from './components/startup-policy.js';
 import PennyContactRouter from './components/PennyContactRouter.jsx';
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -33,10 +35,13 @@ function loadGoogleAnalytics() {
 
 function SiteEntry() {
   const [introFinished, setIntroFinished] = useState(
-    () => performanceProfile.skipIntro || window.location.pathname.replace(/\/+$/, '') === '/grimoire',
+    () => shouldSkipIntro(performanceProfile, window),
   );
   const [AppComponent, setAppComponent] = useState(null);
+  const [appFailed, setAppFailed] = useState(false);
   const [LittleBlackBookComponent, setLittleBlackBookComponent] = useState(null);
+  const [bookLoading, setBookLoading] = useState(false);
+  const [bookFailed, setBookFailed] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -48,7 +53,7 @@ function SiteEntry() {
           setAppComponent(() => LoadedApp);
         }
       })
-      .catch(() => {});
+      .catch(() => { if (!cancelled) setAppFailed(true); });
 
     const video = videoRef.current;
 
@@ -84,37 +89,40 @@ function SiteEntry() {
       }
     }
 
+    let stallTimer;
+    const clearStall = () => window.clearTimeout(stallTimer);
+    const armStall = () => { clearStall(); stallTimer = window.setTimeout(() => setIntroFinished(true), 8000); };
+    if (video) {
+      armStall();
+      video.addEventListener('playing', clearStall);
+      video.addEventListener('waiting', armStall);
+    }
     return () => {
       cancelled = true;
+      clearStall();
+      video?.removeEventListener('playing', clearStall);
+      video?.removeEventListener('waiting', armStall);
     };
   }, []);
 
   useEffect(() => {
-    if (!introFinished) return undefined;
+    if (!introFinished || !AppComponent) return undefined;
+    return deferAnalytics(window, loadGoogleAnalytics);
+  }, [introFinished, AppComponent]);
 
-    let cancelled = false;
-
+  const openBook = () => {
+    if (bookLoading) return;
+    setBookLoading(true);
+    setBookFailed(false);
     import('./LittleBlackBook.jsx')
-      .then(({ default: LoadedLittleBlackBook }) => {
-        if (!cancelled) {
-          setLittleBlackBookComponent(() => LoadedLittleBlackBook);
-        }
-      })
-      .catch(() => {});
-
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(loadGoogleAnalytics);
-    } else {
-      window.setTimeout(loadGoogleAnalytics, 3000);
-    }
-
-    return () => {
-      cancelled = true;
-    };
-  }, [introFinished]);
+      .then(({ default: LoadedLittleBlackBook }) => setLittleBlackBookComponent(() => LoadedLittleBlackBook))
+      .catch(() => setBookFailed(true))
+      .finally(() => setBookLoading(false));
+  };
 
   const finishIntro = () => {
     videoRef.current?.pause();
+    rememberIntro(window);
     setIntroFinished(true);
   };
 
@@ -122,7 +130,9 @@ function SiteEntry() {
     <>
       <div style={{ display: 'contents' }}>
         {introFinished ? (
-          AppComponent ? <AppComponent /> : null
+          AppComponent ? <AppComponent /> : appFailed ? (
+            <main className="startup-recovery" role="alert">WildCard DEV could not finish loading. <button onClick={() => window.location.reload()}>Retry</button></main>
+          ) : <div className="startup-recovery" role="status">Loading WildCard DEV...</div>
         ) : (
           <div
           style={{
@@ -143,7 +153,7 @@ function SiteEntry() {
             ref={videoRef}
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             role="button"
             tabIndex={0}
             aria-label="Penny introduction video. Tap, click, Enter, or Space to skip."
@@ -156,7 +166,7 @@ function SiteEntry() {
               }
             }}
             onEnded={finishIntro}
-            onError={finishIntro}
+            onError={() => setIntroFinished(true)}
             style={{
               display: 'block',
               width: '100%',
@@ -173,14 +183,23 @@ function SiteEntry() {
               <source src={pennySaysHelloWebm} type="video/webm" />
             )}
             </video>
+            <button className="startup-skip" type="button" onClick={finishIntro}>Skip intro</button>
           </div>
         )}
       </div>
       {introFinished && <MessengerLauncher />}
       {introFinished && <AskPenny />}
-      {introFinished && LittleBlackBookComponent ? (
-        <LittleBlackBookComponent />
-      ) : null}
+      {introFinished && (LittleBlackBookComponent ? (
+        <LittleBlackBookComponent initiallyOpen />
+      ) : (
+        <div className="lbb-root">
+          <button className="lbb-edge-tab" type="button" aria-expanded={false} aria-busy={bookLoading}
+            aria-label={bookFailed ? 'Retry opening Penny’s Little Black Book' : 'Open Penny’s Little Black Book'} onClick={openBook}>
+            <span className="lbb-edge-glyph" aria-hidden="true">♠</span>
+            <span className="lbb-edge-label">{bookLoading ? 'WAIT' : bookFailed ? 'RETRY' : 'BOOK'}</span>
+          </button>
+        </div>
+      ))}
     </>
   );
 }
@@ -255,11 +274,7 @@ if (Object.hasOwn(showcaseRoutes, normalizedPath)) {
         <PennyContactRouter videoSource="/static/PennyContactAssistVideo.webm" /></StrictMode>,
       );
 
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(loadGoogleAnalytics);
-      } else {
-        window.setTimeout(loadGoogleAnalytics, 3000);
-      }
+      deferAnalytics(window, loadGoogleAnalytics);
     })
     .catch(() => {
       window.location.replace('/');

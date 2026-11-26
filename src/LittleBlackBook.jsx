@@ -231,8 +231,8 @@ function computeCalculator(left, right, operator) {
   return right;
 }
 
-export default function LittleBlackBook() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function LittleBlackBook({ initiallyOpen = false }) {
+  const [isOpen, setIsOpen] = useState(initiallyOpen);
   const [activeTab, setActiveTab] = useState('today');
   const [data, setData] = useState(defaultData);
   const [storageStatus, setStorageStatus] = useState('Loading device storage…');

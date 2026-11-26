@@ -51,10 +51,10 @@ export function bindViewportPlayback(
 
   const observer = Observer ? new Observer(entries => {
     for (const entry of entries) {
-      if (entry.target === target) visible = entry.isIntersecting;
+      if (entry.target === target) visible = entry.isIntersecting && (!releaseOffscreen || (entry.intersectionRatio ?? 1) >= 0.15);
     }
     sync();
-  }, { threshold: 0 }) : null;
+  }, { threshold: releaseOffscreen ? [0, 0.15] : 0 }) : null;
 
   page.addEventListener('visibilitychange', sync);
   if (fallbackSrc) video.addEventListener('error', onError);

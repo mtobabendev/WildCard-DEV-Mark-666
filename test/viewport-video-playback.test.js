@@ -166,3 +166,13 @@ test('metadata hint falls back to native metadata loading without observer suppo
   assert.equal(video.preload, 'metadata');
   dispose();
 });
+
+test('constrained playback ignores slivers of visibility and releases source below 15 percent',()=>{
+  const page=Object.assign(new EventTarget(),{hidden:false}); let observe;
+  const target={}; const video={source:null,plays:0,pauses:0,getAttribute(){return this.source},setAttribute(_,v){this.source=v},removeAttribute(){this.source=null},load(){},play(){this.plays++;return Promise.resolve()},pause(){this.pauses++}};
+  class Observer { constructor(callback,options){observe=callback;assert.deepEqual(options.threshold,[0,0.15])}observe(){}disconnect(){} }
+  const stop=bindViewportPlayback(video,'/panel.webm',{page,target,Observer,releaseOffscreen:true});
+  observe([{target,isIntersecting:true,intersectionRatio:.01}]); assert.equal(video.source,null);
+  observe([{target,isIntersecting:true,intersectionRatio:.25}]); assert.equal(video.source,'/panel.webm');
+  observe([{target,isIntersecting:true,intersectionRatio:.1}]); assert.equal(video.source,null);assert.equal(video.pauses,1);stop();
+});

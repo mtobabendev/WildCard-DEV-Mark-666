@@ -46,3 +46,6 @@ html[data-performance="lightweight"] .owner-possibilities-pill {
 html[data-performance="lightweight"] .identity-card {
   box-shadow: none;
 }
+
+.startup-skip { position: absolute; bottom: max(1rem, env(safe-area-inset-bottom)); right: 1rem; z-index: 1; padding: .55rem .9rem; border: 1px solid #c9d2df; border-radius: .6rem; background: #100b20; color: #fff; cursor: pointer; }
+.startup-recovery { position: fixed; inset: 0; display: grid; place-content: center; gap: 1rem; color: #fff; background: #0a081d; text-align: center; }
