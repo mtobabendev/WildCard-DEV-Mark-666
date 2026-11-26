@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#13091d">
+  <title>WildCard DEV | Universal Spade Loader</title>
+  <script defer src="/static/wildcard-spade-loader.js"></script>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:18px;color:#fff7ff;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:radial-gradient(circle at 40% 16%,#78265f5c,transparent 43%),
+                 radial-gradient(circle at 87% 90%,#6729a552,transparent 38%),#0b0714}
+    main{width:min(560px,100%);border:1px solid #b36baa; border-radius:24px;
+      padding:clamp(24px,5vw,42px);background:#1e1128d9;box-shadow:0 22px 65px #0009}
+    h1{font-size:clamp(27px,7vw,40px);margin:8px 0 10px;line-height:1.1}
+    .brand{font-weight:900;letter-spacing:.12em;color:#ff83cb}
+    .lead{color:#e5c8df;line-height:1.65;font-size:15px}
+    .spades{display:flex;gap:15px;justify-content:center;margin:28px 0;font-size:40px;
+      color:#ff8cdb;text-shadow:0 0 12px #f949c6,0 0 28px #f12aa3}
+    .options{display:grid;gap:12px;margin:28px 0 0}
+    button{cursor:pointer;border:1px solid #ffd2f0;border-radius:16px;padding:15px 18px;
+      background:linear-gradient(135deg,#942b83,#5a1c84);font:700 15px system-ui;color:white;
+      box-shadow:0 0 15px #e44ca44a}
+    button:hover{background:linear-gradient(135deg,#b6349b,#75249c)}
+    button:focus-visible{outline:3px solid white;outline-offset:3px}
+    .foot{margin:19px 0 0;color:#c6a3c7;font-size:12px;line-height:1.5}
+    .note{margin-top:14px;color:#ffbbdf;font-weight:600;font-size:13px;min-height:20px}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">♠ WILDCARD DEV</div>
+    <h1>Your next hand awaits.</h1>
+    <p class="lead">Meet the universal spade loader: the same hot-pink shimmer on phones, laptops, Party, and every WildCard DEV app that installs the component.</p>
+    <div class="spades" aria-hidden="true"><span>♠</span><span>♠</span><span>♠</span><span>♠</span><span>♠</span></div>
+    <div class="options">
+      <button type="button" id="show-pulse">♠ See the animated loader</button>
+      <button type="button" id="show-progress">♠ See a five-step progress demo</button>
+      <button type="button" id="show-afterhours">♠ See the After Hours access style</button>
+    </div>
+    <p class="note" id="demo-status" role="status"></p>
+    <p class="foot">These are demonstrations, not live downloads. Real WildCard apps report percentages only when they have measurable progress. Tap the × in the loader to dismiss it.</p>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var api = window.WildCardLoader;
+      var status = document.getElementById('demo-status');
+      function finish(token, message) {
+        api.hide(token);
+        status.textContent = message;
+      }
+      document.getElementById('show-pulse').addEventListener('click', function () {
+        status.textContent = 'Animated demo started.';
+        var token = api.show({ label: 'Shuffling your WildCard DEV experience…' });
+        window.setTimeout(function () { finish(token, 'Animated demo complete.'); }, 3700);
+      });
+      document.getElementById('show-progress').addEventListener('click', function () {
+        status.textContent = 'Five-step demonstration started.';
+        var token = api.show({ label: 'Progress demo: step 0 of 5', progress: 0 });
+        var step = 0;
+        var interval = window.setInterval(function () {
+          if (!api.isActive()) { window.clearInterval(interval); return; }
+          step += 1;
+          api.update(token, step * 20, 'Progress demo: step ' + step + ' of 5');
+          if (step === 5) {
+            window.clearInterval(interval);
+            window.setTimeout(function () { finish(token, 'Progress demo complete.'); }, 800);
+          }
+        }, 600);
+      });
+      document.getElementById('show-afterhours').addEventListener('click', function () {
+        status.textContent = 'After Hours preview started.';
+        var token = api.show({ label: 'Checking your After Hours access…' });
+        window.setTimeout(function () { finish(token, 'After Hours preview complete.'); }, 3700);
+      });
+    });
+  </script>
+</body>
+</html>
