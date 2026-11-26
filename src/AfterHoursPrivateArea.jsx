@@ -30,7 +30,10 @@ export default function AfterHoursPrivateArea({ area }) {
   const profile = LABEL[area]
   const TABS = area === 'kandy' ? ['posts', 'photos', 'videos', 'music', 'profile'] : ['posts', 'photos', 'videos', 'profile']
   const managed = useManagedContent(area)
-  const [tab, setTab] = useState('posts')
+  const [tab, setTab] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get('tab')
+    return TABS.includes(requested) ? requested : 'posts'
+  })
   const [expanded, setExpanded] = useState(false)
   const [more, setMore] = useState(false)
   const [avatarPaused,setAvatarPaused]=useState(false)
@@ -47,11 +50,28 @@ export default function AfterHoursPrivateArea({ area }) {
   useEffect(() => {
     if (profile) document.title = profile.short + ' After Hours · WildCard DEV'
   }, [profile])
+  useEffect(() => {
+    if (desktop || tab !== 'music' || new URLSearchParams(window.location.search).get('tab') !== 'music') return undefined
+    const frame = window.requestAnimationFrame(() => document.getElementById('creator-member-tabs')?.scrollIntoView({ block: 'start' }))
+    return () => window.cancelAnimationFrame(frame)
+  }, [desktop])
   if (!profile || !['kandy', 'ashley'].includes(area)) return null
 
   const name = profile.short
   const spotlight=builtinCopy(managed,'spotlight',{title:'Meet '+name,copy:profile.description})
-  const choose = next => { setTab(next); setQuery('') }
+  const choose = next => {
+    if (!TABS.includes(next)) return
+    setTab(next)
+    setQuery('')
+    const url = new URL(window.location.href)
+    if (next === 'posts') url.searchParams.delete('tab')
+    else url.searchParams.set('tab', next)
+    window.history.replaceState(null, '', url)
+  }
+  const openMusic = () => {
+    choose('music')
+    window.requestAnimationFrame(() => document.getElementById('creator-member-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
   const pause=<button type="button" className={desktop?'ah-desktop__avatar-pause':'penny-fans__avatar-control'} aria-label={avatarPaused?'Resume avatar video':'Pause avatar video'} aria-pressed={avatarPaused} onClick={()=>setAvatarPaused(v=>!v)}>👀</button>
   const avatar = <button type="button"
     className={desktop ? 'ah-desktop__avatar' + (expanded ? ' ah-desktop__avatar--expanded' : '') : 'penny-fans__avatar-slot'}
@@ -68,6 +88,9 @@ export default function AfterHoursPrivateArea({ area }) {
     <nav className="creator-member__links" aria-label={name + ' links'}>
       {profile.links.map(link => <a key={link.href} href={link.href}>{link.name} ↗</a>)}
     </nav>
+    {area === 'kandy' && !desktop && <button type="button" className="creator-member__music-shortcut" onClick={openMusic}>
+      ♫ Listen to Kandy's Music <span aria-hidden="true">→</span>
+    </button>}
   </>
   const identity = desktop
     ? <section className="ah-desktop__identity">
@@ -126,7 +149,7 @@ export default function AfterHoursPrivateArea({ area }) {
     <aside className="ah-desktop__right"><div className="ah-desktop__thought"><PennyThoughtBubble provider="gemini" placement="after-hours" /></div><CreatorFriends area={area} /></aside>
     <AskPenny />
   </div>
-  return <main className="penny-fans creator-member">
+  return <main className={'penny-fans creator-member' + (area === 'kandy' ? ' creator-member--kandy' : '')}>
     <div className="penny-fans__wash" aria-hidden="true" />
     <header className="penny-fans__topbar"><a className="penny-fans__brand" href="/">♠ WildCard DEV</a><span className="penny-fans__edition">{name.toUpperCase()} / AFTER HOURS</span><a href="/creators">← Creators</a></header>
     <div className="penny-fans__shell">
@@ -136,6 +159,9 @@ export default function AfterHoursPrivateArea({ area }) {
         <button type="button" aria-current={tab==='posts'?'page':undefined} onClick={()=>{choose('posts');window.scrollTo({top:0})}}><span aria-hidden="true">⌂</span><span>Home</span></button>
         <a href="/creators"><span aria-hidden="true">◉</span><span>Explore</span></a>
         <a href={PARTY+'/?app=messenger'}><span aria-hidden="true">✉</span><span>Messages</span></a>
+        {area === 'kandy' && <button type="button" aria-current={tab === 'music' ? 'page' : undefined} onClick={openMusic}>
+          <span aria-hidden="true">♫</span><span>Music</span>
+        </button>}
         <button type="button" aria-current={tab==='profile'?'page':undefined} onClick={()=>{choose('profile');document.getElementById('creator-member-tabs')?.scrollIntoView({block:'start'})}}><span aria-hidden="true">♙</span><span>Profile</span></button>
       </nav>
       <AskPenny />

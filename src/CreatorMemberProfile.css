@@ -20,4 +20,9 @@
 .creator-member__search { display:grid; gap:5px; padding:12px; grid-column:1/-1; }
 .creator-member__search input { min-width:0; width:100%; box-sizing:border-box; padding:9px; color:inherit; background:#241332; border:1px solid #99688f; border-radius:8px; }
 .creator-member .penny-fans__bottom-nav { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.creator-member--kandy .penny-fans__bottom-nav { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.creator-member__music-shortcut { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-height:48px; margin:14px 0 4px; padding:10px 15px; border:1px solid #dca1eb; border-radius:12px; background:linear-gradient(100deg,#542366,#2e173f); color:#ffe3fb; font:inherit; font-weight:750; text-align:left; cursor:pointer; }
+.creator-member__music-shortcut:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+.creator-member__music-shortcut > span { font-size:1.25em; }
+#creator-member-tabs { scroll-margin-top:12px; }
 .creator-member .penny-fans__bottom-nav > * > span:first-child { font-size:1.4rem; line-height:1; }
