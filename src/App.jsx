@@ -16,8 +16,8 @@ import AshleyPanel from './components/AshleyPanel.jsx';
 const MarkThreeCarousel = lazy(() => import('./components/MarkThreeCarousel.jsx'));
 import DiceTray from './components/DiceTray.jsx';
 import VeilEffectsPlayground from './components/VeilEffectsPlayground.jsx';
-import mattAvatar from '../assets/matt-avatar-ui.png';
-import wildCardDevIcon from '../assets/wildcard-logo-main.png';
+import mattAvatar from '../assets/matt-avatar-ui-v2.webp';
+import wildCardDevIcon from '../assets/wildcard-logo-main-ui.webp';
 import pennySpadeLogo from '../assets/wildcard-logo-penny.png';
 import kandyKandleWebm from '../assets/KandyKandle.webm';
 import pennyKandyAvaVideo from '../assets/PennyKandyAva.webm';
@@ -299,7 +299,7 @@ function PennyLoopVideo({ active }) {
 
   if (!active) return null;
   return (
-    <ViewportVideo
+    <ViewportVideo budgeted
       key={videoIndex}
       className="penny-loop-video"
       src={videos[videoIndex]}
@@ -312,7 +312,7 @@ function PennyLoopVideo({ active }) {
 function KandyVideo({ active }) {
   if (!active) return null;
   return (
-    <ViewportVideo
+    <ViewportVideo budgeted
       className="kandy-video"
       src={kandyKandleWebm}
       compatibilitySrc={kandyBalanced} lightweightSrc={kandyLightweight} compatibilityPoster={kandyPoster}
@@ -623,7 +623,7 @@ function ContactPanels({
                 className="owner-feature-video-shell"
                 aria-hidden="true"
               >
-                <ViewportVideo
+                <ViewportVideo budgeted
                   className="owner-feature-video"
                   src={ownerPennyKandyVideo}
                   compatibilitySrc={ownerBalanced} lightweightSrc={ownerLightweight} compatibilityPoster={ownerPoster}

@@ -7,14 +7,25 @@ const FLIP_INTERVAL_MS = 30000;
 export default function AshleyPanel({ active, links }) {
   const [flipped, setFlipped] = useState(false);
   const [photoReady, setPhotoReady] = useState(false);
+  const [photoRequested, setPhotoRequested] = useState(false);
   const showPhoto = flipped && photoReady;
+
+  // Fetch the hidden reverse face just before the automatic flip, or immediately on request.
+  useEffect(() => {
+    if (!active || photoRequested) return;
+    const timer = window.setTimeout(() => setPhotoRequested(true), 20000);
+    return () => window.clearTimeout(timer);
+  }, [active, photoRequested]);
 
   // A manual flip starts a fresh 30-second interval.
   useEffect(() => {
-    if (!active || !photoReady) return;
-    const timer = window.setTimeout(() => setFlipped(value => !value), FLIP_INTERVAL_MS);
+    if (!active) return;
+    const timer = window.setTimeout(() => {
+      setPhotoRequested(true);
+      setFlipped(value => !value);
+    }, FLIP_INTERVAL_MS);
     return () => window.clearTimeout(timer);
-  }, [active, photoReady, flipped]);
+  }, [active, flipped]);
 
   return (
     <article className="identity-card identity-card--ashley" aria-labelledby="ashley-panel-title">
@@ -89,12 +100,12 @@ export default function AshleyPanel({ active, links }) {
           className="ashley-video-shell ashley-memory-flip"
           aria-label={showPhoto ? "Show Ashley’s introduction video" : "Show Ashley’s memory photograph"}
           aria-pressed={showPhoto}
-          onClick={() => { if (active && photoReady) setFlipped(value => !value); }}
+          onClick={() => { if (active) { setPhotoRequested(true); setFlipped(value => !value); } }}
         >
           <span className="ashley-memory-flip__inner">
             <span className="ashley-memory-flip__face" aria-hidden={showPhoto}>
               {active && (
-                <ViewportVideo
+                <ViewportVideo budgeted
                   className="ashley-video"
                   src="/static/AshleyIntroLoopmp4.webm"
                   active={!showPhoto}
@@ -104,7 +115,7 @@ export default function AshleyPanel({ active, links }) {
               )}
             </span>
             <span className="ashley-memory-flip__face ashley-memory-flip__back" aria-hidden={!showPhoto}>
-              {active && (
+              {active && photoRequested && (
                 <img
                   src={MEMORY_PHOTO}
                   alt="Ashley sharing a celebratory evening with friends"
@@ -122,7 +133,7 @@ export default function AshleyPanel({ active, links }) {
           aria-label="Open Ashley's What If Time Capsule. Combination required."
         >
           {active && (
-            <ViewportVideo
+            <ViewportVideo budgeted
               className="ashley-video"
               src="/static/AshleyHotLoop.webm"
               loop

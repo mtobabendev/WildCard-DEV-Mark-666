@@ -6,7 +6,10 @@ import { bindViewportPlayback } from '../src/components/viewport-video-playback.
 test('only Fire TV and evidence of constrained devices select lower modes', () => {
   assert.equal(detectPerformance({ userAgent: 'Mozilla AFTT Silk/108' }), 'lightweight');
   assert.equal(detectPerformance({ userAgent: 'Linux Android Silk/108 KFAPWI' }), 'cinematic');
-  assert.equal(detectPerformance({ userAgent: 'Linux Firefox', platform: 'Linux aarch64' }), 'balanced');
+  assert.equal(detectPerformance({ userAgent: 'Linux Firefox', platform: 'Linux aarch64' }), 'lightweight');
+  assert.equal(detectPerformance({ userAgent: 'Linux x86_64', platform: 'Linux x86_64', hardwareConcurrency: 4 }), 'lightweight');
+  assert.equal(detectPerformance({ userAgent: 'Linux Android', hardwareConcurrency: 4 }), 'balanced');
+  assert.equal(detectPerformance({ userAgent: 'Linux x86_64', hardwareConcurrency: 8 }), 'cinematic');
   assert.equal(detectPerformance({ deviceMemory: 2 }), 'lightweight');
   assert.equal(detectPerformance({ deviceMemory: 4 }), 'balanced');
   assert.equal(detectPerformance({ saveData: true }), 'lightweight');
