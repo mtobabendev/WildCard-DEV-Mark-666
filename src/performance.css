@@ -49,3 +49,11 @@ html[data-performance="lightweight"] .identity-card {
 
 .startup-skip { position: absolute; bottom: max(1rem, env(safe-area-inset-bottom)); right: 1rem; z-index: 1; padding: .55rem .9rem; border: 1px solid #c9d2df; border-radius: .6rem; background: #100b20; color: #fff; cursor: pointer; }
 .startup-recovery { position: fixed; inset: 0; display: grid; place-content: center; gap: 1rem; color: #fff; background: #0a081d; text-align: center; }
+
+/* Low-end compositor budget: keep the geometry, stop decorative idle effects. */
+html[data-performance="lightweight"] .identity-card,
+html[data-performance="lightweight"] .spinner-card,
+html[data-performance="lightweight"] .spinner-deck { filter: none !important; }
+html[data-performance="lightweight"] .spinner-card-suit,
+html[data-performance="lightweight"] .spinner-card::after,
+html[data-performance="lightweight"] .mark3-carousel__center { animation: none !important; }

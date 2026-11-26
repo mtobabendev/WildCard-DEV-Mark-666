@@ -1,4 +1,4 @@
-import { getPerformance } from './performance-profile.js';
+import { usePerformance } from './use-performance.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ViewportVideo from './ViewportVideo.jsx';
 import wildCardLogo from '../../assets/209000-pinkgothicbatheart.png';
@@ -19,7 +19,7 @@ function Spinner({
   pageVisible,
   reducedMotion,
 }) {
-  const constrained = getPerformance().selectedSpinnerOnly;
+  const constrained = usePerformance().selectedSpinnerOnly;
   const STEP = 360 / channels.length;
   const stageRef = useRef(null);
   const deckRef = useRef(null);
@@ -133,6 +133,7 @@ function Spinner({
   }, [
     changeRotation,
     compact,
+    constrained,
     isWatch,
     open,
     pageVisible,
@@ -439,7 +440,7 @@ function Spinner({
               onClick={() => selectCard(index)}
             >
               {shouldMountVideo && (
-                <ViewportVideo
+                <ViewportVideo budgeted
                   className="spinner-card-video"
                   src={channel.video}
                   active={open && pageVisible && ((!isWatch && !compact && !constrained) || index === activeIndex)}

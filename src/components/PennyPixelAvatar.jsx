@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import './PennyPixelAvatar.css'
+import { usePerformance } from './use-performance.js'
 
 const GIF = '/static/Penny.gif'
 
 // The original animated avatar is independent of the nurse video lifecycle.
 export default function PennyPixelAvatar() {
+  const profile = usePerformance()
   const [animate, setAnimate] = useState(() =>
     !document.hidden && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   )
@@ -22,6 +24,6 @@ export default function PennyPixelAvatar() {
     }
   }, [])
   return animate
-    ? <img className="penny-pixel-avatar" src={GIF} alt="" decoding="async" aria-hidden="true" />
+    ? <img className="penny-pixel-avatar" src={profile.name === 'lightweight' ? '/static/performance-v2/penny-pixel-still.webp' : GIF} alt="" decoding="async" aria-hidden="true" />
     : <span className="penny-pixel-avatar penny-pixel-avatar--still" aria-hidden="true">♠</span>
 }

@@ -1,4 +1,4 @@
-import { initializePerformance } from './components/performance-profile.js';
+import { initializePerformance, startAdaptivePerformance } from './components/performance-profile.js';
 import './performance.css';
 import './little-black-book.css';
 import { shouldSkipIntro, rememberIntro, deferAnalytics } from './components/startup-policy.js';
@@ -108,6 +108,11 @@ function SiteEntry() {
   useEffect(() => {
     if (!introFinished || !AppComponent) return undefined;
     return deferAnalytics(window, loadGoogleAnalytics);
+  }, [introFinished, AppComponent]);
+
+  useEffect(() => {
+    if (!introFinished || !AppComponent) return undefined;
+    return startAdaptivePerformance();
   }, [introFinished, AppComponent]);
 
   const openBook = () => {

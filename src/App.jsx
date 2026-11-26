@@ -299,7 +299,7 @@ function PennyLoopVideo({ active }) {
 
   if (!active) return null;
   return (
-    <ViewportVideo
+    <ViewportVideo budgeted
       key={videoIndex}
       className="penny-loop-video"
       src={videos[videoIndex]}
@@ -312,7 +312,7 @@ function PennyLoopVideo({ active }) {
 function KandyVideo({ active }) {
   if (!active) return null;
   return (
-    <ViewportVideo
+    <ViewportVideo budgeted
       className="kandy-video"
       src={kandyKandleWebm}
       compatibilitySrc={kandyBalanced} lightweightSrc={kandyLightweight} compatibilityPoster={kandyPoster}
@@ -623,7 +623,7 @@ function ContactPanels({
                 className="owner-feature-video-shell"
                 aria-hidden="true"
               >
-                <ViewportVideo
+                <ViewportVideo budgeted
                   className="owner-feature-video"
                   src={ownerPennyKandyVideo}
                   compatibilitySrc={ownerBalanced} lightweightSrc={ownerLightweight} compatibilityPoster={ownerPoster}

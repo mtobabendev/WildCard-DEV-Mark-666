@@ -5,7 +5,7 @@ export default function JennPanel({ videoActive, links }) {
     <article className="identity-card identity-card--jenn" aria-labelledby="jenn-panel-title">
       <div className="jenn-video-shell">
         {videoActive && (
-          <ViewportVideo
+          <ViewportVideo budgeted
             src="/static/JennIntro.webm"
             loop
             aria-label="Jenn’s introduction"

@@ -105,7 +105,7 @@ export default function AshleyPanel({ active, links }) {
           <span className="ashley-memory-flip__inner">
             <span className="ashley-memory-flip__face" aria-hidden={showPhoto}>
               {active && (
-                <ViewportVideo
+                <ViewportVideo budgeted
                   className="ashley-video"
                   src="/static/AshleyIntroLoopmp4.webm"
                   active={!showPhoto}
@@ -133,7 +133,7 @@ export default function AshleyPanel({ active, links }) {
           aria-label="Open Ashley's What If Time Capsule. Combination required."
         >
           {active && (
-            <ViewportVideo
+            <ViewportVideo budgeted
               className="ashley-video"
               src="/static/AshleyHotLoop.webm"
               loop
