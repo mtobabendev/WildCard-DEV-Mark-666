@@ -22,7 +22,7 @@ export const LABEL = {
     description: 'Meet Kandy through her WildCard creator showcase, music, original art and creative projects.',
     image: kandyCover,
     links: [
-      { name: 'Kandy Showcase', href: '/kandy/showcase' },
+      { name: 'Kandy Art & Tarot', href: '/kandy/showcase' },
       { name: 'Stripagram', href: PARTY + '/stripagram/?profile=kandy' },
     ],
   },

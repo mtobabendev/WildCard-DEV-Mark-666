@@ -1024,7 +1024,7 @@ body {
     minmax(3.25rem, 1fr);
   grid-template-areas:
     "facebook hub suno"
-    "play hub apple"
+    "music hub tarot"
     "fans hub stripagram";
   max-width: 11.5rem;
 }
@@ -1039,14 +1039,16 @@ body {
   transform: rotate(2deg);
 }
 
-.identity-card--kandy .kandy-link-card--play {
-  grid-area: play;
+.identity-card--kandy .kandy-link-card--music {
+  grid-area: music;
   transform: rotate(-1deg);
+  color: #ffc5ec;
 }
 
-.identity-card--kandy .kandy-link-card--apple {
-  grid-area: apple;
+.identity-card--kandy .kandy-link-card--tarot {
+  grid-area: tarot;
   transform: rotate(1deg);
+  color: #d8bbff;
 }
 
 .kandy-link-hub {

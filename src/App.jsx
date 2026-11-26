@@ -933,38 +933,16 @@ function ContactPanels({
                   <span className="identity-link-card-label">SUNO</span>
                 </a>
 
-                <a
-                  className="identity-link-card kandy-link-card--play"
-                  href={SUNO_ANDROID_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Download Suno for Android"
-                >
-                  <span
-                    className="identity-link-card-icon"
-                    aria-hidden="true"
-                  >
-                    <GooglePlayIcon />
-                  </span>
-                  <span className="identity-link-card-label">GP</span>
+                <a className="identity-link-card kandy-link-card--music" href="/kandy/after-hours?tab=music" aria-label="Listen to Kandy's music on WildCard DEV">
+                  <span className="identity-link-card-icon" aria-hidden="true">♫</span>
+                  <span className="identity-link-card-label">MUSIC</span>
                 </a>
 
-                <a
-                  className="identity-link-card kandy-link-card--apple"
-                  href={SUNO_IOS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Download Suno for iPhone"
-                >
-                  <span
-                    className="identity-link-card-icon"
-                    aria-hidden="true"
-                  >
-                    <AppleIcon />
-                  </span>
-                  <span className="identity-link-card-label">iOS</span>
+                <a className="identity-link-card kandy-link-card--tarot" href="/kandy/showcase" aria-label="Kandy Art and Tarot creative portfolio">
+                  <span className="identity-link-card-icon" aria-hidden="true">✦</span>
+                  <span className="identity-link-card-label">TAROT</span>
                 </a>
-                <a className="identity-link-card kandy-link-card--fans" href="/kandy/showcase" aria-label="Kandy Fans: art, music and tarot">
+                <a className="identity-link-card kandy-link-card--fans" href="/kandy/after-hours" aria-label="Kandy Fans: After Hours music, posts and galleries">
                   <span className="identity-link-card-icon" aria-hidden="true">♦</span>
                   <span className="identity-link-card-label">FANS</span>
                 </a>
