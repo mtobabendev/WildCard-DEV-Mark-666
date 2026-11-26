@@ -6,8 +6,8 @@ import AskPenny from './components/AskPenny.jsx';
 
 const profiles = {
   kandy: { name: 'Kandy', accent: '#c5a0ff', symbol: '♦', headline: 'Art, music & tarot', description: 'Follow the diamonds into Kandy’s world of original art, music, stories, and tarot.', sections: [
-    ['Music', 'Explore Kandy’s music on Suno.'], ['Art', 'Original visual art and creative projects.'], ['Tarot', 'A home for tarot reflections and creative inspiration.']
-  ], links: [{label:'Music on Suno', href:'https://suno.com/s/JwxHfnS6IWD0exoW', icon:'♫'}, {label:'Facebook', href:'https://www.facebook.com/share/1EXJvJchHu/', icon:'f'}, {label:'Stripagram', href:'https://party.wildcarddev.com/stripagram/?profile=kandy', icon:'◎'}] },
+    ['Music', 'Listen to Kandy’s music on WildCard DEV After Hours.'], ['Art', 'Original visual art and creative projects.'], ['Tarot', 'A home for tarot reflections and creative inspiration.']
+  ], links: [{label:'Music at WildCard DEV', href:'/kandy/after-hours?tab=music', icon:'♫'}, {label:'Facebook', href:'https://www.facebook.com/share/1EXJvJchHu/', icon:'f'}, {label:'Stripagram', href:'https://party.wildcarddev.com/stripagram/?profile=kandy', icon:'◎'}] },
   lucy: { name: 'Lucy', accent: '#ff8a9e', symbol: '♥', headline: 'Design & creative experiments', description: 'Welcome to Lucy’s corner of WildCard DEV, where design tells a story and imagination gets room to play.', sections: [
     ['Design', 'The next designs are still taking shape. Come back to see what Lucy creates.'], ['Experiments', 'Ideas you can touch, turn, and explore as they come to life.'], ['Notes', 'Lucy’s latest creative news will find its home here.']
   ], links: [] },
@@ -44,6 +44,10 @@ function KandyCreativeProfile() {
       <div className="kandy-creative__content" aria-live="polite">
         {tab === 'music' && <>
           <h3>Music collection</h3>
+          <nav className="kandy-creative__links" aria-label="Kandy's hosted music">
+            <a href="/kandy/after-hours?tab=music">♫ Listen to Kandy's complete music library on WildCard DEV ↗</a>
+          </nav>
+          <p>Explore her full WildCard DEV player, or revisit earlier releases on Suno below.</p>
           <div className="kandy-creative__grid">
             {kandyTracks.map((track, index) => <article key={track.href} className="kandy-creative__tile">
               <div className="kandy-creative__cover" aria-hidden="true"><span>♫</span><small>0{index + 1} / MUSIC</small></div>
