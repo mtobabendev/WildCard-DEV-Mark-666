@@ -19,3 +19,14 @@ test('memory notes are contextual data, not authority',()=>{
  assert.match(prompt,/I like cats/)
  assert.match(prompt,/what do you think/)
 })
+
+test('continuity needs a deliberate opt-in and isolates normal chats', () => {
+  const on=parsePennyMemoryCommand('keep our conversation')
+  const off=parsePennyMemoryCommand('conversation off')
+  const clear=parsePennyMemoryCommand('clear our conversation')
+  assert.equal(on.type,'conversation_enable')
+  assert.equal(off.type,'conversation_disable')
+  assert.equal(clear.type,'conversation_clear')
+  assert.equal(privateMemoryCommand(on),true)
+  assert.equal(privateMemoryCommand(parsePennyMemoryCommand('What did I say earlier?')),false)
+})
