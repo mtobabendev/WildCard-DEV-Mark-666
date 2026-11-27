@@ -9,19 +9,27 @@ import PennyAfterHoursSpinner from './components/PennyAfterHoursSpinner.jsx'
 import PennyThoughtBubble from './components/PennyThoughtBubble.jsx'
 import AskPenny from './components/AskPenny.jsx'
 import ViewportVideo from './components/ViewportVideo.jsx'
+import { FRIENDS, PennyFriendCard } from './components/PennyFriends.jsx'
 import {useManagedContent,ManagedCover,ManagedPosts,ManagedProfileVideo,managedAsset,builtinOverride,builtinVisible,builtinCopy,BuiltinBody,BuiltinMedia,BuiltinLink} from './components/ManagedCreatorContent.jsx'
 
 const PARTY = 'https://party.wildcarddev.com'
 const CREATORS = ['penny', 'kandy', 'ashley']
 
-function CreatorFriends({ area }) {
-  return <section className="penny-fans__friends" aria-label="WildCard creator profiles">
+const ASHLEY_CREATOR_FRIEND = FRIENDS.find(friend => friend.name === 'Ashley')
+
+function CreatorFriends({ area, desktop = false }) {
+  return <section className={'penny-fans__friends' + (desktop && area === 'kandy' ? ' ah-desktop__friend-panel' : '')} aria-label="WildCard creator profiles">
     <h2>FRIENDS <span>{CREATORS.length - 1}</span></h2>
     <div className="penny-fans__friend-list">
-      {CREATORS.filter(id => id !== area).map(id => <a key={id} className="creator-member__friend" href={'/' + id + '/after-hours'}>
-        <img src={LABEL[id].image} alt="" loading="lazy" />
-        <strong>{LABEL[id].short}</strong><small>WildCard DEV</small>
-      </a>)}
+      {CREATORS.filter(id => id !== area).map(id => {
+        if (area === 'kandy' && id === 'ashley' && ASHLEY_CREATOR_FRIEND) {
+          return <PennyFriendCard key={id} friend={{ ...ASHLEY_CREATOR_FRIEND, url: '/ashley/after-hours' }} />
+        }
+        return <a key={id} className="creator-member__friend" href={'/' + id + '/after-hours'}>
+          <img src={LABEL[id].image} alt="" loading="lazy" />
+          <strong>{LABEL[id].short}</strong><small>WildCard DEV</small>
+        </a>
+      })}
     </div>
   </section>
 }
@@ -146,7 +154,7 @@ export default function AfterHoursPrivateArea({ area }) {
       {identity}{content}
       <footer className="ah-desktop__footer">♠ WildCard DEV · Member collections remain protected</footer>
     </main>
-    <aside className="ah-desktop__right"><div className="ah-desktop__thought"><PennyThoughtBubble provider="gemini" placement="after-hours" /></div><CreatorFriends area={area} /></aside>
+    <aside className="ah-desktop__right"><div className="ah-desktop__thought"><PennyThoughtBubble provider="gemini" placement="after-hours" /></div><CreatorFriends area={area} desktop /></aside>
     <AskPenny />
   </div>
   return <main className={'penny-fans creator-member' + (area === 'kandy' ? ' creator-member--kandy' : '')}>
