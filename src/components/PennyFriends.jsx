@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 export const FRIENDS = [
   { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
   { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
-  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
+  { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', videos: { cover: '/static/friends/mia-cover.mp4', avatar: '/static/friends/mia-avatar.mp4' }, slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
   { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
   { name: 'Angel Jessy', initial: 'A', handle: '@angel.jessyy', slideshow: { src: '/static/friends/angel-jessy-slides.webp', frames: 9 }, url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
@@ -18,6 +18,52 @@ export const FRIENDS = [
 
 const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
 
+// Load and play only on screen; leave the existing slideshow underneath as fallback.
+function FriendLoop({ src, cardRef, ready, setReady, avatar = false }) {
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    const card = cardRef.current;
+    if (!src || !video || !card) return undefined;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let visible = false;
+    let failed = false;
+    let observer;
+    const sync = () => {
+      if (!visible || document.hidden || motion.matches || failed) {
+        video.pause();
+        if (motion.matches) setReady(false);
+        return;
+      }
+      if (!video.getAttribute('src')) video.src = src;
+      video.play().catch(() => {});
+    };
+    const onError = () => { failed = true; setReady(false); };
+    const onPlaying = () => { if (!motion.matches) setReady(true); };
+    video.addEventListener('error', onError);
+    video.addEventListener('playing', onPlaying);
+    document.addEventListener('visibilitychange', sync);
+    motion.addEventListener?.('change', sync);
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      }, { threshold: 0.05 });
+      observer.observe(card);
+    } else { visible = true; sync(); }
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+      motion.removeEventListener?.('change', sync);
+      video.removeEventListener('error', onError);
+      video.removeEventListener('playing', onPlaying);
+      video.pause();
+    };
+  }, [src, cardRef, setReady]);
+  return <video ref={videoRef} muted loop playsInline preload="none" aria-hidden="true"
+    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none', opacity: ready ? 1 : 0, zIndex: avatar ? 2 : 0 }} />;
+}
+
 // A featured friend's cover advances in order and the avatar shuffles independently.
 export function PennyFriendCard({ friend }) {
   const slideshow = friend.slideshow || null;
@@ -26,6 +72,8 @@ export function PennyFriendCard({ friend }) {
   const isFeatured = frames > 1;
   const cardRef = useRef(null);
   const visibleRef = useRef(true);
+  const [coverReady, setCoverReady] = useState(false);
+  const [avatarReady, setAvatarReady] = useState(false);
   const [coverIndex, setCoverIndex] = useState(0);
   const [avatarIndex, setAvatarIndex] = useState(() =>
     isFeatured ? 1 + Math.floor(Math.random() * (frames - 1)) : 0
@@ -72,8 +120,9 @@ export function PennyFriendCard({ friend }) {
       rel={friend.platform ? undefined : 'noopener noreferrer'}
       aria-label={'Visit ' + friend.name + ' on ' + (friend.platform || 'OnlyFans') + (friend.platform ? '' : ', opens in a new tab')}
     >
-      <span className="penny-fans__friend-cover" aria-hidden="true">
-        {isFeatured ? (
+      {friend.videos?.cover && <FriendLoop src={friend.videos.cover} cardRef={cardRef} ready={coverReady} setReady={setCoverReady} />}
+      <span className="penny-fans__friend-cover" aria-hidden="true" style={coverReady ? { background: 'transparent' } : undefined}>
+        {coverReady ? null : isFeatured ? (
           <span className="penny-fans__featured-cover-slide" style={sheetPosition(coverIndex)} />
         ) : friend.image && <img src={friend.image} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.style.display = "none" }} />}
         <span className="penny-fans__friend-platform">{friend.platform || 'OnlyFans'}</span>
@@ -82,8 +131,9 @@ export function PennyFriendCard({ friend }) {
         {isFeatured ? (
           <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} /></>
         ) : friend.image ? <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><img src={friend.image} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.style.display = "none" }} /></> : friend.initial}
+        {friend.videos?.avatar && <FriendLoop src={friend.videos.avatar} cardRef={cardRef} ready={avatarReady} setReady={setAvatarReady} avatar />}
       </span>
-      <span className="penny-fans__friend-name">
+      <span className="penny-fans__friend-name" style={coverReady ? { position: 'relative', zIndex: 1, background: 'linear-gradient(transparent, rgba(19,8,29,.9))', marginTop: 'auto' } : undefined}>
         <strong>{friend.name}</strong>
         <small>{friend.handle || (friend.platform || 'OnlyFans')}</small>
       </span>
