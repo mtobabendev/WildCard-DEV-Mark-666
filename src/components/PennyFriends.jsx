@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { pennyPrivateMedia } from './privateMediaUrl.js';
 
 const ASHLEY_FRIEND_VIDEO = pennyPrivateMedia('ashley-friend-loop.mp4');
+const SNOW_BIRD_FRIEND_VIDEO = pennyPrivateMedia('snow-bird-friend-loop.mp4');
 
 export const FRIENDS = [
   { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
@@ -11,7 +12,7 @@ export const FRIENDS = [
   { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
   { name: 'Angel Jessy', initial: 'A', handle: '@angel.jessyy', slideshow: { src: '/static/friends/angel-jessy-slides.webp', frames: 9 }, url: 'https://onlyfans.com/angel.jessyy?rec=603551670' },
   { name: 'Lacie Heart', initial: 'L', handle: '@lacieheartvip', slideshow: { src: '/static/friends/lacie-heart-slides.webp', frames: 10 }, url: 'https://onlyfans.com/lacieheartvip?rec=603551670' },
-  { name: 'Snow Bird', initial: 'S', handle: '@snugglbuggx', slideshow: { src: '/static/friends/snow-bird-slides.webp', frames: 7 }, accent: 'snow-bird', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
+  { name: 'Snow Bird', initial: 'S', handle: '@snugglbuggx', videos: { cover: SNOW_BIRD_FRIEND_VIDEO, avatar: SNOW_BIRD_FRIEND_VIDEO, avatarOffset: 7.5 }, slideshow: { src: '/static/friends/snow-bird-slides.webp', frames: 7 }, accent: 'snow-bird', url: 'https://onlyfans.com/snugglbuggx?rec=603551670' },
   { name: 'Goon Goddess', initial: 'G', handle: '@hotnweird', slideshow: { src: '/static/goon-goddess-slides.avif', frames: 9, avatarFrames: true }, url: 'https://onlyfans.com/hotnweird?rec=603551670' },
   { name: 'Evemarie', initial: 'E', handle: '@evamarieee', slideshow: { src: '/static/friends/evemarie-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/evamarieee?rec=603551670' },
   { name: 'Karley Stokes', initial: 'K', handle: '@karleystokes', slideshow: { src: '/static/friends/karley-stokes-slides.webp', frames: 8, avatarFrames: true }, url: 'https://onlyfans.com/karleystokes?rec=603551670' },
