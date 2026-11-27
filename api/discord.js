@@ -1,6 +1,6 @@
 import { createPublicKey, verify } from 'node:crypto';
 import { waitUntil } from '@vercel/functions';
-import { parsePennyMemoryCommand, privateMemoryCommand, contextWithNotes } from '../lib/penny-discord-memory.js';
+import { parsePennyMemoryCommand, privateMemoryCommand, contextWithNotes, buildConversationMessages } from '../lib/penny-discord-memory.js';
 const APP = '1531868631325999256';
 const PARTY = 'https://party.wildcarddev.com/api/penny-provider';
 
@@ -16,7 +16,7 @@ async function memoryOperation(action, interaction, extra = {}) {
     redirect: 'error',
     signal: AbortSignal.timeout(9000),
     headers: { Authorization: 'Bearer ' + secret, 'Content-Type': 'application/json' },
-    body: JSON.stringify({action, guildId:interaction.guild_id,userId,...extra})
+    body: JSON.stringify({action, guildId:interaction.guild_id,channelId:interaction.channel_id,userId,...extra})
   });
   const body = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(body.error || 'Memory service unavailable');
@@ -56,11 +56,35 @@ async function reply(interaction, question) {
         await memoryOperation('forget',interaction,{id:note.id});
         content = 'Forgotten that note, Honey.';
       }
+    } else if (command.type === 'conversation_enable') {
+      await memoryOperation('convo_enable', interaction);
+      content = "Conversation continuity is on, Honey. I'll remember up to four of our recent exchanges in this channel for 24 hours. Say 'conversation off' to erase them and stop. 🖤";
+    } else if (command.type === 'conversation_disable') {
+      await memoryOperation('convo_disable', interaction);
+      content = "Our short-term conversation history is erased and continuity is off, Honey.";
+    } else if (command.type === 'conversation_clear') {
+      await memoryOperation('convo_clear', interaction);
+      content = "Fresh start, Honey. I've cleared our recent conversation in this channel.";
+    } else if (command.type === 'conversation_status') {
+      const {enabled} = await memoryOperation('convo_read', interaction);
+      content = enabled ? "Our 24-hour conversation continuity is on in this channel, Honey. Say 'conversation off' to erase it."
+        : "Our conversation continuity is off here, Honey. Say 'keep our conversation' to turn it on.";
     } else {
       let prompt = command.prompt;
       if (command.type === 'recall') {
         const {items} = await memoryOperation('list',interaction);
         prompt = contextWithNotes(command.prompt, items);
+      }
+      let continuityEnabled = false;
+      let contextMessages = [{role:'user',content:prompt.slice(0,1800)}];
+      if (command.type === 'chat') {
+        try {
+          const continuity = await memoryOperation('convo_read', interaction);
+          continuityEnabled = continuity.enabled === true;
+          if (continuityEnabled) contextMessages = buildConversationMessages(prompt, continuity.exchanges);
+        } catch {
+          // A memory outage never prevents normal, stateless public conversation.
+        }
       }
       const control = new AbortController();
       const timeout = setTimeout(()=>control.abort(),25000);
@@ -68,10 +92,17 @@ async function reply(interaction, question) {
         const result = await fetch(PARTY, {
           method:'POST',redirect:'error',signal:control.signal,
           headers:{'Content-Type':'application/json',Origin:'https://party.wildcarddev.com',Accept:'text/plain'},
-          body:JSON.stringify({messages:[{role:'user',content:prompt.slice(0,2000)}],provider:'gemini',presentation:'standard'})
+          body:JSON.stringify({messages:contextMessages,provider:'gemini',presentation:'standard'})
         });
         if(!result.ok||result.headers.get('X-Penny-Provider')!=='gemini')throw new Error('Provider unavailable');
         content=(await result.text()).trim().slice(0,1900)||"My answer came back empty, Honey. 🖤";
+        if (continuityEnabled && command.type === 'chat') {
+          try {
+            await memoryOperation('convo_append', interaction, {exchange:{
+              interactionId:interaction.id,question:command.prompt,answer:content
+            }});
+          } catch { console.warn('Penny conversation append failed'); }
+        }
       } finally { clearTimeout(timeout); }
     }
   } catch {

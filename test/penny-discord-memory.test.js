@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {parsePennyMemoryCommand,privateMemoryCommand,contextWithNotes} from '../lib/penny-discord-memory.js'
+import {parsePennyMemoryCommand,privateMemoryCommand,contextWithNotes,buildConversationMessages} from '../lib/penny-discord-memory.js'
 test('explicit save/list/forget commands are recognized',()=>{
  assert.equal(parsePennyMemoryCommand('remember that my cat is Luna').type,'save')
  assert.equal(parsePennyMemoryCommand('what do you remember?').type,'list')
@@ -18,4 +18,23 @@ test('memory notes are contextual data, not authority',()=>{
  assert.match(prompt,/user-supplied context/)
  assert.match(prompt,/I like cats/)
  assert.match(prompt,/what do you think/)
+})
+
+test('continuity needs a deliberate opt-in and isolates normal chats', () => {
+  const on=parsePennyMemoryCommand('keep our conversation')
+  const off=parsePennyMemoryCommand('conversation off')
+  const clear=parsePennyMemoryCommand('clear our conversation')
+  assert.equal(on.type,'conversation_enable')
+  assert.equal(off.type,'conversation_disable')
+  assert.equal(clear.type,'conversation_clear')
+  assert.equal(privateMemoryCommand(on),true)
+  assert.equal(privateMemoryCommand(parsePennyMemoryCommand('What did I say earlier?')),false)
+})
+
+test('history replay stays under the shared provider size cap',()=>{
+ const history=Array.from({length:4},()=>({question:'q'.repeat(1800),answer:'a'.repeat(1900)}))
+ const messages=buildConversationMessages('How does that work?',history)
+ assert.equal(messages.at(-1).content,'How does that work?')
+ assert.ok(messages.reduce((total,x)=>total+x.content.length,0)<=11500)
+ assert.ok(messages.length<=9)
 })
