@@ -4,6 +4,7 @@ import PennyActiveAvatar from './PennyActiveAvatar.jsx';
 import PennyPixelAvatar from './PennyPixelAvatar.jsx';
 import { presentationForPath } from './penny-presentation.js';
 import { interpretLocalMemory, performLocalMemory, withLocalMemory } from './penny-local-memory.js';
+import { interpretConversationControl, readBrowserConversation, saveBrowserConversation } from './penny-conversation-client.js';
 
 // Extracted from WildCard Party's Ask Penny experience.
 // Calls the shared Party backend via this site's same-origin /api/penny relay.
@@ -32,9 +33,19 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
   const presentation = embedded ? 'standard' : presentationForPath(window.location.pathname);
   const cabaret = presentation === 'cabaret';
   const sessionKey = cabaret ? SESSION_KEY + ':cabaret' : SESSION_KEY;
+  const continuityKey = sessionKey + ':continuity-v1';
   const [open, setOpen] = useState(embedded);
   const [draft, setDraft] = useState('');
-  const [messages, setMessages] = useState(() => loadMessages(sessionKey));
+  const [messages, setMessages] = useState(() => {
+    const session = loadMessages(sessionKey);
+    if (session.length) return session;
+    try { return readBrowserConversation(window.localStorage, continuityKey).messages; }
+    catch { return []; }
+  });
+  const [continuityEnabled, setContinuityEnabled] = useState(() => {
+    try { return readBrowserConversation(window.localStorage, continuityKey).enabled; }
+    catch { return false; }
+  });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const abortRef = useRef(null);
@@ -51,7 +62,11 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
     } catch {
       // Chat remains available when session storage is disabled.
     }
-  }, [busy, messages, sessionKey]);
+    if (continuityEnabled) {
+      try { saveBrowserConversation(window.localStorage, continuityKey, messages); }
+      catch { /* Browser may disable persistent storage. */ }
+    }
+  }, [busy, messages, sessionKey, continuityKey, continuityEnabled]);
 
   useEffect(() => {
     if (open && transcriptRef.current) {
@@ -76,6 +91,10 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
     setDraft('');
     setError('');
     try { window.sessionStorage.removeItem(sessionKey); } catch { /* optional */ }
+    if (continuityEnabled) {
+      try { saveBrowserConversation(window.localStorage, continuityKey, []); }
+      catch { /* optional */ }
+    }
   }
 
   async function sendMessage(event) {
@@ -85,6 +104,39 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
 
     const stamp = Date.now();
     const incoming = { id: 'user-' + stamp, role: 'user', text };
+    const continuityCommand = interpretConversationControl(text);
+    if (continuityCommand) {
+      let reply;
+      if (continuityCommand === 'enable') {
+        try {
+          saveBrowserConversation(window.localStorage, continuityKey, messages);
+          setContinuityEnabled(true);
+          reply = "Conversation continuity is on in this browser, Honey. I'll keep our most recent exchanges for 24 hours. Say 'conversation off' to erase them.";
+        } catch {
+          reply = "Your browser blocked persistent storage, Honey. I couldn't enable continuity.";
+        }
+      } else if (continuityCommand === 'disable') {
+        try { window.localStorage.removeItem(continuityKey); }
+        catch { /* no more local persistence on this interface */ }
+        setContinuityEnabled(false);
+        reply = "Conversation continuity is off, Honey. I cleared the saved browser transcript.";
+        setMessages([]);
+      } else if (continuityCommand === 'clear') {
+        try {
+          if (continuityEnabled) saveBrowserConversation(window.localStorage, continuityKey, []);
+        } catch { /* no persistence */ }
+        reply = "Fresh start, Honey. I cleared our recent conversation.";
+        setMessages([]);
+      } else {
+        reply = continuityEnabled
+          ? "Our 24-hour conversation continuity is on in this browser, Honey."
+          : "Our conversation continuity is off, Honey. Say 'keep our conversation' to enable it.";
+      }
+      setDraft('');
+      setError('');
+      setMessages([{ id:'penny-'+stamp,role:'assistant',text:reply }]);
+      return;
+    }
     const memoryCmd = interpretLocalMemory(text);
     if (memoryCmd) {
       const result = performLocalMemory(getBrowserNotes(), memoryCmd);
@@ -172,6 +224,7 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
           ? {
               ...message,
               pending: false,
+              failed: true,
               text: message.text || (interrupted
                 ? 'Transmission interrupted.'
                 : 'I lost the line before I could answer.'),
