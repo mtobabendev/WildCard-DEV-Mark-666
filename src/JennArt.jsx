@@ -7,7 +7,8 @@ import CreatorDisplayOrbit from './components/CreatorDisplayOrbit.jsx';
 const exhibits = [
   {title:'HeroClix', description:'HeroClix-inspired character showcase.', icon:'✦', video:'/static/JennHeroClixIntro.webm', caption:'HeroClix character showcase'},
   {title:'Jenn or Treat', description:'Seasonal character art.', icon:'◇', video:'/static/JennOrTreat2.webm'},
-  {title:'Jenn’s Toon', description:'✨ A Jenn Original! Check it out! ✨ An AI animation created by Jenn.', icon:'✧', video:'/static/JennToon.webm', poster:'/static/JennToon.webp', caption:'✨ A Jenn Original! Check it out! ✨'}
+  {title:'Jenn’s Toon', description:'✨ A Jenn Original! Check it out! ✨ An AI animation created by Jenn.', icon:'✧', video:'/static/JennToon.webm', poster:'/static/JennToon.webp', caption:'✨ A Jenn Original! Check it out! ✨'},
+  {title:'From Sketch to Life', description:'Jenn’s animated portrait blends illustration with a fully rendered character.', icon:'✦', video:'/static/JennArtPortrait01.mp4', poster:'/static/JennArtPortrait01.webp', caption:'From Sketch to Life · A Jenn Original!'}
 ];
 
 export default function JennArt() {
