@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { pennyPrivateMedia } from './privateMediaUrl.js';
+
+const ASHLEY_FRIEND_VIDEO = pennyPrivateMedia('ashley-friend-loop.mp4');
 
 export const FRIENDS = [
   { name: 'Kandy', initial: 'K', url: '/kandy/showcase', platform: 'WildCard DEV', image: '/static/KandyOnlyFans2.jpg' },
-  { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp' },
+  { name: 'Ashley', initial: 'A', url: '/ashley/what-if', platform: 'WildCard DEV', image: '/static/AshleyPenthouseMemory.webp', videos: { cover: ASHLEY_FRIEND_VIDEO, avatar: ASHLEY_FRIEND_VIDEO, avatarOffset: 10 } },
   { name: 'Mia Brookes', initial: 'M', handle: '@miabrookestv', videos: { cover: '/static/friends/mia-cover.mp4', avatar: '/static/friends/mia-avatar.mp4' }, slideshow: { src: '/static/friends/mia-slides.webp', frames: 6 }, url: 'https://onlyfans.com/itsmiabrookes?rec=603551670' },
   { name: 'Brooke', initial: 'B', handle: '@brookeshowsxx', slideshow: { src: '/static/friends/brooke-slides.webp', frames: 5 }, url: 'https://onlyfans.com/brookeshowsxx?rec=603551670' },
   { name: 'Aisha Moon', initial: 'A', handle: '@aaaisha_moon', slideshow: { src: '/static/friends/aisha-moon-slides.webp', frames: 8 }, url: 'https://onlyfans.com/aaaisha_moon?rec=603551670' },
@@ -19,31 +22,61 @@ export const FRIENDS = [
 const FRIEND_SLIDESHOW_INTERVAL_MS = 6000;
 
 // Load and play only on screen; leave the existing slideshow underneath as fallback.
-function FriendLoop({ src, cardRef, ready, setReady, avatar = false }) {
+function FriendLoop({ src, cardRef, ready, setReady, avatar = false, offset = 0 }) {
   const videoRef = useRef(null);
   useEffect(() => {
     const video = videoRef.current;
-    const card = cardRef.current;
+    const card = cardRef.current || video?.closest('a');
     if (!src || !video || !card) return undefined;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     let failed = false;
+    let positioned = offset <= 0;
     let observer;
+    let disposed = false;
+    const eligible = () => !disposed && visible && !document.hidden && !motion.matches && !failed;
+    const play = () => {
+      if (!eligible() || !positioned || video.seeking) return;
+      video.defaultMuted = true;
+      video.muted = true;
+      try { video.play()?.catch?.(() => {}); } catch { /* Keep fallback. */ }
+    };
+    const position = () => {
+      if (!positioned && video.readyState >= 1) {
+        const duration = video.duration;
+        if (!Number.isFinite(duration) || duration <= 0) return;
+        positioned = true;
+        video.currentTime = offset % duration;
+      }
+      play();
+    };
     const sync = () => {
-      if (!visible || document.hidden || motion.matches || failed) {
+      if (!eligible()) {
+        video.autoplay = false;
         video.pause();
         if (motion.matches) setReady(false);
         return;
       }
-      if (!video.getAttribute('src')) video.src = src;
-      video.play().catch(() => {});
+      video.defaultMuted = true;
+      video.muted = true;
+      video.setAttribute('muted', '');
+      video.autoplay = offset <= 0;
+      if (video.getAttribute('src') !== src) {
+        video.setAttribute('src', src);
+        video.load();
+      }
+      position();
     };
     const onError = () => { failed = true; setReady(false); };
-    const onPlaying = () => { if (!motion.matches) setReady(true); };
+    const onPlaying = () => { if (eligible() && positioned && !video.seeking) setReady(true); };
     video.addEventListener('error', onError);
     video.addEventListener('playing', onPlaying);
+    video.addEventListener('loadedmetadata', position);
+    video.addEventListener('canplay', play);
+    video.addEventListener('seeked', play);
     document.addEventListener('visibilitychange', sync);
-    motion.addEventListener?.('change', sync);
+    if (motion.addEventListener) motion.addEventListener('change', sync);
+    else motion.addListener?.(sync);
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
@@ -52,16 +85,24 @@ function FriendLoop({ src, cardRef, ready, setReady, avatar = false }) {
       observer.observe(card);
     } else { visible = true; sync(); }
     return () => {
+      disposed = true;
       observer?.disconnect();
       document.removeEventListener('visibilitychange', sync);
-      motion.removeEventListener?.('change', sync);
+      if (motion.removeEventListener) motion.removeEventListener('change', sync);
+      else motion.removeListener?.(sync);
       video.removeEventListener('error', onError);
       video.removeEventListener('playing', onPlaying);
+      video.removeEventListener('loadedmetadata', position);
+      video.removeEventListener('canplay', play);
+      video.removeEventListener('seeked', play);
+      video.autoplay = false;
       video.pause();
+      video.removeAttribute('src');
+      video.load();
     };
-  }, [src, cardRef, setReady]);
-  return <video ref={videoRef} muted loop playsInline preload="none" aria-hidden="true"
-    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none', opacity: ready ? 1 : 0, zIndex: avatar ? 2 : 0 }} />;
+  }, [src, cardRef, setReady, offset]);
+  return <video ref={videoRef} muted loop playsInline preload="none" disablePictureInPicture aria-hidden="true"
+    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: avatar ? 'center 20%' : 'center', pointerEvents: 'none', opacity: ready ? 1 : 0, zIndex: avatar ? 2 : 0 }} />;
 }
 
 // A featured friend's cover advances in order and the avatar shuffles independently.
@@ -70,6 +111,7 @@ export function PennyFriendCard({ friend }) {
   const frames = slideshow?.frames ?? 0;
   const sheetFrames = slideshow?.avatarFrames ? frames * 2 : frames;
   const isFeatured = frames > 1;
+  const hasVideo = Boolean(friend.videos?.cover || friend.videos?.avatar);
   const cardRef = useRef(null);
   const visibleRef = useRef(true);
   const [coverReady, setCoverReady] = useState(false);
@@ -114,7 +156,7 @@ export function PennyFriendCard({ friend }) {
   return (
     <a
       ref={cardRef}
-      className={'penny-fans__friend-card' + (isFeatured ? ' penny-fans__friend-card--featured' : '') + (friend.accent === 'snow-bird' ? ' penny-fans__friend-card--snow-bird' : '')}
+      className={'penny-fans__friend-card' + (isFeatured || hasVideo ? ' penny-fans__friend-card--featured' : '') + (friend.accent === 'snow-bird' ? ' penny-fans__friend-card--snow-bird' : '')}
       href={friend.url}
       target={friend.platform ? undefined : '_blank'}
       rel={friend.platform ? undefined : 'noopener noreferrer'}
@@ -131,7 +173,7 @@ export function PennyFriendCard({ friend }) {
         {isFeatured ? (
           <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><span className="penny-fans__featured-avatar-slide" style={sheetPosition(avatarIndex, true)} /></>
         ) : friend.image ? <><span className="penny-fans__friend-initial-fallback">{friend.initial}</span><img src={friend.image} alt="" loading="lazy" decoding="async" onError={event => { event.currentTarget.style.display = "none" }} /></> : friend.initial}
-        {friend.videos?.avatar && <FriendLoop src={friend.videos.avatar} cardRef={cardRef} ready={avatarReady} setReady={setAvatarReady} avatar />}
+        {friend.videos?.avatar && <FriendLoop src={friend.videos.avatar} cardRef={cardRef} ready={avatarReady} setReady={setAvatarReady} offset={friend.videos.avatarOffset || 0} avatar />}
       </span>
       <span className="penny-fans__friend-name" style={coverReady ? { position: 'relative', zIndex: 1, background: 'linear-gradient(transparent, rgba(19,8,29,.9))', marginTop: 'auto' } : undefined}>
         <strong>{friend.name}</strong>
