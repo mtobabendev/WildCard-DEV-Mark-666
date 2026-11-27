@@ -218,3 +218,36 @@
 
 .after-ask[data-presentation="cabaret"] .after-ask__header { background: linear-gradient(110deg, #4b1946, #261334 65%, #170e26); }
 .after-ask[data-presentation="cabaret"] .after-ask__identity strong { color: #ffd0eb; }
+
+/* Mobile home: keep Jenn's right-hand link orbit clear of the concierge dock.
+   Other routes, embedded chat and desktop retain their existing placement. */
+@media (max-width: 600px) {
+  #root:has(.landing:not(.is-section)) .after-ask:not([data-embedded="true"]) .after-ask__dock {
+    left: max(10px, env(safe-area-inset-left, 0px));
+    right: auto;
+    max-width: calc(50vw - max(10px, env(safe-area-inset-left, 0px)));
+  }
+  #root:has(.landing:not(.is-section)) .after-ask:not([data-embedded="true"]) .after-ask__panel {
+    left: max(8px, env(safe-area-inset-left, 0px));
+    right: auto;
+    max-width: calc(100vw - max(8px, env(safe-area-inset-left, 0px)) - max(8px, env(safe-area-inset-right, 0px)));
+  }
+  #root:has(.landing:not(.is-section)) .after-ask__dock-copy {
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 380px) {
+  #root:has(.landing:not(.is-section)) .after-ask:not([data-embedded="true"]) .after-ask__dock {
+    padding: .35rem;
+    gap: .35rem;
+  }
+  #root:has(.landing:not(.is-section)) .after-ask__dock-light,
+  #root:has(.landing:not(.is-section)) .after-ask__dock-copy small {
+    display: none;
+  }
+}
+@media (max-width: 280px) {
+  #root:has(.landing:not(.is-section)) .after-ask__dock-copy {
+    display: none;
+  }
+}
