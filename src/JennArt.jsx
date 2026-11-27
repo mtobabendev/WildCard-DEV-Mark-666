@@ -27,7 +27,7 @@ export default function JennArt() {
         <p><a href="mailto:Jenn@WildCardDEV.com">Jenn@WildCardDEV.com</a></p>
         <p>Explore Jenn’s original AI animations, HeroClix-inspired characters and creative artwork.</p>
         <ShowcaseOrbit label="Jenn navigation" items={[{label:'Home',href:'/',icon:'♠'},{label:'Facebook',href:'https://www.facebook.com/jennifer.mcbride.946517',icon:'f'},{label:'Art',href:'#jenn-exhibits',icon:'✦'}]} />
-        <div id="jenn-exhibits"><CreatorDisplayOrbit name="Jenn" symbol="✦" slideshow items={exhibits} /></div>
+        <div id="jenn-exhibits"><CreatorDisplayOrbit name="Jenn" symbol="✦" slideshow videoCards liveTiles items={exhibits} /></div>
         <div className="jenn-art__grid">
           {exhibits.map(exhibit => (
             <figure key={exhibit.video}>
