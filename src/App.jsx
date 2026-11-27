@@ -840,42 +840,45 @@ function ContactPanels({
                   Listen to Kandy on Suno
                 </a>
 
-                <div className="kandy-suno-latest">
-                  <a
-                    className="kandy-suno-cta"
-                    href={KANDY_LATEST_TRACK_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => {
-                      trackAnalyticsEvent(
-                        'kandy_suno_latest_track_click',
-                        {
-                          source: 'kandy_card',
-                          link_url: KANDY_LATEST_TRACK_URL,
-                        },
-                      );
+                <a
+                  className="kandy-suno-video-link"
+                  href={KANDY_SUNO_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Watch Kandy’s music preview and visit her Suno page"
+                  onClick={() => {
+                    trackAnalyticsEvent('kandy_suno_playlist_click', {
+                      source: 'kandy_card_video',
+                      link_url: KANDY_SUNO_URL,
+                    });
+                  }}
+                  style={{
+                    display: 'block',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                    maxWidth: '11rem',
+                    margin: '.45rem auto 0',
+                    aspectRatio: '1 / 1',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255, 91, 214, .5)',
+                    borderRadius: '.8rem',
+                    background: '#0b0715',
+                  }}
+                >
+                  <ViewportVideo
+                    src="/static/kandy-suno.webm"
+                    active={open && pageVisible}
+                    loop
+                    aria-hidden="true"
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      pointerEvents: 'none',
                     }}
-                  >
-                    Newest track: Listen now →
-                  </a>
-                  <a
-                    className="kandy-suno-cta"
-                    href={KANDY_PREVIOUS_TRACK_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => {
-                      trackAnalyticsEvent(
-                        'kandy_suno_previous_track_click',
-                        {
-                          source: 'kandy_card',
-                          link_url: KANDY_PREVIOUS_TRACK_URL,
-                        },
-                      );
-                    }}
-                  >
-                    Previous featured track: Listen →
-                  </a>
-                </div>
+                  />
+                </a>
               </div>
 
               <div
