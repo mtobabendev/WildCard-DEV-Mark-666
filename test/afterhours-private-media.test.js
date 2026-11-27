@@ -43,7 +43,7 @@ test('Owner-designated Friends assets and seat cartoon are public; remaining pri
   }
 })
 
-test('private content and Ashley loop use authenticated Party media while existing Friends assets stay public', () => {
+test('private content and approved Friends loops use authenticated Party media while existing Friends assets stay public', () => {
   const files = [
     '../src/PennyAfterHours.jsx',
     '../src/components/AfterHoursDesktop.jsx',
@@ -54,12 +54,17 @@ test('private content and Ashley loop use authenticated Party media while existi
   const sources = files.map(file => readFileSync(new URL(file, import.meta.url), 'utf8'))
   for (const [i,source] of sources.entries()) {
     if (i === 2) {
-      // Only Ashley's new loop is private; existing public Friends assets stay public.
-      assert.deepEqual([...source.matchAll(/pennyPrivateMedia\s*\(\s*['"]([^'"]+)['"]\s*\)/g)].map(match => match[1]), ['ashley-friend-loop.mp4'])
+      // Only the two approved loops are private; existing public Friends assets stay public.
+      assert.deepEqual([...source.matchAll(/pennyPrivateMedia\s*\(\s*['"]([^'"]+)['"]\s*\)/g)].map(match => match[1]), ['ashley-friend-loop.mp4', 'snow-bird-friend-loop.mp4'])
       assert.match(source, /cover: ASHLEY_FRIEND_VIDEO, avatar: ASHLEY_FRIEND_VIDEO, avatarOffset: 10/)
       assert.equal(existsSync(new URL('ashley-friend-loop.mp4', base)), false)
       assert.equal(existsSync(new URL('friends/ashley-friend-loop.mp4', base)), false)
       assert.doesNotMatch(source, /\/static\/(?:friends\/)?ashley-friend-loop\.mp4/)
+      assert.match(source, /cover: SNOW_BIRD_FRIEND_VIDEO, avatar: SNOW_BIRD_FRIEND_VIDEO, avatarOffset: 7\.5/)
+      assert.match(source, /accent: 'snow-bird'/)
+      assert.equal(existsSync(new URL('snow-bird-friend-loop.mp4', base)), false)
+      assert.equal(existsSync(new URL('friends/snow-bird-friend-loop.mp4', base)), false)
+      assert.doesNotMatch(source, /\/static\/(?:friends\/)?snow-bird-friend-loop\.mp4/)
       for (const file of publicFriendFiles) assert.ok(source.includes('/static/' + file), file)
     } else assert.match(source, /pennyPrivateMedia/)
   }
