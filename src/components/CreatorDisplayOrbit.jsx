@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import GallerySlideshow from './GallerySlideshow.jsx';
 import ExhibitVideoPreview from './ExhibitVideoPreview.jsx';
+import ViewportVideo from './ViewportVideo.jsx';
 import UserLoopVideo from './UserLoopVideo.jsx';
 import { galleryStep } from './gallery-slideshow.js';
 import './PennyAfterHoursSpinner.css';
 import './CreatorDisplayOrbit.css';
 
-export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = false, videoCards = false }) {
+export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = false, videoCards = false, liveTiles = false }) {
   const id = useId();
   const pointer = useRef(null);
   const dialog = useRef(null);
@@ -44,13 +45,32 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
     observer.observe(node);
     return () => observer.disconnect();
   }, [videoCards, visible]);
-  const face = (item, moving = false) => videoCards && item.poster
+  const face = (item, moving = false, tile = false) => {
+    if (videoCards && liveTiles && item.video) {
+      const previewActive = selected === null && (tile || (moving && stageVisible && !paused));
+      return <div className="creator-display__card-art">
+        {item.poster
+          ? <img src={item.poster} alt="" loading="lazy" decoding="async" />
+          : <video src={item.video + '#t=0.1'} muted playsInline preload="metadata" aria-hidden="true"
+              className="creator-display__card-video" />}
+        {(moving || tile) && previewActive && <ViewportVideo
+          budgeted respectReducedMotion loop
+          src={item.video} poster={item.poster}
+          className="creator-display__card-video"
+          style={{ position: 'absolute', inset: 0, background: 'transparent' }}
+          aria-hidden="true"
+        />}
+        <span aria-hidden="true" style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: '.45rem .25rem', textAlign: 'center', fontSize: '.72rem', fontWeight: 700, background: 'rgba(16,8,26,.78)', color: '#fff0ff', overflowWrap: 'anywhere', pointerEvents: 'none' }}>{item.title}</span>
+      </div>;
+    }
+    return videoCards && item.poster
     ? <div className="creator-display__card-art">
         {moving && item.video
           ? <ExhibitVideoPreview video={item.video} poster={item.poster} active={stageVisible && !paused && selected === null} />
           : <img src={item.poster} alt="" loading="lazy" decoding="async" />}
       </div>
     : <div className="creator-display__face"><span aria-hidden="true">{item.icon || symbol}</span><strong>{item.title}</strong></div>;
+  };
 
   return (
     <section className={'penny-after-orbit creator-display' + (videoCards ? ' creator-display--video-cards' : '')} aria-label={name + ' display gallery'}>
@@ -62,7 +82,7 @@ export default function CreatorDisplayOrbit({ name, symbol, items, slideshow = f
         <button type="button" className="penny-after-orbit__toggle" aria-expanded={visible} aria-controls={id} onClick={() => setVisible(value => !value)}>{visible ? 'Hide 3D orbit' : 'Explore in 3D'}</button>
       </div>
       <div className="penny-after-orbit__tiles">
-        {items.map((item, index) => <button key={item.title} className="penny-after-orbit__tile" type="button" onClick={event => { trigger.current = event.currentTarget; setSelected(index); }} aria-label={'Open ' + item.title}>{face(item)}<span className="penny-after-orbit__tile-label">{videoCards ? 'CARD' : 'EXHIBIT'} {String(index + 1).padStart(2, '0')}</span></button>)}
+        {items.map((item, index) => <button key={item.title} className="penny-after-orbit__tile" type="button" onClick={event => { trigger.current = event.currentTarget; setSelected(index); }} aria-label={'Open ' + item.title}>{face(item, false, true)}<span className="penny-after-orbit__tile-label">{videoCards ? 'CARD' : 'EXHIBIT'} {String(index + 1).padStart(2, '0')}</span></button>)}
       </div>
       {visible && <div ref={stageRef} id={id} className="penny-after-orbit__stage">
         <div className="penny-after-orbit__viewport" tabIndex={0} role="group" aria-label="3D display orbit. Drag or use arrow keys to rotate. Select a tile above to open an exhibit."
