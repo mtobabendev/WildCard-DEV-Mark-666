@@ -3,10 +3,16 @@ import './AskPenny.css';
 import PennyActiveAvatar from './PennyActiveAvatar.jsx';
 import PennyPixelAvatar from './PennyPixelAvatar.jsx';
 import { presentationForPath } from './penny-presentation.js';
+import { interpretLocalMemory, performLocalMemory, withLocalMemory } from './penny-local-memory.js';
 
 // Extracted from WildCard Party's Ask Penny experience.
 // Calls the shared Party backend via this site's same-origin /api/penny relay.
 const SESSION_KEY = 'wildcard-after-hours:ask-penny-v1';
+const MEMORY_KEY = 'wildcard:ask-penny:browser-memories-v1';
+function getBrowserNotes() {
+  try { const value=JSON.parse(window.localStorage.getItem(MEMORY_KEY)||'[]'); return Array.isArray(value)?value.filter(x=>typeof x==='string').slice(0,20):[]; }
+  catch { return []; }
+}
 
 function loadMessages(sessionKey) {
   try {
@@ -79,10 +85,27 @@ export default function AskPenny({ embedded = false, onClose } = {}) {
 
     const stamp = Date.now();
     const incoming = { id: 'user-' + stamp, role: 'user', text };
+    const memoryCmd = interpretLocalMemory(text);
+    if (memoryCmd) {
+      const result = performLocalMemory(getBrowserNotes(), memoryCmd);
+      let responseText = result.reply;
+      if (result.changed) {
+        try { window.localStorage.setItem(MEMORY_KEY, JSON.stringify(result.notes)); }
+        catch { responseText = "Browser storage is unavailable, Honey. I couldn't save that change."; }
+      }
+      setDraft('');
+      setError('');
+      setMessages((current) => [...current, incoming, {id:'penny-'+stamp,role:'assistant',text:responseText}].slice(-20));
+      return;
+    }
     const responseId = 'penny-' + stamp;
     const outgoing = [...messages, incoming].slice(-10)
       .filter((item) => item.text.trim())
       .map((item) => ({ role: item.role, content: item.text }));
+    if (outgoing.length) {
+      const last = outgoing[outgoing.length - 1];
+      last.content = withLocalMemory(last.content, getBrowserNotes());
+    }
 
     setDraft('');
     setError('');
